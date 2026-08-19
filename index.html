@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="sl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Matjaž Volkar</title>
+<meta name="description" content="Kazalo projektov Matjaža Volkarja na GitHubu: orodja, dokumentacija in predstavitve.">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='18' fill='%232F7D6E'/><text x='50' y='72' font-size='62' font-family='Georgia,serif' fill='%23FAF8F4' text-anchor='middle'>M</text></svg>">
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+
+  :root {
+    --bg:       #FAF8F4;
+    --panel:    #FFFFFF;
+    --line:     #E4E0D7;
+    --line-2:   #EFECE4;
+    --ink:      #16191C;
+    --ink-2:    #565C60;
+    --ink-3:    #8A8F8C;
+    --accent:   #2F7D6E;
+    --accent-2: #1F5A4E;
+    --lock-fg:  #7A6320;
+    --lock-bg:  #F5EFDC;
+    --open-fg:  #2F7D6E;
+    --open-bg:  #E4F0EC;
+    --mono: ui-monospace, "Cascadia Mono", "SF Mono", Menlo, Consolas, monospace;
+    --sans: ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg:       #10141A;
+      --panel:    #171C24;
+      --line:     #262D38;
+      --line-2:   #1E242D;
+      --ink:      #E9E7E2;
+      --ink-2:    #A2A8A6;
+      --ink-3:    #6D7375;
+      --accent:   #5FB3A1;
+      --accent-2: #8ACFC0;
+      --lock-fg:  #D9BC6A;
+      --lock-bg:  #241F12;
+      --open-fg:  #5FB3A1;
+      --open-bg:  #12211E;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg:       #10141A;
+    --panel:    #171C24;
+    --line:     #262D38;
+    --line-2:   #1E242D;
+    --ink:      #E9E7E2;
+    --ink-2:    #A2A8A6;
+    --ink-3:    #6D7375;
+    --accent:   #5FB3A1;
+    --accent-2: #8ACFC0;
+    --lock-fg:  #D9BC6A;
+    --lock-bg:  #241F12;
+    --open-fg:  #5FB3A1;
+    --open-bg:  #12211E;
+  }
+
+  body {
+    margin: 0; min-height: 100vh;
+    background: var(--bg); color: var(--ink);
+    font-family: var(--sans); font-size: 16px; line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 56px 24px 80px; }
+
+  /* masthead */
+  header { border-bottom: 2px solid var(--ink); padding-bottom: 22px; margin-bottom: 8px; }
+  .name {
+    margin: 0; font-family: var(--serif); font-weight: 600;
+    font-size: clamp(34px, 6vw, 52px); line-height: 1.05; letter-spacing: -.015em;
+  }
+  .tagline { margin: 12px 0 0; color: var(--ink-2); max-width: 58ch; font-size: 16.5px; }
+  .contact {
+    margin: 16px 0 0; display: flex; flex-wrap: wrap; gap: 8px 20px;
+    font-family: var(--mono); font-size: 12.5px; letter-spacing: .02em;
+  }
+  .contact a { color: var(--accent); text-decoration: none; border-bottom: 1px solid transparent; }
+  .contact a:hover { border-bottom-color: var(--accent); }
+  .contact a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+
+  /* section heads */
+  h2 {
+    margin: 46px 0 0; font-family: var(--mono); font-size: 11.5px; font-weight: 700;
+    letter-spacing: .17em; text-transform: uppercase; color: var(--ink-3);
+    display: flex; align-items: center; gap: 14px;
+  }
+  h2::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+  .section-note { margin: 10px 0 0; color: var(--ink-3); font-size: 14px; max-width: 62ch; }
+
+  /* index rows */
+  .row {
+    display: grid; grid-template-columns: 1fr auto; gap: 6px 20px;
+    padding: 22px 0; border-bottom: 1px solid var(--line-2);
+  }
+  .row:first-of-type { border-top: 1px solid var(--line-2); margin-top: 18px; }
+  .row h3 { margin: 0; font-size: 20px; line-height: 1.25; letter-spacing: -.012em; font-weight: 620; }
+  .row h3 a { color: var(--ink); text-decoration: none; border-bottom: 1.5px solid var(--accent); }
+  .row h3 a:hover { color: var(--accent); }
+  .row h3 a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+  .desc { grid-column: 1 / -1; margin: 0; color: var(--ink-2); max-width: 66ch; font-size: 15.5px; }
+
+  .chip {
+    font-family: var(--mono); font-size: 10.5px; font-weight: 700; letter-spacing: .11em;
+    text-transform: uppercase; padding: 4px 10px; border-radius: 999px; white-space: nowrap;
+    align-self: start;
+  }
+  .chip-open { color: var(--open-fg); background: var(--open-bg); box-shadow: inset 0 0 0 1px currentColor; }
+  .chip-lock { color: var(--lock-fg); background: var(--lock-bg); box-shadow: inset 0 0 0 1px currentColor; }
+
+  .meta {
+    grid-column: 1 / -1; margin: 4px 0 0;
+    display: flex; flex-wrap: wrap; gap: 6px 16px;
+    font-family: var(--mono); font-size: 12px; color: var(--ink-3);
+    font-variant-numeric: tabular-nums;
+  }
+  .meta a { color: var(--ink-2); text-decoration: none; border-bottom: 1px solid var(--line); }
+  .meta a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+  .meta a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+  .locked h3 { color: var(--ink-2); }
+
+  footer {
+    margin-top: 56px; padding-top: 22px; border-top: 1px solid var(--line);
+    color: var(--ink-3); font-size: 13.5px; max-width: 66ch;
+  }
+  footer p { margin: 0 0 8px; }
+  footer a { color: var(--ink-2); }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+  @media (max-width: 520px) {
+    .row { grid-template-columns: 1fr; }
+    .chip { justify-self: start; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1 class="name">Matjaž Volkar</h1>
+    <p class="tagline">
+      Kazalo tega, kar imam na GitHubu. Orodja, dokumentacija in predstavitve.
+      Odprti projekti so dosegljivi vsem, zaklenjeni zahtevajo prijavo.
+    </p>
+    <nav class="contact">
+      <a href="https://github.com/matjazvolkar">github.com/matjazvolkar</a>
+      <a href="https://www.nevron.eu">nevron.eu</a>
+    </nav>
+  </header>
+
+  <h2>Odprto</h2>
+  <p class="section-note">Dosegljivo brez prijave. Naslov odpre delujočo stran, ne repozitorija.</p>
+
+  <article class="row">
+    <h3><a href="https://matjazvolkar.github.io/spektralni-rob/">Spektralni rob</a></h3>
+    <span class="chip chip-open">javno</span>
+    <p class="desc">
+      Preveri, ali je zvočna datoteka res lossless ali le prekodiran mp3, ki se za to izdaja.
+      Meri, kje se spekter konča in kako naglo, ker izgubni kodek pusti oster rob in tišino nad njim.
+      Analiza teče v brskalniku, datoteka se nikamor ne naloži.
+    </p>
+    <p class="meta">
+      <span>HTML · JavaScript · Python</span>
+      <span>avgust 2026</span>
+      <a href="https://github.com/matjazvolkar/spektralni-rob">koda</a>
+    </p>
+  </article>
+
+  <article class="row">
+    <h3><a href="https://matjazvolkar.github.io/nevron-ai-sdr/">Nevron AI SDR</a></h3>
+    <span class="chip chip-open">javno</span>
+    <p class="desc">
+      Dokumentacija sistema za hladno pridobivanje strank. Vodiči za postavitev kampanj,
+      zaporedja sporočil in delovni postopki.
+    </p>
+    <p class="meta">
+      <span>HTML</span>
+      <span>april 2026</span>
+      <a href="https://github.com/matjazvolkar/nevron-ai-sdr">koda</a>
+    </p>
+  </article>
+
+  <article class="row">
+    <h3><a href="https://matjazvolkar.github.io/hostfulness/promocijski-nacrt.html">Hostfulness</a></h3>
+    <span class="chip chip-open">javno</span>
+    <p class="desc">
+      Promocijski načrt za podcast Hostfulness.
+    </p>
+    <p class="meta">
+      <span>HTML</span>
+      <span>avgust 2026</span>
+      <a href="https://github.com/matjazvolkar/hostfulness">koda</a>
+    </p>
+  </article>
+
+  <article class="row">
+    <h3><a href="https://matjazvolkar.github.io/hotel-habakuk-presentation/habakuk-presentation.html">Hotel Habakuk</a></h3>
+    <span class="chip chip-open">javno</span>
+    <p class="desc">
+      Predstavitev za Hotel Habakuk, skupaj s pripadajočim poročilom.
+    </p>
+    <p class="meta">
+      <span>HTML</span>
+      <span>marec 2026</span>
+      <a href="https://matjazvolkar.github.io/hotel-habakuk-presentation/report.html">poročilo</a>
+      <a href="https://github.com/matjazvolkar/hotel-habakuk-presentation">koda</a>
+    </p>
+  </article>
+
+  <h2>Zaklenjeno</h2>
+  <p class="section-note">
+    Navedeno zaradi popolnosti seznama. Brez ustreznega dostopa se odpre prijavna stran
+    ali pa povezava vrne 404.
+  </p>
+
+  <article class="row locked">
+    <h3><a href="https://my-longevity.pages.dev/">my-longevity</a></h3>
+    <span class="chip chip-lock">zahteva prijavo</span>
+    <p class="desc">
+      Osebni pregled lastnih meritev skozi čas. Gostuje na Cloudflare Pages,
+      dostop je zaščiten s prijavo prek Cloudflare Access.
+    </p>
+    <p class="meta">
+      <span>HTML</span>
+      <span>avgust 2026</span>
+      <a href="https://my-longevity.pages.dev/">stran</a>
+    </p>
+  </article>
+
+  <article class="row locked">
+    <h3>nevron-sdr-private</h3>
+    <span class="chip chip-lock">zahteva prijavo</span>
+    <p class="desc">
+      Produkcijska koda in podatki sistema SDR. Delovna kopija, ločena od javne dokumentacije.
+    </p>
+    <p class="meta">
+      <span>Python</span>
+      <span>avgust 2026</span>
+    </p>
+  </article>
+
+  <article class="row locked">
+    <h3>anger-management-evidence-review</h3>
+    <span class="chip chip-lock">zahteva prijavo</span>
+    <p class="desc">Osebno gradivo. Zasebno.</p>
+    <p class="meta">
+      <span>HTML</span>
+      <span>avgust 2026</span>
+    </p>
+  </article>
+
+  <footer>
+    <p>Stran je statična in jo gosti GitHub Pages. Seznam se ne osvežuje sam, zato ga je ob novem projektu treba dopolniti.</p>
+    <p>Zaklenjeni projekti so navedeni z imenom, njihova vsebina pa ni dosegljiva brez dostopa do računa.</p>
+  </footer>
+
+</div>
+</body>
+</html>
