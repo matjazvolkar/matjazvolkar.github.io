@@ -457,7 +457,7 @@
 <div id="queues"></div>
 
 <h2>4. Trgi po tednih: mail accounti, LinkedIn profili, klicatelji</h2>
-<p>Vsaka vrstica je en vir, vsak stolpec en teden sezone (T1 = 31. 8. 2026). Barva pove scenarij, oznaka trg. Rdeča celica brez batcha Dream 100 pomeni dopolnilne dotike ostalim na označenem trgu: klicatelj kliče ostale, LinkedIn profil pošilja ostalim v Italiji.</p>
+<p>Vsaka vrstica je en vir, vsak stolpec en teden sezone (T1 = 31. 8. 2026). Barva pove scenarij, oznaka trg. Rdeča celica brez batcha Dream 100 pomeni dopolnilne dotike ostalim na označenem trgu: klicatelj kliče ostale, LinkedIn profil pošilja ostalim v Italiji, mail account z oznako USA pošilja single channel v ZDA (ob vklopljenem stikalu).</p>
 <div class="qleg"><i style="background:var(--sc-multi)"></i>Multichannel <i style="background:var(--sc-two)"></i>2-channel <i style="background:var(--sc-single)"></i>Single channel</div>
 <div id="weektable"></div>
 
@@ -1210,7 +1210,7 @@ function renderWeeks(G) {
   const cols = ["230px"]; groups.forEach((n, gi) => { for (let i = 0; i < n; i++) cols.push("minmax(22px, 1fr)"); if (gi < groups.length - 1) cols.push("8px"); });
   const doms = ["getnevron.com", "nevroncore.com", "trynevron.com"]; const people = ["Rok", "Matjaž", "Amadej", "Nina", "Gregor", "Simon"];
   const usaOn = !!($("#in_usa") && $("#in_usa").checked); const usedMails = new Set(G.all.map(b => b.acc && b.acc.mail).filter(Boolean));
-  const mailRows = []; MAILBOXES.forEach(a => { const free = !usedMails.has(a.mail); if (free && !usaOn) return; mailRows.push({ lab: a.who, sub: a.mail + (free ? " · USA" : ""), usa: free, test: b => b.acc && b.acc.mail === a.mail }); });
+  const mailRows = []; MAILBOXES.forEach(a => { const free = !usedMails.has(a.mail); if (free && !usaOn) return; mailRows.push({ lab: a.who, sub: a.mail + (free ? " · samo USA" : ""), mail: true, usa: free, test: b => b.acc && b.acc.mail === a.mail }); });
   [...usedMails].filter(m => m.startsWith("nov-account-")).sort().forEach(m => mailRows.push({ lab: "nov account", sub: m.replace("nov-account-", "dodatni ogreti account ") + " (ni še kupljen)", test: b => b.acc && b.acc.mail === m }));
   const liRows = Object.keys(G.liSlots).map(n => ({ lab: n, sub: "LinkedIn profil", li: true, test: b => b.li === n && b.nl > 0 }));
   const REG = { "Tomaž": "SI, HR, UAE, TN", "popold. IT": "Italija" };
@@ -1227,7 +1227,7 @@ function renderWeeks(G) {
       h += `<div class="lab">${r.lab}<small>${r.sub}</small></div>`;
       for (let w = 1; w <= W; w++) {
         const ws = (w - 1) * 5 + 1, we = w * 5; const act = G.all.filter(b => r.test(b) && b.start <= we && b.end >= ws);
-        if (r.usa) h += `<div class="c single" title="USA single channel mail">USA</div>`;
+        if (r.mail && usaOn && !act.length) h += `<div class="c single" title="USA single channel mail: account v tem tednu nima batcha za sedem trgov, prosta pošiljanja gredo v ZDA">USA</div>`;
         else if (!act.length) { const by = {}; for (let d = ws; d <= we; d++) { const L = G.load[d]; if (!L) continue; const src = r.caller ? (L.tuBy && L.tuBy[r.lab]) : (r.li ? (L.luBy && L.luBy[r.lab]) : null); if (src) Object.entries(src).forEach(([k, v]) => { by[k] = (by[k] || 0) + v; }); }
           const ks = Object.keys(by); if (ks.length) h += `<div class="c single" style="flex-direction:column;gap:1px" title="${r.caller ? "dopolnilni klici ostalim: " : "dopolnilni LinkedIn dotiki ostalim: "}${ks.map(k => k.toUpperCase() + " " + fmt(by[k])).join(", ")}">${ks.map(k => `<span>${k.toUpperCase()}</span>`).join("")}</div>`; else h += `<div class="c"></div>`; }
         else { const scn = act[0].scn; const trgs = [...new Set(act.map(b => b.mk.trg.toUpperCase()))]; h += `<div class="c ${scn}" style="flex-direction:column;gap:1px" title="${act.map(b => b.mk.ime + " B" + b.n + " (" + SCN[b.scn] + ")").join(", ")}">${trgs.map(t => `<span>${t}</span>`).join("")}</div>`; }
