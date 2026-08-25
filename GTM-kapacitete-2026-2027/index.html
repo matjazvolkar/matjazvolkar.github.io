@@ -384,7 +384,7 @@
   .gapc2 .row { display: flex; justify-content: space-between; font-size: 0.8rem; padding: 3px 0; border-bottom: 1px solid var(--line-2); }
   .gapc2 .row b { font-variant-numeric: tabular-nums; }
   .gapc2 .bar { height: 6px; border-radius: 3px; background: var(--line-2); overflow: hidden; margin: 2px 0 6px; } .gapc2 .bar i { display: block; height: 100%; }
-  .caprow { grid-template-columns: repeat(5, minmax(140px, 1fr)); }
+  .caprow { grid-template-columns: repeat(5, minmax(140px, 1fr)); } .tile.sum .v { color: var(--accent); font-size: 2.1rem; }
   @media (max-width: 800px) { .caprow { grid-template-columns: repeat(2, 1fr); } }
 
   /* ---------- v9 ---------- */
@@ -447,7 +447,7 @@
 <p class="small muted" id="c_need"></p>
 
 <h3 style="margin-top:26px">Stopnje sestankov po trgih in kanalih</h3>
-<p>Stopnje so iz objavljenih benchmarkov za mrzel B2B outbound v letu 2026. Kanalna osnova za evropski trg je 1,5 sestanka na 100 kontaktov po mailu, 2,0 po LinkedInu in 4,5 po telefonu, kombinacija vseh treh kanalov pa 3,5 do 6,0 sestanka na 100 kontaktov. Na to gresta dva popravka: <b>trg</b> (Evropa se odziva pri 7 do 10 %, ZDA pri okoli 5 %, Slovenija je med tremi državami z najvišjo stopnjo odgovora na svetu s prek 16 %) in <b>sloj</b> (Dream 100 z imenom odločevalca in raziskano personalizacijo proti široki listi; objavljeni razmik je 2,5 do 3-kraten, tu računamo z dvakratnim).</p>
+<p>Stopnje so iz benchmarkov za mrzel B2B outbound 2026: 1,5 sestanka na 100 kontaktov po mailu, 2,0 po LinkedInu, 4,5 po telefonu. Popravek po trgu (Slovenija visoko, ZDA nizko) in po sloju (Dream 100 dvakrat višje kot ostali).</p>
 <div id="bench"></div>
 
 <h2>3. Sekvence po batchih: trije scenariji</h2>
@@ -974,8 +974,11 @@ function renderCapacity(P, G) {
       <div class="tile ${r[0]} hot"><div class="v">${fmt(T[0])}</div><div class="l">pričakovanih sestankov v sezoni</div><div class="have">razpon ${fmt(T[1])} do ${fmt(T[2])} · ${na100.toFixed(1).replace(".", ",")} na 100 kontaktov · ${fmt(kon)} kontaktov v sezoni</div></div>
       <div class="tile ${r[0]} hot"><div class="v">${fmt(T[0] * WIN_RATE)}</div><div class="l">dobljenih projektov v sezoni</div><div class="have">razpon ${fmt(T[1] * WIN_RATE)} do ${fmt(T[2] * WIN_RATE)} · ob ${Math.round(WIN_RATE * 100)} % konverziji sestanka v projekt</div></div>
     </div>`;
-  }).join("");
-  $("#c_need").innerHTML = `Dejansko na dan je seštevek pošiljanj iz sekvenc v razdelku 3 za vse trge (povprečje prvega 15-dnevnega cikla). Sestanki se ne računajo iz kapacitete, ampak iz kontaktov, ki v sezoni res pridejo na vrsto, po stopnji vsakega trga posebej. Klici in LinkedIn so polni: na dnevih brez dotika Dream 100 klicatelj kliče telefonske kontakte ostalih (${fmt(tuT)} klicev v sezoni; bazen ostalih: ${tuPool}). Tomažev seznam ostalih ima le 500 telefonskih številk in ne zadošča za celo sezono, treba ga je dopolniti z novimi številkami. Prosti LinkedIn dotiki gredo ostalim v Italiji in Grčiji (${fmt(tuL)} kontaktov v sezoni). Dobljeni projekti so sestanki krat ${Math.round(WIN_RATE * 100)} % konverzija. Dodatni ogreti accounti prevzamejo zaostanek na Italiji in Grčiji; ko je bazen kontaktov obdelan pred koncem sezone, dodatni accounti sezono le skrajšajo in sestankov ne dvignejo. Več sestankov iz maila da samo nov bazen (stikalo USA) ali več LinkedIn profilov.`;
+  }).join("") + (() => { const T = MM.tot; const mid = T.e[0] + T.l[0] + T.t[0], lo = T.e[1] + T.l[1] + T.t[1], hi = T.e[2] + T.l[2] + T.t[2];
+    return `<h3 style="margin:14px 0 6px">Skupaj vsi kanali</h3><div class="tiles caprow"><div></div><div></div><div></div>
+      <div class="tile hot sum"><div class="v">${fmt(mid)}</div><div class="l">pričakovanih sestankov v sezoni</div><div class="have">razpon ${fmt(lo)} do ${fmt(hi)} · mail + LinkedIn + klici</div></div>
+      <div class="tile hot sum"><div class="v">${fmt(mid * WIN_RATE)}</div><div class="l">dobljenih projektov v sezoni</div><div class="have">razpon ${fmt(lo * WIN_RATE)} do ${fmt(hi * WIN_RATE)} · ob ${Math.round(WIN_RATE * 100)} % konverziji</div></div></div>`; })();
+  $("#c_need").innerHTML = `Dejansko na dan je seštevek pošiljanj iz razdelka 3. Sestanki so iz kontaktov, ki v sezoni pridejo na vrsto, po stopnji vsakega trga; klici in LinkedIn se na prostih dnevih dopolnijo z ostalimi (bazen ostalih: ${tuPool}). Projekti so sestanki krat ${Math.round(WIN_RATE * 100)} %.`;
   renderBench(MM, days);
 }
 
