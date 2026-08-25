@@ -470,6 +470,7 @@
   <div class="card"><label class="f">Klicateljev za Italijo</label><input type="number" id="q_caller_it" value="1" min="0"></div>
   <div class="card"><label class="f">Klicateljev za UAE, Tennessee</label><input type="number" id="q_caller_other" value="0" min="0"></div>
   <div class="card"><label class="f"><input type="checkbox" id="q_info" checked> E-info: maili na office/info, ko zmanjka direktnih</label></div>
+  <div class="card"><label class="f"><input type="checkbox" id="q_rest_mail" checked> Ostali v ICP pasu na IT, GR, UAE, TN: samo mail (LinkedIn in klici le za Dream 100)</label></div>
 </div>
 <div id="queues"></div>
 
@@ -813,6 +814,7 @@ function marketContacts(mk, P) {
   const rest = synth(Math.round(kO.dm), Math.round(kO.biz), Math.round(kO.li), Math.min(Math.round(kO.dm), Math.round(kO.mob + kO.office)), "rest");
   if (!m.kanali.email) { d100.forEach(c => { c.e = false; c.eo = false; }); rest.forEach(c => { c.e = false; c.eo = false; }); }
   if (!m.kanali.telefon) { d100.forEach(c => { c.m = false; c.o = false; }); rest.forEach(c => { c.m = false; c.o = false; }); }
+  if (qchk("#q_rest_mail") && !["si", "hr"].includes(mk.trg)) rest.forEach(c => { c.l = false; c.m = false; c.o = false; });
   return { d100, rest };
 }
 function grpOf(c, useInfo) { const e = c.e, tel = c.m || c.o; const n = (e ? 1 : 0) + (c.l ? 1 : 0) + (tel ? 1 : 0); if (n === 3) return 1; if (c.l && tel && !e) return 2; if (n === 2) return 3; if (n === 1) return 4; return (useInfo && c.eo) ? 4 : 5; }
