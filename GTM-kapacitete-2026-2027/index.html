@@ -657,6 +657,7 @@ function renderMirror(P) {
   h += `<div class="mrow total">${side({ D: tot.D, O: tot.O }, "O", "left")}${mid("Vsi trgi", rows.length + " trgov skupaj")}${side({ D: tot.D, O: tot.O }, "D", "right")}</div>`;
   $("#mirror").innerHTML = h + "</div>";
   const T7 = trgi(); const nT = T7.length; const kontaktov = tot.D.mail + tot.O.mail + tot.D.li + tot.O.li + tot.D.tel + tot.O.tel;
+  HERO_BASE = { nT, names: T7.map(x => x.ime.replace("Združeni arabski emirati", "UAE").replace(" (ZDA)", "")).join(", "), kontaktov, hot: tot.D.hot + tot.O.hot, mail: tot.D.mail + tot.O.mail, li: tot.D.li + tot.O.li, tel: tot.D.tel + tot.O.tel };
   $("#hero").innerHTML = [
     ["", nT, "trgov", T7.map(x => x.ime.replace("Združeni arabski emirati", "UAE").replace(" (ZDA)", "")).join(", ")],
     ["", 3, "outreach kanali", "mail, LinkedIn, telefon"],
@@ -1242,6 +1243,14 @@ function renderWeeks(G) {
 // ---------- USA single channel mail ----------
 const USA_FIT = { A: ["California", "Florida", "Hawaii", "Colorado", "Arizona", "Tennessee", "South Carolina", "North Carolina", "Utah", "Oregon", "Washington", "Vermont", "Maine", "New Mexico", "Montana", "Wyoming", "Louisiana", "Georgia", "Virginia", "New York", "Massachusetts"], B: ["Texas", "Nevada", "Illinois", "Pennsylvania", "Maryland", "New Jersey", "Michigan", "Minnesota", "Wisconsin", "Ohio", "Missouri", "District of Columbia", "Idaho", "Alaska", "Rhode Island", "New Hampshire", "Connecticut", "Delaware", "Kentucky", "Alabama", "Mississippi"] };
 function usaFit(st) { return USA_FIT.A.includes(st) ? "A" : (USA_FIT.B.includes(st) ? "B" : "C"); }
+let HERO_BASE = null;
+// glava: ob vklopu USA se stevilo trgov in kontaktov vse skupaj poveca za izbrane preverjene maile v ZDA
+function updateHero(U) {
+  const H = HERO_BASE; if (!H) return; const tiles = $("#hero").querySelectorAll(".tile"); if (tiles.length < 5) return;
+  const add = U ? U.selVer : 0, nT = H.nT + (U ? 1 : 0);
+  tiles[0].innerHTML = `<div class="v">${nT}</div><div class="l">trgov</div><div class="have">${H.names}${U ? ", ZDA" : ""}</div>`;
+  tiles[3].innerHTML = `<div class="v">${fmt(H.kontaktov + add)}</div><div class="l">kontaktov vse skupaj</div><div class="have">${fmt(H.hot)} hotelov · ${fmt(H.mail + add)} mailov${U ? " (od tega ZDA " + fmt(add) + ")" : ""} · ${fmt(H.li)} LinkedIn · ${fmt(H.tel)} telefonov</div>`;
+}
 function usaPlan(P, G) {
   if (!DATA.usa) return null;
   const act = G.actual; const days = weeksBetween(new Date(2026, 7, 31), new Date(2027, 3, 30)) * 5;
@@ -1260,8 +1269,8 @@ function renderUSA(P, G) {
   ["apollo_kupi_namen", "apollo_skupno_namen"].forEach(id => { const el = $("#" + id); if (el) el.textContent = el.dataset.base; });
   if ($("#sloji_tag")) $("#sloji_tag").textContent = (usaOn ? nT + 1 : nT) + " trgov"; if ($("#sloji_usa")) $("#sloji_usa").innerHTML = "";
   if ($("#ctx_h2")) $("#ctx_h2").textContent = (usaOn ? "9" : "8") + ". Kontekst novih trgov, viri in metoda";
-  if (!DATA.usa || !usaOn) { return; }
-  const act = G.actual; const U = G.usaPlan || usaPlan(P, G); const { days, capE, free, need, freeAcc, rows, sel, selVer } = U;
+  if (!DATA.usa || !usaOn) { updateHero(null); return; }
+  const act = G.actual; const U = G.usaPlan || usaPlan(P, G); updateHero(U); const { days, capE, free, need, freeAcc, rows, sel, selVer } = U;
   const totVer = rows.reduce((a, r) => a + r.ver, 0), totSmall = rows.reduce((a, r) => a + r.small, 0);
   $("#usa_tiles").innerHTML = [["email cap", fmt(free), "prostih pošiljanj na dan", capE + " možnih minus " + act.e + " dejanskih na sedmih trgih"], ["email act", fmt(need), "kontaktov, ki jih prosti pipeline zmore v sezoni", days + " delovnih dni / 5 mailov na kontakt"], ["email", fmt(totVer), "odločevalcev v hotelih ZDA s preverjenim mailom", fmt(totSmall) + " v podjetjih z 11 do 200 zaposlenimi"], ["email hot", sel, "izbranih zveznih držav", fmt(selVer) + " preverjenih mailov"]].map(t => `<div class="tile ${t[0]}"><div class="v">${t[1]}</div><div class="l">${t[2]}</div><div class="have">${t[3]}</div></div>`).join("");
   let h = `<thead><tr><th class="l">Zvezna država</th><th>Razred</th><th>Odločevalcev v hotelih</th><th class="ch email"><i class="dot"></i>S preverjenim mailom</th><th>11 do 200 zaposlenih</th><th>Kumulativno</th><th class="l">Izbor</th></tr></thead><tbody>`;
