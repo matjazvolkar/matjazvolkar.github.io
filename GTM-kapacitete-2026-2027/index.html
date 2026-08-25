@@ -457,7 +457,7 @@
 <div id="queues"></div>
 
 <h2>4. Trgi po tednih: mail accounti, LinkedIn profili, klicatelji</h2>
-<p>Vsaka vrstica je en vir, vsak stolpec en teden sezone (T1 = 31. 8. 2026). Barva pove scenarij, oznaka trg. Klicatelj v tednu brez batcha Dream 100 kliče ostale (oznaka "ostali"), LinkedIn profil brez batcha pošilja ostalim v Italiji in Grčiji.</p>
+<p>Vsaka vrstica je en vir, vsak stolpec en teden sezone (T1 = 31. 8. 2026). Barva pove scenarij, oznaka trg. Rdeča celica brez batcha Dream 100 pomeni dopolnilne dotike ostalim na označenem trgu: klicatelj kliče ostale, LinkedIn profil pošilja ostalim v Italiji.</p>
 <div class="qleg"><i style="background:var(--sc-multi)"></i>Multichannel <i style="background:var(--sc-two)"></i>2-channel <i style="background:var(--sc-single)"></i>Single channel</div>
 <div id="weektable"></div>
 
@@ -1124,7 +1124,7 @@ function globalPlan(P) {
     const pool = pools.reduce((a, p) => a + p.n, 0); topup[cn] = { pool, used: 0, byTrg: {}, rounds: 0 }; if (!pool) return;
     let pi = 0, leftIn = pools[0].n;
     for (let d = 1; d <= SEASON; d++) { const dayLoad = all.filter(b => b.caller === cn && b.scn === "multi" && b.start && b.start <= d && b.end >= d && SEQ14[d - b.start][0] === "t").reduce((a, b) => a + b.nt, 0); let gap = Math.max(0, cfg.calls - dayLoad);
-      while (gap > 0) { const add = Math.min(gap, leftIn); const trg = pools[pi].trg; if (topup[cn].rounds === 0) topup[cn].byTrg[trg] = (topup[cn].byTrg[trg] || 0) + add; topup[cn].used += add; load[d].t += add; load[d].tu = (load[d].tu || 0) + add; gap -= add; leftIn -= add;
+      while (gap > 0) { const add = Math.min(gap, leftIn); const trg = pools[pi].trg; if (topup[cn].rounds === 0) topup[cn].byTrg[trg] = (topup[cn].byTrg[trg] || 0) + add; topup[cn].used += add; load[d].t += add; load[d].tu = (load[d].tu || 0) + add; load[d].tuBy = load[d].tuBy || {}; load[d].tuBy[cn] = load[d].tuBy[cn] || {}; load[d].tuBy[cn][trg] = (load[d].tuBy[cn][trg] || 0) + add; gap -= add; leftIn -= add;
         if (leftIn <= 0) { pi++; if (pi >= pools.length) { pi = 0; topup[cn].rounds++; } leftIn = pools[pi].n; } } } });
   // dopolnilni LinkedIn dotiki: vsak profil na vsakem dnevu z manj kot 25 dotiki iz batchev doda single channel LinkedIn dotike
   // ostalim v Italiji in Grciji (5 dotikov na kontakt v 14 dneh)
@@ -1134,7 +1134,7 @@ function globalPlan(P) {
   const liTopup = {}; let lpi = 0, lleft = liPools.length ? liPools[0].n : 0;
   Object.keys(liSlots).forEach(n => liTopup[n] = { used: 0, touches: 0, byTrg: {} });
   for (let d = 1; d <= SEASON && liPools.length && lpi < liPools.length; d++) { for (const n of Object.keys(liSlots)) { let gap = Math.max(0, cfg.li - liLoad[n][d]); if (!gap || lpi >= liPools.length) continue;
-      const kont = Math.min(gap / 5, lleft); const trg = liPools[lpi].trg; liTopup[n].byTrg[trg] = (liTopup[n].byTrg[trg] || 0) + kont; liTopup[n].used += kont; liTopup[n].touches += gap; load[d].msg += gap; load[d].lu = (load[d].lu || 0) + gap; lleft -= kont;
+      const kont = Math.min(gap / 5, lleft); const trg = liPools[lpi].trg; liTopup[n].byTrg[trg] = (liTopup[n].byTrg[trg] || 0) + kont; liTopup[n].used += kont; liTopup[n].touches += gap; load[d].msg += gap; load[d].lu = (load[d].lu || 0) + gap; load[d].luBy = load[d].luBy || {}; load[d].luBy[n] = load[d].luBy[n] || {}; load[d].luBy[n][trg] = (load[d].luBy[n][trg] || 0) + gap; lleft -= kont;
       if (lleft <= 0.001) { lpi++; lleft = lpi < liPools.length ? liPools[lpi].n : 0; } } }
   const topupTotal = Object.values(topup).reduce((a, x) => a + x.used, 0); const liTopupTotal = Object.values(liTopup).reduce((a, x) => a + x.used, 0);
   markets.forEach(M => { M.lastD100 = M.bD.length ? Math.max(...M.bD.map(b => b.end)) : null; M.last = M.B.length ? Math.max(...M.B.map(b => b.end)) : null; });
@@ -1186,7 +1186,7 @@ function renderWeeks(G) {
   const usaOn = !!($("#in_usa") && $("#in_usa").checked); const usedMails = new Set(G.all.map(b => b.acc && b.acc.mail).filter(Boolean));
   const mailRows = []; people.forEach(w => { const accsW = doms.map(d => ACC(w, d)); if (w === "Matjaž") accsW.push({ who: "Matjaž", mail: "sales@nevron.net" }); accsW.forEach(a => { const free = !usedMails.has(a.mail); if (free && !usaOn) return; mailRows.push({ lab: w, sub: a.mail + (free ? " · USA" : ""), usa: free, test: b => b.acc && b.acc.mail === a.mail }); }); });
   const liRows = Object.keys(G.liSlots).map(n => ({ lab: n, sub: "LinkedIn profil", li: true, test: b => b.li === n && b.nl > 0 }));
-  const callRows = [["Tomaž", "Slovenija, Hrvaška, UAE, Tennessee, Grčija"], ["popold. IT", "Italija"]].filter(x => G.callerOk[x[0]]).map(x => ({ lab: x[0], sub: "klicatelj · " + x[1], caller: true, test: b => b.caller === x[0] && b.scn === "multi" && b.nt > 0 }));
+  const callRows = [["Tomaž", "SI, HR, UAE, TN"], ["popold. IT", "Italija"]].filter(x => G.callerOk[x[0]]).map(x => ({ lab: x[0], sub: "klicatelj · " + x[1], caller: true, test: b => b.caller === x[0] && b.scn === "multi" && b.nt > 0 }));
   const MESECI = ["januar", "februar", "marec", "april", "maj", "junij", "julij", "avgust", "september", "oktober", "november", "december"];
   let h = `<div class="wg" style="grid-template-columns:${cols.join(" ")}"><div></div>`;
   // meseci: teden pripada mesecu svojega ponedeljka
@@ -1200,8 +1200,8 @@ function renderWeeks(G) {
       for (let w = 1; w <= W; w++) {
         const ws = (w - 1) * 5 + 1, we = w * 5; const act = G.all.filter(b => r.test(b) && b.start <= we && b.end >= ws);
         if (r.usa) h += `<div class="c single" title="USA single channel mail">USA</div>`;
-        else if (!act.length) { let tu = 0, lu = 0; for (let d = ws; d <= we; d++) { if (r.caller && G.load[d]) tu += G.load[d].tu || 0; if (r.li && G.load[d]) lu += G.load[d].lu || 0; }
-          if (r.caller && tu > 0) h += `<div class="c single" title="dopolnilni klici ostalim">ostali</div>`; else if (r.li && lu > 0) h += `<div class="c single" title="dopolnilni LinkedIn dotiki ostalim v Italiji in Grčiji">IT GR</div>`; else h += `<div class="c"></div>`; }
+        else if (!act.length) { const by = {}; for (let d = ws; d <= we; d++) { const L = G.load[d]; if (!L) continue; const src = r.caller ? (L.tuBy && L.tuBy[r.lab]) : (r.li ? (L.luBy && L.luBy[r.lab]) : null); if (src) Object.entries(src).forEach(([k, v]) => { by[k] = (by[k] || 0) + v; }); }
+          const ks = Object.keys(by); if (ks.length) h += `<div class="c single" style="flex-direction:column;gap:1px" title="${r.caller ? "dopolnilni klici ostalim: " : "dopolnilni LinkedIn dotiki ostalim: "}${ks.map(k => k.toUpperCase() + " " + fmt(by[k])).join(", ")}">${ks.map(k => `<span>${k.toUpperCase()}</span>`).join("")}</div>`; else h += `<div class="c"></div>`; }
         else { const scn = act[0].scn; const trgs = [...new Set(act.map(b => b.mk.trg.toUpperCase()))]; h += `<div class="c ${scn}" style="flex-direction:column;gap:1px" title="${act.map(b => b.mk.ime + " B" + b.n + " (" + SCN[b.scn] + ")").join(", ")}">${trgs.map(t => `<span>${t}</span>`).join("")}</div>`; }
         if ((w === 10 || w === 20 || w === 30) && w < W) h += `<div class="gapc"></div>`;
       }
