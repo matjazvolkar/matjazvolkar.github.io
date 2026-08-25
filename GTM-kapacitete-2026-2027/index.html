@@ -1,0 +1,679 @@
+<!doctype html>
+<html lang="sl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>GTM kapacitete 2026-2027</title>
+<meta name="description" content="Nevron: koliko hotelov in kontaktov je na sedmih trgih in kako jih obdelati z danimi mailboxi, LinkedIn profili in prodajalci do 30. 4. 2027.">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2000 2000'><rect width='2000' height='2000' rx='340' fill='%23000126'/><path fill='%231B92FF' d='M1681.3,693.4h197.8V98.8h-594.7v197.8h396.9V693.4z M296.7,1284.3H98.9V1879h594.7v-197.8H296.7V1284.3z'/><path fill='%231B92FF' d='M1879.1,1284.3h-197.8v310.2L296.7,98.8H98.9v594.7h197.8V381.6L1681.3,1879h197.8L1879.1,1284.3z'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<style>
+  /* ============================================================
+     Nevron brand styling. Barve, tipografija in razmiki iz
+     nevron-tokens.css. Imena spremenljivk, ki jih bere JS,
+     ostajajo nespremenjena.
+     ============================================================ */
+  *, *::before, *::after { box-sizing: border-box; }
+  :root {
+    /* Nevron paleta */
+    --n-m1: #000126; --n-m2: #002391; --n-m3: #1B92FF; --n-m4: #73C7FF; --n-m5: #C3E9FF; --n-m6: #E1F4FF;
+    --n-s1: #080C13; --n-s2: #353941; --n-s3: #707379; --n-s4: #B4B6B9; --n-s5: #E0E1E2; --n-s6: #EFF0F0;
+    --n-red: #DA2025; --n-orange: #E56600; --n-yellow: #F6A900; --n-green: #36A058; --n-white: #FFFFFF;
+
+    /* Povrsine in crnilo: temna tema (Nevron M1 navy), edina tema strani */
+    --bg: #000126;
+    --surface: #071034;
+    --surface-2: #0C1745;
+    --line: #223066;
+    --line-2: #17224F;
+    --ink: #FFFFFF;
+    --ink-2: #C2CCE6;
+    --ink-3: #8C97BC;
+    --accent: #73C7FF;
+    --accent-ink: #73C7FF;
+    --accent-soft: #0E1C4E;
+    --logo-ink: #FFFFFF;
+
+    /* Kanali: modra = Email, oranzna = LinkedIn, zelena = Telefon */
+    --email: #1B92FF; --li: #E56600; --tel: #36A058;
+    --email-deep: #0A6FD6; --li-deep: #B34F00; --tel-deep: #237A42;
+    --tail-email: #24528F; --tail-li: #7A4A1C; --tail-tel: #266044;
+
+    /* Pomen */
+    --warn-bg: #3B2B0C; --warn-fg: #F6C877;
+    --bad-bg: #3C1417; --bad-fg: #FF9E99;
+    --good-bg: #0F2E1F; --good-fg: #7FD9A3;
+
+    --mono: ui-monospace, "Cascadia Mono", "SF Mono", Menlo, Consolas, monospace;
+    --sans: "Neue Haas Unica", "Inter", "Helvetica Neue", Arial, sans-serif;
+    --serif: var(--sans);
+
+    --r-sm: 4px; --r-md: 8px; --r-lg: 12px; --r-pill: 999px;
+    --sh-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+    --sh-md: 0 4px 12px -6px rgba(0, 0, 0, 0.6);
+    --sh-lg: 0 12px 28px -10px rgba(0, 0, 0, 0.7);
+  }
+
+  /* ---------- osnova ---------- */
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--sans); font-size: 16px; line-height: 1.5;
+    -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+  }
+  main { max-width: 1240px; margin: 0 auto; padding: 2rem 1.25rem 5rem; }
+  h1 { font-family: var(--sans); font-weight: 700; font-size: 2.25rem; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 0.25rem; }
+  h2 {
+    position: relative; font-family: var(--sans); font-weight: 700; font-size: 1.75rem; line-height: 1.2;
+    letter-spacing: -0.015em; margin: 3rem 0 0.75rem; padding-top: 1.25rem; border-top: 1px solid var(--line);
+  }
+  h2::before { content: ""; position: absolute; top: -2px; left: 0; width: 56px; height: 3px; background: var(--accent); border-radius: 0 0 2px 2px; }
+  h3 { font-family: var(--sans); font-weight: 600; font-size: 1.125rem; line-height: 1.3; margin: 1.5rem 0 0.5rem; }
+  p { max-width: 72ch; }
+  .sub { color: var(--ink-2); font-size: 1.125rem; line-height: 1.6; margin: 0 0 1.5rem; }
+  .muted { color: var(--ink-3); }
+  .small { font-size: 0.85rem; }
+  .mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+  a { color: var(--accent-ink); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  a:hover { color: var(--accent); }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+
+  /* ---------- glava z znakom ---------- */
+  .brandbar {
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    padding-bottom: 1.25rem; margin-bottom: 1.75rem; border-bottom: 1px solid var(--line);
+  }
+  .brandbar__logo { display: inline-flex; color: var(--logo-ink); }
+  .brandbar__logo svg { display: block; width: 148px; height: auto; }
+  .brandbar__meta { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); }
+  .kicker {
+    display: inline-flex; align-items: center; gap: 0.5rem; margin: 0 0 0.5rem;
+    font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-ink);
+  }
+  .kicker::before { content: ""; width: 20px; height: 2px; background: var(--accent); border-radius: 2px; }
+
+  /* ---------- kartice in mreze ---------- */
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 1.125rem 1.25rem; box-shadow: var(--sh-sm); }
+  .card--scroll { overflow-x: auto; }
+  .grid { display: grid; gap: 1rem; }
+  .g5 { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+  .g3 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+
+  /* ---------- vnosna polja ---------- */
+  label.f { display: block; font-size: 0.8rem; font-weight: 600; color: var(--ink-2); margin-bottom: 0.375rem; }
+  input[type=number], input[type=date], select {
+    width: 100%; min-height: 44px; font: inherit; font-family: var(--sans); font-variant-numeric: tabular-nums;
+    padding: 0.5rem 0.75rem; border: 1px solid var(--line); border-radius: var(--r-md);
+    background: var(--surface); color: var(--ink); transition: border-color 150ms ease, box-shadow 150ms ease;
+  }
+  input[type=number]:hover, input[type=date]:hover, select:hover { border-color: var(--n-s4); }
+  input[type=number]:focus, input[type=date]:focus, select:focus {
+    outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(27, 146, 255, 0.22);
+  }
+  input[type=checkbox] { accent-color: var(--accent); transform: scale(1.15); margin-right: 6px; }
+  .hint { font-size: 0.78rem; line-height: 1.45; color: var(--ink-3); margin-top: 0.375rem; }
+  details { border: 1px solid var(--line); border-radius: var(--r-lg); padding: 0.75rem 1.25rem; background: var(--surface); margin-top: 1rem; box-shadow: var(--sh-sm); }
+  details[open] { padding-bottom: 1rem; }
+  summary { cursor: pointer; font-weight: 600; color: var(--ink); padding: 0.25rem 0; }
+  summary:hover { color: var(--accent-ink); }
+
+  /* ---------- ploscice ---------- */
+  .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.75rem; margin: 1rem 0; }
+  .tile { background: var(--surface); border: 1px solid var(--line); border-top: 4px solid var(--line); border-radius: var(--r-lg); padding: 0.875rem 1rem; box-shadow: var(--sh-sm); }
+  .tile .v { font-family: var(--sans); font-weight: 700; font-size: 1.75rem; line-height: 1.1; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; color: var(--ink); }
+  .tile .l { font-size: 0.8rem; line-height: 1.4; color: var(--ink-2); margin-top: 0.375rem; }
+  .tile.email { border-top-color: var(--email); } .tile.li { border-top-color: var(--li); } .tile.tel { border-top-color: var(--tel); }
+
+  /* ---------- tabele ---------- */
+  .tw { overflow-x: auto; margin: 0.625rem 0 1.25rem; border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--surface); box-shadow: var(--sh-sm); }
+  table { border-collapse: collapse; width: 100%; font-size: 0.86rem; }
+  th, td { padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--line-2); text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  th { color: var(--ink-2); font-weight: 600; background: var(--surface-2); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 1; }
+  th:first-child, td:first-child { text-align: left; }
+  td.l, th.l { text-align: left; }
+  tbody tr:not(.sec):not(.sum):hover > td { background: var(--accent-soft); }
+  tr.sum td { font-weight: 600; background: var(--surface-2); border-top: 2px solid var(--line); }
+  tr.sec td { background: var(--accent-soft); color: var(--ink-2); font-weight: 600; text-align: left; letter-spacing: 0.01em; }
+
+  /* ---------- oznake ---------- */
+  .tag { display: inline-block; font-size: 0.72rem; font-weight: 600; padding: 2px 8px; border-radius: var(--r-pill); border: 1px solid var(--line); color: var(--ink-2); background: var(--surface); margin-left: 6px; vertical-align: middle; }
+  .tag.act { background: var(--good-bg); color: var(--good-fg); border-color: transparent; }
+  .tag.est { background: var(--warn-bg); color: var(--warn-fg); border-color: transparent; }
+  .tag.off { background: var(--bad-bg); color: var(--bad-fg); border-color: transparent; }
+
+  /* ---------- legenda ---------- */
+  .legend { display: flex; flex-wrap: wrap; align-items: center; gap: 0.875rem; font-size: 0.82rem; color: var(--ink-2); margin: 0.5rem 0 0.75rem; }
+  .legend span::before {
+    content: ""; display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px;
+    background: var(--c); box-shadow: inset 0 0 0 1px rgba(0, 1, 38, 0.18);
+  }
+  .legend span.tag::before { display: none; }
+  .sw-email { --c: var(--email); } .sw-li { --c: var(--li); } .sw-tel { --c: var(--tel); }
+  .sw-temail { --c: var(--tail-email); } .sw-tli { --c: var(--tail-li); } .sw-ttel { --c: var(--tail-tel); }
+
+  /* ---------- grafi ---------- */
+  svg text { font-family: var(--sans); fill: var(--ink-2); }
+  /* Inter je nekoliko sirsi od sistemske pisave: oznake vrstic v ganttu ostanejo v svojem stolpcu */
+  svg text[font-size="11"] { font-size: 10.4px; letter-spacing: -0.01em; }
+  svg text[font-size="10"] { font-size: 9.6px; letter-spacing: -0.01em; }
+  .bar { cursor: help; }
+  .gantt { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 0.625rem; box-shadow: var(--sh-sm); }
+  .scen { margin-top: 1.25rem; }
+  .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 0.75rem; margin: 0.75rem 0 1rem; }
+  .kpi { border: 1px solid var(--line); border-radius: var(--r-md); padding: 0.625rem 0.875rem; background: var(--surface-2); color: var(--ink-2); font-size: 0.86rem; line-height: 1.4; }
+  .kpi b { font-family: var(--sans); font-weight: 700; font-size: 1.2rem; letter-spacing: -0.01em; font-variant-numeric: tabular-nums; color: var(--ink); display: block; margin-top: 0.25rem; }
+  .ok { color: var(--good-fg); } .bad { color: var(--bad-fg); } .warn { color: var(--warn-fg); }
+
+  /* ---------- opozorila in priporocilo ---------- */
+  .note { background: var(--warn-bg); color: var(--warn-fg); border-left: 3px solid var(--n-orange); border-radius: var(--r-md); padding: 0.625rem 0.875rem; font-size: 0.88rem; margin: 0.625rem 0; }
+  .rec { background: var(--accent-soft); color: var(--ink); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: var(--r-lg); padding: 1rem 1.25rem; margin: 1rem 0; }
+  .rec p { color: inherit; }
+  .rec h3 { color: var(--ink); }
+  ul { padding-left: 1.25rem; } li { margin: 0.1875rem 0; }
+
+  /* ---------- dnevna mreza ---------- */
+  .day { display: grid; grid-template-columns: 210px repeat(15, 1fr); gap: 2px; min-width: 660px; font-size: 0.74rem; align-items: center; }
+  .day .h { color: var(--ink-3); font-weight: 600; text-align: center; }
+  .day .n { color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 6px; }
+  .day .c { height: 24px; border-radius: var(--r-sm); background: var(--line-2); display: flex; align-items: center; justify-content: center; color: #FFFFFF; font-family: var(--mono); font-weight: 600; font-size: 0.7rem; }
+  .day .c.e { background: var(--email-deep); } .day .c.p { background: var(--li-deep); } .day .c.t { background: var(--tel-deep); }
+  .day .tot { background: var(--surface-2); color: var(--ink); font-family: var(--mono); font-size: 0.72rem; text-align: center; padding: 3px 0; border-radius: var(--r-sm); border: 1px solid var(--line); }
+
+  /* ---------- namig ---------- */
+  .tip {
+    position: fixed; pointer-events: none; background: var(--n-m1); color: var(--n-white);
+    font-size: 0.78rem; line-height: 1.4; padding: 0.5rem 0.625rem; border-radius: var(--r-md);
+    border: 1px solid rgba(255, 255, 255, 0.14); box-shadow: var(--sh-lg); display: none; z-index: 9; max-width: 320px;
+  }
+
+  footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--line); color: var(--ink-3); font-size: 0.8rem; }
+
+  /* ---------- odzivnost ---------- */
+  @media (max-width: 767px) {
+    main { padding: 1.5rem 1rem 4rem; }
+    h1 { font-size: 1.75rem; }
+    h2 { font-size: 1.375rem; margin-top: 2.5rem; }
+    .sub { font-size: 1rem; }
+    .brandbar__logo svg { width: 116px; }
+    .brandbar__meta { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+
+  /* ---------- v2: sklopi, ogledalo, sticky ---------- */
+  .tw.sticky { max-height: 82vh; overflow: auto; }
+  .tw.sticky thead th { position: sticky; top: 0; z-index: 2; }
+  .tw.sticky th:first-child, .tw.sticky td:first-child { position: sticky; left: 0; z-index: 1; background: var(--surface); }
+  .tw.sticky thead th:first-child { z-index: 3; background: var(--surface-2); }
+  tr.blk td { background: var(--accent-soft); color: var(--ink); font-weight: 700; text-align: left; letter-spacing: 0.02em; text-transform: uppercase; font-size: 0.74rem; padding-top: 10px; }
+  tr.blk td:first-child { background: var(--accent-soft); }
+  tr.key td { font-weight: 700; color: var(--ink); font-size: 0.95rem; }
+  tr.sub td:first-child { padding-left: 26px; color: var(--ink-2); }
+  .mirror { display: grid; gap: 14px; margin: 14px 0; }
+  .mrow { display: grid; grid-template-columns: 1fr 150px 1fr; gap: 10px; align-items: stretch; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 14px 16px; }
+  .mrow .mid { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; border-left: 1px solid var(--line); border-right: 1px solid var(--line); padding: 0 8px; }
+  .mrow .mid .t { font-weight: 700; font-size: 1.05rem; }
+  .mrow .mid .s { font-size: 0.78rem; color: var(--ink-3); margin-top: 4px; }
+  .side { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .side.left { direction: rtl; } .side.left > * { direction: ltr; }
+  .stat { padding: 6px 8px; border-radius: var(--r-md); background: var(--surface-2); }
+  .stat .v { font-weight: 700; font-size: 1.55rem; line-height: 1.1; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+  .stat .l { font-size: 0.72rem; color: var(--ink-3); margin-top: 2px; }
+  .stat .b { height: 5px; border-radius: 3px; background: var(--line-2); margin-top: 6px; overflow: hidden; }
+  .stat .b i { display: block; height: 100%; background: var(--c, var(--accent)); }
+  .stat.hot { --c: var(--accent); } .stat.email { --c: var(--email); } .stat.li { --c: var(--li); } .stat.tel { --c: var(--tel); }
+  .mhead { display: grid; grid-template-columns: 1fr 150px 1fr; gap: 10px; padding: 0 16px; font-weight: 700; font-size: 0.85rem; color: var(--ink-2); text-transform: uppercase; letter-spacing: 0.04em; }
+  .mhead .r { text-align: right; }
+  .mrow.total { border-color: var(--accent); background: var(--accent-soft); }
+  .mrow.total .stat { background: var(--surface); }
+  .tile .have { font-size: 0.78rem; color: var(--ink-3); margin-top: 2px; }
+  .tile .v.bad { color: var(--bad-fg); } .tile .v.ok { color: var(--good-fg); }
+  @media (max-width: 900px) { .mrow, .mhead { grid-template-columns: 1fr; } .mrow .mid { border: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 8px 0; } .side { grid-template-columns: repeat(2, 1fr); } .side.left { direction: ltr; } }
+</style>
+</head>
+<body>
+<main>
+<header class="brandbar">
+  <span class="brandbar__logo">
+    <svg viewBox="0 0 960 276.9" role="img" aria-label="Nevron" fill="currentColor">
+      <path d="M244.3,93.9h30.5V2.1h-91.8v30.5h61.3v61.3ZM30.5,185.1H0v91.8h91.8v-30.5H30.5v-61.3ZM274.8,185.1h-30.5v47.9L30.5,2.1H0v91.8h30.5v-48.2l213.7,231.1h30.5l.1-91.7Z"/>
+      <path d="M467.4,0c-15.3,0-25.3,7.5-29.8,16.7V2.1h-25.4v91.8h25.4v-53c0-13.5,8.2-20.2,19.1-20.2s16.1,6,16.1,18.4v54.7h25.4v-58.4c.1-24.5-12.7-35.4-30.8-35.4ZM557.3,0c-26.7,0-47.2,18.8-47.2,47.7v1.4c0,29.3,20.2,46.7,47.9,46.7,25.1,0,40.9-11.1,43.9-30.9h-24c-1.6,7.7-7.4,12.8-19.1,12.8-13.9,0-22.1-8.8-22.8-24h66.2v-7c-.1-32.8-21.2-46.7-44.9-46.7ZM536.3,38.1c1.9-13,9.7-20.5,21.1-20.5,12.1,0,19.1,6.7,20,20.5h-41.1ZM813.3,0c-27.5,0-48.4,18.8-48.4,47.6v1.4c0,28.6,20.9,46.8,48.3,46.8s48.4-18.4,48.4-47.4v-1.4c-.1-28.6-20.8-47-48.3-47ZM835.7,48.6c0,17.4-8.2,27.9-22.5,27.9s-22.5-10.5-22.5-28.1v-1.4c0-17.5,8.4-27.7,22.5-27.7s22.5,10.5,22.5,28.1v1.2ZM929.1,0c-15.3,0-25.3,7.5-29.8,16.7V2.1h-25.4v91.8h25.4v-53c0-13.5,8.2-20.2,19.1-20.2s16.1,6,16.1,18.4v54.7h25.5v-58.4c0-24.5-12.8-35.4-30.9-35.4ZM730.6,19.7V2.1h-25.4v91.8h25.4v-46c0-17.5,10.9-23.7,29.7-23.5V.7c-14.9.2-23.9,6.7-29.7,19ZM650.9,67.7l-21.9-65.6h-27.2l33.5,91.8h28.6L697.2,2.1h-24.6l-21.7,65.6Z"/>
+    </svg>
+  </span>
+  <span class="brandbar__meta">Interno gradivo</span>
+</header>
+<p class="kicker">Interna analiza</p>
+<h1>GTM kapacitete 2026-2027</h1>
+<p class="sub">Sedem trgov, tri kanale, ena prodajna sezona do 30. 4. 2027. Koliko odločevalcev lahko dosežemo, koliko sekvenc rabimo in kje zmanjka virov. Stanje podatkov: <span class="mono" id="datum"></span>. Slovenija in Hrvaška sta prešteti iz dosjejev Dream 100, ostali trgi so ocene iz registrov in vzorca 30 hotelov na trg.</p>
+
+<h2>1. Vhodne spremenljivke</h2>
+<div class="grid g5">
+  <div class="card"><label class="f">Število mail accountov (vsi)</label><input type="number" id="in_mb" min="0"><div class="hint" id="h_mb"></div></div>
+  <div class="card"><label class="f">Ogretih mail accountov za hotele</label><input type="number" id="in_warm" min="0"><div class="hint" id="h_warm"></div></div>
+  <div class="card"><label class="f">Število LinkedIn profilov</label><input type="number" id="in_li" min="0"><div class="hint" id="h_li"></div></div>
+  <div class="card"><label class="f">Polno zaposleni prodajalci</label><input type="number" id="in_ft" min="0"><div class="hint">Klici v sekvencah Dream 100, vrstni red SI, HR, UAE, TN.</div></div>
+  <div class="card"><label class="f">Popoldanski prodajalci</label><input type="number" id="in_pt" min="0"><div class="hint">Prvi: Avstrija (samo LinkedIn odgovori). Drugi: Italija (klici v IT sekvencah). Tretji in naprej: ostali trgi po vrsti.</div></div>
+</div>
+<details><summary>Predpostavke (urejljive)</summary>
+  <div class="grid g5" style="margin-top:12px">
+    <div><label class="f">Mailov na dan na ogret account</label><input type="number" id="p_mails" value="33"></div>
+    <div><label class="f">Korakov v mail sekvenci</label><input type="number" id="p_steps" value="5"></div>
+    <div><label class="f">Trajanje mail sekvence (dni)</label><input type="number" id="p_seqd" value="10"></div>
+    <div><label class="f">Dejansko poslanih mailov na lead</label><input type="number" id="p_perlead" value="4.6" step="0.1"><div class="hint">5 korakov minus izstopi ob odgovoru ali bounce-u</div></div>
+    <div><label class="f">Pošiljalnih dni na teden</label><input type="number" id="p_days" value="5"></div>
+    <div><label class="f">LinkedIn povabil na dan na profil</label><input type="number" id="p_li" value="25"></div>
+    <div><label class="f">Trajanje LinkedIn sekvence (dni)</label><input type="number" id="p_liseqd" value="14"></div>
+    <div><label class="f">Klicev na dan na prodajalca</label><input type="number" id="p_calls" value="30"></div>
+    <div><label class="f">Klicev na hotel v sekvenci</label><input type="number" id="p_cph" value="2"></div>
+    <div><label class="f">Faktor kontaktov pri verižnih hotelih</label><input type="number" id="p_chain" value="0.7" step="0.05"><div class="hint">Pri mednarodnih verigah odloča uprava, na objektu ostane GM</div></div>
+    <div><label class="f">Dodatni ogreti accounti</label><input type="number" id="p_extra" value="6"></div>
+    <div><label class="f">Dodatni na voljo od</label><input type="date" id="p_extra_od" value="2026-10-05"></div>
+    <div><label class="f">Začetek pošiljanja</label><input type="date" id="p_start" value="2026-09-07"></div>
+    <div><label class="f">Konec prodajnega okna</label><input type="date" id="p_end" value="2027-04-30"></div>
+    <div><label class="f">Cilj: Dream 100 oba angla v (tednih)</label><input type="number" id="p_goalw" value="8"></div>
+  </div>
+</details>
+
+<h2>2. Trgi: hoteli po slojih</h2>
+<p>ICP: 4 in 5 zvezdic, 30 do 200 sob, neodvisni hoteli in lokalne verige; pilotni pas 75 do 200 sob. Vsak trg je razdeljen na tri sklope: celoten trg, Dream 100 in ostali hoteli zunaj izbora (neodvisni, lokalne in mednarodne verige skupaj).</p>
+<div class="tw sticky"><table id="t_sloji"></table></div>
+<p class="small muted" id="c_sloji"></p>
+
+<h2>3. Dream 100 proti ostalim: kontakti po kanalih</h2>
+<p>Desno Dream 100, levo vsi ostali hoteli zunaj izbora. Številke so kontakti odločevalcev, ki jih lahko dobimo: poslovni mail, LinkedIn profil, telefon (direktna mobilna odločevalca ali office številka hotela).</p>
+<div id="mirror"></div>
+
+<h2>4. Kontakti odločevalcev po trgih, podrobno</h2>
+<p>Odločevalec je lastnik, direktor, GM, vodja hotela, vodja operative, vodja nabave ali vodja odnosov z gosti. Prodaja in marketing ne štejeta. Vodje recepcij so ločeno. Osebni maili so samo za morebitne custom audience, ne za outreach.</p>
+<div class="legend"><span class="tag act">dejansko</span> šteto iz dosjeja Dream 100 <span class="tag est">ocena</span> hoteli × stopnja na hotel (SI, HR: lastna stopnja iz Dream 100; novi trgi: vzorec 30 hotelov)</div>
+<div class="tw sticky"><table id="t_kontakti"></table></div>
+<div class="tiles" id="tiles_total"></div>
+<details><summary>Stopnje na hotel, ki poganjajo ocene</summary><div id="c_kontakti"></div></details>
+
+<h2>5. Kapaciteta proti povpraševanju</h2>
+<p>Kapaciteta je fiksna cev: accounti × mailov na dan, profili × povabil na dan, prodajalci × klicev na dan. Povpraševanje je število leadov, ki jih je treba spraviti skozi sekvence. Dream 100 dobi dva angla zaporedno (Index in Scrape), ostali sloji tretji angle.</p>
+<div class="tiles" id="tiles_cap"></div>
+<div class="tw"><table id="t_demand"></table></div>
+<h3>Koliko virov je treba</h3>
+<div class="tiles" id="tiles_need"></div>
+<p class="small muted" id="c_need"></p>
+
+<h2>6. Scenariji sproženja sekvenc</h2>
+<p>Vsi scenariji delijo isto cev, zato se skupni čas ne spremeni. Razlika je, kateri trg je gotov kdaj in koliko trgov je hkrati "vroče". Vrstice so kampanje (trg × angle × kanal), barva je kanal, poln del je vnos leadov, svetli del je iztek sekvence. Spodnji pas kaže izkoriščenost kanala po tednih: če je pas poln, nikjer ne stoji nič.</p>
+<div class="legend"><span class="sw-email">Email (Instantly)</span><span class="sw-temail">Email iztek</span><span class="sw-li">LinkedIn (HeyReach)</span><span class="sw-tli">LinkedIn iztek</span><span class="sw-tel">Telefon (prodajalec)</span></div>
+<div id="scenarios"></div>
+<div class="rec" id="rec"></div>
+
+<h2>7. Dnevni zamik začetkov</h2>
+<p>Trgi se zaženejo z enodnevnim zamikom, tako da dnevni koraki sekvenc padajo na različne dni in vsak account pošilja polnih 33 na dan od prvega tedna naprej. Prikaz prvih 15 delovnih dni za prvi val (E = mail korak, L = LinkedIn korak, T = klic).</p>
+<div class="card card--scroll"><div class="day" id="daygrid"></div></div>
+
+<h2>8. Kontekst novih trgov, viri in metoda</h2>
+<div id="ctx"></div>
+
+<footer>Nevron d.o.o. · GTM kapacitete 2026-2027 · zgrajeno iz dosjejev Dream 100 (SI, HR), javnih registrov in vzorcev prek Apollo, Skrapp in Firecrawl · stran je namenoma zunaj iskalnikov (noindex).</footer>
+</main>
+<div class="tip" id="tip"></div>
+<script>
+const DATA = {"datum": "2026-08-25", "zivo": {"mailboxi_skupaj": 22, "ogreti_skupaj": 22, "ogreti_hotel": 18, "ogreti_maritime": 4, "domene": ["getnevron.com", "nevron.net", "nevroncore.com", "trynevron.com"], "dnevni_limit": 33, "linkedin_profili": ["Rok Kokalj", "Simon Bergant", "Matjaz Volkar"], "linkedin_hotel": 3, "dodatni_mailboxi": 6, "dodatni_od": "2026-10-05"}, "trgi": [{"id": "si", "ime": "Slovenija", "vir": "dejansko", "kanali": {"email": true, "linkedin": true, "telefon": true}, "opomba_kratka": "Dream 100 je bil izbran pred zožitvijo ICP: 38 od 100 hotelov je v ICP pasu, 11 v pilotnem.", "sloji": {"L0": 444, "L0_hoteli": 444, "L1": 185, "L2": 114, "L3": 8, "L4": 106, "L4_sam": 43, "L4_male": 52, "L4_velike": 11, "L5": 53}, "d100": {"hotelov": 100, "icp_da": 29, "pilot_da": 11, "v_pasu": 38, "kontakti": {"dm": 215, "biz": 71, "priv": 69, "li": 82, "mob": 37, "office": 99, "fd": 17, "fd_biz": 12, "fd_li": 10}, "vir": "dejansko"}, "rest": {"hotelov": 68, "pilot": 42, "bucket": {"lokalna_mala": 46, "samostojen": 12, "lokalna_velika": 10}, "vir": "ocena"}, "intl": {"hotelov": 8, "verige": ["Barcelo Hotel Group|", "Best Western|", "Eurostars Hotels|", "Hoteli Metropol (Remisens)|", "IHG|", "Kempinski|"], "vir": "ocena"}, "stopnje": {"dm_na_hotel": 2.15, "biz_na_hotel": 0.71, "priv_na_hotel": 0.69, "li_na_hotel": 0.82, "mob_na_hotel": 0.37, "office_na_hotel": 0.99, "fd_na_hotel": 0.17, "fd_biz_na_hotel": 0.12, "fd_li_na_hotel": 0.1}, "opombe": ["Dream 100: 361 oseb skupaj, od tega 215 odločevalcev po pravilu (lastnik, direktor, GM, vodja hotela, operativa, nabava, guest relations), 17 vodij recepcij, 49 prodaja/marketing (ne štejejo), 80 brez naziva ali nerazvrščenih (ne štejejo).", "Dream 100 po Rokovem pravilu: 38 od 100 hotelov je v pasu 4-5 zvezdic in 30-200 sob; ICP DA 29, pilot DA 11."], "viri": ["dream100-dossier.html (ROWS)", "univerzum.json / hr/izbor.json", "AJPES RNO / MINT popis"], "kontekst": "", "benchmarki": [], "krediti": {}}, {"id": "hr", "ime": "Hrvaška", "vir": "dejansko", "kanali": {"email": true, "linkedin": true, "telefon": true}, "opomba_kratka": "Dream 100 je bil izbran pred zožitvijo ICP: 62 od 100 hotelov je v ICP pasu, 32 v pilotnem.", "sloji": {"L0": 783, "L0_hoteli": 719, "L1": 432, "L2": 182, "L3": 18, "L4": 164, "L4_sam": 101, "L4_male": 55, "L4_velike": 8, "L5": 74}, "d100": {"hotelov": 100, "icp_da": 61, "pilot_da": 32, "v_pasu": 62, "kontakti": {"dm": 163, "biz": 71, "priv": 0, "li": 73, "mob": 21, "office": 97, "fd": 7, "fd_biz": 2, "fd_li": 6}, "vir": "dejansko"}, "rest": {"hotelov": 102, "pilot": 42, "bucket": {"samostojen": 39, "lokalna_velika": 8, "lokalna_mala": 55}, "vir": "ocena"}, "intl": {"hotelov": 18, "verige": ["DUBROVNIK SEA SUN HOTELS|iberostar", "JADRAN HOTELI|best western", "LIBURNIA RIVIERA HOTELI|remisens", "MPPD|pullman", "PLAVI SAFIR|riu", "SUNCE HOTELI|riu", "ZAGREB CITY HOTELS|hilton", "|autograph", "|best western", "|falkensteiner", "|hilton", "|hyatt", "|kempinski", "|novotel", "|radisson"], "vir": "ocena"}, "stopnje": {"dm_na_hotel": 1.63, "biz_na_hotel": 0.71, "priv_na_hotel": 0.69, "li_na_hotel": 0.73, "mob_na_hotel": 0.21, "office_na_hotel": 0.97, "fd_na_hotel": 0.07, "fd_biz_na_hotel": 0.02, "fd_li_na_hotel": 0.06}, "opombe": ["Osebni maili v hrvaškem dosjeju niso obogateni (0). Za sloj nad Dream 100 je vzeta slovenska stopnja na hotel.", "Dream 100: 229 oseb skupaj, od tega 163 odločevalcev po pravilu (lastnik, direktor, GM, vodja hotela, operativa, nabava, guest relations), 7 vodij recepcij, 42 prodaja/marketing (ne štejejo), 17 brez naziva ali nerazvrščenih (ne štejejo).", "Dream 100 po Rokovem pravilu: 62 od 100 hotelov je v pasu 4-5 zvezdic in 30-200 sob; ICP DA 61, pilot DA 32."], "viri": ["dream100-dossier.html (ROWS)", "univerzum.json / hr/izbor.json", "AJPES RNO / MINT popis"], "kontekst": "", "benchmarki": [], "krediti": {}}, {"id": "uae", "ime": "Združeni arabski emirati", "vir": "ocena", "kanali": {"email": true, "linkedin": true, "telefon": true}, "opomba_kratka": "Register: gulfnews.com; vzorec 30 hotelov; Lusha in Apollo za mobilne in osebne maile.", "sloji": {"L0": 1240, "L0_hoteli": 1240, "L1": 577, "L2": 252, "L3": 108, "L4": 144, "L4_sam": 76, "L4_male": 60, "L4_velike": 8, "L5": 125}, "d100": {"hotelov": 100, "icp_da": 100, "pilot_da": 87, "v_pasu": 100, "vir": "ocena"}, "rest": {"hotelov": 44, "pilot": 38, "vir": "ocena"}, "intl": {"hotelov": 108, "vir": "ocena"}, "stopnje": {"dm_na_hotel": 1.93, "biz_na_hotel": 0.87, "priv_na_hotel": 0.59, "li_na_hotel": 1.93, "mob_na_hotel": 1.45, "office_na_hotel": 0.87, "fd_na_hotel": 1.2, "fd_biz_na_hotel": 0.43, "fd_li_na_hotel": 1.2, "dm_biz": 0.453, "dm_priv": 0.306, "dm_li": 1.0, "dm_mob": 0.753, "hotel_ni_v_apollu": 0.067}, "opombe": ["Direktne mobilne in osebni maili: Lusha zastavice na vzorcu (81 odločevalcev v 22 hotelih): mobilna 75 %, osebni mail 0 %. Apollo gateway ne razkriva osebnih mailov in telefonov, zato Apollo vzorec tu ni merodajen. Osebni maili: Apollo ponovni match 36 razkritih odločevalcev z reveal_personal_emails: 11 z osebnim mailom (31 %).", "Vzorec 30 hotelov; Apollo census odločevalcev 7216, recepcija 1562.", "L2_4_5_v_pasu_30_200: Noben register v UAE ne objavlja sob po hotelu (Dubai Pulse DTCM dataset je za robota nedosegljiv, timeout; FCSC uaestat za Cloudflare). Zato model: povprecje sob po kategoriji iz DET (5*: 56.048/173 = 324 sob; 4*: 43.500/195 = 223 sob), porazdelitev velikosti lognormalna s sigma 0,6 (tipicna za mestne hotelske trge). Delez hotelov v pasu 30-200 sob: 4* = 54,7 %, 5* = 30,5 %; pod 30 sob zanemarljivo (<1 %). Dubaj: 195 x 0,547 + 173 x 0,305 = 160. Isti delezi za Abu Dabi; za severne emirate 4* 60 %/5* 35 % (Šardža, Fudžajra: manjsi hoteli), RAK 50 %/25 % (veliki resorti). Ajman iz registra sob (4*: 4 hoteli/811 sob; 5*: 7 obratov/1.191 sob) = 6. 'Znanih sob' = 41 hotelov 4/5* v pasu, ki sem jim v tej raziskavi individualno preveril stevilo sob (TripAdvisor 'Number of rooms', uradne strani, Booking); ostalih 211 je modelnih. Preverjeni vzorec 55 kandidatov je pokazal, da je ~35 % 'malih neodvisnih' hotelov v resnici nad 200 sob ali medtem preznamcenih (Swissotel Al Murooj, Curio Royal Rose, Vignette Tilal Liwa, Coral Auris Plaza, Marriott Vintage Grand), kar potrjuje konservativne deleze.", "L3_mednarodne_znamke: Mednarodno znamcenih je 67-68 % SOB v Dubaju (Knight Frank 2023, cit. v Arab News/companyregistrationindubai 2025), a znamke so skoncentrirane v velikih hotelih (povprecni Marriott/Hilton/Accor objekt v Dubaju 250-400 sob). Za pas 30-200 sob privzamem delez znamcenih HOTELOV 45 % v Dubaju in Abu Dabiju (Ibis/Novotel/Holiday Inn Express/Hampton/Rove so vecinoma 3* in niso v L2; med 4-5* pod 200 sob so znamke: Four Points, Aloft, Hyatt Place, Vida, Address Boulevard, Hilton Garden Inn, Radisson RED, Tryp, Mercure, Golden Tulip, Millennium Place, Rotana Arjaan/Centro) in 35 % v severnih emiratih (vec neodvisnih obalnih hotelov). Rotana, Jumeirah, Emaar Hospitality (Address/Vida), Millennium, Ramee, Avari, Raviz, Suba, HMH/Coral stejejo kot mednarodne/regionalne znamke (delujejo v vec drzavah), NE kot lokalne verige. L3 = 0,45 x 200 + 0,35 x 53 = 108.", "L4_neodvisni_in_lokalne_verige: L4 = L2 - L3. Razdelitev po vzorcu 55 individualno preverjenih kandidatov in poznavanju trga: lokalne male verige (2-10 hotelov, samo UAE): Al Khoory (6), Flora Hospitality (8), Landmark Hotels & Suites (6), Carlton Hotels & Suites (4), Fortune Group (6), Byblos Hospitality (3), Jannah (6), JA Resorts (7), Al Khaleej (2), Ascot (2), Sun & Sands (4), Grand Excelsior (4), Lavender (3, vecinoma 3*), Signature (3), Somewhere (2), Auris (3), Cassells (2), Gewan/Royal M (5), Danat/ADNH lastna znamka (4), City Seasons/Royal Group (6), Cristal (3), Ayla (3), Al Diar (6), Bin Majid/BM (5), Mysk/Shurooq Šardža (7, vecinoma pod 30 sob), Blazon (2), One to One (2) itd. -> ~60 hotelov v pasu. Lokalne velike (>10 hotelov, samo UAE): prakticno samo TIME Hotels (~11 obratov, 4*, vec pod 200 sob) in Citymax (Landmark Group, 3*, ne steje) -> ~8. Ostalo (~75) so samostojni hoteli, koncentrirani v Deiri, Bur Dubaju, Al Barshi, centru Abu Dabija, Al Ainu, Šardži in na obali Fudžajre.", "L5_pilotni_pas_75_200: Delez L4 v pasu 75-200 sob iz istega lognormalnega modela: 4* (75-200)/(30-200) = 0,88, 5* = 0,95; za neodvisne vzamem 0,87 (vec butičnih objektov pod 75 sob: Zaya Nurai 42, JA Hatta Fort 51, Zoya 61, 72 Hotel 71, Telal 24, Mysk objekti). L5 = 144 x 0,87 = 125. V vzorcu 30 je 26 od 30 hotelov v pasu 75-200."], "viri": ["https://gulfnews.com/business/tourism/uae-welcomes-32-million-hotel-guests-as-tourism-revenues-hit-dh492-billion-1.500552648", "https://www.arabianbusiness.com/business/tourism-hospitality/uae-tourism-hits-record-32-34m-guests-hotel-revenues-rise-to-13-4bn-in-2025", "https://en.wikipedia.org/wiki/Tourism_in_Dubai", "https://www.palmobserver.com/dubai-data/dubai-tourism-hotel-supply/", "https://www.dubaidet.gov.ae/en/research-and-insights/tourism-performance-report-december-2025", "https://www.statista.com/statistics/982628/uae-number-of-five-star-hotels/", "https://thegulfpulse.com/dubai-hotel-market-2025/", "https://www.knightfrank.ae/newsroom/article/2025/10/uae-hospitality-market-review-2025", "https://www.breakingtravelnews.com/news/article/dubais-mid-market-hotels-outperform-premium-sector-in-h1-2026-as-market-adj/", "https://www.khaleejtimes.com/business/dubai-hotel-occupancy-to-recover-in-h2-2026-after-sharp-first-half-decline", "https://skift.com/2026/08/11/uaes-hotel-divide-abu-dhabi-holds-up-while-dubai-sinks/", "https://economymiddleeast.com/news/uae-hospitality-sector-holds-firm-as-abu-dhabis-occupancy-reaches-65-2-percent-dubai-retains-159300-keys/", "https://www.hvs.com/article/10449-shock-divergence-and-recovery-the-impact-of-the-2026-usiran-conflict-on-gcc-hospitality", "https://skift.com/2026/05/06/dubai-hotel-occupancy-to-plummet-to-10-in-q2-moodys/", "https://www.agbi.com/analysis/tourism/2026/03/dubai-hotels-urged-to-hold-rates-after-iran-war-occupancy-drop/", "https://www.costar.com/article/252323992/as-iran-war-disrupts-middle-east-travel-dubai-hotels-take-opportunity-to-close-and-renovate", "https://www.linkedin.com/posts/abdulla-yousuf_dct-annual-report-2025-activity-7447214120451395585-57M2", "https://dct.gov.ae/Pages/AnnualReport2025.aspx", "https://www.wam.ae/en/article/bk5evo1-abu-dhabi-hotels-record-aed611-million-revenue", "https://www.hoteliermiddleeast.com/news/abu-dhabi-has-the-highest-concentration-of-five-star-hotels-in-the-world", "https://economymiddleeast.com/news/sharjah-hotel-revenues-surpass-212-million-guests-surge-2-1-million-2025/", "https://www.khaleejtimes.com/business/ras-al-khaimahs-hotel-inventory-expected-to-increase-from-8321-to-15798-keys-by-2030", "https://raktda.com/press-release-ras-al-khaimah-delivers-record-tourism-performance-in-2025-with-1-35m-overnight-visitors/", "https://data.ajman.ae/explore/assets/classification-by-name/", "https://data.ajman.ae/explore/assets/no-of-rooms/", "https://gulfnews.com/business/tourism/fujairah-hotels-record-peak-occupancy-in-early-2026-1.500512404", "https://companyregistrationindubai.com/2025/11/13/inside-dubais-hospitality-industry-hotel-growth-and-occupancy-rates/", "https://www.tripadvisor.com/ (Number of rooms / Hotel class za 45 kandidatov, avg. 2026)", "Apollo.io mixed_people/api_search, mixed_companies/search, organizations/enrich, people/match (2026-08-25)", "Skrapp.io find_bulk (2026-08-25)"], "kontekst": "UAE je bil do februarja 2026 najbolj vroč hotelski trg regije (Dubaj 2025: 80,7 % zasedenost, rekordnih 19,6 mio gostov), potem pa ga je ameriško-iranska vojna od 28. 2. 2026 zlomila: 60 % odpovedi v 48 urah, dubajska zasedenost s 85 % na 23 % sredi marca, H1 2026 56,4 % (-24,6 o.t.) in RevPAR -35 %, junij 51,6 % z ADR -17 %; Abu Dabi je z domačim in dogodkovnim povpraševanjem padel manj (66,8 %), RAK vmes (49,3 %). Avgusta 2026 se trg sele stabilizira: Emirates leti na ~85 % predvojne kapacitete, vlada je aprila in maja sprostila AED 1 mrd + 1,5 mrd stimulacij za hotelirje, Cavendish Maxwell pričakuje 60-66 % zasedenost za celo leto, CBRE pa okrevanje sele v 2027. Za outreach to pomeni dvoje: neodvisni 4-5* hoteli pod 200 sob (segment, ki je s 64-66 % zasedenosti mid-market prebrodil bolje kot luxury) imajo zdaj prazne sobe, stisnjene marže in odprt interes za tehnologijo, ki reže stroške ali dvigne direktno prodajo, hkrati pa nekateri objekti so zaprti za prenovo ali pa jim je zamrznjen capex; vsak prvi stik naj omeni okrevanje H2/zimske sezone, ne rasti. Strukturno je trg za nas majhen: ~250 hotelov 4-5* v pasu 30-200 sob, od tega ~140 neodvisnih ali lokalno-verižnih, z močno koncentracijo v Deiri/Bur Dubaju/Al Barshi in v Abu Dabiju, in z lastniki, ki so pogosto indijske/pakistanske ali libanonske družinske skupine z GM-jem kot dejanskim odločevalcem (v Apollu 93 % hotelov, a 40 % brez odločevalca; 51 % razkritih DM-jev ima verificiran poslovni mail, LinkedIn praktično vsi). Angleščina zadošča, telefon na spletnih straneh je pri 87 % hotelov in v UAE je poslovni telefonski stik na službene številke običajen; sezona za odločanje je oktober-november, pred zimsko vršno sezono in po Ramadanu (2027: ~8. feb do ~9. mar).", "benchmarki": [{"naslov": "Knight Frank, UAE Hospitality Market Review 2025 (Autumn 2025)", "vir": "https://www.knightfrank.ae/newsroom/article/2025/10/uae-hospitality-market-review-2025", "datum": "2025-10-20", "kljucna_ugotovitev": "213.928 sob v UAE (avg. 2025), 217.853 do konca 2025, 235.674 sob v 1.184 hotelih do 2030; segmenti obstojece ponudbe: luxury 22 %, upper upscale 21 %, upscale 26 % (torej ~69 % 'premium'); 43 % pipelina luxury; Dubaj 55,9 % pipelina; RevPAR +11,9 % (jan-avg 2025). Trg prehaja iz gradnje v investicijsko fazo."}, {"naslov": "Cavendish Maxwell, Dubai Hospitality Sector H1 2026 Market Performance", "vir": "https://www.breakingtravelnews.com/news/article/dubais-mid-market-hotels-outperform-premium-sector-in-h1-2026-as-market-adj/", "datum": "2026-08 (Khaleej Times 2026-08-18)", "kljucna_ugotovitev": "Sredi 2026 Dubaj 152.140 sob v 727 hotelih (-1 % obratov vs konec 2025; vkljucuje zacasno zaprte v prenovi); zasedenost H1 2026 56 % (-30 %), ADR AED 701 (-7 %); upper midscale 66 % in midscale 64 % zasedenosti vs luxury 51 %; 3.150 sob do konca 2026, 2.580 v 2027, 2.470 v 2028; premium segmenti ~70 % sob; napoved celo leto 2026: zasedenost 60-66 %, ADR AED 600-675."}, {"naslov": "CBRE / CoStar (STR), UAE hotel performance H1 2026", "vir": "https://skift.com/2026/08/11/uaes-hotel-divide-abu-dhabi-holds-up-while-dubai-sinks/", "datum": "2026-08-11", "kljucna_ugotovitev": "UAE zasedenost do junija 2026 -28 o.t., RevPAR -31,8 %; Dubaj 56,4 % (-24,6 o.t., RevPAR -35,2 %), Abu Dabi 66,8 % (-13,5 o.t., RevPAR -20,3 %), RAK 49,3 % (-23,3 o.t., ADR +5,2 %); marec Dubaj 33,1 %; okrevanje ne pred zacetkom 2027; napoved -48 % prihodov v UAE 2026. Junij 2026 (STR prek Economy Middle East): Dubaj 51,6 %, ADR AED 375,6 (-17,1 %), RevPAR -38,7 %; Abu Dabi 65,2 %."}, {"naslov": "HVS, Shock, Divergence, and Recovery: The Impact of the 2026 U.S.-Iran Conflict on GCC Hospitality", "vir": "https://www.hvs.com/article/10449-shock-divergence-and-recovery-the-impact-of-the-2026-usiran-conflict-on-gcc-hospitality", "datum": "2026-05-05", "kljucna_ugotovitev": "Vojna od 28. 2. 2026: v 48 urah 60 % odpovedi rezervacij v Dubaju, zasedenost s 84,8 % (jan-feb) na 22,8 % v tednu do 14. 3.; Moody's je za Q2 napovedal 10 %; povpraševanje zaostaja za obnovo letov, okrevanje 'pocasnejse in neenakomerno'."}, {"naslov": "Cavendish Maxwell, Sharjah hospitality 2025 + Stirling Hospitality Advisors, RAK Investment Pulse (5. izdaja)", "vir": "https://economymiddleeast.com/news/sharjah-hotel-revenues-surpass-212-million-guests-surge-2-1-million-2025/", "datum": "2026-06 (Šardža) / 2025-06-23 (RAK, Khaleej Times)", "kljucna_ugotovitev": "Šardža: 102 hotela / 10.700 ključev, večinoma srednji razred, 78 % zasedenost, ADR AED 305, samo 476 novih luxury/upscale ključev do 2030. RAK: 8.321 ključev -> 15.798 do 2030 (7.427 potrjenih), 92 % novih sob 5*, Wynn Al Marjan 1.530 sob 2027; 86 % hotelov outsourca pralnico, 85 % podpira centralno nabavo (https://www.khaleejtimes.com/business/ras-al-khaimahs-hotel-inventory-expected-to-increase-from-8321-to-15798-keys-by-2030)."}, {"naslov": "DET Dubai, Tourism performance report Jan-Dec 2025 + Emirates Tourism Council 2025", "vir": "https://www.palmobserver.com/dubai-data/dubai-tourism-hotel-supply/", "datum": "2026-02 (DET) / 2026-04-15 in 2026-05-25 (ETC)", "kljucna_ugotovitev": "Dubaj 2025: 19,59 mio mednarodnih gostov (+5 %), 827 obratov / 154.264 sob, zasedenost 80,7 %, ADR AED 579, RevPAR AED 467 (rekordno leto pred vojno). UAE 2025: 32,34 mio hotelskih gostov, 79,3-79,5 % zasedenost, prihodki AED 49,2 mrd (+9,7 %), 1.240 obratov / 217.000 sob."}], "krediti": {"apollo_reveals": 37, "skrapp_find": 9, "opomba": "Apollo: 36 unikatnih oseb razkritih (22 DM + 6 sekundarnih DM + 8 vodij recepcije), 37 API klicev (en reveal je bil zaracunan dvakrat zaradi Dropbox zaklepa cache datoteke pri prvem zagonu). Skrapp: 25 poizvedb find_bulk, zaracunanih 9 (used 19.620 -> 19.629; quota 25.000). Firecrawl: ~200 search + ~90 scrape klicev. Apollo usage_stats endpoint vraca 404, stevilke so iz lokalnega stetja klicev."}, "vzorec_n": 30}, {"id": "it", "ime": "Italija", "vir": "ocena", "kanali": {"email": true, "linkedin": true, "telefon": true}, "opomba_kratka": "Register: www.istat.it; vzorec 30 hotelov; Lusha in Apollo za mobilne in osebne maile.", "sloji": {"L0": 32943, "L0_hoteli": 32943, "L1": 7410, "L2": 4072, "L3": 530, "L4": 3542, "L4_sam": 2625, "L4_male": 624, "L4_velike": 293, "L5": 1293}, "d100": {"hotelov": 100, "icp_da": 100, "pilot_da": 37, "v_pasu": 100, "vir": "ocena"}, "rest": {"hotelov": 3442, "pilot": 1256, "vir": "ocena"}, "intl": {"hotelov": 530, "vir": "ocena"}, "stopnje": {"dm_na_hotel": 1.87, "biz_na_hotel": 0.97, "priv_na_hotel": 0.0, "li_na_hotel": 1.4, "mob_na_hotel": 1.09, "office_na_hotel": 0.93, "fd_na_hotel": 0.33, "fd_biz_na_hotel": 0.2, "fd_li_na_hotel": 0.26, "dm_biz": 0.518, "dm_priv": 0.0, "dm_li": 0.75, "dm_mob": 0.585, "hotel_ni_v_apollu": 0.167}, "opombe": ["Direktne mobilne in osebni maili: Lusha zastavice na vzorcu (65 odločevalcev v 19 hotelih): mobilna 58 %, osebni mail 0 %. Apollo gateway ne razkriva osebnih mailov in telefonov, zato Apollo vzorec tu ni merodajen. Osebni maili: Apollo ponovni match 39 razkritih odločevalcev z reveal_personal_emails: 0 z osebnim mailom (0 %).", "Vzorec 30 hotelov; Apollo census odločevalcev 9638, recepcija 1372.", "L2_4_5_v_pasu_30_200: Delez hotelov v pasu 30-200 sob izracunan iz dveh zivih dezelnih registrov s kapaciteto na strukturo: Puglia (osservatorio.dms.puglia.it, strutture_ricettive.csv, 2026-08) in Umbria (dati.regione.umbria.it, 2026-08). Zdruzeno: 4* 280/502 = 0,558 v pasu (208 pod 30 sob, 14 nad 200); 5* 30/63 = 0,476 (33 pod 30). L2 = 6.639 x 0,558 + 771 x 0,476 = 3.705 + 367 = 4.072. Znanih sob = 310 hotelov iz registrov (280 + 30), neznanih = preostalih 3.762, ocenjenih z delezem. Konzervativno: Emilia-Romagna (povprecje 64,5) in mestni hoteli (Milano, Rim) so vecji od Puglie/Umbrie, zato je dejanski delez v pasu verjetno 0,58-0,62, kar bi L2 dvignilo na ~4.300.", "L3_mednarodne_znamke: Horwath HTL Italy Hotels & Chains 2023 (podatki 2022): mednarodne verige 4-4S* 389 hotelov (povp. 129 kljucev) + luxury 5-5L* 114 hotelov (povp. 113) = 503. Rast 2022-2025: THRENDS Hotel Chains Monitor (dec. 2025) 2.607 veriznih hotelov proti 1.892 (2022), +38 %, pri cemer je 72 % novih vstopov mednarodnih (Horwath 2024). Ocena mednarodnih 4/5* 2025: 503 x 1,5 = 755; v pasu 30-200 sob 70 % (vecina ostalih nad 200) = 528, zaokrozeno 530. Vkljucuje soft brande (Autograph, Curio, Tribute, WorldHotels), ki jih monitor steje kot verizne. Zaupanje: zmerno.", "L4_neodvisni_in_lokalne_verige: L4 = L2 - L3 = 4.072 - 530 = 3.542. Domace verige 4/5* 2022 (Horwath): 827 upscale + 114 luxury = 941 hotelov; x 1,30 rasti do 2025 = 1.223; v pasu 30-200 (povp. 115 / 90 kljucev) 75 % = 917. Delez skupin z vec kot 10 hoteli med domacimi verigami po Horwath lestvici 2022 (TH Resorts 30, Gruppo UNA 47, Iti 30, Starhotels 26, Blu Hotels 30, Apogia 36, Bluserena 13, Alpitour 14, Studio Vacanze 18, Aeroviaggi 13, CDShotels 12, iH 22, Geturhotels 15, Aurum 16, Club Esse 13, Parc 13, HNH 15, Loan 14, Chincherini 12, Planetaria 12, Sina 11 ...) ~32 % = 293 velike, 624 male. Samostojni = 3.542 - 917 = 2.625. Zaupanje: zmerno; Horwath ne objavlja stevila hotelov po velikosti skupine, delez 32 % je sestet iz lestvice top 20.", "L5_pilotni_pas_75_200: Iz istih registrov delez 75-200 sob: 4* 107/502 = 0,213, 5* 6/63 = 0,095, torej 1.487 od L1 oz. 36,5 % od L2. L5 = 3.542 x 0,365 = 1.293. Neodvisni so v povprecju manjsi od verig, zato je to zgornja meja; realno 1.150-1.300."], "viri": ["https://www.istat.it/storage/ASI/2025/capitoli/C19.pdf", "https://www.istat.it/wp-content/uploads/2026/03/Statistica-Today_Turismo-2024.pdf", "https://news.federalberghi.it/overview/rapporto-federalberghi-italia-prima-in-europa-per-capacit-alberghiera-ricettiv.aspx", "https://www.federalberghi.it/download/download.aspx?file=caffd834-f3ad-4d76-a8d5-45e1a4f82361&listId=f24d3693-761f-4a0a-a3db-7a35dd342fc1", "https://statistica.regione.emilia-romagna.it/statistiche-per-temi/turismo/dati-preliminari/dati-consolidati-2024/analisi-territoriale-della-offerta-turistica/dettaglio-regionale/regione-anno-2024.pdf/@@download/file/REGIONE%20-%20Anno%202024.pdf", "https://osservatorio.dms.puglia.it/opendata/puglia_sr_lt/strutture_ricettive.csv", "https://dati.puglia.it/ckan/dataset/puglia-elenco-delle-strutture-ricettive-e-delle-locazioni-turistiche-progressivo", "https://dati.regione.umbria.it/dataset/strutture-ricettive", "https://www.ithic.it/new-hotel-chains-monitor-sets-chains-presence-to-new-records/", "https://horwathhtl.com/wp-content/uploads/2024/09/ITALY_HOTELS-CHAINS_2023.pdf", "https://www.travelforbusiness.it/catene-alberghiere-in-italia-il-rapporto-hotel-chains-2024/", "https://www.hoteldomani.it/italia-cresce-il-peso-dei-big-player-il-72-dei-nuovi-hotel-di-catena-e-dei-grandi-brand-internazionali/", "https://www.costar.com/products/str-benchmark/resources/press-releases/formula-1-drove-milan-room-rates-record-highs", "https://www.borsaitaliana.it/borsa/notizie/radiocor/economia/dettaglio/turismo-confindustria-alberghi-bene-dati-2026-ora-fare-sistema-nRC_06072026_1601_427108042.html", "https://www.ithic.it/italy-remains-a-top-target-for-hotel-investors-with-rising-return-expectations/", "https://en.ilsole24ore.com/art/sina-hotels-is-expanding-its-soft-brands-combining-italian-identity-with-global-networks-to-take-on-the-major-groups-AJD7xZF", "https://hotellerie.pambianconews.com/2025/09/09/planetaria-punta-a-60-mln-e-di-fatturato-nel-2025-tutti-gli-utili-saranno-reinvestiti/", "https://www.bataniselecthotels.it/", "https://hotellerie.pambianconews.com/2024/09/04/barletta-acquista-villa-diodoro-a-taormina-investimento-da-85-mln-e/", "https://www.bestwestern.com/en_US/book/hotels-in-lecce/risorgimento-resort/propertyCode.86158.html", "https://www.patrimoniotn.it/property/grand-hotel-imperial/", "https://www.agendaviaggi.com/luca-rombi-si-insedia-al-bettoja-hotel-massimo-dazeglio/", "https://travellermade.com/hotel-partners-europe/marinedda-thalasso-spa-italy/", "https://www.hotelmypassion.com/en/vsp-very-special-player-en/excelsior-palace/", "https://www.meetingecongressi.com/it/albergo/milano/123078/hotel_berna.htm", "https://www.meetingecongressi.com/it/albergo/siracusa/79700/grand_hotel_villa_politi_1862.htm", "https://it.linkedin.com/in/anta-bray-7a53795a"], "kontekst": "Italija je najvecji hotelski trg v Evropi (32.943 hotelov, 1,1 mio sob) in hkrati najbolj razdrobljen: verige imajo po THRENDS decembra 2025 le ~8 % hotelov in ~22 % sob, tako da ostaja v pasu 4/5* s 30-200 sobami okoli 3.500 neodvisnih in lokalno-veriznih hotelov, dve tretjini juzno od Bologne ali v mestnih palazzih z manj kot 100 sobami. Povprecni 4* hotel ima 55-65 sob, zato je vec kot 40 % 4* hotelov pod 30 sobami in izpade iz ICP. Odlocevalec je pri samostojnih hotelih druzina lastnikov (Bucher, Fiorentino, Varese, Serandrei), pri lokalnih verigah pa skupinski CEO ali direttore generale; Apollo pokrije le okoli dve tretjini hotelov na ravni organizacije in le pri polovici vzorca vsebuje imenovanega odlocevalca, zato je LinkedIn/Firecrawl + Skrapp nujen drugi korak. Trg je v letu 2026 v investicijskem vzponu (rekordni ADR v Milanu, pipeline 269 veriznih projektov 2026-2029, 84 izstopov iz domacih verig v enem cetrtletju), kar pomeni, da neodvisni 4* hoteli v mestih cutijo pritisk znamk in so dovzetni za orodja, ki jim pomagajo ostati samostojni. Operativno: italijanska pisma v formalnem registru, Ferragosto (5.-25. 8.) mrtev, nakupna okna nov-mar; 'Direttore' je pogosto GM in lastnik hkrati.", "benchmarki": [{"naslov": "Federalberghi, X Rapporto sul sistema alberghiero e turistico ricettivo italiano", "vir": "https://news.federalberghi.it/overview/rapporto-federalberghi-italia-prima-in-europa-per-capacit-alberghiera-ricettiv.aspx", "datum": "2025-11-29", "kljucna_ugotovitev": "32.943 hotelov, 1,1 mio sob, 2,3 mio lezisc (Italija prva v Evropi); 6.639 hotelov 4* in 771 5* (22,5 %), 3* + RTA 55,2 %; povprecje 69,3 lezisca na hotel (37,6 leta 1980); po sobah vodijo Emilia-Romagna 141.578, Trentino-Alto Adige 123.439, Veneto 108.992, Lazio 108.217; 283,9 mio nocitev v hotelih 2024."}, {"naslov": "THRENDS Hotel Chains Monitor Italy (objava ITHIC)", "vir": "https://www.ithic.it/new-hotel-chains-monitor-sets-chains-presence-to-new-records/", "datum": "2026-02-19", "kljucna_ugotovitev": "Dec. 2025: 2.607 veriznih hotelov s 239 tisoc sobami (+64 % proti 2013); penetracija verig ~8 % po hotelih in ~22 % po sobah; v luxury nad 40 % po hotelih; Q4 2025 115 novih vstopov (61 % upscale) in 84 izstopov (75 % iz domacih verig); pipeline 2026-2029 ~269 projektov, 39 % luxury."}, {"naslov": "Istat, Statistica Today: 2024 nuovo anno record per il turismo in Italia", "vir": "https://www.istat.it/wp-content/uploads/2026/03/Statistica-Today_Turismo-2024.pdf", "datum": "2026-03", "kljucna_ugotovitev": "2024: 139,6 mio prihodov in 466,2 mio nocitev (rekord); tuji gostje 52,5 % hotelskih nocitev; nerezidenti 58,1 % svojih hotelskih nocitev v 4/5* (rezidenti 43,0 %); ZDA 64,4 % nocitev v 4/5*, Nemcija 21,9 %."}, {"naslov": "CoStar/STR: Formula 1 drove Milan room rates to record highs", "vir": "https://www.costar.com/products/str-benchmark/resources/press-releases/formula-1-drove-milan-room-rates-record-highs", "datum": "2025-09", "kljucna_ugotovitev": "Milano rekordni ADR in RevPAR: 6. 9. 2025 zasedenost 93,1 %, ADR 411,57 EUR, RevPAR 383,30 EUR; Fashion Week zasedenost 91,4 %, ADR 394,60 EUR."}, {"naslov": "Confindustria Alberghi o podatkih Ministrstva za turizem za poletje 2026", "vir": "https://www.borsaitaliana.it/borsa/notizie/radiocor/economia/dettaglio/turismo-confindustria-alberghi-bene-dati-2026-ora-fare-sistema-nRC_06072026_1601_427108042.html", "datum": "2026-07-06", "kljucna_ugotovitev": "OTA zasedenost Italije 51,2 % (Spanija 42,8 %, Francija 32,9 %), povprecna cena 153 EUR; poziv k 'fare sistema'."}, {"naslov": "Horwath HTL, Italy Hotels & Chains Report 2023 (10. izdaja) - STAREJSI VIR, edini s kategorijskim razrezom verig", "vir": "https://horwathhtl.com/wp-content/uploads/2024/09/ITALY_HOTELS-CHAINS_2023.pdf", "datum": "2023-05 (podatki 2022)", "kljucna_ugotovitev": "1.892 veriznih hotelov / 202.696 sob (5,5 % hotelov, 17,7 % sob); upscale 4-4S* 1.216 hotelov (827 domacih, 389 mednarodnih), luxury 228 (114/114); povp. velikost mednarodne 120 kljucev, domace 100; 287 blagovnih znamk (158 domacih); domace verige 66 % veriznih hotelov."}], "krediti": {"apollo_reveals": 39, "skrapp_find": 14, "opomba": "Apollo: 1 testno + 38 v paketu = 39 (od 40); 2 razkritji porabljeni na napacni domeni (Forte dei Marmi). Skrapp: 34 poizvedb v 4 paketih, zaracunanih 14 (stevec 19.596 -> 19.606, +3, +1, +0); 17 kreditov med 11:55 in 12:20 je porabil drug proces, ne ta ocena. Firecrawl: ~110 klicev (search + scrape)."}, "vzorec_n": 30}, {"id": "at", "ime": "Avstrija", "vir": "ocena", "kanali": {"email": false, "linkedin": true, "telefon": false}, "opomba_kratka": "Register: www.wko.at; vzorec 30 hotelov; Lusha in Apollo za mobilne in osebne maile.", "sloji": {"L0": 4929, "L0_hoteli": 4929, "L1": 1931, "L2": 1368, "L3": 110, "L4": 1258, "L4_sam": 1085, "L4_male": 150, "L4_velike": 23, "L5": 330}, "d100": {"hotelov": 100, "icp_da": 100, "pilot_da": 26, "v_pasu": 100, "vir": "ocena"}, "rest": {"hotelov": 1158, "pilot": 304, "vir": "ocena"}, "intl": {"hotelov": 110, "vir": "ocena"}, "stopnje": {"dm_na_hotel": 2.17, "biz_na_hotel": 1.6, "priv_na_hotel": 0.0, "li_na_hotel": 1.54, "mob_na_hotel": 1.25, "office_na_hotel": 1.0, "fd_na_hotel": 0.5, "fd_biz_na_hotel": 0.38, "fd_li_na_hotel": 0.44, "dm_biz": 0.738, "dm_priv": 0.0, "dm_li": 0.708, "dm_mob": 0.577, "hotel_ni_v_apollu": 0.1}, "opombe": ["Direktne mobilne in osebni maili: Lusha zastavice na vzorcu (26 odločevalcev v 25 hotelih): mobilna 58 %, osebni mail 0 %. Apollo gateway ne razkriva osebnih mailov in telefonov, zato Apollo vzorec tu ni merodajen. Osebni maili: Apollo ponovni match 40 razkritih odločevalcev z reveal_personal_emails: 0 z osebnim mailom (0 %).", "Vzorec 30 hotelov; Apollo census odločevalcev 1594, recepcija 241.", "L2_4_5_v_pasu_30_200: Znane sobe: imenik OeHV (oehv.at/mitglieder/hotelverzeichnis, filtri Sterne x Betten, brano 25.8.2026 s Playwrightom): 1.046 clanov 4/4S/5/5S po posteljah 0-50: 115, 51-100: 412, 101-150: 218, 151-200: 116, >200: 185. Pas 30-200 sob = 60-400 postelj (sobe = postelje/2): 0,8 x 412 + 218 + 116 + 0,75 x 185 = 802 (76,7 %). Neznane: preostalih 885 hotelov L1 (neclani OeHV, po OeHV = pol kapacitete, torej manjsi); privzeta manjsa porazdelitev (25/45/15/8/7 %) da 64 % v pasu = 566. Skupaj 1.368 = 70,8 % L1. Preverba s povprecjem: Statistik Austria 5/4* 314.800 postelj / ~2.800 obratov = 108 postelj = ~54 sob na obrat (vsi tipi); samo hoteli ~72 sob.", "L3_mednarodne_znamke: Od spodaj navzgor: poimenski popis mednarodnih znamk, fransiz in mehkih znamk s 4/5* hoteli 30-200 sob v AT (Marriott/Luxury Collection/Sheraton/AC/Design Hotels ~12, Hilton/Curio ~4, IHG (Holiday Inn, voco, Indigo) ~6, Accor (Mercure, Novotel, Sofitel, MGallery, SO/, Hoxton) ~9, Hyatt 1, Radisson ~5, Wyndham/Vienna House/Ramada ~4, Best Western ~15, NH/Minor ~3, Kempinski 1, Steigenberger 1, Mandarin Oriental 1, Rosewood 1, Anantara 1, Six Senses 1, Falkensteiner ~12, Leonardo 1, H-Hotels 1, Novum/niu ~2, Almanac 1, Zoku 1, Adina 2, Robinson/TUI Blue/Aldiana ~6, Travel Charme 2, Pytloun 1) = ~100, plus ~10 neidentificiranih. Od zgoraj navzdol: Horwath HTL DACH 2025 = 18 % sob v AT je pod znamko; ~295 tisoc hotelskih sob x 18 % = ~53 tisoc sob / ~120 sob na hotel = ~440 veriznih hotelov (vkljucno z domacimi verigami in budget znamkami); mednarodne 4/5* v pasu ~ 25-30 % = 110-130. Tockovna ocena 110 (8 % L2). Zaupanje: srednje.", "L4_neodvisni_in_lokalne_verige: L4 = L2 - L3 = 1.368 - 110. Lokalne velike (>10 hotelov, samo AT): Austria Trend Hotels (Verkehrsbuero, ~25 hotelov, ~14 v pasu 4*), VAYA Resorts (~6 4* hotelov v pasu), AlpenParks (~3) = 23. JUFA (60 his) je 3* in ne steje; Harry's Home, Arcotel, Amedia imajo hise tudi v DE/CH in so mejni (steti kot lokalne male oz. izloceni). Lokalne male (2-10 hotelov): druzinske skupine (Sacher 2, Schick 5, Kremslehner 3, IMLAUER 7, Weitzer 4, Reiters 2, Warmbad 3, Sans Souci, Lenikus 2, Schani 5, Harisch 4, Pletzer ~8, Schultz, Holleis 3, Hettegger 4, VAMED Vitality World 7 term ...) ocena 150 hotelov v pasu (~12 % L4; v vzorcu 30 hotelov je 8 clanov lokalnih verig, a vzorec je bil namerno obogaten). Samostojni = ostanek 1.085. Zaupanje delitve: nizko do srednje; skupni L4 srednje.", "L5_pilotni_pas_75_200: 75-200 sob = 150-400 postelj. OeHV clani 4/5*: 151-200 postelj 116 + 0,75 x >200 185 = 255 od 802 v pasu (31,8 %); neclani ocenjeno 20,7 %; utezeno 27 % L2; znamke so v povprecju vecje, zato za L4 ~26 %: 0,26 x 1.258 = 327 -> 330."], "viri": ["https://www.statistik.at/fileadmin/announcement/2026/01/20260120TourismusBettenBestand2025.pdf", "https://www.statistik.at/fileadmin/pages/71/AnzahlBetriebeBettenBundeslaenderUnterkunftsarten2025.ods", "https://www.statistik.at/statistiken/tourismus-und-verkehr/tourismus/beherbergung/betriebe-betten", "https://www.wko.at/oe/tourismus-freizeitwirtschaft/tourismus-freizeitwirtschaft-in-zahlen-2025.pdf", "https://www.wko.at/hotelsterne/sternehotels", "https://www.wko.at/hotelsterne/vier-sterne-superior-hotels", "https://www.wko.at/hotelsterne/fuenf-sterne-hotels-in-oesterreich", "https://www.wko.at/hotelsterne/fuenf-sterne-superior-hotels", "https://www.oehv.at/mitglieder/hotelverzeichnis/", "https://www.oehv.at/recht-service/studien-kennzahlen/fitness-check-fuer-hotels-2025/", "https://horwathhtl.com/publication/dach-region-hotels-chains-report-2025/", "https://www.christie.com/de-de/neuigkeiten/pressemitteilungen/neuer-marktbericht-von-christie-co-wien-treibt-osterreichs-hoteltransaktionen-auf-ein-neues-niveau/", "https://www.christie.com/de-at/neuigkeiten/pressemitteilungen/hotelinvestmentmarkt-osterreich-mit-solidem-ersten-halbjahr-und-positivem-ausblick-auf-die-zweite-jahreshalfte-2026/", "https://hotelinside.ch/report-teil-1-zwischen-boutique-charme-und-kettenboom-die-zukunft-der-wiener-privathotellerie/", "https://immobilien-investment.at/artikel/wiener-privathotellerie-gibt-sich-gegenueber-markenhotels-selbstbewusst/", "https://hotelinside.ch/marktwertreport-2026-alpine-ferienhotellerie-in-oesterreich-zwischen-vermoegenszuwachs-und-ertragsdruck/", "https://b2b.wien.info/de/newsroom/corporate-news/bilanz2025-1083476", "https://tophotelprojects.com/blog/new-hotel-projects-in-austria", "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=20011678 (TKG 2021, par. 174)"], "kontekst": "Avstrija je trg neodvisnih druzinskih hotelov: po Horwath HTL (2025) je pod znamko le 18 % sob (DE 42 %, CH 32 %), 4/5* segment pa je s 1.931 hoteli po WKOe velik, a razprsen po alpskih destinacijah (Tirol 687, Salzburg 385), Dunaj ima le 107 4/5* hotelov, a z vso mednarodno kapaciteto. Hladni e-mail in hladni klici podjetjem so nezakoniti (par. 174 TKG 2021, brez B2B izjeme), zato je edini operativno uporaben kanal LinkedIn; vzorec kaze, da ima 71 % odlocevalcev LinkedIn profil, Apollo pa ne vrne nobene mobilne stevilke in nobenega zasebnega maila. Apollo pozna 90 % hotelov iz vzorca, a pri ~30 % hotelov nima odlocevalca (lastniska druzina ni na LinkedInu), zato je treba lastnike iskati prek impressuma, Firmenbucha (evi.gv.at, firmenabc.at) in strani 'Gastgeber'; Skrapp najde veljaven mail pri ~45 % takih imen. Odlocevalec je v alpskih hisah skoraj vedno lastnik-gostitelj (Inhaber, Gastgeber, Geschaeftsfuehrer), v mestnih in veriznih hisah pa GM/Hoteldirektor; verige (Sacher, IMLAUER, Austria Trend, Warmbad) imajo skupinske vloge (CEO, Area GM, Head of Procurement). Sezonskost: alpski hoteli so zaprti april-maj in oktober-november, kar je edini cas, ko lastniki berejo sporocila. Investicijsko okolje 2025/26 je aktivno (480 mio EUR transakcij, nasledstva, bancne prodaje), marze pa so nizke (Fitness-Check 2025), zato argument stroskov in kadra deluje bolje kot argument luksuza.", "benchmarki": [{"naslov": "Statistik Austria: Tourismusjahr 2024/25, mehr Betriebe, mehr Betten (Bestandsstatistik)", "vir": "https://www.statistik.at/fileadmin/announcement/2026/01/20260120TourismusBettenBestand2025.pdf", "datum": "2026-01-20", "kljucna_ugotovitev": "73.174 nastanitvenih obratov (+1,8 %) in 1,20 mio postelj (+0,7 %); 5/4* hoteli in podobni obrati 2,9 tisoc z 314.800 posteljami (+1,8 % postelj), 3* 4,6 tisoc (211.900 postelj), 2/1* 3,3 tisoc; zasedenost postelj 5/4* 50,3 %, Wien poleti 57 %."}, {"naslov": "Horwath HTL: DACH Region Hotels & Chains Report 2025", "vir": "https://horwathhtl.com/publication/dach-region-hotels-chains-report-2025/", "datum": "2025-10-06", "kljucna_ugotovitev": "V Avstriji je pod znamko 18 % vseh hotelskih sob (Nemcija 42 %, Svica 32 %); verizna kapaciteta je skoncentrirana v velikih mestih (Wien), rast najmocnejsa v economy in upper-midscale segmentu."}, {"naslov": "Christie & Co: Hoteltransaktionsmarkt Oesterreich 2025", "vir": "https://www.christie.com/de-de/neuigkeiten/pressemitteilungen/neuer-marktbericht-von-christie-co-wien-treibt-osterreichs-hoteltransaktionen-auf-ein-neues-niveau/", "datum": "2026-01-18", "kljucna_ugotovitev": "480 mio EUR transakcij v 2025 (+43 %), ~80 % volumna na Dunaju, 77 % tuji kupci; vec kot polovica volumna upper-upscale/luxury, najvec poslov upscale/midscale; za 2026 pricakovano zelo aktivno leto (Andaz, Grand Hotel, Park Hyatt v prodaji). H1 2026: ~240 mio EUR, 80 % mednarodni investitorji (christie.com, 12.7.2026)."}, {"naslov": "Christie & Co: Privathotellerie in Wien - Gesunder Wettbewerb oder Verdraengung vom Markt?", "vir": "https://hotelinside.ch/report-teil-1-zwischen-boutique-charme-und-kettenboom-die-zukunft-der-wiener-privathotellerie/", "datum": "2026-05-20", "kljucna_ugotovitev": "Wien: ~450 hotelov, 42.400 sob; 65 % hotelov je neodvisnih, a znamke obvladujejo 64 % sob; neodvisni ADR ~173 EUR vs. znamke ~132 EUR, zasedenost neodvisnih ~77 %; 65 % neodvisnih ocenjuje konkurencnost kot 'zelo dobro' (2013: ~10 %), 53 % razmislja o siritvi."}, {"naslov": "OeHV / OeHT / Prodinger / Kohl & Partner: Fitness-Check 2025 fuer Hotels", "vir": "https://www.oehv.at/recht-service/studien-kennzahlen/fitness-check-fuer-hotels-2025/", "datum": "2025-11-19", "kljucna_ugotovitev": "Benchmark >1.000 pocitniskih hotelov 3* do 5*: zasedenost stabilna, prihodek na sobo raste le v 4*S/5*, v navadni 4* stagnira; stroski dela +5-7 % (mediana 45-48 tisoc EUR na FTE), GOP nizek in stagnira, visji stroski financiranja iznicijo rast."}, {"naslov": "Prodinger: Marktwertreport 2026 - alpine Ferienhotellerie", "vir": "https://hotelinside.ch/marktwertreport-2026-alpine-ferienhotellerie-in-oesterreich-zwischen-vermoegenszuwachs-und-ertragsdruck/", "datum": "2025-11-11", "kljucna_ugotovitev": "Trzna vrednost 4* alpskega hotela ~227.200 EUR na sobo (referencna velikost 60-70 sob); verizenost v AT ~18 %; za 2026 pricakovano vec transakcij zaradi nasledstev in bancno sprozenih prodaj; strukturni pritisk: stroski, pomanjkanje kadra, investicijski zaostanek."}, {"naslov": "WienTourismus: Bilanz 2025", "vir": "https://b2b.wien.info/de/newsroom/corporate-news/bilanz2025-1083476", "datum": "2026-01-28", "kljucna_ugotovitev": "Wien 2025: 450 hotelov, 42.400 sob, 84.600 postelj (+4 % sob, +17 hotelov), 20,07 mio nocitev (+6 %), zasedenost sob ~71 %, ~60 % postelj v 4/5*, 26 luksuznih hotelov (novo Mandarin Oriental); pipeline 2026: Palais Coburg Residenz (150 sob, Q3 2026), Radisson Lustenau (114, Q4 2026), Hotel Bristol LC (150, Q4 2027) po tophotelprojects.com (12.8.2026)."}], "krediti": {"apollo_reveals": 40, "skrapp_find": 17, "opomba": "40 edinstvenih oseb razkritih (35 odlocevalcev + 5 recepcija), 41 API klicev, ker je prvi zapis v predpomnilnik ob 35. razkritju padel na Dropbox zaklepu in je bil isti ID ponovljen (Apollo ze razkritih oseb ne zaracuna dvakrat). Skrapp: 32 iskanj, zaracunanih 17 (stanje 19.579 -> 19.596). Firecrawl: ~180 klicev (search + scrape)."}, "vzorec_n": 30}, {"id": "tn", "ime": "Tennessee (ZDA)", "vir": "ocena", "kanali": {"email": true, "linkedin": true, "telefon": true}, "opomba_kratka": "Register: economic-impact.ahla.com; vzorec 30 hotelov; Lusha in Apollo za mobilne in osebne maile.", "sloji": {"L0": 1710, "L0_hoteli": 1710, "L1": 156, "L2": 82, "L3": 63, "L4": 21, "L4_sam": 14, "L4_male": 7, "L4_velike": 0, "L5": 13}, "d100": {"hotelov": 21, "icp_da": 21, "pilot_da": 13, "v_pasu": 21, "vir": "ocena"}, "rest": {"hotelov": 0, "pilot": 0, "vir": "ocena"}, "intl": {"hotelov": 63, "vir": "ocena"}, "stopnje": {"dm_na_hotel": 1.37, "biz_na_hotel": 0.7, "priv_na_hotel": 0.3, "li_na_hotel": 1.27, "mob_na_hotel": 0.84, "office_na_hotel": 1.0, "fd_na_hotel": 0.2, "fd_biz_na_hotel": 0.07, "fd_li_na_hotel": 0.2, "dm_biz": 0.51, "dm_priv": 0.222, "dm_li": 0.93, "dm_mob": 0.612, "hotel_ni_v_apollu": 0.27}, "opombe": ["Direktne mobilne in osebni maili: Lusha zastavice na vzorcu (49 odločevalcev v 21 hotelih): mobilna 61 %, osebni mail 0 %. Apollo gateway ne razkriva osebnih mailov in telefonov, zato Apollo vzorec tu ni merodajen. Osebni maili: Apollo ponovni match 27 razkritih odločevalcev z reveal_personal_emails: 6 z osebnim mailom (22 %).", "Vzorec 30 hotelov; Apollo census odločevalcev 1219, recepcija 212.", "L2_4_5_v_pasu_30_200: Sobe za 133 hotelov iz uradnih strani, Tripadvisor/Cvent/Michelin (Firecrawl search, work/tn/rooms_batch.json) in lastnega znanja za znane znamke (npr. DoubleTree Nashville 338, Drury Plaza Nashville 389; zaupanje zmerno). Med znanimi je v pasu 30-200 71 hotelov (53 %); pri znamkah je delez v pasu 50 %, ta delez je uporabljen za 23 neznanih (11 v pasu).", "L3_mednarodne_znamke: L2 hoteli z znamko, franszizo ali mehko znamko (Curio, Tapestry, Tribute, Autograph, Ascend, Unbound, Design Hotels, Luxury Collection) ter domace verige s sedezem zunaj Tennesseeja (Opal Collection FL = The Nash, Palisociety CA = ARRIVE, AvantStay, Johnny Morris Nature Resorts MO = Big Cypress, Herschend MO = Dollywood). Znanih 52 + 11 ocenjenih.", "L4_neodvisni_in_lokalne_verige: L2 minus L3. Po imenu preverjenih 19: The Hermitage Hotel (122); Fairlane Hotel (Oliver Hospitality) (81); Motif on Music Row (133); Bode Nashville (Bode Hotels) (93); Harthall Hotel (89); The Nashville Reserve (Oliver) (61); Hu. Hotel (110); The Hotel Chalet (127); Hotel Clemons (54); The Tennessean (82); RT Lodge (58); Blackberry Farm (68); Blackberry Mountain (36); The Inn at Christmas Place (145); RiverStone Condo Resort (Shular Hospitality) (128); Historic Rocky Waters Inn (Smoky Mountain Hotel Group) (36); Southall Farm & Inn (78); Carnegie Hotel & Spa (136); General Morgan Inn (52). Plus 2 rezervi za neodvisne, ki jih Booking zajem ni ujel. 'Lokalna veriga' = skupina s sedezem v Tennesseeju brez znamke: Oliver Hospitality (Nashville; ima tudi 3 hotele zunaj TN), Bode Hotels (Nashville; 1 hotel v CA), Blackberry (Walland), Shular Hospitality (Sevierville), Smoky Mountain Hotel Group (Gatlinburg). Nobena lokalna skupina nima >10 hotelov brez znamke; lokalne skupine z vec hoteli (Shular, SMHG, Patel druzine) imajo predvsem franszizne hotele, ki so v L3. Neodvisni izven pasu: Peabody 464, Guest House at Graceland 450, Riverline 600, Read House 241, Ramsey 208, Greystone 259 (nad); River Inn 28, Oliver Knoxville 28, Pontotoc 10, Dwell 16 (pod).", "L5_pilotni_pas_75_200: L4 s 75-200 sobami: The Hermitage Hotel (122); Fairlane Hotel (Oliver Hospitality) (81); Motif on Music Row (133); Bode Nashville (Bode Hotels) (93); Harthall Hotel (89); Hu. Hotel (110); The Hotel Chalet (127); The Tennessean (82); The Inn at Christmas Place (145); RiverStone Condo Resort (Shular Hospitality) (128); Southall Farm & Inn (78); Carnegie Hotel & Spa (136) + 1 rezerva."], "viri": ["https://economic-impact.ahla.com/states/tennessee/", "https://www.ahla.com/resource/2025-economic-impact-us-hotel-industry", "https://www.booking.com/searchresults.html?ss=Tennessee%2C+United+States&nflt=ht_id%3D204%3Bclass%3D4%3Bclass%3D5", "https://newsroom.aaa.com/wp-content/uploads/2024/04/AAA-Four-Diamond-Hotels-2026-1.pdf", "https://newsroom.aaa.com/2025/12/four-hotels-earn-prestigious-aaa-five-diamonds/", "https://www.lodgingdevelopment.com/hotel-development/tennessee", "https://www.visitmusiccity.com/sites/default/files/2026-04/getfile-(8).pdf", "https://www.visitmusiccity.com/about/research", "https://www.costar.com/article/897885961/50-room-supply-growth-over-the-last-decade-finally-affects-nashville-hotel-performance", "https://www.matthews.com/insights/nashville-tn-hospitality-market-report-q3-2025", "https://www.hoteldive.com/news/nashville-hotel-market-spotlight/749248/", "https://www.axios.com/local/nashville/2026/08/05/tennessee-tourism-spending-record-breaking", "https://www.tn.gov/tourism/news/2025/6/26/tn-tourism-breaks-record-spending-for-fourth-consecutive-year-with-31-7b-in-2024.html", "https://www.memphistravel.com/media/memphis-fact-sheet", "https://www.memphisflyer.com/the-downtown-project-tourism/", "https://www.visitknoxville.com/places-to-stay/hotels/", "https://media.mypigeonforge.com/facts/", "https://www.wvlt.tv/2026/05/26/were-holding-our-own-pigeon-forge-tourism-holds-steady-visitors-tighten-budgets-amid-rising-costs/", "https://www.hvs.com/article/9896-the-dynamic-demand-base-powering-the-knoxville-lodging-market", "https://www.tnhta.org/about-us", "https://www.oliverhospitality.com/properties", "https://www.wate.com/news/local-news/late-2026-opening-date-targeted-for-new-andrew-johnson-building-hotel/", "https://www.greatsmokiesgreatlodging.com/", "https://www.linkedin.com/in/rajbhula", "https://www.bbb.org/us/tn/nashville/profile/motel/sai-ram-009-llc-dba-motif-on-music-row-0573-37377620", "https://www.timesfreepress.com/news/2015/jun/20/adam-kinsey-takes-over-leadership-choo-choo/", "https://www.knoxnews.com/story/money/business/2019/01/29/tennessee-hotel-downtown-knoxville-sold-along-holiday-inn-southern-living-nick-cazana-rockbridge/2700781002/", "https://turkeycreekhospitality.com/team", "https://www.tnhta.org/all-current-members/carnegie-hotel---johnson-city", "https://www.opalcollection.com/nashville/", "https://www.hotelplanner.com/Hotels/334779/Reservations-Motif-on-Music-Row-Nashville-50-Music-Sq-West-37203", "https://www.musicroadresort.com/about-us", "https://valleyforgeinn.net/", "https://tnstateparks.com/parks/fall-creek-falls/lodge", "http://tnstateparks.com/parks/paris-landing/lodge", "work/tn: booking_city_list.json, booking_classified.json, rooms_batch.json, apollo_sample.json, reveals.json, skrapp.json, li_search.json, phones.json, phones2.json, census.json"], "kontekst": "Tennessee je trg znamk: od ~1.710 hotelov jih po nasi oceni le ~156 sodi v upscale/upper-upscale/luxury ali med prave neodvisne 4-5* hotele, in od teh je neodvisnih s 30-200 sobami komaj ~21 (Nashville 7, Memphis 1, Chattanooga 2, Knoxville z okolico 4, Sevier County 3, drugod 2, plus 2 rezervi). Druzinsko lastnistvo v Sevier County (Oaktenn, Music Road, Shular, Smoky Mountain Hotel Group) je stevilno, a hoteli so 3* ali pa nosijo franszizo; lokalni lastniki franchiz (Patel druzine, Shular, SMHG) so verjetno boljsa tarca kot 'neodvisni' segment sam, ker o tehnologiji odlocajo sami, a to je izven pravil L4. Nashville ima od 2024 presezek ponudbe (RevPAR 2025 -2,1 %, Memphis zasedenost 58,6 %), kar odpira argument stroskovne ucinkovitosti. Kontaktna pokritost v Apollu je za ZDA dobra: 79 % L4 hotelov je v Apollu, 91 % odlocevalcev ima LinkedIn, 55 % preverjen sluzbeni mail (Apollo verified ali Skrapp valid); Apollo pri 0.89 DM zadetkov oznacuje 'has_direct_phone', a stevilk prek nasega prehoda ne dobimo (asinhroni webhook), zato je dm_mobilna izmerjena 0,0. Pravni okvir: CAN-SPAM dovoljuje hladni B2B mail z odjavo; TCPA prepoveduje avtomatizirane/vnaprej posnete klice in SMS na mobilne brez izrecnega soglasja, rocni B2B klic na sluzbeno stevilko je dovoljen, Tennessee Do-Not-Call velja za potrosnike; klicanje neposrednih mobilnih stevilk odlocevalcev naj bo rocno in brez avtomatskega klicalnika. Casovna razlika 7 ur (Central/Eastern) omeji klicno okno na 15-19 h po srednjeevropskem casu.", "benchmarki": [{"naslov": "Tennessee Tourism 2025: record $32.5B visitor spending, lodging revenue flat at $7.38B", "vir": "https://www.axios.com/local/nashville/2026/08/05/tennessee-tourism-spending-record-breaking", "datum": "2026-08-05", "kljucna_ugotovitev": "Rekordnih 32,5 mrd USD potrosnje in ~150 mio obiskovalcev v 2025; prihodki nastanitev 7,38 mrd USD, medletno skoraj brez rasti; polno porocilo TDTD po okrajih septembra 2026."}, {"naslov": "Lodging Development: Tennessee hotel pipeline", "vir": "https://www.lodgingdevelopment.com/hotel-development/tennessee", "datum": "2026-08", "kljucna_ugotovitev": "77 projektov / 14.107 sob v razvoju (upper upscale 13 projektov / 3.803 sob, luxury 4 / 968); 46 odprtij / 6.328 sob v 24 mesecih; 39 transakcij nad 10 mio USD v 18 mesecih; pipeline skoraj v celoti znamke (Hilton, Marriott, Hyatt)."}, {"naslov": "NCVC + STR: Nashville Davidson County Hotel Development Pipeline", "vir": "https://www.visitmusiccity.com/sites/default/files/2026-04/getfile-(8).pdf", "datum": "2026-04", "kljucna_ugotovitev": "14 hotelov / 1.638 sob v gradnji, 30 / 5.835 v koncnem nacrtovanju, dodatni predlagani; neodvisni projekti redki (Songteller 245, Hoxton 200, Morris Building 128; Pendry/Ritz/Fairmont/EDITION = znamke)."}, {"naslov": "CoStar: 50% room supply growth over the last decade finally affects Nashville hotel performance", "vir": "https://www.costar.com/article/897885961/50-room-supply-growth-over-the-last-decade-finally-affects-nashville-hotel-performance", "datum": "2025-08-29", "kljucna_ugotovitev": "Nashville iz ~40.000 sob (2014) na ~60.000 (2024); ponudba prehiteva povprasevanje, RevPAR pada."}, {"naslov": "Visit Nashville Research: 2025 hotel performance", "vir": "https://www.visitmusiccity.com/about/research", "datum": "2026", "kljucna_ugotovitev": "Davidson County 2025: zasedenost 67,0 %, ADR 199,20 USD (-1,3 %), RevPAR -2,1 %, ponudba +3,4 %, povprasevanje +2,6 % (rekord)."}, {"naslov": "Memphis Tourism fact sheet + 2025 occupancy", "vir": "https://www.memphistravel.com/media/memphis-fact-sheet ; https://www.memphisflyer.com/the-downtown-project-tourism/", "datum": "2023 (fact sheet, STAREJSE) / 2026 (zasedenost 2025)", "kljucna_ugotovitev": "Memphis MSA 26.000+ sob, downtown 4.000+; zasedenost 2025 58,6 % (2024: 61,7 %), najnizje od 2011; do 15 downtown projektov, vecinoma pod 140 sob."}, {"naslov": "Visit Knoxville / Pigeon Forge Department of Tourism: supply", "vir": "https://www.visitknoxville.com/places-to-stay/hotels/ ; https://media.mypigeonforge.com/facts/ ; https://www.wvlt.tv/2026/05/26/were-holding-our-own-pigeon-forge-tourism-holds-steady-visitors-tighten-budgets-amid-rising-costs/", "datum": "2026", "kljucna_ugotovitev": "Knox County 9.200+ sob (1.800+ downtown); Pigeon Forge 14.500+ nastanitvenih enot (hoteli, moteli, kondominiji, koce), +1.600 hotelskih sob od 2024; obiskovalci 2026 varcujejo."}], "krediti": {"apollo_reveals": 27, "skrapp_find": 10, "opomba": "Apollo usage_stats vraca 404 (znano); stetje prek reveal_cache 'ocena_tn' (27 zapisov). Skrapp: used 19.609 -> 19.619 (10 kreditov za 10 najdenih naslovov, invalid brezplacno)."}, "vzorec_n": 30}, {"id": "gr", "ime": "Grčija", "vir": "manjka", "kanali": {"email": true, "linkedin": true, "telefon": false}, "sloji": {}, "d100": {}, "rest": {}, "intl": {}, "stopnje": {}, "opombe": ["Ocena za Grčija še ni izdelana."], "viri": [], "kontekst": "", "benchmarki": [], "krediti": {}}]};
+const $ = (s) => document.querySelector(s);
+const fmt = (n) => (n == null || isNaN(n)) ? "–" : String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+const pct = (x) => (x == null || isNaN(x)) ? "–" : Math.round(x * 100) + " %";
+const MARKET_ORDER = ["si", "hr", "uae", "it", "tn", "gr", "at"];
+const CH = { email: "Email", linkedin: "LinkedIn", telefon: "Telefon" };
+
+function num(id, d) { const v = parseFloat($(id).value); return isNaN(v) ? d : v; }
+function params() {
+  return {
+    mb: num("#in_mb", 0), warm: num("#in_warm", 0), li: num("#in_li", 0), ft: num("#in_ft", 0), pt: num("#in_pt", 0),
+    mails: num("#p_mails", 33), steps: num("#p_steps", 5), seqd: num("#p_seqd", 10), perlead: num("#p_perlead", 4.6), days: num("#p_days", 5),
+    lid: num("#p_li", 25), liseqd: num("#p_liseqd", 14), calls: num("#p_calls", 30), cph: num("#p_cph", 2), chain: num("#p_chain", 0.7),
+    extra: num("#p_extra", 0), extraOd: new Date($("#p_extra_od").value), start: new Date($("#p_start").value), end: new Date($("#p_end").value), goalw: num("#p_goalw", 8),
+  };
+}
+const trgi = () => MARKET_ORDER.map(id => DATA.trgi.find(t => t.id === id)).filter(Boolean);
+
+// ---------- kontakti po slojih ----------
+function kontakti(m, layer, P) {
+  const s = m.stopnje || {}; const L = m[layer] || {}; const h = L.hotelov || 0;
+  if (layer === "d100" && L.vir === "dejansko" && L.kontakti) return Object.assign({ vir: "dejansko" }, L.kontakti);
+  const f = layer === "intl" ? P.chain : 1;
+  return { vir: "ocena", dm: h * (s.dm_na_hotel || 0) * f, biz: h * (s.biz_na_hotel || 0) * f, priv: h * (s.priv_na_hotel || 0) * f, li: h * (s.li_na_hotel || 0) * f,
+    mob: h * (s.mob_na_hotel || 0) * f, office: h * (s.office_na_hotel || 0), fd: h * (s.fd_na_hotel || 0), fd_biz: h * (s.fd_biz_na_hotel || 0), fd_li: h * (s.fd_li_na_hotel || 0) };
+}
+function sumK(list) { const o = { dm: 0, biz: 0, priv: 0, li: 0, mob: 0, office: 0, fd: 0, fd_biz: 0, fd_li: 0 }; list.forEach(k => Object.keys(o).forEach(f => o[f] += (k[f] || 0))); return o; }
+
+// ---------- tabele ----------
+function marketTag(m) { return m.vir === "dejansko" ? '<span class="tag act">dej.</span>' : (m.vir === "manjka" ? '<span class="tag off">čaka</span>' : '<span class="tag est">ocena</span>'); }
+function restHotels(m) { return ((m.rest || {}).hotelov || 0) + ((m.intl || {}).hotelov || 0); }
+function renderSloji() {
+  const T = trgi();
+  const head = `<thead><tr><th class="l">Sloj (hoteli)</th>${T.map(m => `<th>${m.ime}${marketTag(m)}</th>`).join("")}<th>Skupaj</th></tr></thead>`;
+  const blocks = [
+    ["Celoten trg", [
+      ["Hoteli v registru, vse kategorije", m => m.sloji.L0, "sub"],
+      ["4 in 5 zvezdic, vsi operaterji", m => m.sloji.L1, "sub"],
+      ["4 in 5 zvezdic, 30 do 200 sob", m => m.sloji.L2, "key"],
+    ]],
+    ["Dream 100", [
+      ["Hotelov v izboru", m => m.d100.hotelov, "key"],
+      ["od tega ICP", m => m.d100.icp_da, "sub"],
+      ["od tega pilotni pas 75 do 200 sob", m => m.d100.pilot_da, "sub"],
+    ]],
+    ["Ostali zunaj izbora", [
+      ["Hotelov zunaj Dream 100", m => restHotels(m), "key"],
+      ["od tega neodvisni in lokalne verige", m => (m.rest || {}).hotelov, "sub"],
+      ["od tega mednarodne verige", m => (m.intl || {}).hotelov, "sub"],
+      ["od tega pilotni pas 75 do 200 sob", m => (m.rest || {}).pilot, "sub"],
+    ]],
+  ];
+  let body = "<tbody>";
+  blocks.forEach(([bl, rows]) => {
+    body += `<tr class="blk"><td colspan="${T.length + 2}">${bl}</td></tr>`;
+    rows.forEach(([lab, f, cls]) => { let tot = 0; const cells = T.map(m => { const v = m.vir === "manjka" ? null : f(m); if (typeof v === "number") tot += v; return `<td>${fmt(v)}</td>`; }).join(""); body += `<tr class="${cls}"><td class="l">${lab}</td>${cells}<td>${fmt(tot)}</td></tr>`; });
+  });
+  $("#t_sloji").innerHTML = head + body + "</tbody>";
+  $("#c_sloji").innerHTML = T.filter(m => m.opomba_kratka).map(m => `<b>${m.ime}</b>: ${m.opomba_kratka}`).join(" · ");
+}
+
+function telCount(k, hotels) { return (k.mob || 0) + Math.min(hotels || 0, k.office || 0); }
+function statHTML(cls, v, label, share) { return `<div class="stat ${cls}"><div class="v">${fmt(v)}</div><div class="l">${label}</div><div class="b"><i style="width:${Math.round(100 * Math.max(0, Math.min(1, share || 0)))}%"></i></div></div>`; }
+function renderMirror(P) {
+  const T = trgi().filter(m => m.vir !== "manjka");
+  const rows = T.map(m => {
+    const kD = kontakti(m, "d100", P), kO = sumK([kontakti(m, "rest", P), kontakti(m, "intl", P)]);
+    const hD = m.d100.hotelov, hO = restHotels(m);
+    return { m, D: { hot: hD, mail: kD.biz, li: kD.li, tel: telCount(kD, hD) }, O: { hot: hO, mail: kO.biz, li: kO.li, tel: telCount(kO, hO) } };
+  });
+  const tot = { D: { hot: 0, mail: 0, li: 0, tel: 0 }, O: { hot: 0, mail: 0, li: 0, tel: 0 } };
+  rows.forEach(r => ["D", "O"].forEach(sd => Object.keys(tot[sd]).forEach(k => tot[sd][k] += r[sd][k])));
+  const mx = (r, k) => Math.max(r.D[k], r.O[k], 1);
+  const side = (r, sd, cls) => `<div class="side ${cls}">${statHTML("hot", r[sd].hot, "hotelov", r[sd].hot / mx(r, "hot"))}${statHTML("email", r[sd].mail, "poslovnih mailov", r[sd].mail / mx(r, "mail"))}${statHTML("li", r[sd].li, "LinkedIn profilov", r[sd].li / mx(r, "li"))}${statHTML("tel", r[sd].tel, "telefonov (mobilne + office)", r[sd].tel / mx(r, "tel"))}</div>`;
+  const mid = (m, sub) => `<div class="mid"><div class="t">${m}</div><div class="s">${sub}</div></div>`;
+  let h = `<div class="mhead"><div>Ostali zunaj izbora</div><div style="text-align:center">Trg</div><div class="r">Dream 100</div></div><div class="mirror">`;
+  const chan = (m) => `${m.kanali.email ? "mail" : "brez maila"} · LinkedIn · ${m.kanali.telefon ? "klic" : "brez klica"}`;
+  h += `<div class="mrow total">${side({ D: tot.D, O: tot.O }, "O", "left")}${mid("Vsi trgi", "7 trgov skupaj")}${side({ D: tot.D, O: tot.O }, "D", "right")}</div>`;
+  rows.forEach(r => { h += `<div class="mrow">${side(r, "O", "left")}${mid(r.m.ime.replace("Združeni arabski emirati", "UAE"), chan(r.m))}${side(r, "D", "right")}</div>`; });
+  $("#mirror").innerHTML = h + "</div>";
+}
+
+function renderKontakti(P) {
+  const T = trgi();
+  const cols = [["dm", "Odločevalci"], ["biz", "Poslovni mail"], ["priv", "Osebni mail"], ["li", "LinkedIn"], ["mob", "Direktna mobilna"], ["office", "Office telefon (hotelov)"], ["fd", "Vodje recepcij"], ["fd_biz", "… z mailom"], ["fd_li", "… z LinkedIn"]];
+  let h = `<thead><tr><th class="l">Trg / sloj</th><th>Hotelov</th>${cols.map(c => `<th>${c[1]}</th>`).join("")}</tr></thead><tbody>`;
+  const totals = { d100: [], rest: [], intl: [] };
+  T.forEach(m => {
+    if (m.vir === "manjka") { h += `<tr class="blk"><td colspan="11">${m.ime}: ocena še ni izdelana</td></tr>`; return; }
+    const ch = m.kanali; const chTxt = `${ch.email ? "" : " · brez maila"}${ch.telefon ? "" : " · brez klicev"}`;
+    h += `<tr class="blk"><td colspan="11">${m.ime}${marketTag(m)}<span class="muted small" style="text-transform:none;font-weight:400">${chTxt}</span></td></tr>`;
+    const kD = kontakti(m, "d100", P); totals.d100.push(kD);
+    h += `<tr class="key"><td class="l">Dream 100</td><td>${fmt(m.d100.hotelov)}</td>${cols.map(c => `<td>${fmt(kD[c[0]])}</td>`).join("")}</tr>`;
+    const kR = kontakti(m, "rest", P), kI = kontakti(m, "intl", P); totals.rest.push(kR); totals.intl.push(kI);
+    const kO = sumK([kR, kI]);
+    h += `<tr class="key"><td class="l">Ostali zunaj izbora</td><td>${fmt(restHotels(m))}</td>${cols.map(c => `<td>${fmt(kO[c[0]])}</td>`).join("")}</tr>`;
+    h += `<tr class="sub"><td class="l">neodvisni in lokalne verige</td><td>${fmt(m.rest.hotelov)}</td>${cols.map(c => `<td>${fmt(kR[c[0]])}</td>`).join("")}</tr>`;
+    h += `<tr class="sub"><td class="l">mednarodne verige</td><td>${fmt(m.intl.hotelov)}</td>${cols.map(c => `<td>${fmt(kI[c[0]])}</td>`).join("")}</tr>`;
+    const all = sumK([kD, kR, kI]);
+    h += `<tr class="sum"><td class="l">Celoten trg</td><td>${fmt(m.sloji.L2)}</td>${cols.map(c => `<td>${fmt(all[c[0]])}</td>`).join("")}</tr>`;
+  });
+  const tD = sumK(totals.d100), tR = sumK(totals.rest), tI = sumK(totals.intl), tA = sumK([tD, tR, tI]);
+  const hot = (L) => T.reduce((a, m) => a + ((m[L] || {}).hotelov || 0), 0);
+  h += `<tr class="blk"><td colspan="11">Vsi trgi skupaj</td></tr>`;
+  h += `<tr class="key"><td class="l">Dream 100</td><td>${fmt(hot("d100"))}</td>${cols.map(c => `<td>${fmt(tD[c[0]])}</td>`).join("")}</tr>`;
+  h += `<tr class="key"><td class="l">Ostali zunaj izbora</td><td>${fmt(hot("rest") + hot("intl"))}</td>${cols.map(c => `<td>${fmt(sumK([tR, tI])[c[0]])}</td>`).join("")}</tr>`;
+  h += `<tr class="sum"><td class="l">Skupaj</td><td>${fmt(hot("d100") + hot("rest") + hot("intl"))}</td>${cols.map(c => `<td>${fmt(tA[c[0]])}</td>`).join("")}</tr>`;
+  $("#t_kontakti").innerHTML = h + "</tbody>";
+  $("#tiles_total").innerHTML = [
+    ["email", fmt(tD.biz), "poslovnih mailov, Dream 100"], ["email", fmt(tA.biz), "poslovnih mailov, vsi sloji"],
+    ["li", fmt(tD.li), "LinkedIn profilov, Dream 100"], ["li", fmt(tA.li), "LinkedIn profilov, vsi sloji"],
+    ["tel", fmt(tD.mob), "direktnih mobilnih, Dream 100"], ["tel", fmt(tA.mob), "direktnih mobilnih, vsi sloji"],
+    ["", fmt(tA.priv), "osebnih mailov (custom audience)"], ["", fmt(tA.fd), "vodij recepcij, vsi sloji"],
+  ].map(t => `<div class="tile ${t[0]}"><div class="v">${t[1]}</div><div class="l">${t[2]}</div></div>`).join("");
+  const st = T.filter(m => m.stopnje && m.stopnje.dm_na_hotel != null).map(m => `<tr><td class="l">${m.ime}</td><td>${m.stopnje.dm_na_hotel}</td><td>${m.stopnje.biz_na_hotel}</td><td>${m.stopnje.priv_na_hotel}</td><td>${m.stopnje.li_na_hotel}</td><td>${m.stopnje.mob_na_hotel}</td><td>${pct(m.stopnje.office_na_hotel)}</td><td>${m.stopnje.fd_na_hotel}</td><td class="l">${m.vir === "dejansko" ? "Dream 100 dosje" : "vzorec " + (m.vzorec_n || "?") + " hotelov (Apollo, Skrapp, Firecrawl, Lusha)"}</td></tr>`).join("");
+  $("#c_kontakti").innerHTML = `<div class="tw"><table><thead><tr><th class="l">Trg</th><th>Odločevalcev</th><th>Poslovnih mailov</th><th>Osebnih mailov</th><th>LinkedIn</th><th>Direktnih mobilnih</th><th>Office telefon</th><th>Vodij recepcij</th><th class="l">Vir stopnje</th></tr></thead><tbody>${st}</tbody></table></div><p class="small muted">Vse stopnje so na hotel. Pri mednarodnih verigah je uporabljen faktor ${P.chain}.</p>`;
+}
+
+// ---------- kampanje ----------
+function angles(id) { return id === "hr" ? ["Index", "Scrape"] : ["Scrape", "Index"]; }
+function buildCampaigns(P) {
+  const T = trgi().filter(m => m.vir !== "manjka"); const C = [];
+  T.forEach((m, mi) => {
+    const kD = kontakti(m, "d100", P), kR = kontakti(m, "rest", P), kI = kontakti(m, "intl", P);
+    const [a1, a2] = angles(m.id);
+    if (m.kanali.email) {
+      const c1 = { id: `${m.id}-e-1`, m, ch: "email", layer: "d100", angle: a1, demand: Math.round(kD.biz), pri: mi, pred: null };
+      const c2 = { id: `${m.id}-e-2`, m, ch: "email", layer: "d100", angle: a2, demand: Math.round(kD.biz), pri: mi + 0.5, pred: c1.id };
+      const c3 = { id: `${m.id}-e-3`, m, ch: "email", layer: "rest", angle: "Angle 3", demand: Math.round(kR.biz + kI.biz), pri: 100 + mi, pred: null };
+      C.push(c1, c2, c3);
+    }
+    const l1 = { id: `${m.id}-l-1`, m, ch: "linkedin", layer: "d100", angle: a1, demand: Math.round(kD.li), pri: mi, pred: null };
+    const l2 = { id: `${m.id}-l-2`, m, ch: "linkedin", layer: "d100", angle: a2, demand: Math.round(kD.li), pri: mi + 0.5, pred: l1.id };
+    const l3 = { id: `${m.id}-l-3`, m, ch: "linkedin", layer: "rest", angle: "Angle 3", demand: Math.round(kR.li + kI.li), pri: 100 + mi, pred: null };
+    C.push(l1, l2, l3);
+    if (m.kanali.telefon) {
+      const hotels = Math.round(Math.min(m.d100.hotelov, Math.max(kD.office, kD.mob)));
+      C.push({ id: `${m.id}-t-1`, m, ch: "telefon", layer: "d100", angle: "klici v sekvenci", demand: hotels, pri: mi, pred: null });
+    }
+  });
+  return C;
+}
+
+// ---------- simulacija ----------
+function weeksBetween(a, b) { return Math.max(1, Math.round((b - a) / (7 * 864e5))); }
+function simulate(P, scen) {
+  const C = buildCampaigns(P).map(c => Object.assign({}, c, { rem: c.demand, start: null, intakeEnd: null, tailEnd: null, alloc: [] }));
+  const byId = Object.fromEntries(C.map(c => [c.id, c]));
+  const W = weeksBetween(P.start, P.end);
+  const tailW = { email: Math.ceil(P.seqd / 7), linkedin: Math.ceil(P.liseqd / 7), telefon: 0 };
+  const util = { email: [], linkedin: [], telefon: [] };
+  const capEmail = (w) => { const d = new Date(P.start.getTime() + w * 7 * 864e5); const mb = P.warm + (d >= P.extraOd ? P.extra : 0); return mb * P.mails * P.days / P.perlead; };
+  const capLi = () => P.li * P.lid * P.days;
+  const sellerCap = P.calls * P.days / P.cph;
+  // prodajalci: FT -> [si,hr,uae,tn], PT1 -> [] (AT), PT2 -> [it], PT3+ -> ostali telefonski trgi
+  const pools = [];
+  for (let i = 0; i < P.ft; i++) pools.push({ name: `Polni prodajalec ${i + 1}`, mk: ["si", "hr", "uae", "tn"] });
+  const ptM = [[], ["it"], ["uae", "tn"], ["si", "hr"]];
+  for (let i = 0; i < P.pt; i++) pools.push({ name: `Popoldanski ${i + 1}`, mk: ptM[Math.min(i, 3)] });
+  const ready = (c, w) => { if (c.rem <= 0) return false; if (!c.pred) return true; const p = byId[c.pred]; return p.rem <= 0 && p.intakeEnd != null && (p.intakeEnd + tailW[p.ch]) <= w; };
+  for (let w = 0; w < W; w++) {
+    ["email", "linkedin"].forEach(ch => {
+      let cap = ch === "email" ? capEmail(w) : capLi(); const cap0 = cap;
+      const d100Rem = C.some(c => c.ch === ch && c.layer === "d100" && c.rem > 0);
+      let rd = C.filter(c => c.ch === ch && ready(c, w)).sort((a, b) => a.pri - b.pri);
+      if (scen.restAfterD100 && d100Rem) rd = rd.filter(c => c.layer === "d100");
+      let groups = scen.leftover ? [rd.filter(c => c.layer === "d100"), rd.filter(c => c.layer !== "d100")] : [rd];
+      groups.forEach(g => {
+        g = g.slice(0, scen.K);
+        // water-filling: enak delez, presezek naprej
+        let left = g.slice();
+        while (cap > 0.5 && left.length) {
+          const share = cap / left.length; const next = [];
+          left.forEach(c => { const take = Math.min(share, c.rem); if (take > 0) { c.rem -= take; cap -= take; c.alloc[w] = (c.alloc[w] || 0) + take; if (c.start == null) c.start = w; if (c.rem <= 0.5) { c.rem = 0; c.intakeEnd = w; c.tailEnd = w + tailW[ch]; } else next.push(c); } });
+          if (next.length === left.length) break; left = next;
+        }
+      });
+      util[ch][w] = cap0 > 0 ? (cap0 - cap) / cap0 : 0;
+    });
+    // telefon
+    let usedT = 0, capT = 0;
+    pools.forEach(pool => {
+      let cap = sellerCap; capT += sellerCap;
+      for (const mk of pool.mk) {
+        const c = byId[`${mk}-t-1`]; if (!c || c.rem <= 0) continue;
+        const e = byId[`${mk}-e-1`] || byId[`${mk}-l-1`]; if (e && e.start == null) continue; // klici sledijo drugemu mailu
+        const take = Math.min(cap, c.rem); if (take <= 0) continue;
+        c.rem -= take; cap -= take; usedT += take; c.alloc[w] = (c.alloc[w] || 0) + take; c.pool = pool.name; if (c.start == null) c.start = w; if (c.rem <= 0.5) { c.rem = 0; c.intakeEnd = w; c.tailEnd = w; }
+        if (cap <= 0.5) break;
+      }
+    });
+    util.telefon[w] = capT > 0 ? usedT / capT : null;
+  }
+  // KPI
+  const d100 = C.filter(c => c.layer === "d100" && c.ch !== "telefon");
+  const doneW = (list) => list.length && list.every(c => c.tailEnd != null) ? Math.max(...list.map(c => c.tailEnd)) : null;
+  const perMarket = trgi().filter(m => m.vir !== "manjka").map(m => ({ m, done: doneW(d100.filter(c => c.m.id === m.id)), doneEmail: doneW(d100.filter(c => c.m.id === m.id && c.ch === "email")), doneLi: doneW(d100.filter(c => c.m.id === m.id && c.ch === "linkedin")) }));
+  const restList = C.filter(c => c.layer === "rest");
+  const telList = C.filter(c => c.ch === "telefon");
+  const gapWeeks = (ch) => util[ch].filter((u, w) => u != null && u < 0.95 && C.some(c => c.ch === ch && c.rem > 0 || (c.ch === ch && c.intakeEnd != null && c.intakeEnd > w))).length;
+  return { C, W, util, perMarket, d100Done: doneW(d100), restDone: doneW(restList), restOpen: restList.filter(c => c.rem > 0), telDone: doneW(telList), telOpen: telList.filter(c => c.rem > 0), pools, gaps: { email: gapWeeks("email"), linkedin: gapWeeks("linkedin") } };
+}
+function wDate(P, w) { const d = new Date(P.start.getTime() + w * 7 * 864e5); return d.toLocaleDateString("sl-SI", { day: "numeric", month: "short", year: "numeric" }); }
+
+// ---------- gantt ----------
+const MON = ["jan", "feb", "mar", "apr", "maj", "jun", "jul", "avg", "sep", "okt", "nov", "dec"];
+function gantt(P, R) {
+  const rowsC = R.C.filter(c => c.demand > 0).sort((a, b) => MARKET_ORDER.indexOf(a.m.id) - MARKET_ORDER.indexOf(b.m.id) || ["email", "linkedin", "telefon"].indexOf(a.ch) - ["email", "linkedin", "telefon"].indexOf(b.ch) || a.pri - b.pri);
+  const LW = 250, cw = 22, rh = 18, top = 30, W = R.W; const width = LW + W * cw + 10; const utilH = 3 * 14 + 16; const height = top + rowsC.length * rh + 20 + utilH;
+  const col = { email: "var(--email)", linkedin: "var(--li)", telefon: "var(--tel)" }, tcol = { email: "var(--tail-email)", linkedin: "var(--tail-li)", telefon: "var(--tail-tel)" };
+  let s = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" font-size="11">`;
+  // mesecna os
+  let lastM = -1;
+  for (let w = 0; w < W; w++) { const d = new Date(P.start.getTime() + w * 7 * 864e5); if (d.getMonth() !== lastM) { lastM = d.getMonth(); s += `<text x="${LW + w * cw + 2}" y="14" font-size="11">${MON[d.getMonth()]} ${String(d.getFullYear()).slice(2)}</text><line x1="${LW + w * cw}" y1="18" x2="${LW + w * cw}" y2="${height - utilH}" stroke="var(--line)" />`; } }
+  let prevM = null;
+  rowsC.forEach((c, i) => {
+    const y = top + i * rh;
+    if (c.m.id !== prevM) { s += `<line x1="0" y1="${y - 1}" x2="${width}" y2="${y - 1}" stroke="var(--line)" />`; prevM = c.m.id; }
+    s += `<text x="4" y="${y + 12}" font-size="11" fill="var(--ink)">${c.m.ime.replace(" (ZDA)", "").replace("Združeni arabski emirati", "UAE")} · ${c.layer === "d100" ? "D100" : "Nad D100"} · ${c.angle}${c.pool ? " · " + c.pool : ""}</text>`;
+    if (c.start != null) {
+      const x0 = LW + c.start * cw; const ie = c.intakeEnd != null ? c.intakeEnd : W - 1; const te = c.tailEnd != null ? c.tailEnd : ie;
+      if (c.tailEnd != null && c.tailEnd > c.intakeEnd) s += `<rect x="${LW + (ie + 1) * cw}" y="${y + 3}" width="${(te - ie) * cw - 2}" height="${rh - 6}" rx="3" fill="${tcol[c.ch]}" />`;
+      for (let w = c.start; w <= ie; w++) { const a = c.alloc[w] || 0; if (a <= 0) continue; const op = 0.35 + 0.65 * Math.min(1, a / Math.max(1, Math.max(...c.alloc.filter(Boolean)))); s += `<rect class="bar" data-tip="${c.m.ime} · ${c.angle} · ${CH[c.ch]} · teden ${wDate(P, w)}: ${fmt(a)} novih leadov (od ${fmt(c.demand)})" x="${x0 + (w - c.start) * cw}" y="${y + 3}" width="${cw - 2}" height="${rh - 6}" rx="3" fill="${col[c.ch]}" opacity="${op.toFixed(2)}" />`; }
+      if (c.intakeEnd == null) s += `<text x="${LW + W * cw + 2}" y="${y + 12}" font-size="10" fill="var(--bad-fg)">${fmt(c.rem)} ostane</text>`;
+    } else s += `<text x="${LW + 4}" y="${y + 12}" font-size="10" fill="var(--bad-fg)">ni kapacitete: ${fmt(c.demand)} leadov</text>`;
+  });
+  // izkoriscenost
+  const uy = top + rowsC.length * rh + 18;
+  s += `<text x="4" y="${uy - 4}" font-size="11">Izkoriščenost kanala po tednih (poln = 100 %)</text>`;
+  ["email", "linkedin", "telefon"].forEach((ch, k) => {
+    const y = uy + k * 14; s += `<text x="4" y="${y + 10}" font-size="10">${CH[ch]}</text>`;
+    for (let w = 0; w < W; w++) { const u = R.util[ch][w]; if (u == null) { s += `<rect x="${LW + w * cw}" y="${y}" width="${cw - 2}" height="11" rx="2" fill="none" stroke="var(--line)" />`; continue; } s += `<rect class="bar" data-tip="${CH[ch]} · teden ${wDate(P, w)}: ${pct(u)} kapacitete" x="${LW + w * cw}" y="${y}" width="${cw - 2}" height="11" rx="2" fill="${col[ch]}" opacity="${(0.08 + 0.92 * u).toFixed(2)}" />`; }
+  });
+  return s + "</svg>";
+}
+
+const SCEN = [
+  { key: "s1", name: "Scenarij 1: vse vzporedno (kot naročeno)", K: 99, restAfterD100: false, leftover: false, desc: "SI Scrape + HR Index hkrati, po izteku zamenjava, ostali trgi Scrape pa Index, tretji angle za sloj nad Dream 100 teče vzporedno in si deli cev z Dream 100." },
+  { key: "s1b", name: "Scenarij 1b: vzporedno, Dream 100 prednostno", K: 99, restAfterD100: false, leftover: true, desc: "Isto kot 1, a tretji angle dobi le ostanek kapacitete, dokler ima Dream 100 nezačete leade. Dream 100 na vseh trgih je gotov najprej." },
+  { key: "s2", name: "Scenarij 2: delno zaporedno (štiri kampanje hkrati)", K: 4, restAfterD100: true, leftover: false, desc: "Največ štiri kampanje na kanal hkrati po prioriteti (SI, HR, UAE, IT, TN, GR, AT). Sloj nad Dream 100 šele, ko je Dream 100 povsod gotov." },
+  { key: "s3", name: "Scenarij 3: strogo zaporedno (en trg naenkrat)", K: 1, restAfterD100: true, leftover: false, desc: "Vsa cev enemu trgu, angle za anglom, trg za trgom. Med iztekom sekvence prvega trga cev že dela za naslednjega, zato ni lukenj." },
+];
+
+function renderScenarios(P) {
+  const out = []; const R = {};
+  SCEN.forEach(sc => {
+    const r = simulate(P, sc); R[sc.key] = r;
+    const pm = r.perMarket.map(x => `<tr><td class="l">${x.m.ime}</td><td>${x.doneEmail != null ? wDate(P, x.doneEmail) : (x.m.kanali.email ? '<span class="bad">ne do konca</span>' : '<span class="muted">brez maila</span>')}</td><td>${x.doneLi != null ? wDate(P, x.doneLi) : '<span class="bad">ne do konca</span>'}</td></tr>`).join("");
+    const telRows = r.C.filter(c => c.ch === "telefon").map(c => `<tr><td class="l">${c.m.ime}</td><td>${c.pool || '<span class="bad">ni prodajalca</span>'}</td><td>${fmt(c.demand)}</td><td>${c.tailEnd != null ? wDate(P, c.tailEnd) : (c.start != null ? `<span class="bad">${fmt(c.rem)} hotelov ostane</span>` : '<span class="bad">ne začne</span>')}</td></tr>`).join("");
+    out.push(`<div class="scen card"><h3 style="margin-top:0">${sc.name}</h3><p class="small">${sc.desc}</p>
+      <div class="kpis">
+        <div class="kpi">Dream 100, oba angla, vsi trgi<b class="${r.d100Done != null ? "ok" : "bad"}">${r.d100Done != null ? wDate(P, r.d100Done) : "ne do 30. 4."}</b></div>
+        <div class="kpi">Sloj nad Dream 100 (angle 3)<b class="${r.restDone != null ? "ok" : "bad"}">${r.restDone != null ? wDate(P, r.restDone) : "ne do konca: " + fmt(r.restOpen.reduce((a, c) => a + c.rem, 0)) + " leadov ostane"}</b></div>
+        <div class="kpi">Klici Dream 100<b class="${r.telDone != null ? "ok" : "bad"}">${r.telDone != null ? wDate(P, r.telDone) : (r.telOpen.length + " trgov nedokončanih")}</b></div>
+        <div class="kpi">Tedni z nezapolnjeno cevjo (email / LinkedIn)<b>${r.gaps.email} / ${r.gaps.linkedin}</b></div>
+      </div>
+      <div class="gantt">${gantt(P, r)}</div>
+      <div class="grid g3" style="margin-top:12px"><div class="tw"><table><thead><tr><th class="l">Dream 100 gotov (oba angla)</th><th>Email</th><th>LinkedIn</th></tr></thead><tbody>${pm}</tbody></table></div>
+      <div class="tw"><table><thead><tr><th class="l">Klici</th><th>Prodajalec</th><th>Hotelov</th><th>Gotovo</th></tr></thead><tbody>${telRows}</tbody></table></div></div></div>`);
+  });
+  $("#scenarios").innerHTML = out.join("");
+  // priporocilo
+  const best = SCEN.map(sc => ({ sc, r: R[sc.key] })).filter(x => x.r.d100Done != null).sort((a, b) => a.r.d100Done - b.r.d100Done)[0];
+  const s1 = R.s1, s3 = R.s3, s1b = R.s1b;
+  const firstMarketS3 = s3.perMarket.find(x => x.m.id === "si");
+  const totalRest = s1.C.filter(c => c.layer === "rest").reduce((a, c) => a + c.demand, 0);
+  let rec = `<h3 style="margin-top:0">Kaj številke povedo</h3><ul>`;
+  rec += `<li><b>Cev je ista v vseh scenarijih.</b> Email zmore ${fmt(P.warm * P.mails * P.days / P.perlead)} novih leadov na teden (${P.warm} accountov × ${P.mails} × ${P.days} dni / ${P.perlead} mailov na lead), LinkedIn ${fmt(P.li * P.lid * P.days)} povabil na teden, vsak prodajalec ${fmt(P.calls * P.days / P.cph)} hotelov na teden. Zaporedje spremeni samo, kdo je gotov prvi.</li>`;
+  if (best) rec += `<li><b>Dream 100 z obema angloma na vseh trgih je najhitreje gotov v ${best.sc.name.split(":")[0]}</b>: ${wDate(P, best.r.d100Done)}. ${s1b.d100Done != null && s1.d100Done != null && s1b.d100Done < s1.d100Done ? "Scenarij 1 brez prednosti za Dream 100 ga zamakne na " + wDate(P, s1.d100Done) + ", ker tretji angle (" + fmt(totalRest) + " leadov nad Dream 100) pije isto cev." : ""}</li>`;
+  if (firstMarketS3 && firstMarketS3.done != null) rec += `<li><b>Če hočeš en trg zares zaključen zgodaj, je to scenarij 3</b>: Slovenija ima oba angla za sabo ${wDate(P, firstMarketS3.done)}, ostali trgi pa čakajo. Vzporedno (1b) dobi vsak trg prvi angle v prvih tednih, a nihče ni gotov pred ${s1b.d100Done != null ? wDate(P, s1b.d100Done) : "koncem okna"}.</li>`;
+  rec += `<li><b>Kje zmanjka:</b> ${s1b.restDone == null ? "sloj nad Dream 100 (" + fmt(totalRest) + " leadov) se z današnjimi accounti ne izteče do 30. 4.; rabimo dodatne mailboxe ali ožji izbor (glej razdelek 4)." : "sloj nad Dream 100 se z današnjimi accounti izteče " + wDate(P, s1b.restDone) + "."} ${s1b.telOpen.length ? "Klici: " + s1b.telOpen.map(c => c.m.ime).join(", ") + " brez prodajalca ali nedokončani; Grčija in Avstrija nista telefonska trga." : "Klici so pokriti."}</li>`;
+  rec += `<li><b>Priporočilo:</b> scenarij 1b. Vsi trgi dobijo prvi angle takoj (vsak dan en trg, glej razdelek 6), Dream 100 ima prednost pred tretjim anglom, cev nikoli ne stoji. Ko so vsi Dream 100 skozi oba angla, se sprosti vsa kapaciteta za sloj nad Dream 100, kjer je največ leadov in kjer je smiselno dodati accounte.</li></ul>`;
+  $("#rec").innerHTML = rec;
+}
+
+// ---------- kapaciteta ----------
+function renderCapacity(P) {
+  const C = buildCampaigns(P);
+  const capE = P.warm * P.mails * P.days / P.perlead, capL = P.li * P.lid * P.days, capT = (P.ft + P.pt) * P.calls * P.days / P.cph;
+  const dE = C.filter(c => c.ch === "email" && c.layer === "d100").reduce((a, c) => a + c.demand, 0), rE = C.filter(c => c.ch === "email" && c.layer === "rest").reduce((a, c) => a + c.demand, 0);
+  const dL = C.filter(c => c.ch === "linkedin" && c.layer === "d100").reduce((a, c) => a + c.demand, 0), rL = C.filter(c => c.ch === "linkedin" && c.layer === "rest").reduce((a, c) => a + c.demand, 0);
+  const dT = C.filter(c => c.ch === "telefon").reduce((a, c) => a + c.demand, 0);
+  $("#tiles_cap").innerHTML = [
+    ["email", fmt(P.warm * P.mails), "mailov na dan", P.warm + " ogretih accountov × " + P.mails], ["email", fmt(capE), "novih leadov na teden", "mail sekvence, " + P.perlead + " mailov na lead"],
+    ["li", fmt(P.li * P.lid), "LinkedIn povabil na dan", P.li + " profili × " + P.lid], ["li", fmt(capL), "novih leadov na teden", "LinkedIn sekvence"],
+    ["tel", fmt((P.ft + P.pt) * P.calls), "klicev na dan", (P.ft + P.pt) + " prodajalcev × " + P.calls], ["tel", fmt(capT), "hotelov na teden", P.cph + " klica na hotel"],
+  ].map(t => `<div class="tile ${t[0]}"><div class="v">${t[1]}</div><div class="l">${t[2]}</div><div class="have">${t[3]}</div></div>`).join("");
+  let h = `<thead><tr><th class="l">Kanal</th><th>Dream 100, angle 1 + 2 (leadov)</th><th>Ostali, angle 3 (leadov)</th><th>Skupaj</th><th>Kapaciteta na teden</th><th>Tednov za Dream 100</th><th>Tednov za vse</th><th>Sekvenc (kampanj)</th></tr></thead><tbody>`;
+  const W = weeksBetween(P.start, P.end);
+  const row = (lab, d, r, cap, n) => `<tr><td class="l">${lab}</td><td>${fmt(d)}</td><td>${fmt(r)}</td><td>${fmt(d + r)}</td><td>${fmt(cap)}</td><td class="${d / cap > W ? "bad" : ""}">${cap ? (d / cap).toFixed(1) : "–"}</td><td class="${(d + r) / cap > W ? "bad" : ""}">${cap ? ((d + r) / cap).toFixed(1) : "–"}</td><td>${n}</td></tr>`;
+  h += row("Email (Instantly)", dE, rE, capE, C.filter(c => c.ch === "email").length);
+  h += row("LinkedIn (HeyReach)", dL, rL, capL, C.filter(c => c.ch === "linkedin").length);
+  h += row("Telefon (samo Dream 100, hotelov)", dT, 0, capT, C.filter(c => c.ch === "telefon").length);
+  $("#t_demand").innerHTML = h + `</tbody>`;
+  const needGoal = Math.ceil(dE * P.perlead / (P.goalw * P.days * P.mails)); const needAll = Math.ceil((dE + rE) * P.perlead / (W * P.days * P.mails));
+  const needLiGoal = Math.ceil(dL / (P.goalw * P.days * P.lid)); const needLiAll = Math.ceil((dL + rL) / (W * P.days * P.lid));
+  const needSellers = Math.ceil(dT * P.cph / (W * P.days * P.calls));
+  const tile = (cls, v, have, l, sub) => `<div class="tile ${cls}"><div class="v ${v > have ? "bad" : "ok"}">${fmt(v)}</div><div class="l">${l}</div><div class="have">imamo ${fmt(have)} · ${sub}</div></div>`;
+  $("#tiles_need").innerHTML = tile("email", needGoal, P.warm, "ogretih accountov", "Dream 100 oba angla v " + P.goalw + " tednih") + tile("email", needAll, P.warm, "ogretih accountov", "vsi sloji do " + P.end.toLocaleDateString("sl-SI"))
+    + tile("li", needLiGoal, P.li, "LinkedIn profilov", "Dream 100 oba angla v " + P.goalw + " tednih") + tile("li", needLiAll, P.li, "LinkedIn profilov", "vsi sloji do " + P.end.toLocaleDateString("sl-SI"))
+    + tile("tel", needSellers, P.ft + P.pt, "prodajalcev za klice", fmt(dT) + " hotelov × " + P.cph + " klica do konca okna");
+  $("#c_need").innerHTML = `Vsaka kampanja v Instantly je ena sekvenca (trg × angle × sloj), v HeyReachu enako. Avstrija nima mail kampanj (§ 174 TKG), Grčija in Avstrija nimata klicev. Rdeča številka pomeni, da danes tega vira ni dovolj.`;
+}
+
+// ---------- dnevni zamik ----------
+function renderDaygrid(P) {
+  const T = trgi().filter(m => m.vir !== "manjka"); const rows = []; const stepsE = [0, 2, 5, 7, 10].slice(0, P.steps); const stepsL = [1, 3, 7, 14].slice(0, 4); const stepsT = [5, 9].slice(0, P.cph);
+  T.forEach((m, i) => { const off = i; const [a1] = angles(m.id);
+    if (m.kanali.email) rows.push({ n: `${m.ime.replace(" (ZDA)", "").replace("Združeni arabski emirati", "UAE")} · ${a1} · Email (start dan ${off + 1})`, cls: "e", days: stepsE.map((d, k) => [off + dayIdx(d), "E" + (k + 1)]) });
+    rows.push({ n: `${m.ime.replace(" (ZDA)", "").replace("Združeni arabski emirati", "UAE")} · ${a1} · LinkedIn (start dan ${off + 1})`, cls: "p", days: stepsL.map((d, k) => [off + dayIdx(d), "L" + (k + 1)]) });
+    if (m.kanali.telefon) rows.push({ n: `${m.ime.replace(" (ZDA)", "").replace("Združeni arabski emirati", "UAE")} · klici (po 2. mailu)`, cls: "t", days: stepsT.map((d, k) => [off + dayIdx(d), "T" + (k + 1)]) });
+  });
+  function dayIdx(calDays) { return Math.round(calDays * 5 / 7); } // koledarski dnevi v delovne
+  let h = `<div class="n"></div>` + Array.from({ length: 15 }, (_, d) => `<div class="h">d${d + 1}</div>`).join("");
+  const load = { e: Array(15).fill(0), p: Array(15).fill(0), t: Array(15).fill(0) };
+  rows.forEach(r => { h += `<div class="n" title="${r.n}">${r.n}</div>`; const map = {}; r.days.forEach(([d, l]) => { if (d < 15) { map[d] = l; load[r.cls][d]++; } }); for (let d = 0; d < 15; d++) h += `<div class="c ${map[d] ? r.cls : ""}">${map[d] || ""}</div>`; });
+  h += `<div class="n"><b>Aktivnih mail korakov</b></div>` + load.e.map(v => `<div class="tot">${v}</div>`).join("");
+  h += `<div class="n"><b>Aktivnih LinkedIn korakov</b></div>` + load.p.map(v => `<div class="tot">${v}</div>`).join("");
+  h += `<div class="n"><b>Klicnih korakov</b></div>` + load.t.map(v => `<div class="tot">${v}</div>`).join("");
+  $("#daygrid").innerHTML = h;
+}
+
+// ---------- kontekst ----------
+function renderCtx() {
+  const T = trgi();
+  $("#ctx").innerHTML = T.map(m => `<details><summary>${m.ime}<span class="tag ${m.vir === "dejansko" ? "act" : (m.vir === "manjka" ? "off" : "est")}">${m.vir}</span></summary>
+    ${m.kontekst ? `<p>${m.kontekst}</p>` : ""}${(m.opombe || []).length ? `<h3>Kako je številka nastala</h3><ul class="small">${m.opombe.map(o => `<li>${o}</li>`).join("")}</ul>` : ""}
+    ${(m.benchmarki || []).length ? `<h3>Benchmarki</h3><ul>${m.benchmarki.map(b => `<li><a href="${b.vir}" target="_blank" rel="noopener">${b.naslov}</a> (${b.datum}): ${b.kljucna_ugotovitev}</li>`).join("")}</ul>` : ""}
+    ${(m.viri || []).length ? `<h3>Viri</h3><ul class="small">${m.viri.slice(0, 25).map(v => `<li>${/^https?:/.test(v) ? `<a href="${v}" target="_blank" rel="noopener">${v}</a>` : v}</li>`).join("")}</ul>` : ""}
+    ${m.krediti && Object.keys(m.krediti).length ? `<p class="small muted">Porabljeni krediti za vzorec: Apollo ${m.krediti.apollo_reveals ?? 0}, Skrapp ${m.krediti.skrapp_find ?? 0}.</p>` : ""}
+  </details>`).join("") + `<details><summary>Metoda</summary><ul>
+    <li>Sloji: hoteli v registru; 4 in 5 zvezdic; 30 do 200 sob (celoten ICP trg); mednarodne znamke, franšize, soft brandi ločeno; neodvisni in lokalne verige so tarče; pilotni pas 75 do 200 sob. Slovenija: AJPES RNO (836 nastanitev, od tega 444 hotelov in aparthotelov). Hrvaška: MINT popis kategoriziranih objektov (783 hotelov). Novi trgi: register ali uradna statistika, porazdelitev velikosti iz vzorca ali povprečja kategorije.</li>
+    <li>Kontakti: Slovenija in Hrvaška so prešteti iz polja ROWS dosjejev Dream 100 (osebe z nazivom, razvrščene po pravilu). Sloj nad Dream 100 je ocenjen z lastno stopnjo na hotel iz Dream 100. Novi trgi: vzorec 30 hotelov iz L4 skozi Apollo (iskanje brez kreditov, razkritja do 40 na trg), Skrapp (do 60 na trg) in Firecrawl (spletne strani, LinkedIn izrezki, registri).</li>
+    <li>Mednarodne verige: kontakti × faktor (privzeto 0,7), ker o tehnologiji odloča uprava skupine.</li>
+    <li>Model kapacitete: tedenski koraki; vsaka kampanja dobi delež cevi po pravilu scenarija (water-filling: kdor rabi manj, presežek odda naprej). Drugi angle se začne po izteku prvega. Klici sledijo mail sekvenci in so vezani na prodajalca po trgih.</li>
+    <li>Brez razponov: kjer je vir dal razpon, je vzeta sredina.</li></ul></details>`;
+}
+
+// ---------- init ----------
+function init() {
+  $("#datum").textContent = DATA.datum;
+  const z = DATA.zivo;
+  $("#in_mb").value = z.mailboxi_skupaj; $("#in_warm").value = z.ogreti_hotel; $("#in_li").value = z.linkedin_hotel; $("#in_ft").value = 1; $("#in_pt").value = 2;
+  $("#h_mb").textContent = `Instantly: ${z.mailboxi_skupaj} accountov na ${z.domene.length} domenah (${z.domene.join(", ")}), vsi ogreti.`;
+  $("#h_warm").textContent = `${z.ogreti_hotel} za hotele; ${z.ogreti_maritime} na nevron.net so Simonovi za maritime. Dodatnih ${z.dodatni_mailboxi} (nevronos.com) od ${z.dodatni_od}.`;
+  $("#h_li").textContent = `HeyReach: ${z.linkedin_profili.join(", ")}. Za hotele: Matjaž, Rok, Amadej (Amadej še ni priklopljen); Simon je zaseden z maritime.`;
+  $("#p_extra").value = z.dodatni_mailboxi; $("#p_extra_od").value = z.dodatni_od;
+  renderSloji(); renderCtx(); recompute();
+  document.querySelectorAll("input").forEach(i => i.addEventListener("input", recompute));
+  const tip = $("#tip");
+  document.addEventListener("mousemove", e => { const t = e.target.closest && e.target.closest("[data-tip]"); if (t) { tip.style.display = "block"; tip.textContent = t.getAttribute("data-tip"); tip.style.left = (e.clientX + 12) + "px"; tip.style.top = (e.clientY + 12) + "px"; } else tip.style.display = "none"; });
+}
+function recompute() { const P = params(); renderMirror(P); renderKontakti(P); renderCapacity(P); renderScenarios(P); renderDaygrid(P); }
+init();
+</script>
+</body>
+</html>
