@@ -382,6 +382,10 @@
   .gapc2 .row b { font-variant-numeric: tabular-nums; }
   .gapc2 .bar { height: 6px; border-radius: 3px; background: var(--line-2); overflow: hidden; margin: 2px 0 6px; } .gapc2 .bar i { display: block; height: 100%; }
   .caprow { grid-template-columns: repeat(4, minmax(160px, 1fr)); }
+  .bnotes { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 0.75rem; margin: 0.75rem 0 1rem; }
+  .bnote { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 0.75rem 0.875rem; box-shadow: var(--sh-sm); }
+  .bnote b { font-size: 0.95rem; }
+  .bnote p { margin: 0.375rem 0 0; font-size: 0.82rem; line-height: 1.5; color: var(--ink-2); }
   @media (max-width: 800px) { .caprow { grid-template-columns: repeat(2, 1fr); } }
 
   /* ---------- v9 ---------- */
@@ -426,7 +430,7 @@
 <p class="kicker">Interna analiza</p>
 <h1 style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap"><span>GTM outreach aktivnosti</span><span style="color:var(--ink-3);font-weight:500;text-align:right">Kapacitete prodajne sezone 2026-2027</span></h1>
 <div class="tiles hero" id="hero"></div>
-<p class="sub small">Slovenija in Hrvaška sta iz dejanskega vzorca (dosjeja Dream 100, prešteti odločevalci in kontakti), ostalih pet trgov je ocena iz registrov in vzorca 30 hotelov na trg. Stanje podatkov: <span class="mono" id="datum"></span>.</p>
+<p class="sub small">Slovenija in Hrvaška sta iz dejanskega vzorca (dosjeja Dream 100, prešteti odločevalci in kontakti), ostalih pet trgov je ocena iz registrov in vzorca 30 hotelov na trg.</p>
 
 <h2>2. Dream 100 proti ostalim: kontakti po kanalih</h2>
 <p>ICP: hoteli s 4 in 5 zvezdicami, 30 do 200 sob, neodvisni ali v lokalni verigi, Booking ocena nad 8,0. Odločevalec je lastnik, direktor, GM, vodja hotela, vodja operative, vodja nabave ali vodja odnosov z gosti. Kontakt na kanalu je poslovni mail, LinkedIn profil ali telefon (direktna mobilna ali office številka hotela).</p>
@@ -440,6 +444,11 @@
   <div class="card"><label class="f">Popoldanskih prodajalcev</label><input type="number" id="in_pt" min="0"><div class="hint">Prvi kliče Italijo.</div></div>
 </div><div id="cap_rows"></div>
 <p class="small muted" id="c_need"></p>
+
+<h3 style="margin-top:26px">Od kod stopnje sestankov</h3>
+<p>Zadnja ploščica pri vsakem kanalu ni pavšal. Vsak trg ima svojo stopnjo, ker se sedem trgov med seboj razlikuje za več kot desetkrat. Slovenija je edini trg z resnim lastnim rezultatom na mailu, Hrvaška edini z resnim rezultatom na LinkedInu, Italija in Tennessee sta izmerjena in oba slaba, Grčija, UAE in Avstrija pa nimajo lastnega vzorca. Enota je <b>opravljen sestanek</b>, ne dogovorjen termin in ne pozitiven odgovor.</p>
+<div class="legend"><span class="tag act">lastni podatki</span> izmerjeno v Instantlyju, HeyReachu ali Attiu <span class="tag est">prenos ali ocena</span> brez lastnega vzorca na tem trgu</div>
+<div id="bench"></div>
 
 <h2>4. Sekvence po batchih: trije scenariji</h2>
 <div id="scenarios3"></div>
@@ -846,27 +855,135 @@ function renderScenarios(P) {
   $("#rec").innerHTML = rec;
 }
 
+// ---------- benchmarki sestankov ----------
+// Stopnje so SESTANKI (opravljeni, ne le dogovorjeni) NA 100 KONTAKTOV, ki gredo skozi
+// celotno sekvenco na tem kanalu. Par je [Dream 100, ostali v ICP pasu].
+// Sidro: lastni podatki iz Instantlyja, HeyReacha in Attia, stanje 25. 8. 2026.
+// Pretvorba iz "priloznost / zanimanje" v "opravljen sestanek": faktor 0,4
+// (55 do 60 % pozitivnih odgovorov se dogovori za termin, 78 % se ga udelezi).
+const BENCH = {
+  si: {
+    vir: "merjeno", e: [3.0, 1.4], l: [4.5, 2.0], t: [4.0, 0],
+    op: "Mail: 16 priložnosti na 226 kontaktov (916 poslanih mailov) v štirih slovenskih kampanjah, kar je 7,1 % na kontakt in daleč najboljši rezultat med vsemi trgi. V modelu smo to znižali na 3,0, ker je vzorec majhen in ker gre drugi angle na iste ljudi, ki na prvega niso odgovorili. LinkedIn: 8 zanimanj na 80 povabil. Klici: brez lastnih podatkov, vzeli smo zgornji rob razpona, ker Tomaž kliče v maternem jeziku na trgu, kjer Nevron poznajo.",
+  },
+  hr: {
+    vir: "merjeno", e: [1.0, 0.45], l: [2.4, 1.1], t: [3.0, 0],
+    op: "Mail: 4 odgovori in 0 priložnosti na 674 poslanih. Ničle nismo vzeli, ker je vzorec premajhen za sklep, postavili smo spodnji rob panožnega razpona. LinkedIn je nasprotna zgodba: 5 zanimanj na 123 povabil in 30,9 % sprejetih povabil, kar je najvišji odstotek med vsemi sedmimi trgi. Hrvaška je zato LinkedIn trg, ne mail trg.",
+  },
+  it: {
+    vir: "merjeno", e: [0.35, 0.15], l: [0.9, 0.4], t: [2.5, 0],
+    op: "Omnichannel val po devetih regijah: 1 priložnost na 2.090 poslanih mailov (0,05 %) in 8 zanimanj na 546 LinkedIn povabil. Dream 100 z imenom odločevalca postavljamo nekoliko višje od tistega vala, ki je v 59 % šel na info@ naslove. Klici so v Italiji najmočnejši kanal, ker jih opravlja popoldanski italijanski prodajalec v maternem jeziku.",
+  },
+  gr: {
+    vir: "prenos", e: [0.5, 0.22], l: [0.9, 0.4], t: [1.5, 0],
+    op: "Brez lastnih podatkov. Prenos z Italije zaradi podobne strukture lastništva, sezonskosti in deleža neodvisnih hotelov. Mail je za spoznanje višji, ker grški trg še ni tako zasičen s cold outboundom kot italijanski. Klic je nižji, ker Tomaž kliče v angleščini in ne v maternem jeziku sogovornika.",
+  },
+  uae: {
+    vir: "ocena", e: [0.8, 0.35], l: [1.2, 0.55], t: [1.5, 0],
+    op: "Brez lastnih podatkov in brez javnega benchmarka za Zaliv. Mail in LinkedIn sta nad južnoevropskim povprečjem, ker je angleščina poslovni jezik in ker je LinkedIn v zalivskem hotelirstvu močan kanal. Klic je nižji zaradi trdih vratarjev na recepcijah mednarodnih znamk in zaradi časovnega zamika. Ta trg ima najširši razpon negotovosti.",
+  },
+  at: {
+    vir: "prenos", e: [0, 0], l: [1.0, 0.45], t: [0, 0],
+    op: "Mail in klic sta po § 174 TKG prepovedana brez predhodne privolitve, zato ostane samo LinkedIn. Stopnja je prenos z nizozemskega vala (5 zanimanj na 454 povabil, 14,5 % sprejetih), popravljena navzgor, ker je v Avstriji LinkedIn edini kanal in zato dobi polno sekvenco petih sporočil namesto podporne vloge.",
+  },
+  tn: {
+    vir: "merjeno", e: [0.3, 0.13], l: [0.6, 0.27], t: [1.0, 0],
+    op: "Prenos s Floride, kar je isti trg, isti ICP in ista sekvenca: 2 priložnosti na 4.319 poslanih mailov (0,05 %) in 13 zanimanj na 1.557 LinkedIn povabil pri 14,4 % sprejetih. Ameriški hotelski nabiralnik je najbolj zasičen med vsemi sedmimi trgi. Klic je nizek, ker gre za klic iz Evrope, s tujim naglasom in v ameriško popoldne.",
+  },
+};
+// razpon okoli srednje vrednosti glede na to, kako trdna je podlaga
+const BAND = { merjeno: [0.6, 1.5], prenos: [0.5, 1.8], ocena: [0.45, 2.0] };
+const VIRLBL = { merjeno: "lastni podatki", prenos: "prenos s sorodnega trga", ocena: "ocena brez podlage" };
+
+// Iz razporeda batchev prebere, koliko KONTAKTOV (ne dotikov) gre v sezoni skozi
+// posamezen kanal na posameznem trgu, loceno za Dream 100 in ostale, in to zmnozi
+// s stopnjo iz tabele BENCH.
+function meetingModel(G, days) {
+  const per = {};
+  (G ? G.all : []).forEach(b => {
+    if (!b.start || b.start > days) return;
+    const k = b.mk.trg; if (!per[k]) per[k] = { e: [0, 0], l: [0, 0], t: [0, 0] };
+    const n = b.c.length || 1; const sD = Math.min(1, b.nD / n);
+    const em = b.ne + b.no;
+    per[k].e[0] += em * sD; per[k].e[1] += em * (1 - sD);
+    per[k].l[0] += b.nl * sD; per[k].l[1] += b.nl * (1 - sD);
+    per[k].t[0] += b.nt; // klici gredo samo Dream 100
+  });
+  const rows = []; const tot = { e: [0, 0, 0, 0], l: [0, 0, 0, 0], t: [0, 0, 0, 0] };
+  MARKETS.forEach(mk => {
+    const c = per[mk.trg], B = BENCH[mk.trg]; if (!c || !B) return;
+    const bd = BAND[B.vir];
+    const r = { trg: mk.trg, ime: mk.ime, vir: B.vir, op: B.op, ch: {}, mid: 0, low: 0, high: 0, kon: 0 };
+    ["e", "l", "t"].forEach(ch => {
+      const kon = c[ch][0] + c[ch][1];
+      const mid = c[ch][0] * B[ch][0] / 100 + c[ch][1] * B[ch][1] / 100;
+      r.ch[ch] = { kon, konD: c[ch][0], konR: c[ch][1], rate: B[ch], mid, low: mid * bd[0], high: mid * bd[1] };
+      r.mid += mid; r.low += mid * bd[0]; r.high += mid * bd[1]; r.kon += kon;
+      tot[ch][0] += mid; tot[ch][1] += mid * bd[0]; tot[ch][2] += mid * bd[1]; tot[ch][3] += kon;
+    });
+    rows.push(r);
+  });
+  return { rows, tot };
+}
+
 // ---------- kapaciteta proti dejanski uporabi ----------
 function renderCapacity(P, G) {
   const act = G ? G.actual : { e: 0, inv: 0, msg: 0, t: 0 };
   const ft = qnum("#in_ft", 1), pt = qnum("#in_pt", 2);
   const days = weeksBetween(new Date(2026, 7, 31), new Date(2027, 3, 30)) * 5;
+  const MM = meetingModel(G, days);
   const cap = { e: P.warm * 33, li: P.li * 25, t: (Math.min(ft, 1) + Math.min(pt, 1)) * 33 };
   const rows = [
-    ["email", "Mail", cap.e, act.e, P.warm + " ogretih accountov × 33", "vse kampanje, vsi trgi, ustaljeno stanje", 2, "na 100 poslanih mailov 2 sestanka"],
-    ["li", "LinkedIn", cap.li, act.li, P.li + " profili × 25 dotikov", fmt(act.inv) + " povabil + " + fmt(act.msg) + " sporočil na dan", 5, "na 100 LinkedIn dotikov 5 sestankov"],
-    ["tel", "Klici", cap.t, act.t, Math.min(ft, 1) + " polni (Tomaž) × 33 + " + Math.min(pt, 1) + " popoldanski (IT) × 33", "multichannel batchi, ustaljeno stanje", 20, "na 100 klicev 20 sestankov"],
+    ["email", "Mail", cap.e, act.e, P.warm + " ogretih accountov × 33", "vse kampanje, vsi trgi, ustaljeno stanje", "e"],
+    ["li", "LinkedIn", cap.li, act.li, P.li + " profili × 25 dotikov", fmt(act.inv) + " povabil + " + fmt(act.msg) + " sporočil na dan", "l"],
+    ["tel", "Klici", cap.t, act.t, Math.min(ft, 1) + " polni (Tomaž) × 33 + " + Math.min(pt, 1) + " popoldanski (IT) × 33", "multichannel batchi, ustaljeno stanje", "t"],
   ];
   $("#cap_rows").innerHTML = rows.map(r => {
-    const pct = r[2] ? Math.round(100 * r[3] / r[2]) : 0; const meet = r[3] * days * r[6] / 100;
+    const pct = r[2] ? Math.round(100 * r[3] / r[2]) : 0;
+    const T = MM.tot[r[6]], kon = T[3];
+    const na100 = kon ? (100 * T[0] / kon) : 0;
     return `<h3 style="margin:14px 0 6px">${r[1]}</h3><div class="tiles caprow">
       <div class="tile ${r[0]} cap"><div class="v">${fmt(r[2])}</div><div class="l">možnih na dan</div><div class="have">${r[4]}</div></div>
       <div class="tile ${r[0]} act"><div class="v">${fmt(r[3])}</div><div class="l">dejansko na dan</div><div class="have">${r[5]}</div></div>
       <div class="tile ${r[0]}"><div class="v ${pct < 50 ? "bad" : "ok"}">${pct} %</div><div class="l">izkoriščenost kanala</div><div class="have">${fmt(r[3])} od ${fmt(r[2])}</div></div>
-      <div class="tile ${r[0]} hot"><div class="v">${fmt(meet)}</div><div class="l">potencialnih sestankov v sezoni</div><div class="have">${r[7]} · ${(r[3] * r[6] / 100).toFixed(1)} na dan · ${days} delovnih dni</div></div>
+      <div class="tile ${r[0]} hot"><div class="v">${fmt(T[0])}</div><div class="l">pričakovanih sestankov v sezoni</div><div class="have">razpon ${fmt(T[1])} do ${fmt(T[2])} · ${na100.toFixed(1).replace(".", ",")} na 100 kontaktov · ${fmt(kon)} kontaktov v sezoni</div></div>
     </div>`;
   }).join("");
-  $("#c_need").innerHTML = `Dejansko na dan je seštevek pošiljanj iz sekvenc v razdelku 5 za vse trge (povprečje prvega 15-dnevnega cikla). Potencial sestankov je izračun iz dejanske uporabe, ne iz kapacitete.`;
+  $("#c_need").innerHTML = `Dejansko na dan je seštevek pošiljanj iz sekvenc v razdelku 5 za vse trge (povprečje prvega 15-dnevnega cikla). Sestanki se ne računajo iz kapacitete, ampak iz kontaktov, ki v sezoni res pridejo na vrsto, po stopnji vsakega trga posebej.`;
+  renderBench(MM, days);
+}
+
+function renderBench(MM, days) {
+  const el = $("#bench"); if (!el) return;
+  const r2 = v => v.toFixed(2).replace(".", ",");
+  const head = `<thead><tr><th class="l">Trg</th><th class="l">Podlaga</th>
+    <th class="ch email"><i class="dot"></i>Mail D100</th><th class="ch email">Mail ostali</th>
+    <th class="ch li"><i class="dot"></i>LinkedIn D100</th><th class="ch li">LinkedIn ostali</th>
+    <th class="ch tel"><i class="dot"></i>Klic D100</th>
+    <th>Kontaktov</th><th>Sestankov</th><th>Razpon</th></tr></thead>`;
+  const cell = (x, i) => x.rate[i] ? r2(x.rate[i]) : '<span class="muted">–</span>';
+  const body = MM.rows.map(r => `<tr>
+    <td class="l"><b>${r.ime}</b></td>
+    <td class="l"><span class="tag ${r.vir === "merjeno" ? "act" : "est"}">${VIRLBL[r.vir]}</span></td>
+    <td>${cell(r.ch.e, 0)}</td><td>${cell(r.ch.e, 1)}</td>
+    <td>${cell(r.ch.l, 0)}</td><td>${cell(r.ch.l, 1)}</td>
+    <td>${cell(r.ch.t, 0)}</td>
+    <td>${fmt(r.kon)}</td><td><b>${fmt(r.mid)}</b></td>
+    <td class="muted">${fmt(r.low)} do ${fmt(r.high)}</td></tr>`).join("");
+  const T = MM.tot;
+  const sumMid = T.e[0] + T.l[0] + T.t[0], sumLow = T.e[1] + T.l[1] + T.t[1], sumHigh = T.e[2] + T.l[2] + T.t[2];
+  const sumKon = T.e[3] + T.l[3] + T.t[3];
+  const sum = `<tr class="sum"><td class="l">Skupaj</td><td class="l"></td>
+    <td colspan="2">${fmt(T.e[0])} sestankov</td>
+    <td colspan="2">${fmt(T.l[0])} sestankov</td>
+    <td>${fmt(T.t[0])}</td>
+    <td>${fmt(sumKon)}</td>
+    <td><span style="font-size:1.7em;font-weight:700;color:var(--accent)">${fmt(sumMid)}</span></td>
+    <td class="muted">${fmt(sumLow)} do ${fmt(sumHigh)}</td></tr>`;
+  const notes = MM.rows.map(r => `<div class="bnote"><b>${r.ime}</b> <span class="tag ${r.vir === "merjeno" ? "act" : "est"}">${VIRLBL[r.vir]}</span><p>${r.op}</p></div>`).join("");
+  el.innerHTML = `<div class="tw"><table>${head}<tbody>${body}${sum}</tbody></table></div>
+    <p class="small muted">Stolpci s kanali so sestanki na 100 kontaktov, ki gredo skozi celotno sekvenco na tem kanalu. Sestanki v predzadnjem stolpcu so te stopnje, pomnožene s kontakti, ki v ${days} delovnih dneh sezone res pridejo na vrsto po razporedu iz razdelka 5. Kontakt, ki je hkrati na mailu in na LinkedInu, šteje na obeh kanalih, zato je vsota sestankov po kanalih višja od števila hotelov, ki bodo dejansko rezervirali termin. Za oceno enkratnih hotelov vzemi približno 70 % vsote.</p>
+    <div class="bnotes">${notes}</div>`;
 }
 
 // ---------- globalni model: trije scenariji, 14 dotikov ----------
@@ -881,8 +998,8 @@ const CYCLE = 15; const SCN = { multi: "Multichannel", two: "2-channel", single:
 const ACC = (who, dom) => ({ who, mail: `${{ Rok: "rok.kokalj", Matjaž: "matjaz.volkar", Amadej: "amadej.demsar" }[who]}@${dom}` });
 const MARKETS = [
   { trg: "si", ime: "Slovenija", accounts: [ACC("Rok", "nevroncore.com"), ACC("Matjaž", "nevroncore.com")], liHome: ["Rok", "Matjaž"], caller: "Tomaž", restScn: "two" },
-  { trg: "hr", ime: "Hrvaška", accounts: [ACC("Amadej", "nevroncore.com"), ACC("Amadej", "getnevron.com")], liHome: ["Rok"], caller: "Tomaž", restScn: "two" },
-  { trg: "it", ime: "Italija", accounts: [ACC("Rok", "trynevron.com"), ACC("Rok", "getnevron.com")], liHome: [], caller: "popoldanski IT", restScn: "single" },
+  { trg: "hr", ime: "Hrvaška", accounts: [ACC("Rok", "getnevron.com"), ACC("Rok", "trynevron.com")], liHome: ["Rok"], caller: "Tomaž", restScn: "two" },
+  { trg: "it", ime: "Italija", accounts: [ACC("Amadej", "nevroncore.com"), ACC("Amadej", "getnevron.com")], liHome: ["Amadej"], caller: "popold. IT", restScn: "single" },
   { trg: "gr", ime: "Grčija", accounts: [ACC("Amadej", "trynevron.com"), ACC("Rok", "nevron.net")], liHome: [], caller: "Tomaž", restScn: "single" },
   { trg: "uae", ime: "UAE", accounts: [ACC("Matjaž", "getnevron.com")], liHome: [], caller: "Tomaž", restScn: "two" },
   { trg: "at", ime: "Avstrija", accounts: [{ who: "samo LinkedIn", mail: null }], liHome: [], caller: null, restScn: "single", d100Scn: "single" },
@@ -925,9 +1042,9 @@ function composeBatches(pool, cfg) {
 function globalPlan(P) {
   const cfg = { mails: 33, li: 25, calls: 33, info: true };
   const ft = qnum("#in_ft", 1), pt = qnum("#in_pt", 2);
-  const callerOk = { "Tomaž": ft >= 1, "popoldanski IT": pt >= 1 };
+  const callerOk = { "Tomaž": ft >= 1, "popold. IT": pt >= 1 };
   const liSlots = {}; ["Rok", "Matjaž", "Amadej"].slice(0, Math.max(1, qnum("#in_li", 3))).forEach(n => liSlots[n] = [1, 2, 3]);
-  const callSlots = { "Tomaž": [1, 2, 3], "popoldanski IT": [1, 2, 3] };
+  const callSlots = { "Tomaž": [1, 2, 3], "popold. IT": [1, 2, 3] };
   const accSlots = {}; // kljuc: mail ali "li-only:<trg>"
   const all = []; // vsi batchi z zahtevami
   const markets = [];
@@ -1000,9 +1117,11 @@ function renderQueues(P, G) {
     const kp = `<div class="stat email"><div class="l">mail kontaktov</div>${hasMail ? two(c(cc.d100, x => x.e || x.eo), c(cc.rest, x => x.e || x.eo), `${c(cc.d100, x => x.e)} direktnih, ${c(cc.d100, x => !x.e && x.eo)} info`, `${c(cc.rest, x => x.e)} direktnih`) : '<div class="two"><div><b>0</b><span>mail v Avstriji ni dovoljen</span></div></div>'}</div>
       <div class="stat li"><div class="l">LinkedIn kontaktov</div>${two(c(cc.d100, x => x.l), c(cc.rest, x => x.l), "", "")}</div>
       <div class="stat tel"><div class="l">telefonskih kontaktov${caller ? "" : " · brez klicev"}</div>${two(c(cc.d100, x => x.m || x.o), c(cc.rest, x => x.m || x.o), `${c(cc.d100, x => x.m)} mobilnih, ${c(cc.d100, x => !x.m && x.o)} office`, `${c(cc.rest, x => x.m)} mobilnih`)}</div>
-      <div class="stat hot"><div class="v">${M.bD.length}</div><div class="l">batchev Dream 100 <span class="scn ${M.scnD}">${SCN[M.scnD]}</span><br>${accD.mail ? accD.who + " · " + accD.mail : accD.who}${M.lastD100 ? " · do " + wdFmt(M.lastD100) : ""}</div></div>
-      <div class="stat hot"><div class="v">${M.bR.length}</div><div class="l">batchev ostali <span class="scn ${M.scnR}">${SCN[M.scnR]}</span><br>${accR.mail ? accR.who + " · " + accR.mail : accR.who}${M.bR.length ? " · do " + wdFmt(Math.max(...M.bR.map(b => b.end))) : ""}</div></div>`;
-    html += `<div class="qcard"><h3>${mk.ime}${real ? "" : ' <span class="tag est">ocena</span>'}</h3><div class="who">LinkedIn: ${mk.liHome.length ? mk.liHome.join(", ") : "prosti profil po vrsti"} · ${caller ? "klicatelj " + caller : "brez klicev"}</div><div class="qkp">${kp}</div></div>`;
+      <div class="stat hot"><div class="v">${M.bD.length}</div><div class="l">batchev Dream 100 <span class="scn ${M.scnD}">${SCN[M.scnD]}</span>${M.lastD100 ? "<br>do " + wdFmt(M.lastD100) : ""}</div></div>
+      <div class="stat hot"><div class="v">${M.bR.length}</div><div class="l">batchev ostali <span class="scn ${M.scnR}">${SCN[M.scnR]}</span>${M.bR.length ? "<br>do " + wdFmt(Math.max(...M.bR.map(b => b.end))) : ""}</div></div>`;
+    const accTxt = mk.accounts.filter(a => a.mail).map((a, i) => `${i === 0 ? "Dream 100" : "ostali"}: ${a.who} ${a.mail}`).join(" · ") || "brez maila";
+    const liTxt = [...new Set(M.B.filter(b => b.li).map(b => b.li))].join(", ") || (mk.liHome.length ? mk.liHome.join(", ") : "prosti profil");
+    html += `<div class="qcard"><h3>${mk.ime}${real ? "" : ' <span class="tag est">ocena</span>'}</h3><div class="who">Mail ${accTxt} · LinkedIn ${liTxt} · ${caller ? "klicatelj " + caller : "brez klicev"}</div><div class="qkp">${kp}</div></div>`;
   });
   $("#queues").innerHTML = html;
   renderScenarios3();
@@ -1013,12 +1132,12 @@ function renderWeeks(G) {
   const doms = ["getnevron.com", "nevroncore.com", "trynevron.com", "nevron.net"]; const people = ["Rok", "Matjaž", "Amadej"];
   const mailRows = []; people.forEach(w => doms.forEach(d => { if (d === "nevron.net" && w !== "Rok") return; const a = ACC(w, d); mailRows.push({ lab: w, sub: a.mail, test: b => b.acc && b.acc.mail === a.mail }); }));
   const liRows = Object.keys(G.liSlots).map(n => ({ lab: n, sub: "LinkedIn profil", test: b => b.li === n && b.nl > 0 }));
-  const callRows = [["Tomaž", "Slovenija, Hrvaška, UAE, Tennessee, Grčija"], ["popoldanski IT", "Italija"]].filter(x => G.callerOk[x[0]]).map(x => ({ lab: x[0], sub: "klicatelj · " + x[1], test: b => b.caller === x[0] && b.scn === "multi" && b.nt > 0 }));
+  const callRows = [["Tomaž", "Slovenija, Hrvaška, UAE, Tennessee, Grčija"], ["popold. IT", "Italija"]].filter(x => G.callerOk[x[0]]).map(x => ({ lab: x[0], sub: "klicatelj · " + x[1], test: b => b.caller === x[0] && b.scn === "multi" && b.nt > 0 }));
   const MESECI = ["januar", "februar", "marec", "april", "maj", "junij", "julij", "avgust", "september", "oktober", "november", "december"];
   let h = `<div class="wg" style="grid-template-columns:${cols.join(" ")}"><div></div>`;
   // meseci: teden pripada mesecu svojega ponedeljka
-  const wm = []; for (let w = 1; w <= W; w++) { const d = wdDate((w - 1) * 5 + 1); wm.push(d.getMonth() + "-" + d.getFullYear()); }
-  let w = 1; while (w <= W) { const key = wm[w - 1]; let n = 0; while (w + n <= W && wm[w + n - 1] === key) n++; const d = wdDate((w - 1) * 5 + 1); h += `<div class="grp" style="grid-column: span ${n}">${MESECI[d.getMonth()]} ${d.getFullYear()}</div>`; for (let k = 0; k < n; k++) { const ww = w + k; if ((ww === 10 || ww === 20 || ww === 30) && ww < W) h += `<div class="gapc"></div>`; } w += n; }
+  const wm = []; for (let w = 1; w <= W; w++) { const d = wdDate((w - 1) * 5 + 4); wm.push(d.getMonth() + "-" + d.getFullYear()); }
+  let w = 1; while (w <= W) { const key = wm[w - 1]; let n = 0; while (w + n <= W && wm[w + n - 1] === key) n++; const d = wdDate((w - 1) * 5 + 4); h += `<div class="grp" style="grid-column: span ${n}">${MESECI[d.getMonth()]} ${d.getFullYear()}</div>`; for (let k = 0; k < n; k++) { const ww = w + k; if ((ww === 10 || ww === 20 || ww === 30) && ww < W) h += `<div class="gapc"></div>`; } w += n; }
   h += `<div class="lab">Teden</div>`; for (let w2 = 1; w2 <= W; w2++) { h += `<div class="hd"><b>T${w2}</b></div>`; if ((w2 === 10 || w2 === 20 || w2 === 30) && w2 < W) h += `<div class="gapc"></div>`; }
   const section = (title, rs) => {
     h += `<div class="sec">${title}</div>`;
@@ -1056,7 +1175,7 @@ function renderCtx() {
 
 // ---------- init ----------
 function init() {
-  $("#datum").textContent = DATA.datum;
+  
   const z = DATA.zivo;
   $("#in_warm").value = z.ogreti_hotel; $("#in_li").value = z.linkedin_hotel; $("#in_ft").value = 1; $("#in_pt").value = 2;
   $("#h_warm").textContent = `${z.ogreti_hotel} za hotele; ${z.ogreti_maritime} na nevron.net so Simonovi za maritime. Dodatnih ${z.dodatni_mailboxi} (nevronos.com) od ${z.dodatni_od}.`;
