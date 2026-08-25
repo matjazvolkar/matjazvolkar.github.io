@@ -277,6 +277,12 @@
   .big .sub b { color: var(--ink); }
   .blk2.d100 .big .v { color: var(--accent); }
   .tw table { font-size: 0.82rem; } th, td { padding: 6px 8px; }
+
+  /* ---------- v3: outreach kanali v podrobni tabeli ---------- */
+  th.ch { color: var(--ink); border-bottom: 3px solid var(--c); background: color-mix(in srgb, var(--c) 22%, var(--surface-2)); }
+  th.ch .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--c); margin-right: 5px; vertical-align: 1px; }
+  td.ch { background: color-mix(in srgb, var(--c) 8%, transparent); font-weight: 600; color: var(--ink); }
+  .ch.email { --c: var(--email); } .ch.li { --c: var(--li); } .ch.tel { --c: var(--tel); }
 </style>
 </head>
 <body>
@@ -447,29 +453,29 @@ function renderMirror(P) {
 
 function renderKontakti(P) {
   const T = trgi();
-  const cols = [["dm", "Odloče-<br>valci"], ["biz", "Poslovni<br>mail"], ["priv", "Osebni<br>mail"], ["li", "LinkedIn"], ["mob", "Direktna<br>mobilna"], ["office", "Office tel.<br>(hotelov)"], ["fd", "Vodje<br>recepcij"], ["fd_biz", "… z<br>mailom"], ["fd_li", "… z<br>LinkedIn"]];
-  let h = `<thead><tr><th class="l">Trg / sloj</th><th>Hotelov</th>${cols.map(c => `<th>${c[1]}</th>`).join("")}</tr></thead><tbody>`;
+  const cols = [["dm", "Odloče-<br>valci"], ["biz", "Poslovni<br>mail", "email"], ["priv", "Osebni<br>mail"], ["li", "LinkedIn", "li"], ["mob", "Direktna<br>mobilna", "tel"], ["office", "Office tel.<br>(hotelov)"], ["fd", "Vodje<br>recepcij"], ["fd_biz", "… z<br>mailom"], ["fd_li", "… z<br>LinkedIn"]];
+  let h = `<thead><tr><th class="l">Trg / sloj</th><th>Hotelov</th>${cols.map(c => `<th class="${c[2] ? "ch " + c[2] : ""}">${c[2] ? "<i class=\"dot\"></i>" : ""}${c[1]}</th>`).join("")}</tr></thead><tbody>`;
   const totals = { d100: [], rest: [], intl: [] };
   T.forEach(m => {
     if (m.vir === "manjka") { h += `<tr class="blk"><td colspan="11">${m.ime}: ocena še ni izdelana</td></tr>`; return; }
     const ch = m.kanali; const chTxt = `${ch.email ? "" : " · brez maila"}${ch.telefon ? "" : " · brez klicev"}`;
     h += `<tr class="blk"><td colspan="11">${m.ime}${marketTag(m)}<span class="muted small" style="text-transform:none;font-weight:400">${chTxt}</span></td></tr>`;
     const kD = kontakti(m, "d100", P); totals.d100.push(kD);
-    h += `<tr class="key"><td class="l">Dream 100</td><td>${fmt(m.d100.hotelov)}</td>${cols.map(c => `<td>${fmt(kD[c[0]])}</td>`).join("")}</tr>`;
+    h += `<tr class="key"><td class="l">Dream 100</td><td>${fmt(m.d100.hotelov)}</td>${cols.map(c => `<td class="${c[2] ? "ch " + c[2] : ""}">${fmt(kD[c[0]])}</td>`).join("")}</tr>`;
     const kR = kontakti(m, "rest", P), kI = kontakti(m, "intl", P); totals.rest.push(kR); totals.intl.push(kI);
     const kO = sumK([kR, kI]);
-    h += `<tr class="key"><td class="l">Ostali zunaj izbora</td><td>${fmt(restHotels(m))}</td>${cols.map(c => `<td>${fmt(kO[c[0]])}</td>`).join("")}</tr>`;
-    h += `<tr class="sub"><td class="l">neodvisni in lokalne verige</td><td>${fmt(m.rest.hotelov)}</td>${cols.map(c => `<td>${fmt(kR[c[0]])}</td>`).join("")}</tr>`;
-    h += `<tr class="sub"><td class="l">mednarodne verige</td><td>${fmt(m.intl.hotelov)}</td>${cols.map(c => `<td>${fmt(kI[c[0]])}</td>`).join("")}</tr>`;
+    h += `<tr class="key"><td class="l">Ostali zunaj izbora</td><td>${fmt(restHotels(m))}</td>${cols.map(c => `<td class="${c[2] ? "ch " + c[2] : ""}">${fmt(kO[c[0]])}</td>`).join("")}</tr>`;
+    h += `<tr class="sub"><td class="l">neodvisni in lokalne verige</td><td>${fmt(m.rest.hotelov)}</td>${cols.map(c => `<td class="${c[2] ? "ch " + c[2] : ""}">${fmt(kR[c[0]])}</td>`).join("")}</tr>`;
+    h += `<tr class="sub"><td class="l">mednarodne verige</td><td>${fmt(m.intl.hotelov)}</td>${cols.map(c => `<td class="${c[2] ? "ch " + c[2] : ""}">${fmt(kI[c[0]])}</td>`).join("")}</tr>`;
     const all = sumK([kD, kR, kI]);
-    h += `<tr class="sum"><td class="l">Celoten trg</td><td>${fmt(m.sloji.L2)}</td>${cols.map(c => `<td>${fmt(all[c[0]])}</td>`).join("")}</tr>`;
+    h += `<tr class="sum"><td class="l">Celoten trg</td><td>${fmt(m.sloji.L2)}</td>${cols.map(c => `<td class="${c[2] ? "ch " + c[2] : ""}">${fmt(all[c[0]])}</td>`).join("")}</tr>`;
   });
   const tD = sumK(totals.d100), tR = sumK(totals.rest), tI = sumK(totals.intl), tA = sumK([tD, tR, tI]);
   const hot = (L) => T.reduce((a, m) => a + ((m[L] || {}).hotelov || 0), 0);
   h += `<tr class="blk"><td colspan="11">Vsi trgi skupaj</td></tr>`;
-  h += `<tr class="key"><td class="l">Dream 100</td><td>${fmt(hot("d100"))}</td>${cols.map(c => `<td>${fmt(tD[c[0]])}</td>`).join("")}</tr>`;
-  h += `<tr class="key"><td class="l">Ostali zunaj izbora</td><td>${fmt(hot("rest") + hot("intl"))}</td>${cols.map(c => `<td>${fmt(sumK([tR, tI])[c[0]])}</td>`).join("")}</tr>`;
-  h += `<tr class="sum"><td class="l">Skupaj</td><td>${fmt(hot("d100") + hot("rest") + hot("intl"))}</td>${cols.map(c => `<td>${fmt(tA[c[0]])}</td>`).join("")}</tr>`;
+  h += `<tr class="key"><td class="l">Dream 100</td><td>${fmt(hot("d100"))}</td>${cols.map(c => `<td class="${c[2] ? "ch " + c[2] : ""}">${fmt(tD[c[0]])}</td>`).join("")}</tr>`;
+  h += `<tr class="key"><td class="l">Ostali zunaj izbora</td><td>${fmt(hot("rest") + hot("intl"))}</td>${cols.map(c => `<td class="${c[2] ? "ch " + c[2] : ""}">${fmt(sumK([tR, tI])[c[0]])}</td>`).join("")}</tr>`;
+  h += `<tr class="sum"><td class="l">Skupaj</td><td>${fmt(hot("d100") + hot("rest") + hot("intl"))}</td>${cols.map(c => `<td class="${c[2] ? "ch " + c[2] : ""}">${fmt(tA[c[0]])}</td>`).join("")}</tr>`;
   $("#t_kontakti").innerHTML = h + "</tbody>";
   $("#tiles_total").innerHTML = [
     ["email", fmt(tD.biz), "poslovnih mailov, Dream 100"], ["email", fmt(tA.biz), "poslovnih mailov, vsi sloji"],
