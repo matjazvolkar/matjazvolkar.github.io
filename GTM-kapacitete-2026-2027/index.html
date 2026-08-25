@@ -365,6 +365,7 @@
   .hero .tile .l { font-size: 0.86rem; color: var(--ink-2); }
   .hero .tile .have { font-size: 0.76rem; }
   .tile.hot { border-top: 4px solid var(--accent); }
+  .mrow .mid .flag { font-size: 1.9rem; line-height: 1; margin-bottom: 4px; }
 </style>
 </head>
 <body>
@@ -528,11 +529,12 @@ function renderMirror(P) {
   rows.forEach(r => ["D", "O"].forEach(sd => Object.keys(tot[sd]).forEach(k => tot[sd][k] += r[sd][k])));
   const mx = (r, k) => Math.max(r.D[k], r.O[k], 1);
   const side = (r, sd, cls) => `<div class="side ${cls}">${statHTML("hot", r[sd].hot, "hotelov", r[sd].hot / mx(r, "hot"))}${statHTML("email", r[sd].mail, "poslovnih mailov", r[sd].mail / mx(r, "mail"))}${statHTML("li", r[sd].li, "LinkedIn profilov", r[sd].li / mx(r, "li"))}${statHTML("tel", r[sd].tel, "telefonov", r[sd].tel / mx(r, "tel"), `${fmt(r[sd].mob)} mobilnih · ${fmt(r[sd].off)} office`)}</div>`;
-  const mid = (m, sub) => `<div class="mid"><div class="t">${m}</div><div class="s">${sub}</div></div>`;
+  const FLAG = { si: "🇸🇮", hr: "🇭🇷", uae: "🇦🇪", it: "🇮🇹", tn: "🇺🇸", gr: "🇬🇷", at: "🇦🇹" };
+  const mid = (m, sub, id) => `<div class="mid">${id && FLAG[id] ? `<div class="flag">${FLAG[id]}</div>` : ""}<div class="t">${m}</div><div class="s">${sub}</div></div>`;
   let h = `<div class="mhead"><div>Ostali zunaj izbora (ICP pas)</div><div style="text-align:center">Trg</div><div class="r">Dream 100</div></div><div class="mirror">`;
   const chan = (m) => `${m.kanali.email ? "mail" : "brez maila"} · LinkedIn · ${m.kanali.telefon ? "klic" : "brez klica"}`;
   h += `<div class="mrow total">${side({ D: tot.D, O: tot.O }, "O", "left")}${mid("Vsi trgi", "7 trgov skupaj")}${side({ D: tot.D, O: tot.O }, "D", "right")}</div>`;
-  rows.forEach(r => { h += `<div class="mrow">${side(r, "O", "left")}${mid(r.m.ime.replace("Združeni arabski emirati", "UAE"), chan(r.m))}${side(r, "D", "right")}</div>`; });
+  rows.forEach(r => { h += `<div class="mrow">${side(r, "O", "left")}${mid(r.m.ime.replace("Združeni arabski emirati", "UAE"), chan(r.m), r.m.id)}${side(r, "D", "right")}</div>`; });
   $("#mirror").innerHTML = h + "</div>";
   const T7 = trgi(); const nT = T7.length; const kontaktov = tot.D.mail + tot.O.mail + tot.D.li + tot.O.li + tot.D.tel + tot.O.tel;
   $("#hero").innerHTML = [
