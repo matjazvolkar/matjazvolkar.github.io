@@ -450,10 +450,6 @@
 <p>Stopnje so iz benchmarkov za mrzel B2B outbound 2026: 1,5 sestanka na 100 kontaktov po mailu, 2,0 po LinkedInu, 4,5 po telefonu. Popravek po trgu (Slovenija visoko, ZDA nizko) in po sloju (Dream 100 dvakrat višje kot ostali).</p>
 <div id="bench"></div>
 
-<h3 style="margin-top:26px">Od sestanka do živega hotela</h3>
-<p>Cilj sezone šteje <b>žive hotele</b>, ne dogovorjenih sestankov in ne podpisanih pogodb. Med enim in drugim so trije koraki, od katerih vsak številko zmanjša ali poveča, in vsak ima svoj vir. Spodnja tabela jih pelje po vrsti in se preračuna skupaj z vnosi na vrhu razdelka.</p>
-<div id="funnel"></div>
-
 <h2>3. Sekvence po batchih: trije scenariji</h2>
 <div id="scenarios3"></div>
 <h3 style="margin-top:22px">Trgi: kontakti in batchi</h3>
@@ -903,40 +899,21 @@ const LAYER = { d100: 1.5, rest: 0.75 };
 const BAND = [0.7, 1.4];
 // Avstrija: mail in klic sta po § 174 TKG prepovedana, ostane samo LinkedIn.
 const NO_MAIL = { at: true };
-// Klic na centralo hotela proti klicu na direktno mobilno odlocevalca. Vmes je
-// receptor, zato je stopnja polovicna. Velja za dopolnilne klice sloju ostalih.
-const CALL_REST = 0.5;
 
 function benchRate(trg, ch, layer) {
   if (trg === "usa" && ch !== "e") return 0;
   const m = MOD[trg]; if (!m) return 0;
   if (ch === "e" && NO_MAIL[trg]) return 0;
-  // Klic v Dream 100 gre na preverjeno direktno stevilko, kar kanalna osnova ze
-  // predpostavlja, zato se sloj tam ne mnozi se enkrat. Dopolnilni klici ostalim
-  // gredo na centralo hotela, torej cez recepcijo, zato polovicna stopnja.
-  if (ch === "t") return CH_BASE.t * m.t * (layer === "rest" ? CALL_REST : 1);
+  // Klici gredo samo v Dream 100 in samo na preverjene direktne stevilke, kar je ze
+  // predpostavka kanalne osnove, zato se sloj pri klicu ne mnozi se enkrat.
+  if (ch === "t") return CH_BASE.t * m.t;
   return CH_BASE[ch] * m.w * LAYER[layer];
 }
 
 // Iz razporeda batchev prebere, koliko KONTAKTOV (ne dotikov) gre v sezoni skozi
 // posamezen kanal na posameznem trgu, loceno za Dream 100 in ostale.
-// Konverzija dogovorjen sestanek -> podpisana pogodba, iz objavljenih benchmarkov 2026:
-//   show rate dogovorjen -> opravljen         78 do 80 %
-//   opravljen -> prava priloznost              50 do 60 %
-//   priloznost -> pogodba, SMB pod 25k $ ACV   25 do 40 %
-// Zmnozek je 12 %. Kontrola po drugi poti: mediana SQL -> closed won je 14 % za
-// cisti mrzel outbound (22 % ob inbound podpori), krat show rate da 11 %.
-const WIN = { mid: 0.12, low: 0.08, high: 0.18 };
-const WIN_RATE = WIN.mid;
-// Isti hotel se pri vec kanalih steje veckrat. Za razlicne hotele vzemi 80 % vsote.
-const UNIQ = 0.80;
-// Cilj steje ZIVE HOTELE, ne pogodb. Iz lastnih slojev: Slovenija ima v ICP pasu
-// 106 hotelov (43 samostojnih, 52 v malih lokalnih verigah, 11 v dveh velikih),
-// Hrvaska 164 (101 samostojnih, 55 v malih, 8 v treh velikih). To da 1,3 do 1,6
-// hotela na racun. Mnozitelj se uresnici samo, ce se veriga dela namerno.
-const CHAIN = { mid: 1.4, low: 1.0, high: 1.8 };
-// Piloti se rekrutirajo iz toplih odnosov avgusta do oktobra, ne iz mrzlega outbounda.
-const PILOTI = 10;
+// konverzija sestanek -> dobljen projekt; ko vzporedna seja izracuna svojo stopnjo, jo zamenjaj tukaj
+const WIN_RATE = 0.20;
 function meetingModel(G, days) {
   const per = {};
   (G ? G.all : []).forEach(b => {
@@ -1001,68 +978,9 @@ function renderCapacity(P, G) {
   }).join("") + (() => { const T = MM.tot; const mid = T.e[0] + T.l[0] + T.t[0], lo = T.e[1] + T.l[1] + T.t[1], hi = T.e[2] + T.l[2] + T.t[2];
     return `<h3 style="margin:14px 0 6px">Skupaj vsi kanali</h3><div class="tiles caprow"><div></div><div></div><div></div>
       <div class="tile hot sum"><div class="v">${fmt(mid)}</div><div class="l">pričakovanih sestankov v sezoni</div><div class="have">razpon ${fmt(lo)} do ${fmt(hi)} · mail + LinkedIn + klici</div></div>
-      <div class="tile hot sum"><div class="v">${fmt(mid * UNIQ * WIN.mid)}</div><div class="l">podpisanih pogodb v sezoni</div><div class="have">razpon ${fmt(lo * UNIQ * WIN.low)} do ${fmt(hi * UNIQ * WIN.high)} · ${Math.round(WIN.mid * 100)} % konverzija, brez podvojenih hotelov</div></div></div>`; })();
-  $("#c_need").innerHTML = `Dejansko na dan je seštevek pošiljanj iz razdelka 3. Sestanki so iz kontaktov, ki v sezoni pridejo na vrsto, po stopnji vsakega trga; klici in LinkedIn se na prostih dnevih dopolnijo z ostalimi (bazen ostalih: ${tuPool}). Projekti pri posameznem kanalu so sestanki tega kanala krat ${Math.round(WIN.mid * 100)} %; ker se hotel na dveh kanalih steje dvakrat, je njihova vsota visja od skupne vrstice, ki podvojitve odsteje.`;
+      <div class="tile hot sum"><div class="v">${fmt(mid * WIN_RATE)}</div><div class="l">dobljenih projektov v sezoni</div><div class="have">razpon ${fmt(lo * WIN_RATE)} do ${fmt(hi * WIN_RATE)} · ob ${Math.round(WIN_RATE * 100)} % konverziji</div></div></div>`; })();
+  $("#c_need").innerHTML = `Dejansko na dan je seštevek pošiljanj iz razdelka 3. Sestanki so iz kontaktov, ki v sezoni pridejo na vrsto, po stopnji vsakega trga; klici in LinkedIn se na prostih dnevih dopolnijo z ostalimi (bazen ostalih: ${tuPool}). Projekti so sestanki krat ${Math.round(WIN_RATE * 100)} %.`;
   renderBench(MM, days);
-  renderFunnel(MM);
-}
-
-function renderFunnel(MM) {
-  const el = $("#funnel"); if (!el) return;
-  const T = MM.tot;
-  const sest = T.e[0] + T.l[0] + T.t[0], sLo = T.e[1] + T.l[1] + T.t[1], sHi = T.e[2] + T.l[2] + T.t[2];
-  const uniq = sest * UNIQ, uLo = sLo * UNIQ, uHi = sHi * UNIQ;
-  const pog = uniq * WIN.mid, pLo = uLo * WIN.low, pHi = uHi * WIN.high;
-  const hot = pog * CHAIN.mid, hLo = pLo * CHAIN.low, hHi = pHi * CHAIN.high;
-  const pct = v => Math.round(v * 100) + " %";
-  const korak = (naziv, v, lo, hi, kaj, vir) =>
-    `<tr><td class="l"><b>${naziv}</b></td><td><b>${fmt(v)}</b></td><td class="muted">${fmt(lo)} do ${fmt(hi)}</td><td class="l">${kaj}</td><td class="l small muted" style="white-space:normal;min-width:300px;max-width:560px;line-height:1.45">${vir}</td></tr>`;
-  const lijak = `<div class="tw"><table>
-    <thead><tr><th class="l">Korak</th><th>Sredina</th><th>Razpon</th><th class="l">Množitelj</th><th class="l">Od kod</th></tr></thead><tbody>
-    ${korak("Dogovorjeni sestanki", sest, sLo, sHi, "iz tabele zgoraj", "stopnje po trgih in kanalih iz objavljenih benchmarkov 2026")}
-    ${korak("Različni hoteli s sestankom", uniq, uLo, uHi, "× " + pct(UNIQ), "hotel, ki se odzove na mailu in na LinkedInu, je v vsoti po kanalih štet dvakrat")}
-    ${korak("Podpisane pogodbe", pog, pLo, pHi, "× " + pct(WIN.mid) + " (" + pct(WIN.low) + " do " + pct(WIN.high) + ")", "show rate 78 do 80 %, opravljen sestanek v pravo priložnost 50 do 60 %, priložnost v pogodbo 25 do 40 % za SMB pod 25.000 $ ACV; kontrola: mediana SQL v posel 14 % za čisti mrzel outbound")}
-    ${korak("Živi hoteli iz outbounda", hot, hLo, hHi, "× " + String(CHAIN.mid).replace(".", ",") + " (" + String(CHAIN.low).replace(".", ",") + " do " + String(CHAIN.high).replace(".", ",") + ")", "hotelov na račun: SI ICP pas 106 hotelov na 66 računov, HR 164 na 126; velja samo, če se veriga dela namerno kot prodaj enemu in razširi na skupino")}
-    ${korak("Topli piloti", PILOTI, PILOTI, PILOTI, "prišteto", "rekrutirani iz toplih odnosov avgust do oktober, ne iz mrzlega outbounda; imenovanih je 6 od 10 do 15")}
-    <tr class="sum"><td class="l">Živi hoteli skupaj</td>
-      <td><span style="font-size:1.7em;font-weight:700;color:var(--accent)">${fmt(hot + PILOTI)}</span></td>
-      <td class="muted">${fmt(hLo + PILOTI)} do ${fmt(hHi + PILOTI)}</td><td colspan="2" class="l muted">cilj sezone je 50</td></tr>
-    </tbody></table></div>`;
-
-  // obcutljivost: konverzija krat hotelov na racun
-  const wins = [0.10, 0.12, 0.15], chains = [1.0, 1.4, 1.8];
-  const hd = chains.map(c => `<th>${String(c).replace(".", ",")} hotela na pogodbo</th>`).join("");
-  const rows = wins.map(w => {
-    const tds = chains.map(c => {
-      const v = uniq * w * c + PILOTI;
-      const ok = v >= 50;
-      return `<td style="${ok ? "background:var(--good-bg);color:var(--good-fg);font-weight:700" : ""}">${fmt(v)}</td>`;
-    }).join("");
-    return `<tr><td class="l"><b>${pct(w)}</b>${w === WIN.mid ? ' <span class="tag act">benchmark</span>' : ""}</td>${tds}</tr>`;
-  }).join("");
-  const obc = `<div class="tw"><table>
-    <thead><tr><th class="l">Konverzija sestanka v pogodbo</th>${hd}</tr></thead>
-    <tbody>${rows}</tbody></table></div>
-    <p class="small muted">Vrednosti so živi hoteli ob koncu sezone, vključno z ${PILOTI} toplimi piloti. Zeleno polje pomeni, da je cilj 50 dosežen.</p>`;
-
-  // vrzel do cilja in izmerjeni vzvodi
-  const cilj = 50, skupaj = hot + PILOTI, manjka = cilj - skupaj;
-  const naSestanek = CHAIN.mid * WIN.mid * UNIQ; // zivih hotelov na en dogovorjen sestanek
-  const vrzel = manjka > 0
-    ? `Pri teh vnosih je sredina <b>${fmt(skupaj)}</b> živih hotelov. Do cilja manjka <b>${fmt(manjka)}</b>, kar je <b>${fmt(manjka / naSestanek)}</b> dogovorjenih sestankov več.`
-    : `Pri teh vnosih je sredina <b>${fmt(skupaj)}</b> živih hotelov, cilj 50 je dosežen.`;
-  const vzvodi = `<div class="tw"><table>
-    <thead><tr><th class="l">Sprememba proti privzetim vnosom</th><th>Sestankov</th><th>Živih hotelov</th></tr></thead><tbody>
-    <tr><td class="l">Privzeto: 1 polni in 1 popoldanski klicatelj, 3 LinkedIn profili</td><td>206</td><td>38</td></tr>
-    <tr><td class="l">Drugi <b>polni</b> klicatelj</td><td>206</td><td class="muted">38, brez učinka</td></tr>
-    <tr><td class="l">Drugi <b>popoldanski</b> klicatelj</td><td>252</td><td>44</td></tr>
-    <tr><td class="l">Dva dodatna LinkedIn profila</td><td>229</td><td>41</td></tr>
-    <tr><td class="l">Drugi popoldanski klicatelj in dva LinkedIn profila</td><td>274</td><td>47</td></tr>
-    <tr class="sum"><td class="l">Tretji popoldanski klicatelj povrh</td><td>297</td><td><span style="color:var(--good-fg);font-weight:700">50</span></td></tr>
-    </tbody></table></div>
-    <p class="small muted">Izmerjeno na tem modelu s premikanjem vnosov na vrhu razdelka. Drugi <b>polni</b> klicatelj ne doda ničesar, ker Tomaž na svojih trgih ni ozko grlo. Ozko grlo je <b>popoldanski italijanski klicatelj</b>, ker ima Italija daleč največji bazen telefonskih kontaktov. Pogoj za vse to so telefonske številke: model porabi okoli 2.100 številk za sloj ostalih, seznam pa jih ima 500.</p>`;
-
-  el.innerHTML = lijak + obc + `<p class="small" style="margin:10px 0 4px">${vrzel}</p>` + vzvodi;
 }
 
 function renderBench(MM, days) {
@@ -1071,14 +989,14 @@ function renderBench(MM, days) {
   const head = `<thead><tr><th class="l">Trg</th>
     <th class="ch email"><i class="dot"></i>Mail Dream 100</th><th class="ch email">Mail ostali</th>
     <th class="ch li"><i class="dot"></i>LinkedIn Dream 100</th><th class="ch li">LinkedIn ostali</th>
-    <th class="ch tel"><i class="dot"></i>Klic Dream 100</th><th class="ch tel">Klic ostali</th>
+    <th class="ch tel"><i class="dot"></i>Klic Dream 100</th>
     <th>Kontaktov v sezoni</th><th>Sestankov</th><th>Razpon</th></tr></thead>`;
   const cell = (x, i) => x.rate[i] ? r2(x.rate[i]) : '<span class="muted">ni kanala</span>';
   const body = MM.rows.map(r => `<tr>
     <td class="l"><b>${r.ime}</b></td>
     <td>${cell(r.ch.e, 0)}</td><td>${cell(r.ch.e, 1)}</td>
     <td>${cell(r.ch.l, 0)}</td><td>${cell(r.ch.l, 1)}</td>
-    <td>${cell(r.ch.t, 0)}</td><td>${cell(r.ch.t, 1)}</td>
+    <td>${cell(r.ch.t, 0)}</td>
     <td>${fmt(r.kon)}</td><td><b>${fmt(r.mid)}</b></td>
     <td class="muted">${fmt(r.low)} do ${fmt(r.high)}</td></tr>`).join("");
   const T = MM.tot;
@@ -1087,7 +1005,7 @@ function renderBench(MM, days) {
   const sum = `<tr class="sum"><td class="l">Skupaj</td>
     <td colspan="2">${fmt(T.e[0])} sestankov</td>
     <td colspan="2">${fmt(T.l[0])} sestankov</td>
-    <td colspan="2">${fmt(T.t[0])} sestankov</td>
+    <td>${fmt(T.t[0])} sestankov</td>
     <td>${fmt(sumKon)}</td>
     <td><span style="font-size:1.7em;font-weight:700;color:var(--accent)">${fmt(sumMid)}</span></td>
     <td class="muted">${fmt(sumLow)} do ${fmt(sumHigh)}</td></tr>`;
