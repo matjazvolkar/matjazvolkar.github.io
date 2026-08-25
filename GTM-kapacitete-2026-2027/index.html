@@ -948,7 +948,7 @@ function renderCapacity(P, G) {
   const usaOn = !!($("#in_usa") && $("#in_usa").checked); const usedAcc = new Set(G.all.map(b => b.acc && b.acc.mail).filter(Boolean)).size; const freeAcc = Math.max(0, P.warm - usedAcc); G.usa = { on: usaOn, freeAcc, sends: usaOn ? freeAcc * 33 : 0 };
   if (usaOn) act.e = Math.min(cap.e, act.e + freeAcc * 33);
   const rows = [
-    ["email", "Mail", cap.e, act.e, P.warm + " ogretih accountov × 33", (usaOn ? "vsi trgi + USA single channel (" + G.usa.freeAcc + " prostih accountov)" : "vse kampanje, vsi trgi, ustaljeno stanje"), "e"],
+    ["email", "Mail", cap.e, act.e, P.warm + " ogretih accountov × 33", (usaOn ? "vsi trgi + USA single channel (" + G.usa.freeAcc + " prostih accountov)" : "vse kampanje, vsi trgi, ustaljeno stanje (od 5. dne)"), "e"],
     ["li", "LinkedIn", cap.li, act.li, P.li + " profili × 25 dotikov", fmt(act.inv) + " povabil + " + fmt(act.msg) + " sporočil na dan", "l"],
     ["tel", "Klici", cap.t, act.t, Math.min(ft, 1) + " polni (Tomaž) × 33 + " + Math.min(pt, 1) + " popoldanski (IT) × 33", "multichannel batchi, ustaljeno stanje", "t"],
   ];
@@ -1102,8 +1102,9 @@ function globalPlan(P) {
   // razpored po dnevih: vsak dan dobi prosti vir najvisje prioritetni batch, ki ima vse potrebne vire proste
   all.sort((x, y) => x.pri[0] - y.pri[0] || x.pri[1] - y.pri[1] || x.pri[2] - y.pri[2]);
   const D = 200; const load = {}; for (let d = 1; d <= D; d++) load[d] = { e: 0, inv: 0, msg: 0, t: 0 };
-  const liPref = mk => mk.trg === "si" ? ["Rok", "Matjaž"] : (mk.trg === "hr" ? ["Rok", "Amadej", "Matjaž"] : ["Amadej", "Rok", "Matjaž"]);
+  const liPref = mk => mk.trg === "si" ? ["Rok", "Matjaž", "Amadej"] : (mk.trg === "hr" ? ["Rok", "Amadej", "Matjaž"] : ["Amadej", "Rok", "Matjaž"]);
   const freeSlot = (slots, d) => { let best = -1; slots.forEach((f, k) => { if (f <= d && (best < 0 || f > slots[best])) best = k; }); return best; };
+  all.forEach(b => { b.start = null; });
   let pending = all.slice();
   for (let d = 1; d <= D && pending.length; d++) {
     const left = [];
@@ -1113,7 +1114,16 @@ function globalPlan(P) {
       let key = null, ka = -1; for (const a of pref) { const k2 = a.mail || ("li-only:" + b.mk.trg); if (!accSlots[k2]) accSlots[k2] = [1, 2, 3]; const kk = freeSlot(accSlots[k2], d); if (kk >= 0) { key = k2; ka = kk; b.acc = a; break; } }
       if (ka < 0) { left.push(b); continue; }
       let kl = -1, pn = null;
-      if (b.nl > 0) { for (const n of liPref(b.mk).filter(n => liSlots[n])) { const k = freeSlot(liSlots[n], d); if (k >= 0) { kl = k; pn = n; break; } } if (kl < 0) { left.push(b); continue; } }
+      if (b.nl > 0) {
+        // LinkedIn sloti: klicni (multichannel) batchi imajo prednost; za vsakega aktivnega klicatelja so rezervirani 4 sloti
+        if (b.scn !== "multi") {
+          const freeLI = Object.values(liSlots).reduce((a, sl) => a + sl.filter(f => f <= d).length, 0);
+          let reserve = 0; Object.keys(callSlots).forEach(cn => { if (!callerOk[cn]) return; const activeM = all.filter(x => x.scn === "multi" && x.caller === cn && x.nl > 0 && x.start != null && x.start <= d && x.start + CYCLE > d).length; reserve += Math.max(0, 4 - activeM); });
+          if (freeLI <= reserve) { left.push(b); continue; }
+        }
+        for (const n of liPref(b.mk).filter(n => liSlots[n])) { const k = freeSlot(liSlots[n], d); if (k >= 0) { kl = k; pn = n; break; } }
+        if (kl < 0) { left.push(b); continue; }
+      }
       let kc = -1;
       if (b.scn === "multi" && b.nt > 0 && b.caller) { kc = freeSlot(callSlots[b.caller], d); if (kc < 0) { left.push(b); continue; } }
       accSlots[key][ka] = d + CYCLE; if (kl >= 0) { liSlots[pn][kl] = d + CYCLE; b.li = pn; } if (kc >= 0) callSlots[b.caller][kc] = d + CALL_CYCLE;
@@ -1124,7 +1134,7 @@ function globalPlan(P) {
   }
   pending.forEach(b => { b.start = D + 1; b.end = D + SEQ14.length; });
   markets.forEach(M => { M.lastD100 = M.bD.length ? Math.max(...M.bD.map(b => b.end)) : null; M.last = M.B.length ? Math.max(...M.B.map(b => b.end)) : null; });
-  let e = 0, inv = 0, msg = 0, t = 0; const w0 = 3, w1 = CYCLE; for (let d = w0; d <= w1; d++) { e += load[d].e; inv += load[d].inv; msg += load[d].msg; t += load[d].t; } const nd = w1 - w0 + 1;
+  let e = 0, inv = 0, msg = 0, t = 0; const w0 = 5, w1 = CYCLE + 4; for (let d = w0; d <= w1; d++) { e += load[d].e; inv += load[d].inv; msg += load[d].msg; t += load[d].t; } const nd = w1 - w0 + 1;
   return { markets, all, cfg, load, actual: { e: Math.round(e / nd), inv: Math.round(inv / nd), msg: Math.round(msg / nd), li: Math.round((inv + msg) / nd), t: Math.round(t / nd) }, liSlots, callerOk };
 }
 function scenarioGrid(scn) {
