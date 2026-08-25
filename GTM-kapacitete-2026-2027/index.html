@@ -234,6 +234,49 @@
   .tile .have { font-size: 0.78rem; color: var(--ink-3); margin-top: 2px; }
   .tile .v.bad { color: var(--bad-fg); } .tile .v.ok { color: var(--good-fg); }
   @media (max-width: 900px) { .mrow, .mhead { grid-template-columns: 1fr; } .mrow .mid { border: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 8px 0; } .side { grid-template-columns: repeat(2, 1fr); } .side.left { direction: ltr; } }
+
+  /* ---------- v3: sekvenca in loceni hoteli ---------- */
+  .seq { display: grid; grid-template-columns: 150px repeat(18, minmax(52px, 1fr)); gap: 3px; font-size: 0.78rem; align-items: stretch; min-width: 1060px; }
+  .seq .hd { text-align: center; color: var(--ink-3); font-size: 0.72rem; padding: 2px 0; }
+  .seq .hd b { display: block; color: var(--ink); font-size: 0.9rem; }
+  .seq .lab { display: flex; align-items: center; color: var(--ink); font-weight: 600; white-space: nowrap; }
+  .seq .lab small { display: block; color: var(--ink-3); font-weight: 400; }
+  .seq .cell { min-height: 40px; border-radius: 6px; background: var(--surface-2); display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; line-height: 1.1; }
+  .seq .cell b { font-size: 0.9rem; } .seq .cell span { font-size: 0.62rem; opacity: 0.9; }
+  .seq .cell.e { background: var(--email-deep); } .seq .cell.p { background: var(--li-deep); } .seq .cell.t { background: var(--tel-deep); }
+  .seq .cell.next { opacity: 0.45; }
+  .seq .sum { text-align: center; font-weight: 700; padding: 6px 0; border-radius: 6px; border: 1px solid var(--line); color: var(--ink); }
+  .seq .sum.e { border-color: var(--email); } .seq .sum.p { border-color: var(--li); } .seq .sum.t { border-color: var(--tel); }
+  .seq .gap { grid-column: 1 / -1; height: 6px; }
+  .one { display: grid; grid-template-columns: repeat(14, minmax(64px, 1fr)); gap: 4px; min-width: 980px; }
+  .one .d { border-radius: 8px; padding: 8px 4px; text-align: center; color: #fff; }
+  .one .d .n { font-size: 0.68rem; opacity: 0.85; } .one .d b { display: block; font-size: 1rem; margin: 2px 0; } .one .d span { font-size: 0.68rem; }
+  .one .d.e { background: var(--email-deep); } .one .d.p { background: var(--li-deep); } .one .d.t { background: var(--tel-deep); }
+  .side { grid-template-columns: 1.25fr 1fr 1fr 1fr; }
+  .stat.hot { background: transparent; border: 1px solid var(--accent); }
+  .stat.hot .v { font-size: 2.1rem; }
+  .stat.hot .l { color: var(--accent); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; font-size: 0.68rem; }
+  .stat.hot .b { display: none; }
+  .side.right .stat.hot { margin-right: 10px; } .side.left .stat.hot { margin-left: 10px; }
+  .mrow.total .stat.hot { background: transparent; }
+
+  /* ---------- v3: kartice po trgih ---------- */
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 14px; margin: 14px 0; }
+  .mc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 14px 16px; }
+  .mc.total { border-color: var(--accent); background: var(--accent-soft); }
+  .mc h4 { margin: 0 0 10px; font-size: 1.05rem; display: flex; align-items: center; justify-content: space-between; }
+  .blk2 { border-top: 1px solid var(--line); padding: 10px 0 6px; }
+  .blk2 .bt { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 6px; }
+  .fr { display: grid; grid-template-columns: 1fr 64px 90px; gap: 8px; align-items: center; font-size: 0.85rem; padding: 3px 0; color: var(--ink-2); }
+  .fr .n { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; color: var(--ink); }
+  .fr .bar { height: 8px; border-radius: 4px; background: var(--line-2); overflow: hidden; } .fr .bar i { display: block; height: 100%; background: var(--accent); }
+  .fr.key { color: var(--ink); font-weight: 700; } .fr.key .n { font-size: 1.05rem; }
+  .big { display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: center; }
+  .big .v { font-size: 2.2rem; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; }
+  .big .sub { font-size: 0.82rem; color: var(--ink-2); line-height: 1.35; }
+  .big .sub b { color: var(--ink); }
+  .blk2.d100 .big .v { color: var(--accent); }
+  .tw table { font-size: 0.82rem; } th, td { padding: 6px 8px; }
 </style>
 </head>
 <body>
@@ -269,7 +312,7 @@
     <div><label class="f">LinkedIn povabil na dan na profil</label><input type="number" id="p_li" value="25"></div>
     <div><label class="f">Trajanje LinkedIn sekvence (dni)</label><input type="number" id="p_liseqd" value="14"></div>
     <div><label class="f">Klicev na dan na prodajalca</label><input type="number" id="p_calls" value="30"></div>
-    <div><label class="f">Klicev na hotel v sekvenci</label><input type="number" id="p_cph" value="2"></div>
+    <div><label class="f">Klicev na osebo v sekvenci</label><input type="number" id="p_cph" value="4"></div>
     <div><label class="f">Faktor kontaktov pri verižnih hotelih</label><input type="number" id="p_chain" value="0.7" step="0.05"><div class="hint">Pri mednarodnih verigah odloča uprava, na objektu ostane GM</div></div>
     <div><label class="f">Dodatni ogreti accounti</label><input type="number" id="p_extra" value="6"></div>
     <div><label class="f">Dodatni na voljo od</label><input type="date" id="p_extra_od" value="2026-10-05"></div>
@@ -280,12 +323,12 @@
 </details>
 
 <h2>2. Trgi: hoteli po slojih</h2>
-<p>ICP: 4 in 5 zvezdic, 30 do 200 sob, neodvisni hoteli in lokalne verige; pilotni pas 75 do 200 sob. Vsak trg je razdeljen na tri sklope: celoten trg, Dream 100 in ostali hoteli zunaj izbora (neodvisni, lokalne in mednarodne verige skupaj).</p>
-<div class="tw sticky"><table id="t_sloji"></table></div>
+<p>ICP: 4 in 5 zvezdic, 30 do 200 sob, neodvisni hoteli in lokalne verige; pilotni pas 75 do 200 sob. Vsak trg je razdeljen na tri sklope: celoten trg, Dream 100 in ostali hoteli v ICP pasu zunaj izbora (neodvisni, lokalne in mednarodne verige skupaj). Hoteli s tremi zvezdicami ali zunaj pasu 30 do 200 sob niso nikjer.</p>
+<div class="cards" id="t_sloji"></div>
 <p class="small muted" id="c_sloji"></p>
 
 <h2>3. Dream 100 proti ostalim: kontakti po kanalih</h2>
-<p>Desno Dream 100, levo vsi ostali hoteli zunaj izbora. Številke so kontakti odločevalcev, ki jih lahko dobimo: poslovni mail, LinkedIn profil, telefon (direktna mobilna odločevalca ali office številka hotela).</p>
+<p>Desno Dream 100, levo vsi ostali hoteli v ICP pasu (4 in 5 zvezdic, 30 do 200 sob), ki niso v izboru: neodvisni, lokalne in mednarodne verige. Številke so kontakti odločevalcev, ki jih lahko dobimo: poslovni mail, LinkedIn profil, telefon (direktna mobilna odločevalca ali office številka hotela).</p>
 <div id="mirror"></div>
 
 <h2>4. Kontakti odločevalcev po trgih, podrobno</h2>
@@ -309,9 +352,19 @@
 <div id="scenarios"></div>
 <div class="rec" id="rec"></div>
 
-<h2>7. Dnevni zamik začetkov</h2>
-<p>Trgi se zaženejo z enodnevnim zamikom, tako da dnevni koraki sekvenc padajo na različne dni in vsak account pošilja polnih 33 na dan od prvega tedna naprej. Prikaz prvih 15 delovnih dni za prvi val (E = mail korak, L = LinkedIn korak, T = klic).</p>
-<div class="card card--scroll"><div class="day" id="daygrid"></div></div>
+<h2>7. Kako teče 14-dnevna sekvenca: en prodajalec, en trg</h2>
+<p>Primer: Rok dela Slovenijo, angle 1. Odločevalce razdelimo v <b>batche po 33</b>. Vsak batch gre skozi <b>14 delovnih dni</b> in vsak dan dobi natanko en dotik; kanal se menja: mail, LinkedIn, klic, mail, LinkedIn, klic in tako naprej. Batch 1 začne v ponedeljek, batch 2 v torek, batch 3 v sredo. Od tretjega dne naprej je vsak dan en batch na mailu, en na LinkedInu in en na telefonu: Rok pošlje 33 mailov in 33 LinkedIn dotikov, Tomaž opravi 33 klicev. Ko batch 1 na 14. dan konča, njegovo mesto 15. dan prevzame batch 4 z novimi 33 ljudmi.</p>
+<div class="legend"><span class="sw-email">E = mail (E1 do E5)</span><span class="sw-li">L = LinkedIn (L1 povabilo, L2 do L4 sporočilo, L5 InMail)</span><span class="sw-tel">C = klic (C1 do C4)</span></div>
+<div class="card" style="overflow-x:auto"><div id="seqgrid"></div></div>
+<h3>Kaj dobi en odločevalec iz batcha 1</h3>
+<div class="card" style="overflow-x:auto"><div id="seqone"></div></div>
+<div class="grid g3" style="margin-top:14px">
+  <div class="card"><div class="stat hot" style="background:transparent"><div class="v">99</div><div class="l">odločevalcev na 14 delovnih dni na en profil (3 batchi × 33)</div></div></div>
+  <div class="card"><div class="stat email" style="background:transparent"><div class="v">33 + 33 + 33</div><div class="l">mailov, LinkedIn dotikov in klicev vsak dan, brez luknje</div></div></div>
+  <div class="card"><div class="stat tel" style="background:transparent"><div class="v">14</div><div class="l">dotikov na osebo v 14 delovnih dneh: 5 mailov, 5 LinkedIn, 4 klici</div></div></div>
+</div>
+<div class="note"><b>Kje se 14-dnevni ritem zatakne.</b> Sekvenca ima 14 dotikov, kanali pa se vrtijo po tri (E, L, C), zato zadnja dva dotika (E5, L5) ostaneta brez klica. Ko batch 1 konča in batch 4 vstopi 15. dan, imata dan 15 in 16 po 66 mailov oziroma LinkedIn dotikov (E5 in L5 starih batchev plus E1 in L1 novih), Tomaž pa ta dva dneva nima klicev. Mail to prenese (Rok ima štiri mailboxe), LinkedIn tudi (L5 je InMail, ne povabilo), klici pa dobijo luknjo dveh dni na vsakih 14. Rešitev, če jo hočemo: <b>15. dotik C5</b> (zaključni klic) in batch 4 vstopi 16. dan; potem je vsak dan natanko 33 + 33 + 33 brez izjeme, cikel pa je 99 odločevalcev na 15 delovnih dni.</div>
+<p class="small muted">Dnevi so delovni dnevi (ponedeljek do petek); 14 delovnih dni je slabe tri tedne. Kdor odgovori ali ga Tomaž dobi na telefon, izstopi iz sekvence takoj, na vseh kanalih. LinkedIn sporočila (L2 do L5) gredo samo tistim, ki so sprejeli povabilo.</p>
 
 <h2>8. Kontekst novih trgov, viri in metoda</h2>
 <div id="ctx"></div>
@@ -352,32 +405,22 @@ function sumK(list) { const o = { dm: 0, biz: 0, priv: 0, li: 0, mob: 0, office:
 function marketTag(m) { return m.vir === "dejansko" ? '<span class="tag act">dej.</span>' : (m.vir === "manjka" ? '<span class="tag off">čaka</span>' : '<span class="tag est">ocena</span>'); }
 function restHotels(m) { return ((m.rest || {}).hotelov || 0) + ((m.intl || {}).hotelov || 0); }
 function renderSloji() {
-  const T = trgi();
-  const head = `<thead><tr><th class="l">Sloj (hoteli)</th>${T.map(m => `<th>${m.ime}${marketTag(m)}</th>`).join("")}<th>Skupaj</th></tr></thead>`;
-  const blocks = [
-    ["Celoten trg", [
-      ["Hoteli v registru, vse kategorije", m => m.sloji.L0, "sub"],
-      ["4 in 5 zvezdic, vsi operaterji", m => m.sloji.L1, "sub"],
-      ["4 in 5 zvezdic, 30 do 200 sob", m => m.sloji.L2, "key"],
-    ]],
-    ["Dream 100", [
-      ["Hotelov v izboru", m => m.d100.hotelov, "key"],
-      ["od tega ICP", m => m.d100.icp_da, "sub"],
-      ["od tega pilotni pas 75 do 200 sob", m => m.d100.pilot_da, "sub"],
-    ]],
-    ["Ostali zunaj izbora", [
-      ["Hotelov zunaj Dream 100", m => restHotels(m), "key"],
-      ["od tega neodvisni in lokalne verige", m => (m.rest || {}).hotelov, "sub"],
-      ["od tega mednarodne verige", m => (m.intl || {}).hotelov, "sub"],
-      ["od tega pilotni pas 75 do 200 sob", m => (m.rest || {}).pilot, "sub"],
-    ]],
-  ];
-  let body = "<tbody>";
-  blocks.forEach(([bl, rows]) => {
-    body += `<tr class="blk"><td colspan="${T.length + 2}">${bl}</td></tr>`;
-    rows.forEach(([lab, f, cls]) => { let tot = 0; const cells = T.map(m => { const v = m.vir === "manjka" ? null : f(m); if (typeof v === "number") tot += v; return `<td>${fmt(v)}</td>`; }).join(""); body += `<tr class="${cls}"><td class="l">${lab}</td>${cells}<td>${fmt(tot)}</td></tr>`; });
-  });
-  $("#t_sloji").innerHTML = head + body + "</tbody>";
+  const T = trgi().filter(m => m.vir !== "manjka");
+  const sumT = (f) => T.reduce((a, m) => a + (f(m) || 0), 0);
+  const card = (name, tag, S, d, o, total) => {
+    const mx = Math.max(S.L0 || 1, 1);
+    const fr = (lab, v, key) => `<div class="fr${key ? " key" : ""}"><div>${lab}</div><div class="n">${fmt(v)}</div><div class="bar"><i style="width:${Math.round(100 * (v || 0) / mx)}%"></i></div></div>`;
+    return `<div class="mc${total ? " total" : ""}"><h4>${name}${tag}</h4>
+      <div class="blk2"><div class="bt">Celoten trg</div>${fr("Hoteli v registru, vse kategorije", S.L0)}${fr("4 in 5 zvezdic", S.L1)}${fr("4 in 5 zvezdic, 30 do 200 sob (ICP pas)", S.L2, true)}</div>
+      <div class="blk2 d100"><div class="bt">Dream 100</div><div class="big"><div class="v">${fmt(d.hotelov)}</div><div class="sub">hotelov v izboru<br>ICP <b>${fmt(d.icp_da)}</b> · pilotni pas 75 do 200 sob <b>${fmt(d.pilot_da)}</b></div></div></div>
+      <div class="blk2"><div class="bt">Ostali v ICP pasu, zunaj izbora</div><div class="big"><div class="v">${fmt(o.n)}</div><div class="sub">hotelov<br>neodvisni + lokalne verige <b>${fmt(o.rest)}</b> · mednarodne verige <b>${fmt(o.intl)}</b><br>pilotni pas 75 do 200 sob <b>${fmt(o.pilot)}</b></div></div></div>
+    </div>`;
+  };
+  let h = card("Vsi trgi skupaj", `<span class="tag">${T.length} trgov</span>`, { L0: sumT(m => m.sloji.L0), L1: sumT(m => m.sloji.L1), L2: sumT(m => m.sloji.L2) },
+    { hotelov: sumT(m => m.d100.hotelov), icp_da: sumT(m => m.d100.icp_da), pilot_da: sumT(m => m.d100.pilot_da) },
+    { n: sumT(m => restHotels(m)), rest: sumT(m => m.rest.hotelov), intl: sumT(m => m.intl.hotelov), pilot: sumT(m => m.rest.pilot) }, true);
+  T.forEach(m => { h += card(m.ime, marketTag(m), m.sloji, m.d100, { n: restHotels(m), rest: m.rest.hotelov, intl: m.intl.hotelov, pilot: m.rest.pilot }, false); });
+  $("#t_sloji").innerHTML = h;
   $("#c_sloji").innerHTML = T.filter(m => m.opomba_kratka).map(m => `<b>${m.ime}</b>: ${m.opomba_kratka}`).join(" · ");
 }
 
@@ -395,7 +438,7 @@ function renderMirror(P) {
   const mx = (r, k) => Math.max(r.D[k], r.O[k], 1);
   const side = (r, sd, cls) => `<div class="side ${cls}">${statHTML("hot", r[sd].hot, "hotelov", r[sd].hot / mx(r, "hot"))}${statHTML("email", r[sd].mail, "poslovnih mailov", r[sd].mail / mx(r, "mail"))}${statHTML("li", r[sd].li, "LinkedIn profilov", r[sd].li / mx(r, "li"))}${statHTML("tel", r[sd].tel, "telefonov (mobilne + office)", r[sd].tel / mx(r, "tel"))}</div>`;
   const mid = (m, sub) => `<div class="mid"><div class="t">${m}</div><div class="s">${sub}</div></div>`;
-  let h = `<div class="mhead"><div>Ostali zunaj izbora</div><div style="text-align:center">Trg</div><div class="r">Dream 100</div></div><div class="mirror">`;
+  let h = `<div class="mhead"><div>Ostali zunaj izbora (ICP pas)</div><div style="text-align:center">Trg</div><div class="r">Dream 100</div></div><div class="mirror">`;
   const chan = (m) => `${m.kanali.email ? "mail" : "brez maila"} · LinkedIn · ${m.kanali.telefon ? "klic" : "brez klica"}`;
   h += `<div class="mrow total">${side({ D: tot.D, O: tot.O }, "O", "left")}${mid("Vsi trgi", "7 trgov skupaj")}${side({ D: tot.D, O: tot.O }, "D", "right")}</div>`;
   rows.forEach(r => { h += `<div class="mrow">${side(r, "O", "left")}${mid(r.m.ime.replace("Združeni arabski emirati", "UAE"), chan(r.m))}${side(r, "D", "right")}</div>`; });
@@ -404,7 +447,7 @@ function renderMirror(P) {
 
 function renderKontakti(P) {
   const T = trgi();
-  const cols = [["dm", "Odločevalci"], ["biz", "Poslovni mail"], ["priv", "Osebni mail"], ["li", "LinkedIn"], ["mob", "Direktna mobilna"], ["office", "Office telefon (hotelov)"], ["fd", "Vodje recepcij"], ["fd_biz", "… z mailom"], ["fd_li", "… z LinkedIn"]];
+  const cols = [["dm", "Odloče-<br>valci"], ["biz", "Poslovni<br>mail"], ["priv", "Osebni<br>mail"], ["li", "LinkedIn"], ["mob", "Direktna<br>mobilna"], ["office", "Office tel.<br>(hotelov)"], ["fd", "Vodje<br>recepcij"], ["fd_biz", "… z<br>mailom"], ["fd_li", "… z<br>LinkedIn"]];
   let h = `<thead><tr><th class="l">Trg / sloj</th><th>Hotelov</th>${cols.map(c => `<th>${c[1]}</th>`).join("")}</tr></thead><tbody>`;
   const totals = { d100: [], rest: [], intl: [] };
   T.forEach(m => {
@@ -624,23 +667,24 @@ function renderCapacity(P) {
   $("#c_need").innerHTML = `Vsaka kampanja v Instantly je ena sekvenca (trg × angle × sloj), v HeyReachu enako. Avstrija nima mail kampanj (§ 174 TKG), Grčija in Avstrija nimata klicev. Rdeča številka pomeni, da danes tega vira ni dovolj.`;
 }
 
-// ---------- dnevni zamik ----------
-function renderDaygrid(P) {
-  const T = trgi().filter(m => m.vir !== "manjka"); const rows = []; const stepsE = [0, 2, 5, 7, 10].slice(0, P.steps); const stepsL = [1, 3, 7, 14].slice(0, 4); const stepsT = [5, 9].slice(0, P.cph);
-  T.forEach((m, i) => { const off = i; const [a1] = angles(m.id);
-    if (m.kanali.email) rows.push({ n: `${m.ime.replace(" (ZDA)", "").replace("Združeni arabski emirati", "UAE")} · ${a1} · Email (start dan ${off + 1})`, cls: "e", days: stepsE.map((d, k) => [off + dayIdx(d), "E" + (k + 1)]) });
-    rows.push({ n: `${m.ime.replace(" (ZDA)", "").replace("Združeni arabski emirati", "UAE")} · ${a1} · LinkedIn (start dan ${off + 1})`, cls: "p", days: stepsL.map((d, k) => [off + dayIdx(d), "L" + (k + 1)]) });
-    if (m.kanali.telefon) rows.push({ n: `${m.ime.replace(" (ZDA)", "").replace("Združeni arabski emirati", "UAE")} · klici (po 2. mailu)`, cls: "t", days: stepsT.map((d, k) => [off + dayIdx(d), "T" + (k + 1)]) });
-  });
-  function dayIdx(calDays) { return Math.round(calDays * 5 / 7); } // koledarski dnevi v delovne
-  let h = `<div class="n"></div>` + Array.from({ length: 15 }, (_, d) => `<div class="h">d${d + 1}</div>`).join("");
-  const load = { e: Array(15).fill(0), p: Array(15).fill(0), t: Array(15).fill(0) };
-  rows.forEach(r => { h += `<div class="n" title="${r.n}">${r.n}</div>`; const map = {}; r.days.forEach(([d, l]) => { if (d < 15) { map[d] = l; load[r.cls][d]++; } }); for (let d = 0; d < 15; d++) h += `<div class="c ${map[d] ? r.cls : ""}">${map[d] || ""}</div>`; });
-  h += `<div class="n"><b>Aktivnih mail korakov</b></div>` + load.e.map(v => `<div class="tot">${v}</div>`).join("");
-  h += `<div class="n"><b>Aktivnih LinkedIn korakov</b></div>` + load.p.map(v => `<div class="tot">${v}</div>`).join("");
-  h += `<div class="n"><b>Klicnih korakov</b></div>` + load.t.map(v => `<div class="tot">${v}</div>`).join("");
-  $("#daygrid").innerHTML = h;
+// ---------- sekvenca: 3 batchi, 14 delovnih dni ----------
+const SEQ = [["e", "E1", "mail"], ["p", "L1", "povabilo"], ["t", "C1", "klic"], ["e", "E2", "mail"], ["p", "L2", "sporočilo"], ["t", "C2", "klic"], ["e", "E3", "mail"], ["p", "L3", "sporočilo"], ["t", "C3", "klic"], ["e", "E4", "mail"], ["p", "L4", "sporočilo"], ["t", "C4", "klic"], ["e", "E5", "mail"], ["p", "L5", "InMail"]];
+const DNI = ["pon", "tor", "sre", "čet", "pet"];
+function renderSeq() {
+  const D = 18; let h = `<div class="seq"><div class="lab">Delovni dan</div>`;
+  for (let d = 1; d <= D; d++) h += `<div class="hd"><b>${d}</b>${DNI[(d - 1) % 5]}${d % 5 === 1 && d > 1 ? " · " + Math.ceil(d / 5) + ". teden" : ""}</div>`;
+  const load = { e: Array(D + 1).fill(0), p: Array(D + 1).fill(0), t: Array(D + 1).fill(0) };
+  const row = (b, label, sub, next) => { h += `<div class="lab">${label}<small>${sub}</small></div>`; for (let d = 1; d <= D; d++) { const k = d - b; if (k >= 0 && k < 14) { const [c, n, t] = SEQ[k]; load[c][d]++; h += `<div class="cell ${c}${next ? " next" : ""}"><b>${n}</b><span>${t}</span></div>`; } else h += `<div class="cell"></div>`; } };
+  row(1, "Batch 1", "33 odločevalcev", false); row(2, "Batch 2", "33 odločevalcev", false); row(3, "Batch 3", "33 odločevalcev", false);
+  h += `<div class="gap"></div>`;
+  row(15, "Batch 4", "novih 33, dan 15", true); row(16, "Batch 5", "novih 33, dan 16", true); row(17, "Batch 6", "novih 33, dan 17", true);
+  h += `<div class="gap"></div>`;
+  const sum = (c, label) => { h += `<div class="lab">${label}</div>`; for (let d = 1; d <= D; d++) h += `<div class="sum ${c}">${load[c][d] * 33}</div>`; };
+  sum("e", "Rok: mailov"); sum("p", "Rok: LinkedIn"); sum("t", "Tomaž: klicev");
+  $("#seqgrid").innerHTML = h + "</div>";
+  $("#seqone").innerHTML = `<div class="one">${SEQ.map(([c, n, t], i) => `<div class="d ${c}"><div class="n">dan ${i + 1} · ${DNI[i % 5]}</div><b>${n}</b><span>${t}</span></div>`).join("")}</div>`;
 }
+function renderDaygrid() { renderSeq(); }
 
 // ---------- kontekst ----------
 function renderCtx() {
