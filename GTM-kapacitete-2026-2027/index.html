@@ -488,7 +488,7 @@
 <tr><td class="l">Hetzner</td><td class="l">Strežnik za 10 avtomatiziranih SDR opravil</td><td>25,00 €</td><td>–</td></tr>
 <tr><td class="l">LinkedIn Sales Navigator Core × 3</td><td class="l">profili: Rok, Simon, Matjaž</td><td>247,92 €</td><td>–</td></tr>
 <tr><td class="l">Playwright, Porkbun, Cloudflare</td><td class="l">Avtomatizacija, registrar, DNS</td><td>0,00 €</td><td>–</td></tr>
-<tr><td class="l">HeyReach</td><td class="l">LinkedIn outreach, Growth, 3 sedeži; četrtletno 423 $ (~389 €), 30 % popust</td><td>129,72 €</td><td>3. 9. 2026</td></tr>
+<tr><td class="l">HeyReach</td><td class="l">Growth, 3 sedeži, četrtletno 423 $</td><td>129,72 €</td><td>3. 9. 2026</td></tr>
 <tr class="sum"><td class="l">Skupaj</td><td class="l"></td><td><span style="font-size:1.7em;font-weight:700;color:var(--accent)">926,72 €</span></td><td>/ mesec</td></tr>
 </tbody>
 </table></div>
@@ -499,8 +499,8 @@
 <tbody>
 <tr><td class="l">LinkedIn Sales Navigator Core</td><td class="l">profil: Amadej</td><td>82,64 €</td><td>1. 9. 2026</td></tr>
 <tr><td class="l">Firecrawl nadgradnja</td><td class="l">85 € → 342 €/mesec</td><td>257,00 €</td><td>1. 9. 2026</td></tr>
-<tr><td class="l">Apollo, dodatni krediti</td><td class="l">5.000 kreditov (100 $)</td><td>92,00 €</td><td>1. 9. 2026</td></tr>
-<tr><td class="l">HeyReach, 4. sedež</td><td class="l">LinkedIn outreach za Amadeja; četrtletni obračun 3. 9.: 597 $ za 4 sedeže (~549 €) namesto 423 $ (~389 €) za 3</td><td>53,36 €</td><td>1. 9. 2026</td></tr>
+<tr><td class="l">Apollo, dodatni krediti</td><td class="l" id="apollo_kupi_namen" data-base="5.000 kreditov (100 $)">5.000 kreditov (100 $)</td><td id="apollo_kupi_cena" data-base="92">92,00 €</td><td>1. 9. 2026</td></tr>
+<tr><td class="l">HeyReach, 4. sedež</td><td class="l">4. sedež za Amadeja, četrtletno 597 $ namesto 423 $</td><td>53,36 €</td><td>1. 9. 2026</td></tr>
 <tr class="sum"><td class="l">Skupaj</td><td class="l"></td><td><span id="kupi_sum" data-base="485" style="font-size:1.7em;font-weight:700;color:var(--accent)">485,00 €</span></td><td></td></tr>
 </tbody>
 </table></div>
@@ -512,14 +512,14 @@
 <tr><td class="l">Instantly</td><td class="l">Cold email pošiljanje, Hyper Growth</td><td>87,60 €</td><td>4. 9. 2026</td></tr>
 <tr><td class="l">Google Workspace, Business Starter (3 trgi)</td><td class="l">18 mailboxov</td><td>122,40 €</td><td>2027</td></tr>
 <tr><td class="l">Google Workspace, Business Standard (nevron.net)</td><td class="l">6 mailboxov</td><td>81,60 €</td><td>2027</td></tr>
-<tr><td class="l">Apollo.io</td><td class="l">Obogatitev kontaktov</td><td>91,08 €</td><td>24. 9. 2026</td></tr>
+<tr><td class="l">Apollo.io</td><td class="l" id="apollo_skupno_namen" data-base="Obogatitev kontaktov">Obogatitev kontaktov</td><td id="apollo_skupno_cena" data-base="91.08">91,08 €</td><td>24. 9. 2026</td></tr>
 <tr><td class="l">Attio</td><td class="l">CRM, 1 uporabnik, Pro</td><td>86,00 €</td><td>1. 9. 2026</td></tr>
 <tr><td class="l">Lusha</td><td class="l">Telefonska obogatitev, Professional</td><td>29,90 €</td><td>19. 9. 2026</td></tr>
 <tr><td class="l">Firecrawl<span class="tag">30 % deljeno z drugimi projekti</span></td><td class="l">Scraping in obogatitev (skupna cena 342 €)</td><td>102,60 €</td><td>10. 9. 2026</td></tr>
 <tr><td class="l">Hetzner</td><td class="l">Strežnik za 10 avtomatiziranih SDR opravil</td><td>25,00 €</td><td>–</td></tr>
 <tr><td class="l">LinkedIn Sales Navigator Core × 4</td><td class="l">profili: Rok, Simon, Matjaž, Amadej</td><td>330,56 €</td><td>–</td></tr>
 <tr><td class="l">Playwright, Porkbun, Cloudflare</td><td class="l">Avtomatizacija, registrar, DNS</td><td>0,00 €</td><td>–</td></tr>
-<tr><td class="l">HeyReach</td><td class="l">LinkedIn outreach, Growth, 4 sedeži; četrtletno 597 $ (~549 €), 30 % popust</td><td>183,08 €</td><td>3. 9. 2026</td></tr>
+<tr><td class="l">HeyReach</td><td class="l">Growth, 4 sedeži, četrtletno 597 $</td><td>183,08 €</td><td>3. 9. 2026</td></tr>
 <tr class="sum"><td class="l">Skupaj</td><td class="l"></td><td><span id="skupno_sum" data-base="1139.82" style="font-size:1.7em;font-weight:700;color:var(--accent)">1.139,82 €</span></td><td>/ mesec</td></tr>
 </tbody>
 </table></div>
@@ -1220,8 +1220,8 @@ function renderUSA(P, G) {
   const oldCard = $("#usa_card"); if (oldCard) oldCard.remove(); const nT = trgi().filter(m => m.vir !== "manjka").length;
   // stroski: Apollo krediti za USA (1 kredit na razkrit mail, paket 5.000 kreditov = 100 $ = 92 EUR), razporejeno na 8 mesecev sezone
   const eur = v => v.toFixed(2).replace(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " €";
-  document.querySelectorAll(".usa_cost").forEach(el => el.remove());
-  [["kupi_sum", 0], ["skupno_sum", 0]].forEach(([id]) => { const el = $("#" + id); if (el) el.textContent = eur(parseFloat(el.dataset.base)); });
+  ["kupi_sum", "skupno_sum", "apollo_kupi_cena", "apollo_skupno_cena"].forEach(id => { const el = $("#" + id); if (el) el.textContent = eur(parseFloat(el.dataset.base)); });
+  ["apollo_kupi_namen", "apollo_skupno_namen"].forEach(id => { const el = $("#" + id); if (el) el.textContent = el.dataset.base; });
   if ($("#sloji_tag")) $("#sloji_tag").textContent = (usaOn ? nT + 1 : nT) + " trgov"; if ($("#sloji_usa")) $("#sloji_usa").innerHTML = "";
   if ($("#ctx_h2")) $("#ctx_h2").textContent = (usaOn ? "9" : "8") + ". Kontekst novih trgov, viri in metoda";
   if (!DATA.usa || !usaOn) { return; }
@@ -1239,9 +1239,9 @@ function renderUSA(P, G) {
   if ($("#sloji_usa")) $("#sloji_usa").innerHTML = `ZDA (single channel mail, Apollo): ${fmt(totVsi)} odločevalcev v hotelih, ${fmt(totVer)} s preverjenim mailom, izbranih ${sel} zveznih držav s ${fmt(selVer)} maili.`;
   $("#t_sloji").insertAdjacentHTML("beforeend", `<div class="mc usa-card" id="usa_card"><h4>ZDA, single channel mail<span class="tag est">Apollo</span></h4><div class="blk2"><div class="bt">Celoten trg</div><div class="fr"><div>Odločevalcev v hotelih (Apollo)</div><div class="n">${fmt(totVsi)}</div><div class="bar"><i style="width:100%"></i></div></div><div class="fr"><div>s preverjenim mailom</div><div class="n">${fmt(totVer)}</div><div class="bar"><i style="width:${Math.round(100 * totVer / Math.max(1, totVsi))}%"></i></div></div><div class="fr key"><div>v podjetjih z 11 do 200 zaposlenimi</div><div class="n">${fmt(totSmall)}</div><div class="bar"><i style="width:${Math.round(100 * totSmall / Math.max(1, totVsi))}%"></i></div></div></div><div class="blk2 d100"><div class="bt">Izbor za prosti mail pipeline</div><div class="big"><div class="v">${sel}</div><div class="sub">zveznih držav<br>${fmt(selVer)} preverjenih mailov · ${fmt(need)} kontaktov zmore prosti pipeline</div></div></div></div>`);
   const paketov = Math.ceil(selVer / 5000), enkratno = paketov * 92, naMesec = enkratno / 8;
-  [["kupi_sum", "pred startom USA"], ["skupno_sum", "enkratno"]].forEach(([id, rok]) => { const el = $("#" + id); if (!el) return; const tr = el.closest("tr");
-    tr.insertAdjacentHTML("beforebegin", `<tr class="usa_cost"><td class="l">Apollo, krediti za USA single channel<span class="tag est">ob stikalu USA</span></td><td class="l">${fmt(selVer)} preverjenih mailov v ${sel} državah = ${paketov} ${paketov === 1 ? 'paket' : (paketov === 2 ? 'paketa' : (paketov < 5 ? 'paketi' : 'paketov'))} po 5.000 kreditov (100 $); ${eur(enkratno)} enkratno, razporejeno na 8 mesecev sezone</td><td>${eur(naMesec)}</td><td>${rok}</td></tr>`);
-    el.textContent = eur(parseFloat(el.dataset.base) + naMesec); });
+  const kratko = `+ ${fmt(selVer)} kreditov za USA (${eur(enkratno)} enkratno / 8 mes.)`;
+  [["apollo_kupi_namen", "apollo_kupi_cena", "kupi_sum"], ["apollo_skupno_namen", "apollo_skupno_cena", "skupno_sum"]].forEach(([nId, cId, sId]) => { const n = $("#" + nId), c = $("#" + cId), su = $("#" + sId); if (!n || !c || !su) return;
+    n.textContent = n.dataset.base + " " + kratko; c.textContent = eur(parseFloat(c.dataset.base) + naMesec); su.textContent = eur(parseFloat(su.dataset.base) + naMesec); });
   $("#usa_note").innerHTML = `Prosti pipeline je ${fmt(free)} pošiljanj na dan (kar ustreza ${freeAcc} celim accountom; tudi delno zasedeni accounti pošljejo preostanek do 33 v ZDA). Razvrstitev v razrede A, B, C je presoja (leisure in resort trgi z neodvisnimi hoteli pred mestnimi in poslovnimi), ne meritev; Apollo ne pozna števila sob, zato je "11 do 200 zaposlenih" edini približek velikosti. Preverjeni maili so Apollo status verified; pred pošiljanjem gre vsak še skozi SMTP preverbo.`;
 }
 
