@@ -391,7 +391,7 @@
   .wg .lab { color: var(--ink); font-weight: 600; font-size: 0.74rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 6px; display: flex; flex-direction: column; justify-content: center; }
   .wg .lab small { color: var(--ink-3); font-weight: 400; font-size: 0.64rem; }
   .wg .sec { grid-column: 1 / -1; font-size: 0.72rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: .05em; padding: 8px 0 2px; }
-  .wg .c { min-height: 26px; border-radius: 4px; background: var(--surface-2); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 0.66rem; line-height: 1; }
+  .wg .c { min-height: 30px; border-radius: 4px; background: var(--surface-2); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 0.66rem; line-height: 1; }
   .wg .c.multi { background: var(--email-deep); } .wg .c.two { background: var(--li-deep); } .wg .c.mail { background: var(--tel-deep); }
   .wg .gapc { background: transparent; }
   .stat .two { display: flex; justify-content: space-between; gap: 8px; font-size: 0.8rem; margin-top: 2px; } .stat .two b { font-size: 1.15rem; }
@@ -406,7 +406,7 @@
   .scard h3 { margin: 0; font-size: 1.5rem; color: var(--sc); }
   .scard .use { margin: 8px 0 12px; } .scard .use .k { font-size: 0.78rem; color: var(--ink-3); text-transform: uppercase; letter-spacing: .05em; }
   .scard .use .big { font-size: 1.35rem; font-weight: 700; color: var(--ink); line-height: 1.2; } .scard .use .w { font-size: 0.9rem; color: var(--ink-2); margin-top: 2px; }
-  .scard .qg .c.e, .scard .qg .c.p, .scard .qg .c.t { background: var(--sc); color: #fff; } .scard.multi .qg .c.e, .scard.multi .qg .c.p, .scard.multi .qg .c.t { color: #1a1200; }
+  .scard .qg .c.e { background: var(--email-deep); } .scard .qg .c.p { background: var(--li-deep); } .scard .qg .c.t { background: var(--tel-deep); }
   .scard .qg .c.pause { background: var(--surface-2); color: var(--ink-3); font-weight: 400; }
   .stat .scn { display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: 0.7rem; font-weight: 700; color: #fff; margin-left: 4px; }
   .scn.multi { background: var(--sc-multi); color: #1a1200; } .scn.two { background: var(--sc-two); } .scn.single { background: var(--sc-single); }
@@ -424,7 +424,7 @@
   <span class="brandbar__meta">Interno gradivo</span>
 </header>
 <p class="kicker">Interna analiza</p>
-<h1 style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap"><span>GTM outreach aktivnosti</span><span style="color:var(--ink-3);font-weight:500;font-size:1.4rem;text-align:right">Kapacitete prodajne sezone 2026-2027</span></h1>
+<h1 style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap"><span>GTM outreach aktivnosti</span><span style="color:var(--ink-3);font-weight:500;text-align:right">Kapacitete prodajne sezone 2026-2027</span></h1>
 <div class="tiles hero" id="hero"></div>
 <p class="sub small">Slovenija in Hrvaška sta iz dejanskega vzorca (dosjeja Dream 100, prešteti odločevalci in kontakti), ostalih pet trgov je ocena iz registrov in vzorca 30 hotelov na trg. Stanje podatkov: <span class="mono" id="datum"></span>.</p>
 
@@ -645,7 +645,7 @@ function renderMirror(P) {
     ["", nT, "trgov", T7.map(x => x.ime.replace("Združeni arabski emirati", "UAE").replace(" (ZDA)", "")).join(", ")],
     ["", 3, "outreach kanali", "mail, LinkedIn, telefon"],
     ["", weeksBetween(new Date(2026, 7, 31), new Date(2027, 3, 30)) + " tednov", "trajanje aktivnosti", "31. 8. 2026 do 30. 4. 2027"],
-    ["hot", fmt(kontaktov), "kontaktov, vsi kanali, trgi", fmt(tot.D.hot + tot.O.hot) + " hotelov · " + fmt(tot.D.mail + tot.O.mail) + " mailov · " + fmt(tot.D.li + tot.O.li) + " LinkedIn · " + fmt(tot.D.tel + tot.O.tel) + " telefonov"],
+    ["hot", fmt(kontaktov), "kontaktov vse skupaj", fmt(tot.D.hot + tot.O.hot) + " hotelov · " + fmt(tot.D.mail + tot.O.mail) + " mailov · " + fmt(tot.D.li + tot.O.li) + " LinkedIn · " + fmt(tot.D.tel + tot.O.tel) + " telefonov"],
     ["", fmt(tot.D.mail + tot.D.li + tot.D.tel), "kontaktov v Dream 100", fmt(tot.D.hot) + " hotelov · " + fmt(tot.D.mail) + " mailov · " + fmt(tot.D.li) + " LinkedIn · " + fmt(tot.D.tel) + " telefonov"],
   ].map(t => `<div class="tile ${t[0]}"><div class="v">${t[1]}</div><div class="l">${t[2]}</div><div class="have">${t[3]}</div></div>`).join("");
 }
@@ -881,7 +881,7 @@ const CYCLE = 15; const SCN = { multi: "Multichannel", two: "2-channel", single:
 const ACC = (who, dom) => ({ who, mail: `${{ Rok: "rok.kokalj", Matjaž: "matjaz.volkar", Amadej: "amadej.demsar" }[who]}@${dom}` });
 const MARKETS = [
   { trg: "si", ime: "Slovenija", accounts: [ACC("Rok", "nevroncore.com"), ACC("Matjaž", "nevroncore.com")], liHome: ["Rok", "Matjaž"], caller: "Tomaž", restScn: "two" },
-  { trg: "hr", ime: "Hrvaška", accounts: [ACC("Amadej", "nevroncore.com"), ACC("Amadej", "getnevron.com")], liHome: ["Amadej"], caller: "Tomaž", restScn: "two" },
+  { trg: "hr", ime: "Hrvaška", accounts: [ACC("Amadej", "nevroncore.com"), ACC("Amadej", "getnevron.com")], liHome: ["Rok"], caller: "Tomaž", restScn: "two" },
   { trg: "it", ime: "Italija", accounts: [ACC("Rok", "trynevron.com"), ACC("Rok", "getnevron.com")], liHome: [], caller: "popoldanski IT", restScn: "single" },
   { trg: "gr", ime: "Grčija", accounts: [ACC("Amadej", "trynevron.com"), ACC("Rok", "nevron.net")], liHome: [], caller: "Tomaž", restScn: "single" },
   { trg: "uae", ime: "UAE", accounts: [ACC("Matjaž", "getnevron.com")], liHome: [], caller: "Tomaž", restScn: "two" },
@@ -901,20 +901,23 @@ function marketContacts(mk, P) {
   return { d100, rest };
 }
 function grpOf(c) { const e = c.e, tel = c.m || c.o; const n = (e ? 1 : 0) + (c.l ? 1 : 0) + (tel ? 1 : 0); if (n === 3) return 1; if (c.l && tel && !e) return 2; if (n === 2) return 3; if (n === 1) return 4; return c.eo ? 4 : 5; }
-// scn: multi (mail+li+klic), two (mail+li), mail (samo mail)
-function composeBatches(pool, scn, cfg) {
-  const useL = scn !== "single" || !cfg.mail, useT = scn === "multi", useE = cfg.mail && !(scn === "single" && false);
+// hibridni batch: Dream 100 kontakti najprej (mail, LinkedIn, klic), prosta mesta na mailu in LinkedInu
+// dopolnijo ostali (2-channel ali single), klici samo za Dream 100
+function composeBatches(pool, cfg) {
   const batches = []; let rest = pool.slice();
   while (rest.length) {
-    const b = { c: [], ne: 0, no: 0, nl: 0, nt: 0, nm: 0, scn }; const left = [];
+    const b = { c: [], ne: 0, no: 0, nl: 0, nt: 0, nm: 0, nD: 0 }; const left = [];
     for (const c of rest) {
-      const wantE = useE && c.e, wantL = useL && c.l, wantT = useT && (c.m || c.o), wantI = useE && cfg.info && !c.e && c.eo;
-      if (!(wantE || wantL || wantT)) { if (wantI && b.ne + b.no < cfg.mails) { b.c.push(c); b.no++; } else left.push(c); continue; }
+      const d100 = c.layer === "d100";
+      const wantE = cfg.mail && c.e && (d100 || cfg.restMail), wantI = cfg.mail && cfg.info && !c.e && c.eo && (d100 || cfg.restMail);
+      const wantL = c.l && (d100 ? cfg.d100Li : cfg.restLi), wantT = d100 && cfg.calls > 0 && (c.m || c.o);
+      if (!(wantE || wantL || wantT)) { if (wantI && b.ne + b.no < cfg.mails) { b.c.push(c); b.no++; if (d100) b.nD++; } else left.push(c); continue; }
       if ((wantE && b.ne + b.no >= cfg.mails) || (wantL && b.nl >= cfg.li) || (wantT && b.nt >= cfg.calls)) { left.push(c); continue; }
-      b.c.push(c); if (wantE) b.ne++; if (wantL) b.nl++; if (wantT) { b.nt++; if (c.m) b.nm++; }
+      b.c.push(c); if (d100) b.nD++; if (wantE) b.ne++; if (wantL) b.nl++; if (wantT) { b.nt++; if (c.m) b.nm++; }
     }
-    if (useE && cfg.info) for (const c of b.c) { if (!c.e && c.eo && !c._info && b.ne + b.no < cfg.mails) { c._info = true; b.no++; } }
+    if (cfg.mail && cfg.info) for (const c of b.c) { if (!c.e && c.eo && !c._info && b.ne + b.no < cfg.mails) { c._info = true; b.no++; } }
     if (!b.c.length) break;
+    b.scn = b.nt > 0 ? "multi" : ((b.nl > 0 && b.ne + b.no > 0) ? "two" : "single");
     batches.push(b); rest = left;
   }
   return batches;
@@ -934,25 +937,36 @@ function globalPlan(P) {
     const rank = c => grpOf(c) * 10 + (c.icp === "DA" ? 0 : (c.icp === "MEJNO" ? 1 : 2));
     const d100 = cc.d100.filter(c => grpOf(c) < 5).sort((x, y) => rank(x) - rank(y)); const rest = cc.rest.filter(c => grpOf(c) < 5).sort((x, y) => rank(x) - rank(y));
     const scnD = mk.d100Scn || (caller ? "multi" : "two"); const scnR = mk.restScn;
-    const bD = composeBatches(d100, scnD, Object.assign({}, cfg, { mail: hasMail })); const bR = composeBatches(rest, scnR, Object.assign({}, cfg, { mail: hasMail }));
+    // ostali: 2-channel = mail + LinkedIn; single = samo mail (IT, GR) ali samo LinkedIn (AT)
+    const restLi = scnR === "two" || !hasMail, restMail = hasMail;
+    const B = composeBatches(d100.concat(rest), Object.assign({}, cfg, { mail: hasMail, calls: caller ? cfg.calls : 0, d100Li: true, restLi, restMail }));
     const accD = mk.accounts[0], accR = mk.accounts[1] || mk.accounts[0];
-    bD.forEach((b, i) => { b.n = i + 1; b.layer = "d100"; b.acc = accD; b.mk = mk; b.caller = caller; b.pri = [0, mi, i]; all.push(b); });
-    bR.forEach((b, i) => { b.n = bD.length + i + 1; b.layer = "rest"; b.acc = accR; b.mk = mk; b.caller = null; b.pri = [scnR === "single" ? 2 : 1, mi, i]; all.push(b); });
-    markets.push({ mk, m, cc, hasMail, caller, bD, bR, B: bD.concat(bR), scnD, scnR });
+    const bD = B.filter(b => b.nD > 0), bR = B.filter(b => b.nD === 0);
+    B.forEach((b, i) => { b.n = i + 1; b.layer = b.nD === b.c.length ? "d100" : (b.nD > 0 ? "mix" : "rest"); b.acc = b.nD > 0 ? accD : accR; b.mk = mk; b.caller = b.nt > 0 ? caller : null; b.pri = [b.nD > 0 ? 0 : (b.scn === "single" ? 2 : (["si", "hr"].includes(mk.trg) ? 0.5 : 1)), mi, i]; all.push(b); });
+    markets.push({ mk, m, cc, hasMail, caller, bD, bR, B, scnD, scnR });
   });
-  // razpored po prioriteti: multichannel Dream 100 (po trgih), nato 2-channel, nato mail-channel
+  // razpored po dnevih: vsak dan dobi prosti vir najvisje prioritetni batch, ki ima vse potrebne vire proste
   all.sort((x, y) => x.pri[0] - y.pri[0] || x.pri[1] - y.pri[1] || x.pri[2] - y.pri[2]);
   const D = 200; const load = {}; for (let d = 1; d <= D; d++) load[d] = { e: 0, inv: 0, msg: 0, t: 0 };
-  all.forEach(b => {
-    const key = b.acc.mail || ("li-only:" + b.mk.trg); if (!accSlots[key]) accSlots[key] = [1, 2, 3];
-    const needs = [{ slots: accSlots[key], name: "acc" }];
-    if (b.nl > 0) { const order = [...b.mk.liHome.filter(n => liSlots[n]), ...Object.keys(liSlots).filter(n => !b.mk.liHome.includes(n))]; let bp = null; order.forEach(pn => liSlots[pn].forEach((d, k) => { if (!bp || d < bp.d) bp = { pn, k, d }; })); needs.push({ slots: liSlots[bp.pn], name: "li", pn: bp.pn }); b.li = bp.pn; }
-    if (b.scn === "multi" && b.nt > 0 && b.caller) needs.push({ slots: callSlots[b.caller], name: "call" });
-    const picks = needs.map(n => { let bk = 0; n.slots.forEach((d, k) => { if (d < n.slots[bk]) bk = k; }); return { n, k: bk, d: n.slots[bk] }; });
-    const start = Math.max(...picks.map(x => x.d)); picks.forEach(x => { x.n.slots[x.k] = start + CYCLE; });
-    b.start = start; b.end = start + SEQ14.length - 1;
-    for (let d = b.start; d <= b.end && d <= D; d++) { const [ch, code] = SEQ14[d - b.start]; if (ch === "e") load[d].e += b.ne + b.no; else if (ch === "p" && b.nl > 0) { if (code === "L1") load[d].inv += b.nl; else load[d].msg += b.nl; } else if (ch === "t" && b.scn === "multi" && b.caller) load[d].t += b.nt; }
-  });
+  const liPref = mk => mk.trg === "si" ? ["Rok", "Matjaž"] : (mk.trg === "hr" ? ["Rok", "Amadej", "Matjaž"] : ["Amadej", "Rok", "Matjaž"]);
+  const freeSlot = (slots, d) => { let best = -1; slots.forEach((f, k) => { if (f <= d && (best < 0 || f > slots[best])) best = k; }); return best; };
+  let pending = all.slice();
+  for (let d = 1; d <= D && pending.length; d++) {
+    const left = [];
+    for (const b of pending) {
+      const key = b.acc.mail || ("li-only:" + b.mk.trg); if (!accSlots[key]) accSlots[key] = [1, 2, 3];
+      const ka = freeSlot(accSlots[key], d); if (ka < 0) { left.push(b); continue; }
+      let kl = -1, pn = null;
+      if (b.nl > 0) { for (const n of liPref(b.mk).filter(n => liSlots[n])) { const k = freeSlot(liSlots[n], d); if (k >= 0) { kl = k; pn = n; break; } } if (kl < 0) { left.push(b); continue; } }
+      let kc = -1;
+      if (b.scn === "multi" && b.nt > 0 && b.caller) { kc = freeSlot(callSlots[b.caller], d); if (kc < 0) { left.push(b); continue; } }
+      accSlots[key][ka] = d + CYCLE; if (kl >= 0) { liSlots[pn][kl] = d + CYCLE; b.li = pn; } if (kc >= 0) callSlots[b.caller][kc] = d + CYCLE;
+      b.start = d; b.end = d + SEQ14.length - 1;
+      for (let dd = b.start; dd <= b.end && dd <= D; dd++) { const [ch, code] = SEQ14[dd - b.start]; if (ch === "e") load[dd].e += b.ne + b.no; else if (ch === "p" && b.nl > 0) { if (code === "L1") load[dd].inv += b.nl; else load[dd].msg += b.nl; } else if (ch === "t" && b.scn === "multi" && b.caller) load[dd].t += b.nt; }
+    }
+    pending = left;
+  }
+  pending.forEach(b => { b.start = D + 1; b.end = D + SEQ14.length; });
   markets.forEach(M => { M.lastD100 = M.bD.length ? Math.max(...M.bD.map(b => b.end)) : null; M.last = M.B.length ? Math.max(...M.B.map(b => b.end)) : null; });
   let e = 0, inv = 0, msg = 0, t = 0; const w0 = 3, w1 = CYCLE; for (let d = w0; d <= w1; d++) { e += load[d].e; inv += load[d].inv; msg += load[d].msg; t += load[d].t; } const nd = w1 - w0 + 1;
   return { markets, all, cfg, load, actual: { e: Math.round(e / nd), inv: Math.round(inv / nd), msg: Math.round(msg / nd), li: Math.round((inv + msg) / nd), t: Math.round(t / nd) }, liSlots, callerOk };
@@ -1000,9 +1014,12 @@ function renderWeeks(G) {
   const mailRows = []; people.forEach(w => doms.forEach(d => { if (d === "nevron.net" && w !== "Rok") return; const a = ACC(w, d); mailRows.push({ lab: w, sub: a.mail, test: b => b.acc && b.acc.mail === a.mail }); }));
   const liRows = Object.keys(G.liSlots).map(n => ({ lab: n, sub: "LinkedIn profil", test: b => b.li === n && b.nl > 0 }));
   const callRows = [["Tomaž", "Slovenija, Hrvaška, UAE, Tennessee, Grčija"], ["popoldanski IT", "Italija"]].filter(x => G.callerOk[x[0]]).map(x => ({ lab: x[0], sub: "klicatelj · " + x[1], test: b => b.caller === x[0] && b.scn === "multi" && b.nt > 0 }));
+  const MESECI = ["januar", "februar", "marec", "april", "maj", "junij", "julij", "avgust", "september", "oktober", "november", "december"];
   let h = `<div class="wg" style="grid-template-columns:${cols.join(" ")}"><div></div>`;
-  let wi = 0; groups.forEach((n, gi) => { h += `<div class="grp" style="grid-column: span ${n}">T${wi + 1} do T${wi + n}</div>`; wi += n; if (gi < groups.length - 1) h += `<div class="gapc"></div>`; });
-  h += `<div class="lab">Teden</div>`; for (let w = 1; w <= W; w++) { h += `<div class="hd"><b>T${w}</b>${wdFmt((w - 1) * 5 + 1)}</div>`; if ((w === 10 || w === 20 || w === 30) && w < W) h += `<div class="gapc"></div>`; }
+  // meseci: teden pripada mesecu svojega ponedeljka
+  const wm = []; for (let w = 1; w <= W; w++) { const d = wdDate((w - 1) * 5 + 1); wm.push(d.getMonth() + "-" + d.getFullYear()); }
+  let w = 1; while (w <= W) { const key = wm[w - 1]; let n = 0; while (w + n <= W && wm[w + n - 1] === key) n++; const d = wdDate((w - 1) * 5 + 1); h += `<div class="grp" style="grid-column: span ${n}">${MESECI[d.getMonth()]} ${d.getFullYear()}</div>`; for (let k = 0; k < n; k++) { const ww = w + k; if ((ww === 10 || ww === 20 || ww === 30) && ww < W) h += `<div class="gapc"></div>`; } w += n; }
+  h += `<div class="lab">Teden</div>`; for (let w2 = 1; w2 <= W; w2++) { h += `<div class="hd"><b>T${w2}</b></div>`; if ((w2 === 10 || w2 === 20 || w2 === 30) && w2 < W) h += `<div class="gapc"></div>`; }
   const section = (title, rs) => {
     h += `<div class="sec">${title}</div>`;
     rs.forEach(r => {
@@ -1010,7 +1027,7 @@ function renderWeeks(G) {
       for (let w = 1; w <= W; w++) {
         const ws = (w - 1) * 5 + 1, we = w * 5; const act = G.all.filter(b => r.test(b) && b.start <= we && b.end >= ws);
         if (!act.length) h += `<div class="c"></div>`;
-        else { const scn = act[0].scn; const trgs = [...new Set(act.map(b => b.mk.trg.toUpperCase()))].join("+"); h += `<div class="c ${scn}" title="${act.map(b => b.mk.ime + " B" + b.n + " (" + SCN[b.scn] + ")").join(", ")}">${trgs}</div>`; }
+        else { const scn = act[0].scn; const trgs = [...new Set(act.map(b => b.mk.trg.toUpperCase()))]; h += `<div class="c ${scn}" style="flex-direction:column;gap:1px" title="${act.map(b => b.mk.ime + " B" + b.n + " (" + SCN[b.scn] + ")").join(", ")}">${trgs.map(t => `<span>${t}</span>`).join("")}</div>`; }
         if ((w === 10 || w === 20 || w === 30) && w < W) h += `<div class="gapc"></div>`;
       }
     });
