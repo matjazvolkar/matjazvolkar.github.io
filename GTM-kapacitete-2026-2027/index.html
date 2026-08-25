@@ -795,7 +795,7 @@ function composeBatches(pool, cfg) {
   while (rest.length) {
     const b = { c: [], ne: 0, no: 0, nl: 0, nt: 0, nm: 0 }; const left = [];
     for (const c of rest) {
-      const wantE = c.e, wantL = c.l, wantT = c.m || c.o;
+      const wantE = c.e, wantL = c.l, wantT = cfg.calls > 0 && (c.m || c.o);
       if (!(wantE || wantL || wantT)) { if (cfg.info && c.eo && b.ne + b.no < cfg.mails) { b.c.push(c); b.no++; } else left.push(c); continue; }
       if ((wantE && b.ne + b.no >= cfg.mails) || (wantL && b.nl >= cfg.li) || (wantT && b.nt >= cfg.calls)) { left.push(c); continue; }
       b.c.push(c); if (wantE) b.ne++; if (wantL) b.nl++; if (wantT) { b.nt++; if (c.m) b.nm++; }
@@ -869,7 +869,7 @@ function renderQueues(P) {
     // izkoriscenost v prvem ciklu (15 delovnih dni)
     const cyc = 15; let uE = 0, uI = 0, uM = 0, uT = 0; for (let d = 1; d <= cyc; d++) { const L0 = R.load[d] || { e: 0, o: 0, inv: 0, msg: 0, t: 0 }; uE += L0.e + L0.o; uI += L0.inv; uM += L0.msg; uT += L0.t; }
     const per = R.B.slice(0, 3).reduce((a, b) => a + b.c.length, 0);
-    const util = `<div class="note"><b>Kaj model pokaže za ${mk.title.split(",")[0]}:</b> en prodajalec z enim mail accountom, enim LinkedIn profilom in enim klicateljem obdela <b>${per} kontaktov na 15 delovnih dni</b> (trije batchi hkrati). V prvem ciklu je mail account zaseden ${Math.round(100 * uE / (cyc * cfg.mails))} % (${uE} od ${cyc * cfg.mails} mailov), klicatelj ${cfg.calls ? Math.round(100 * uT / (cyc * cfg.calls)) : 0} % (${uT} od ${cyc * cfg.calls} klicev), LinkedIn povabila pa le ${Math.round(100 * uI / (cyc * cfg.li))} % (${uI} od ${cyc * cfg.li}), ker gre povabilo (L1) vsakemu batchu samo enkrat, sporočila L2 do L5 (${uM}) pa ne štejejo v limit povabil. Ozko grlo sta torej mail account s 33 mailov na dan in klicatelj s 33 klici na dan, ne LinkedIn: vsak dodaten mail account brez dodatnega klicatelja ne pospeši ničesar, ker bi tretji batch na telefonu na dan potreboval 66 klicev.</div>`;
+    const util = `<div class="note"><b>Kaj model pokaže za ${mk.title.split(",")[0]}:</b> en prodajalec z enim mail accountom, enim LinkedIn profilom in enim klicateljem obdela <b>${per} kontaktov na 15 delovnih dni</b> (trije batchi hkrati). V prvem ciklu je mail account zaseden ${Math.round(100 * uE / (cyc * cfg.mails))} % (${uE} od ${cyc * cfg.mails} mailov), klicatelj ${cfg.calls ? Math.round(100 * uT / (cyc * cfg.calls)) + " % (" + uT + " od " + (cyc * cfg.calls) + " klicev)" : "ni določen, klicni dotiki se preskočijo"}, LinkedIn povabila pa le ${Math.round(100 * uI / (cyc * cfg.li))} % (${uI} od ${cyc * cfg.li}), ker gre povabilo (L1) vsakemu batchu samo enkrat, sporočila L2 do L5 (${uM}) pa ne štejejo v limit povabil. Ozko grlo sta torej mail account s 33 mailov na dan in klicatelj s 33 klici na dan, ne LinkedIn: vsak dodaten mail account brez dodatnega klicatelja ne pospeši ničesar, ker bi tretji batch na telefonu na dan potreboval 66 klicev.</div>`;
     html += `<div class="qcard"><h3>${mk.title}</h3><div class="who">${mk.who} · Dream 100: ${K.hotelov} hotelov, ${K.dm.length} odločevalcev (${K.hotelov_brez_dm} hotelov še brez odločevalca, v raziskavi)${mk.trg === "hr" ? " · hrvaški register nima office mailov hotelov, zato E-info na Hrvaškem še ni mogoč" : ""}</div>
       <div class="qkp">${tiles}</div><div class="qkp">${kp}</div>
       <h3 style="font-size:1rem;color:var(--ink);margin-top:14px">Prvi trije batchi po dotikih (${R.L} dotikov, zamik en dan)</h3>
