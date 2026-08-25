@@ -1123,10 +1123,10 @@ function globalPlan(P) {
       if (ka < 0) { left.push(b); continue; }
       let kl = -1, pn = null;
       if (b.nl > 0) {
-        // LinkedIn sloti: klicni (multichannel) batchi imajo prednost; za vsakega aktivnega klicatelja so rezervirani 4 sloti
+        // LinkedIn sloti: multichannel batchi imajo prednost; za vsako skupino klicateljev je rezerviranih toliko slotov, kolikor jih cakajoci multichannel batchi rabijo (najvec 3 na klicatelja + 1)
         if (b.scn !== "multi") {
           const freeLI = Object.values(liSlots).reduce((a, sl) => a + sl.filter(f => f <= d).length, 0);
-          let reserve = 0; Object.keys(callSlots).forEach(cn => { const activeM = all.filter(x => x.scn === "multi" && x.callerName === cn && x.nl > 0 && x.start != null && x.start <= d && x.start + CYCLE > d).length; reserve += Math.max(0, 4 - activeM); });
+          let reserve = 0; Object.keys(CALLERS).forEach(g => { const nC = CALLERS[g].length; if (!nC) return; const activeM = all.filter(x => x.scn === "multi" && x.caller === g && x.nl > 0 && x.start != null && x.start <= d && x.start + CYCLE > d).length; const pendM = all.filter(x => x.scn === "multi" && x.caller === g && x.nl > 0 && x.start == null).length; reserve += Math.max(0, Math.min(3 * nC + 1, activeM + pendM) - activeM); });
           if (freeLI <= reserve) { left.push(b); continue; }
         }
         for (const n of liPref(b.mk).filter(n => liSlots[n])) { const k = freeSlot(liSlots[n], d); if (k >= 0) { kl = k; pn = n; break; } }
