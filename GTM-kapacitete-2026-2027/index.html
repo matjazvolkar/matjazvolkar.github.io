@@ -532,12 +532,6 @@
 </tbody>
 </table></div>
 
-<h2>10. USA: single channel mail za proste mail accounte</h2>
-<p>Mail pipeline na sedmih trgih ni poln. Prosti del zapolni single channel mail kampanja po ZDA, kjer Apollo (iskanje brez kreditov, 25. 8. 2026) šteje odločevalce v hotelih (lastnik, GM, hotel manager, direktor operative, nabava, guest experience) s preverjenim mailom po zveznih državah. Stolpec "11 do 200 zaposlenih" je približek za neodvisne in manjše hotele. Države so razvrščene po primernosti za produkt (A: leisure in resort trgi z veliko neodvisnimi hoteli, B: mestni in poslovni trgi, C: ostalo) in znotraj razreda po številu preverjenih mailov; izbor se polni od vrha, dokler ni prostih pošiljanj dovolj za celo sezono.</p>
-<div class="tiles" id="usa_tiles"></div>
-<div class="tw"><table id="usa_table"></table></div>
-<p class="small muted" id="usa_note"></p>
-
 <details style="margin-top:36px"><summary>Arhiv: pravila sestavljanja batchev in nastavitve sekvenc (če se bo kdaj rabilo)</summary>
 <div style="margin-top:10px"><div class="rec"><b>Pravila, po katerih se sestavljajo batchi.</b>
 <ol style="margin:6px 0 0 18px;padding:0">
@@ -1189,25 +1183,7 @@ function renderWeeks(G) {
   h += `</div>`;
   $("#weektable").innerHTML = `<div style="overflow-x:auto">${h}</div>`;
 }
-
-// ---------- USA single channel mail ----------
-const USA_FIT = { A: ["California", "Florida", "Hawaii", "Colorado", "Arizona", "Tennessee", "South Carolina", "North Carolina", "Utah", "Oregon", "Washington", "Vermont", "Maine", "New Mexico", "Montana", "Wyoming", "Louisiana", "Georgia", "Virginia", "New York", "Massachusetts"], B: ["Texas", "Nevada", "Illinois", "Pennsylvania", "Maryland", "New Jersey", "Michigan", "Minnesota", "Wisconsin", "Ohio", "Missouri", "District of Columbia", "Idaho", "Alaska", "Rhode Island", "New Hampshire", "Connecticut", "Delaware", "Kentucky", "Alabama", "Mississippi"] };
-function usaFit(st) { return USA_FIT.A.includes(st) ? "A" : (USA_FIT.B.includes(st) ? "B" : "C"); }
-function renderUSA(P, G) {
-  if (!DATA.usa) { $("#usa_table").innerHTML = ""; return; }
-  const act = G.actual; const days = weeksBetween(new Date(2026, 7, 31), new Date(2027, 3, 30)) * 5;
-  const capE = P.warm * 33; const free = Math.max(0, capE - act.e); const need = Math.round(free * days / 5); const freeAcc = Math.floor(free / 33);
-  const rows = Object.entries(DATA.usa).map(([st, v]) => ({ st, fit: usaFit(st), vsi: v.vsi || 0, ver: v.verified || 0, small: v.verified_small || 0 })).sort((a, b) => a.fit.localeCompare(b.fit) || b.ver - a.ver);
-  let cum = 0, sel = 0, selVer = 0; rows.forEach(r => { if (cum < need) { r.sel = true; cum += r.ver; sel++; selVer += r.ver; } else r.sel = false; r.cum = cum; });
-  const totVer = rows.reduce((a, r) => a + r.ver, 0), totSmall = rows.reduce((a, r) => a + r.small, 0);
-  $("#usa_tiles").innerHTML = [["email cap", fmt(free), "prostih pošiljanj na dan", capE + " možnih minus " + act.e + " dejanskih"], ["email act", fmt(need), "kontaktov, ki jih prosti pipeline zmore v sezoni", days + " delovnih dni / 5 mailov na kontakt"], ["email", fmt(totVer), "odločevalcev v hotelih ZDA s preverjenim mailom", fmt(totSmall) + " v podjetjih z 11 do 200 zaposlenimi"], ["email hot", sel, "izbranih zveznih držav", fmt(selVer) + " preverjenih mailov"]].map(t => `<div class="tile ${t[0]}"><div class="v">${t[1]}</div><div class="l">${t[2]}</div><div class="have">${t[3]}</div></div>`).join("");
-  let h = `<thead><tr><th class="l">Zvezna država</th><th>Razred</th><th>Odločevalcev v hotelih</th><th class="ch email"><i class="dot"></i>S preverjenim mailom</th><th>11 do 200 zaposlenih</th><th>Kumulativno</th><th class="l">Izbor</th></tr></thead><tbody>`;
-  rows.forEach(r => { h += `<tr class="${r.sel ? "key" : ""}"><td class="l">${r.st}</td><td>${r.fit}</td><td>${fmt(r.vsi)}</td><td class="ch email">${fmt(r.ver)}</td><td>${fmt(r.small)}</td><td>${r.sel ? fmt(r.cum) : ""}</td><td class="l">${r.sel ? '<span class="tag act">izbrana</span>' : ""}</td></tr>`; });
-  $("#usa_table").innerHTML = h + "</tbody>";
-  $("#usa_note").innerHTML = `Prosti pipeline ustreza ${freeAcc} accountom s 33 pošiljanji na dan. Razvrstitev v razrede A, B, C je presoja (leisure in resort trgi z neodvisnimi hoteli pred mestnimi in poslovnimi), ne meritev; Apollo ne pozna števila sob, zato je "11 do 200 zaposlenih" edini približek velikosti. Preverjeni maili so Apollo status verified; pred pošiljanjem gre vsak še skozi SMTP preverbo.`;
-}
-
-function renderDaygrid(P) { const G = globalPlan(P); renderQueues(P, G); renderWeeks(G); renderCapacity(P, G); renderUSA(P, G); }
+function renderDaygrid(P) { const G = globalPlan(P); renderQueues(P, G); renderWeeks(G); renderCapacity(P, G); }
 
 // ---------- kontekst ----------
 function renderCtx() {
