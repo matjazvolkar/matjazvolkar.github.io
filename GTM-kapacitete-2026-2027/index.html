@@ -229,6 +229,11 @@
   .stat.hot { --c: var(--accent); } .stat.email { --c: var(--email); } .stat.li { --c: var(--li); } .stat.tel { --c: var(--tel); }
   .mhead { display: grid; grid-template-columns: 1fr 150px 1fr; gap: 10px; padding: 0 16px; font-weight: 700; font-size: 0.85rem; color: var(--ink-2); text-transform: uppercase; letter-spacing: 0.04em; }
   .mhead .r { text-align: right; }
+  .ban { position: relative; }
+  .ban .stat { opacity: 0.3; filter: grayscale(1); }
+  .ban::before, .ban::after { content: ""; position: absolute; left: 10%; right: 10%; top: 50%; height: 5px; margin-top: -2px; background: #DA2025; border-radius: 3px; transform: rotate(28deg); pointer-events: none; box-shadow: 0 0 0 1px rgba(0,0,0,.35); }
+  .ban::after { transform: rotate(-28deg); }
+  .ban .why { position: absolute; left: 0; right: 0; bottom: 6px; text-align: center; font-size: 0.68rem; font-weight: 700; color: #DA2025; letter-spacing: 0.02em; }
   .mrow.total { border-color: var(--accent); background: var(--accent-soft); }
   .mrow.total .stat { background: var(--surface); }
   .tile .have { font-size: 0.78rem; color: var(--ink-3); margin-top: 2px; }
@@ -641,7 +646,10 @@ function renderMirror(P) {
   const tot = { D: { hot: 0, mail: 0, li: 0, tel: 0, mob: 0, off: 0 }, O: { hot: 0, mail: 0, li: 0, tel: 0, mob: 0, off: 0 } };
   rows.forEach(r => ["D", "O"].forEach(sd => Object.keys(tot[sd]).forEach(k => tot[sd][k] += r[sd][k])));
   const mx = (r, k) => Math.max(r.D[k], r.O[k], 1);
-  const side = (r, sd, cls) => `<div class="side ${cls}">${statHTML("hot", r[sd].hot, "hotelov", r[sd].hot / mx(r, "hot"))}${statHTML("email", r[sd].mail, "poslovnih mailov", r[sd].mail / mx(r, "mail"))}${statHTML("li", r[sd].li, "LinkedIn profilov", r[sd].li / mx(r, "li"))}${statHTML("tel", r[sd].tel, "telefonov", r[sd].tel / mx(r, "tel"), `${fmt(r[sd].mob)} mobilnih · ${fmt(r[sd].off)} office`)}</div>`;
+  // Avstrija: hladen mail in hladen klic sta po § 174 TKG prepovedana, kartici sta prekrizani
+  const BAN = { at: { email: true, tel: true, why: "prepovedano, § 174 TKG" } };
+  const ban = (r, ch, html) => { const b = r.m && BAN[r.m.id]; return b && b[ch] ? `<div class="ban" title="${b.why}: po avstrijskem zakonu je dovoljen samo LinkedIn">${html}<div class="why">${b.why}</div></div>` : html; };
+  const side = (r, sd, cls) => `<div class="side ${cls}">${statHTML("hot", r[sd].hot, "hotelov", r[sd].hot / mx(r, "hot"))}${ban(r, "email", statHTML("email", r[sd].mail, "poslovnih mailov", r[sd].mail / mx(r, "mail")))}${statHTML("li", r[sd].li, "LinkedIn profilov", r[sd].li / mx(r, "li"))}${ban(r, "tel", statHTML("tel", r[sd].tel, "telefonov", r[sd].tel / mx(r, "tel"), `${fmt(r[sd].mob)} mobilnih · ${fmt(r[sd].off)} office`))}</div>`;
   const FLAG = {
     si: `<svg viewBox="0 0 30 20"><rect width="30" height="20" fill="#fff"/><rect y="6.67" width="30" height="6.67" fill="#005ce5"/><rect y="13.33" width="30" height="6.67" fill="#ed1c24"/><path d="M6 4.2c2.4 0 3.6.6 3.6.6v4.4c0 2.6-2.2 4.2-3.6 4.6-1.4-.4-3.6-2-3.6-4.6V4.8s1.2-.6 3.6-.6z" fill="#005ce5" stroke="#ed1c24" stroke-width=".5"/><path d="M3.2 9.4l1-1.6.8 1.2.9-1.6.9 1.6.8-1.2 1 1.6" fill="#fff"/></svg>`,
     hr: `<svg viewBox="0 0 30 20"><rect width="30" height="6.67" fill="#ff0000"/><rect y="6.67" width="30" height="6.67" fill="#fff"/><rect y="13.33" width="30" height="6.67" fill="#171796"/><g transform="translate(11.5 5)"><rect width="7" height="9" rx="1" fill="#fff"/><path d="M0 0h1.4v1.8H0zM2.8 0h1.4v1.8H2.8zM5.6 0H7v1.8H5.6zM1.4 1.8h1.4v1.8H1.4zM4.2 1.8h1.4v1.8H4.2zM0 3.6h1.4v1.8H0zM2.8 3.6h1.4v1.8H2.8zM5.6 3.6H7v1.8H5.6zM1.4 5.4h1.4v1.8H1.4zM4.2 5.4h1.4v1.8H4.2zM0 7.2h1.4V9H0zM2.8 7.2h1.4V9H2.8zM5.6 7.2H7V9H5.6z" fill="#ff0000"/></g></svg>`,
@@ -653,7 +661,7 @@ function renderMirror(P) {
   };
   const mid = (m, sub, id) => `<div class="mid">${id && FLAG[id] ? `<div class="flag">${FLAG[id]}</div>` : ""}<div class="t">${m}</div><div class="s">${sub}</div></div>`;
   let h = `<div class="mhead"><div>Ostali zunaj izbora (ICP pas)</div><div style="text-align:center">Trg</div><div class="r">Dream 100</div></div><div class="mirror">`;
-  const chan = (m) => `${m.kanali.email ? "mail" : "brez maila"} · LinkedIn · ${m.kanali.telefon ? "klic" : "brez klica"}`;
+  const chan = (m) => m.id === "at" ? "samo LinkedIn, mail in klic prepovedana (§ 174 TKG)" : `${m.kanali.email ? "mail" : "brez maila"} · LinkedIn · ${m.kanali.telefon ? "klic" : "brez klica"}`;
   rows.forEach(r => { h += `<div class="mrow">${side(r, "O", "left")}${mid(r.m.ime.replace("Združeni arabski emirati", "UAE"), chan(r.m), r.m.id)}${side(r, "D", "right")}</div>`; });
   h += `<div class="mrow total">${side({ D: tot.D, O: tot.O }, "O", "left")}${mid("Vsi trgi", rows.length + " trgov skupaj")}${side({ D: tot.D, O: tot.O }, "D", "right")}</div>`;
   $("#mirror").innerHTML = h + "</div>";
