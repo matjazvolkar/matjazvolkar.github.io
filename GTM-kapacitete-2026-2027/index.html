@@ -984,7 +984,7 @@ function renderCapacity(P, G) {
     const pct = r[2] ? Math.round(100 * r[3] / r[2]) : 0;
     const T = MM.tot[r[6]], kon = T[3];
     const na100 = kon ? (100 * T[0] / kon) : 0;
-    return `<div class="caphead"><h3>${r[1]}</h3><div></div><div></div><h3>Sestanki</h3><h3>Projekti</h3></div><div class="tiles caprow">
+    return `<div class="caphead"><h3>${r[1]}</h3><div></div><div></div>${r[0] === "email" ? "<h3>Sestanki</h3><h3>Projekti</h3>" : ""}</div><div class="tiles caprow">
       <div class="tile ${r[0]} cap"><div class="v">${fmt(r[2])}</div><div class="l">možnih na dan</div><div class="have">${r[4]}</div></div>
       <div class="tile ${r[0]} act"><div class="v">${fmt(r[3])}</div><div class="l">dejansko na dan</div><div class="have">${r[5]}</div></div>
       <div class="tile ${r[0]}"><div class="v ${pct < 50 ? "bad" : "ok"}">${pct} %</div><div class="l">izkoriščenost kanala</div><div class="have">${fmt(r[3])} od ${fmt(r[2])}</div></div>
@@ -992,7 +992,7 @@ function renderCapacity(P, G) {
       <div class="tile ${r[0]} hot"><div class="v">${fmt(T[0] * WIN_RATE)}</div><div class="l">dobljenih projektov v sezoni</div><div class="have">razpon ${fmt(T[1] * WIN_RATE)} do ${fmt(T[2] * WIN_RATE)} · ob ${Math.round(WIN_RATE * 100)} % konverziji sestanka v projekt</div></div>
     </div>`;
   }).join("") + (() => { const T = MM.tot; const mid = T.e[0] + T.l[0] + T.t[0], lo = T.e[1] + T.l[1] + T.t[1], hi = T.e[2] + T.l[2] + T.t[2];
-    return `<div class="caphead"><h3>Skupaj vsi kanali</h3><div></div><div></div><h3>Sestanki</h3><h3>Projekti</h3></div><div class="tiles caprow"><div></div><div></div><div></div>
+    return `<div class="caphead"><h3>Skupaj vsi kanali</h3></div><div class="tiles caprow"><div></div><div></div><div></div>
       <div class="tile hot sum"><div class="v">${fmt(mid)}</div><div class="l">pričakovanih sestankov v sezoni</div><div class="have">razpon ${fmt(lo)} do ${fmt(hi)} · mail + LinkedIn + klici</div></div>
       <div class="tile hot sum"><div class="v">${fmt(mid * WIN_RATE)}</div><div class="l">dobljenih projektov v sezoni</div><div class="have">razpon ${fmt(lo * WIN_RATE)} do ${fmt(hi * WIN_RATE)} · ob ${Math.round(WIN_RATE * 100)} % konverziji</div></div></div>`; })();
   $("#c_need").innerHTML = `Dejansko na dan je seštevek pošiljanj iz razdelka 3. Sestanki so iz kontaktov, ki v sezoni pridejo na vrsto, po stopnji vsakega trga; klici in LinkedIn se na prostih dnevih dopolnijo z ostalimi (bazen ostalih: ${tuPool}). Projekti so sestanki krat ${Math.round(WIN_RATE * 100)} %.`;
