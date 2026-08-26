@@ -644,7 +644,9 @@ function renderMirror(P) {
     return { m, D: { hot: hD, mail: kD.biz, li: kD.li, tel: telCount(kD, hD), mob: kD.mob, off: Math.min(hD, kD.office) }, O: { hot: hO, mail: kO.biz, li: kO.li, tel: telCount(kO, hO), mob: kO.mob, off: Math.min(hO, kO.office) } };
   });
   const tot = { D: { hot: 0, mail: 0, li: 0, tel: 0, mob: 0, off: 0 }, O: { hot: 0, mail: 0, li: 0, tel: 0, mob: 0, off: 0 } };
-  rows.forEach(r => ["D", "O"].forEach(sd => Object.keys(tot[sd]).forEach(k => tot[sd][k] += r[sd][k])));
+  // Avstrija: mail in telefon sta prepovedana (§ 174 TKG), zato v vsote ne gresta; LinkedIn in hoteli ostanejo
+  const BAN_CH = ["mail", "tel", "mob", "off"];
+  rows.forEach(r => ["D", "O"].forEach(sd => Object.keys(tot[sd]).forEach(k => { if (r.m.id === "at" && BAN_CH.includes(k)) return; tot[sd][k] += r[sd][k]; })));
   const mx = (r, k) => Math.max(r.D[k], r.O[k], 1);
   // Avstrija: hladen mail in hladen klic sta po § 174 TKG prepovedana, kartici sta prekrizani
   const BAN = { at: { email: true, tel: true, why: "prepovedano, § 174 TKG" } };
@@ -663,7 +665,7 @@ function renderMirror(P) {
   let h = `<div class="mhead"><div>Ostali zunaj izbora (ICP pas)</div><div style="text-align:center">Trg</div><div class="r">Dream 100</div></div><div class="mirror">`;
   const chan = (m) => m.id === "at" ? "samo LinkedIn, mail in klic prepovedana (§ 174 TKG)" : `${m.kanali.email ? "mail" : "brez maila"} · LinkedIn · ${m.kanali.telefon ? "klic" : "brez klica"}`;
   rows.forEach(r => { h += `<div class="mrow">${side(r, "O", "left")}${mid(r.m.ime.replace("Združeni arabski emirati", "UAE"), chan(r.m), r.m.id)}${side(r, "D", "right")}</div>`; });
-  h += `<div class="mrow total">${side({ D: tot.D, O: tot.O }, "O", "left")}${mid("Vsi trgi", rows.length + " trgov skupaj")}${side({ D: tot.D, O: tot.O }, "D", "right")}</div>`;
+  h += `<div class="mrow total">${side({ D: tot.D, O: tot.O }, "O", "left")}${mid("Vsi trgi", rows.length + " trgov skupaj · brez avstrijskih mailov in telefonov (§ 174 TKG)")}${side({ D: tot.D, O: tot.O }, "D", "right")}</div>`;
   $("#mirror").innerHTML = h + "</div>";
   const T7 = trgi(); const nT = T7.length; const kontaktov = tot.D.mail + tot.O.mail + tot.D.li + tot.O.li + tot.D.tel + tot.O.tel;
   HERO_BASE = { nT, names: T7.map(x => x.ime.replace("Združeni arabski emirati", "UAE").replace(" (ZDA)", "")).join(", "), kontaktov, hot: tot.D.hot + tot.O.hot, mail: tot.D.mail + tot.O.mail, li: tot.D.li + tot.O.li, tel: tot.D.tel + tot.O.tel };
@@ -685,7 +687,8 @@ function renderKontakti(P) {
   T.forEach(m => {
     if (m.vir === "manjka") return;
     const ch = m.kanali; const chTxt = `${ch.email ? "mail" : "brez maila"} · LinkedIn · ${ch.telefon ? "klic" : "brez klica"}`;
-    const kD = kontakti(m, "d100", P), kR = kontakti(m, "rest", P), kI = kontakti(m, "intl", P); totals.d100.push(kD); totals.rest.push(kR); totals.intl.push(kI);
+    const kD = kontakti(m, "d100", P), kR = kontakti(m, "rest", P), kI = kontakti(m, "intl", P);
+    const zeroBan = k => m.id === "at" ? Object.assign({}, k, { biz: 0, priv: 0, mob: 0, office: 0, fd_biz: 0 }) : k; totals.d100.push(zeroBan(kD)); totals.rest.push(zeroBan(kR)); totals.intl.push(zeroBan(kI));
     const kO = sumK([kR, kI]), all = sumK([kD, kR, kI]);
     h += `<div class="mkt">${m.ime}${marketTag(m)}<small>${chTxt}</small></div><div class="tw"><table>${head}<tbody>`;
     h += tr("key", "Dream 100", m.d100.hotelov, kD);
@@ -697,7 +700,7 @@ function renderKontakti(P) {
   });
   const tD = sumK(totals.d100), tR = sumK(totals.rest), tI = sumK(totals.intl), tA = sumK([tD, tR, tI]);
   const hot = (L) => T.reduce((a, m) => a + ((m[L] || {}).hotelov || 0), 0);
-  h += `<div class="mkt">Vsi trgi skupaj<small>7 trgov</small></div><div class="tw"><table>${head}<tbody>`;
+  h += `<div class="mkt">Vsi trgi skupaj<small>7 trgov · avstrijski maili in telefoni niso šteti (§ 174 TKG), LinkedIn je</small></div><div class="tw"><table>${head}<tbody>`;
   h += tr("key", "Dream 100", hot("d100"), tD);
   h += tr("key", "Ostali v ICP pasu, zunaj izbora", hot("rest") + hot("intl"), sumK([tR, tI]));
   h += tr("sub", "neodvisni in lokalne verige", hot("rest"), tR);
