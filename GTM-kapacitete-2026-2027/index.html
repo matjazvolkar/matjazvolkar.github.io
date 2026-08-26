@@ -411,6 +411,17 @@
   :root { --sc-multi: #F6A900; --sc-two: #C2823F; --sc-single: #DA2025; }
   .wg .c.r2 { box-shadow: inset 0 0 0 2px rgba(255,255,255,.75); }
   .wg .c.multi { background: var(--sc-multi); color: #1a1200; } .wg .c.two { background: var(--sc-two); } .wg .c.single { background: var(--sc-single); }
+
+  /* v32: sloj batcha v celici. Oranzna crta = Dream 100, bela crta = ostali; deljen teden ima obe.
+     Crta lezi na temni podlagi, da se oranzna loci od rumene multichannel celice. */
+  .wg .c { position: relative; min-height: 38px; padding-bottom: 11px; }
+  .wg .c > .mk { position: absolute; left: 3px; right: 3px; bottom: 3px; height: 7px; padding: 1px; display: flex; gap: 2px; border-radius: 3px; background: rgba(0, 0, 0, .72); overflow: hidden; }
+  .wg .c > .mk > i { flex: 1; border-radius: 2px; min-width: 5px; }
+  .wg .c > .mk > .d1 { background: var(--n-orange); }
+  .wg .c > .mk > .rs { background: var(--n-white); }
+  .qleg i.lin { width: 18px; height: 5px; border-radius: 3px; }
+  .qleg i.lin.split { background: linear-gradient(90deg, var(--n-orange) 0 46%, rgba(0,0,0,.55) 46% 54%, var(--n-white) 54% 100%); }
+  .qleg .qsep { display: inline-block; width: 1px; height: 15px; background: var(--line); margin: 0 2px; }
   .sc3 { display: grid; grid-template-columns: 1fr; gap: 14px; }
   .scard { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 16px 18px; border-top: 6px solid var(--sc); }
   .scard.multi { --sc: var(--sc-multi); } .scard.two { --sc: var(--sc-two); } .scard.single { --sc: var(--sc-single); }
@@ -465,8 +476,8 @@
 <div id="queues"></div>
 
 <h2>4. Trgi po tednih: mail accounti, LinkedIn profili, klicatelji</h2>
-<p>Vsaka vrstica je en vir, vsak stolpec en teden sezone (T1 = 31. 8. 2026). Barva pove scenarij, oznaka trg. Rdeča celica brez batcha Dream 100 pomeni dopolnilne dotike ostalim na označenem trgu: klicatelj kliče ostale, LinkedIn profil pošilja ostalim v Italiji, mail account z oznako USA pošilja single channel v ZDA (ob vklopljenem stikalu). Slovenija in Hrvaška gresta skozi dva kroga: številka pod državo je krog (1 ali 2); drugi krog ima drug angle in drugega pošiljatelja, po premoru 4 tednov. Od 14. 12. do 1. 1. se novi batchi ne začenjajo.</p>
-<div class="qleg"><i style="background:var(--sc-multi)"></i>Multichannel <i style="background:var(--sc-two)"></i>2-channel <i style="background:var(--sc-single)"></i>Single channel</div>
+<p>Vsaka vrstica je en vir, vsak stolpec en teden sezone (T1 = 31. 8. 2026). Barva pove scenarij, oznaka trg. Rdeča celica brez batcha Dream 100 pomeni dopolnilne dotike ostalim na označenem trgu: klicatelj kliče ostale, LinkedIn profil pošilja ostalim v Italiji, mail account z oznako USA pošilja single channel v ZDA (ob vklopljenem stikalu). Slovenija in Hrvaška gresta skozi dva kroga: številka pod državo je krog (1 ali 2); drugi krog ima drug angle in drugega pošiljatelja, po premoru 4 tednov. Od 14. 12. do 1. 1. se novi batchi ne začenjajo. Črta ob spodnjem robu celice pove sloj: oranžna je Dream 100, bela so ostali. Kadar v istem tednu na istem viru tečeta oba sloja, sta črti dve, oranžna in bela.</p>
+<div class="qleg"><i style="background:var(--sc-multi)"></i>Multichannel <i style="background:var(--sc-two)"></i>2-channel <i style="background:var(--sc-single)"></i>Single channel <span class="qsep"></span><i class="lin" style="background:var(--n-orange)"></i>Dream 100 <i class="lin" style="background:var(--n-white)"></i>ostali <i class="lin split"></i>oba sloja v istem tednu</div>
 <div id="weektable"></div>
 
 <h2>5. Kontakti odločevalcev po trgih, podrobno</h2>
@@ -1262,16 +1273,22 @@ function renderWeeks(G) {
   const wm = []; for (let w = 1; w <= W; w++) { const d = wdDate((w - 1) * 5 + 4); wm.push(d.getMonth() + "-" + d.getFullYear()); }
   let w = 1; while (w <= W) { const key = wm[w - 1]; let n = 0; while (w + n <= W && wm[w + n - 1] === key) n++; const d = wdDate((w - 1) * 5 + 4); h += `<div class="grp" style="grid-column: span ${n}">${MESECI[d.getMonth()]} ${d.getFullYear()}</div>`; for (let k = 0; k < n; k++) { const ww = w + k; if ((ww === 10 || ww === 20 || ww === 30) && ww < W) h += `<div class="gapc"></div>`; } w += n; }
   h += `<div class="lab">Teden</div>`; for (let w2 = 1; w2 <= W; w2++) { h += `<div class="hd"><b>T${w2}</b></div>`; if ((w2 === 10 || w2 === 20 || w2 === 30) && w2 < W) h += `<div class="gapc"></div>`; }
+  // spodnja crta v celici: oranzna = Dream 100, bela = ostali; deljen teden dobi obe
+  const mark = (d100, rest) => (d100 || rest) ? `<i class="mk">${d100 ? '<i class="d1"></i>' : ""}${rest ? '<i class="rs"></i>' : ""}</i>` : "";
+  const slojIme = (d100, rest) => d100 && rest ? "Dream 100 in ostali" : (d100 ? "Dream 100" : "ostali");
   const section = (title, rs) => {
     h += `<div class="sec">${title}</div>`;
     rs.forEach(r => {
       h += `<div class="lab">${r.lab}<small>${r.sub}</small></div>`;
       for (let w = 1; w <= W; w++) {
         const ws = (w - 1) * 5 + 1, we = w * 5; const act = G.all.filter(b => r.test(b) && b.start <= we && b.end >= ws);
-        if (r.mail && usaOn && !act.length) h += `<div class="c single" title="USA single channel mail: account v tem tednu nima batcha za sedem trgov, prosta pošiljanja gredo v ZDA">USA</div>`;
+        if (r.mail && usaOn && !act.length) h += `<div class="c single" title="USA single channel mail (ostali, bela črta): account v tem tednu nima batcha za sedem trgov, prosta pošiljanja gredo v ZDA">USA${mark(false, true)}</div>`;
         else if (!act.length) { const by = {}; for (let d = ws; d <= we; d++) { const L = G.load[d]; if (!L) continue; const src = r.caller ? (L.tuBy && L.tuBy[r.lab]) : (r.li ? (L.luBy && L.luBy[r.lab]) : null); if (src) Object.entries(src).forEach(([k, v]) => { by[k] = (by[k] || 0) + v; }); }
-          const ks = Object.keys(by); if (ks.length) h += `<div class="c single" style="flex-direction:column;gap:1px" title="${r.caller ? "dopolnilni klici ostalim: " : "dopolnilni LinkedIn dotiki ostalim: "}${ks.map(k => k.toUpperCase() + " " + fmt(by[k])).join(", ")}">${ks.map(k => `<span>${k.toUpperCase()}</span>`).join("")}</div>`; else h += `<div class="c"></div>`; }
-        else { const scn = act[0].scn; const r2 = act.some(b => b.round === 2); const trgs = [...new Set(act.map(b => b.mk.trg.toUpperCase() + (b.krog ? "|" + b.round : "")))]; h += `<div class="c ${scn}" style="flex-direction:column;gap:1px" title="${act.map(b => b.mk.ime + " B" + b.n + " (" + SCN[b.scn] + (b.krog ? ", " + b.round + ". krog " + b.krog.angle + ", " + b.acc.who : "") + ")").join(", ")}">${trgs.map(t => t.split("|").map(x => `<span>${x}</span>`).join("")).join("")}</div>`; }
+          const ks = Object.keys(by); if (ks.length) h += `<div class="c single" style="flex-direction:column;gap:1px" title="${r.caller ? "dopolnilni klici ostalim (bela črta): " : "dopolnilni LinkedIn dotiki ostalim (bela črta): "}${ks.map(k => k.toUpperCase() + " " + fmt(by[k])).join(", ")}">${ks.map(k => `<span>${k.toUpperCase()}</span>`).join("")}${mark(false, true)}</div>`; else h += `<div class="c"></div>`; }
+        else { const scn = act[0].scn; const r2 = act.some(b => b.round === 2); const trgs = [...new Set(act.map(b => b.mk.trg.toUpperCase() + (b.krog ? "|" + b.round : "")))];
+          // sloj celice: batch je lahko cist Dream 100, cisti ostali ali mesan (Dream 100 + polnila)
+          const hasD = act.some(b => b.nD > 0), hasR = act.some(b => b.c.length - b.nD > 0);
+          h += `<div class="c ${scn}" style="flex-direction:column;gap:1px" title="${act.map(b => b.mk.ime + " B" + b.n + " (" + SCN[b.scn] + ", " + slojIme(b.nD > 0, b.c.length - b.nD > 0) + (b.krog ? ", " + b.round + ". krog " + b.krog.angle + ", " + b.acc.who : "") + ")").join(", ")}">${trgs.map(t => t.split("|").map(x => `<span>${x}</span>`).join("")).join("")}${mark(hasD, hasR)}</div>`; }
         if ((w === 10 || w === 20 || w === 30) && w < W) h += `<div class="gapc"></div>`;
       }
     });
