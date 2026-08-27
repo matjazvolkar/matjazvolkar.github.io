@@ -284,6 +284,11 @@
   .tw table { font-size: 0.82rem; } th, td { padding: 6px 8px; }
   .d3 { font-size: 0.78em; font-weight: 700; color: var(--good-fg); margin-left: 4px; }
   tr.s2 td:first-child { padding-left: 26px; color: var(--ink-2); }
+  .zakaj { counter-reset: z; list-style: none; margin: 10px 0 6px; padding: 0; display: grid; gap: 10px; }
+  .zakaj li { counter-increment: z; position: relative; padding: 12px 16px 12px 52px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); font-size: 0.95rem; line-height: 1.5; }
+  .zakaj li::before { content: counter(z); position: absolute; left: 14px; top: 12px; width: 24px; height: 24px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); font-weight: 700; font-size: 0.82rem; display: flex; align-items: center; justify-content: center; }
+  .zakaj b { color: var(--ink); }
+  .sklep { margin: 12px 0 6px; padding: 12px 16px; border-radius: var(--r-lg); border: 1px solid var(--accent); background: var(--accent-soft); font-size: 0.95rem; line-height: 1.5; }
   .d3.zero { color: var(--ink-3); }
 
   /* ---------- v3: outreach kanali v podrobni tabeli ---------- */
@@ -499,6 +504,16 @@
 <div id="t_sloji3"></div>
 <p class="small muted" id="c_sloji3"></p>
 <div class="note"><b>Kaj popust pomeni.</b> Sonda Apollo čez 208 domen je izmerila, koliko hotelov ima v bazi vsaj enega odločevalca: Slovenija 26 % pri 4 in 5 zvezdicah proti 15 % pri treh (popust 0,6), Hrvaška 46 % proti 33 % (popust 0,7). Office telefon pride iz registra, zato tam popusta ni. <b>Booking še ni upoštevan.</b> Merilo Booking nad 8,0 velja tudi za tri zvezdice: v hrvaškem pilotnem pasu je od 15 preverjenih velikih trizvezdičnih hotelov padlo 6 (Hvar 7,7, Pula 6,7, Matija Gubec 7,5, Porto Zadar 7,2, Borik Lumbarda 7,4, Zagreb 7,9). Realno preživi približno 60 % ozke variante.</div>
+
+<h3 style="margin:26px 0 6px">Zakaj ostajamo pri 4 in 5 zvezdicah</h3>
+<ol class="zakaj">
+<li><b>Slovenija nima kaj dobiti.</b> Od 59 novih hotelov jih ima 35 med 30 in 49 sob. V pilotnem pasu 75 do 200 sob so nova samo 3 neodvisna podjetja in 6 LinkedIn profilov.</li>
+<li><b>Četrtina hrvaške pridobitve ni nova.</b> Od 94 novih hotelov jih 24 pripada skupinam, ki jih že pokrivamo (Valamar, Plava Laguna, Maistra, Arena, Liburnia, Maestral, Jadran). Če dobimo skupino, njeni trizvezdični hoteli pridejo zraven brez spremembe ICP.</li>
+<li><b>Merilo Booking odreže ravno velike.</b> Od 15 preverjenih velikih neodvisnih trizvezdičnih hotelov na Hrvaškem jih je 6 pod 8,0. To so stari resortski hoteli, torej natanko tisto, kar ICP namenoma izloča.</li>
+<li><b>Odločevalcev tam ni na LinkedInu.</b> Delež hotelov z vsaj enim odločevalcem v bazi je pri treh zvezdicah skoraj prepolovljen: Slovenija 15 % proti 26 %, Hrvaška 33 % proti 46 %.</li>
+<li><b>Ne manjka nam tarč, manjka nam raziskanih ljudi.</b> Samo Italija ima 3.442 hotelov zunaj izbora, Grčija 1.343, Avstrija 1.158. Široka varianta doda 110 podjetij za raziskavo, pridobi pa okoli 30 LinkedIn profilov na trg.</li>
+</ol>
+<p class="sklep"><b>Namesto širitve:</b> ICP ostane 4 in 5 zvezdic, v Dream 100 Hrvaška pa gre 9 poimenskih izjem, veliki neodvisni trizvezdični hoteli nad 75 sob z Booking oceno nad 8,0 (Kimen Cres, Horizont Baška Voda, International Rab, Faraon Trpanj, Selce, Omorika Punat, Park Čakovec, Istra Brijuni, Bolero Biograd). V Sloveniji sta taka hotela dva: Belvedere Izola in Ambient Domžale.</p>
 
 <h2>7. Stroški cold outbound orodij in kaj kupiti zdaj</h2>
 <p>Mesečni strošek orodij, ki poganjajo cold outbound. Stanje 25. 8. 2026.</p>
