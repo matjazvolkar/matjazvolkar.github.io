@@ -639,12 +639,7 @@
 
 
 
-<h2>8. Kapaciteta po dejanskih kanalih: klici, LinkedIn, mail</h2>
-<p>Fiksne kapacitete sezone: klici tečejo od prvega dne znotraj multichannel batchev: septembra kliče Matjaž, od 5. 10. 2026 prevzame Tomaž (30 klicev na dan; SI, HR, UAE, NY); Aleš popoldne kliče samo Italijo (30 na dan); 3 LinkedIn sedeži (Rok, Matjaž, Amadej), od oktobra četrti (Tomaž), generičnih sedežev ni; 18 ogretih mail accountov po 33 mailov na dan. Stopnje so javni benchmarki za mrzel outbound iz raziskave <a href="https://claude.ai/code/artifact/855b9f54-69ad-464f-b64d-2f5d37812074" target="_blank" rel="noopener">GTM benchmarki po aktivnostih</a> (31. 8. 2026): sredina in razpon, brez lastnih kampanjskih številk. Sestanek v projekt za mrzel vir 10,3 % (3,1 do 19 %): 7,9 % krat 1,3 dokaznega dviga (Index in scrape tenant kot kvantificiran dokaz, objavljena cena), po popravku 31. 8. Dejansko na dan je iz razporeda v razdelku 3 (oktober, polni pogon).</p>
-<div id="cap_rows"></div>
-<p class="small muted" id="c_need"></p>
-
-<h2>9. Kontekst novih trgov, viri in metoda</h2>
+<h2>8. Kontekst novih trgov, viri in metoda</h2>
 <div id="ctx"></div>
 
 <details style="margin-top:36px"><summary>Arhiv: pravila sestavljanja batchev in nastavitve sekvenc (če se bo kdaj rabilo)</summary>
@@ -1082,6 +1077,7 @@ function meetingModel(G) {
 
 // ---------- kapaciteta po dejanskih kanalih ----------
 function renderCapacity(P, G) {
+  if (!$("#cap_rows")) return; // sekcija 8 odstranjena 31. 8.
   const act = Object.assign({}, G ? G.actual : { e: 0, inv: 0, msg: 0, t: 0, li: 0 });
   const MM = meetingModel(G);
   const cap = { t: (FT + PT) * 30, li: (LI_SEATS + 1) * 25, e: WARM * 33 };
