@@ -954,15 +954,15 @@ function renderScenarios(P) {
 // lastnih kampanjskih stevilk. Dream 100 = personalizacija ena na ena (2,5x) in materni jezik (1,5x)
 // nad genericnim; pri klicu je razlika mobilna proti centrali.
 const BENCH = {
-  t_mob:    { mid: 3.00, lo: 1.50, hi: 6.00, z: "nizko",  vir: "Gong (300 M klicev), Cognism 2026, Skipcall: javljanje 15 do 18 %, pogovor v sestanek 10 %, 4 poskusi" },
-  t_office: { mid: 1.05, lo: 0.50, hi: 2.10, z: "nizko",  vir: "Skipcall, SalesIntel: javljanje odločevalca prek centrale 3 do 6 %, faktor 0,35 proti mobilni" },
+  t_mob:    { mid: 3.75, lo: 1.90, hi: 7.50, z: "nizko",  vir: "Gong (300 M klicev), Cognism 2026, Skipcall: javljanje 15 do 18 %, pogovor v sestanek 10 %, 4 poskusi; Index kot opener 1,25x" },
+  t_office: { mid: 1.31, lo: 0.63, hi: 2.60, z: "nizko",  vir: "Skipcall, SalesIntel: javljanje odločevalca prek centrale 3 do 6 %, faktor 0,35 proti mobilni; omemba Indexa 1,25x" },
   l_d100:   { mid: 1.05, lo: 0.36, hi: 2.70, z: "zmerno", vir: "Expandi hospitality (42 računov): sprejem 28 %, odgovor 14,5 %; 0,7 na 100 povabil × 1,5 personalizacija" },
-  l_rest:   { mid: 0.70, lo: 0.24, hi: 1.80, z: "zmerno", vir: "Expandi 2026, Belkins (11,5 M povabil): 0,24 do 1,8 sestanka na 100 povabil" },
-  e_d100:   { mid: 1.90, lo: 0.50, hi: 4.00, z: "nizko",  vir: "Belkins, Instantly 2026: 0,5 na 100 × 2,5 personalizacija ena na ena × 1,5 materni jezik (Lavender, Cognism)" },
-  e_rest:   { mid: 0.75, lo: 0.20, hi: 1.50, z: "zmerno", vir: "Belkins (7,5 M poslanih), Instantly, Apollo: 0,5 na 100 kontaktov × 1,5 materni jezik" },
+  l_rest:   { mid: 1.05, lo: 0.36, hi: 2.70, z: "zmerno", vir: "Expandi 2026, Belkins (11,5 M povabil): 0,24 do 1,8 sestanka na 100 povabil; s povezavama scrape in Index 1,5x" },
+  e_d100:   { mid: 1.90, lo: 0.50, hi: 4.00, z: "nizko",  vir: "Belkins, Instantly 2026: 0,5 na 100 × 2,5 personalizacija ena na ena × 1,5 materni jezik (Lavender, Cognism); s povezavama scrape in Index znotraj stropa 5x" },
+  e_rest:   { mid: 0.40, lo: 0.05, hi: 1.20, z: "nizko",  vir: "Belkins (7,5 M poslanih), Instantly, Apollo: enokanalne sekvence z velikim deležem info@ naslovov vlečejo dol, povezavi scrape in Index gor (Italija: 59 % na info@ = polom liste)" },
 };
 // sestanek v projekt, mrzel vir: prihod × kvalificirana priloznost × podpis (Bridge Group, Ebsta x Pavilion 2025, Optifai)
-const WIN = { mid: 0.079, lo: 0.026, hi: 0.17 };
+const WIN = { mid: 0.103, lo: 0.031, hi: 0.19 }; // 7,9 % x 1,3 dokaznega dviga (Index, scrape tenant, objavljena cena), benchmark stran 31. 8.
 // isti osebi vsak naslednji krog z drugim anglom in drugim posiljateljem: 60, 50, 40 % stopnje prvega kroga
 const ROUNDF = [1, 0.6, 0.5, 0.4];
 const NO_MAIL = { at: true };
@@ -1023,7 +1023,7 @@ function renderCapacity(P, G) {
   }).join("") + (() => { const mid = MM.e.mid + MM.l.mid + MM.t.mid, lo = MM.e.lo + MM.l.lo + MM.t.lo, hi = MM.e.hi + MM.l.hi + MM.t.hi;
     return `<div class="caphead"><h3>Skupaj vsi kanali</h3></div><div class="tiles caprow"><div></div><div></div><div></div>
       <div class="tile hot sum"><div class="v">${fmt(mid)}</div><div class="l">pričakovanih sestankov v sezoni</div><div class="have">razpon ${fmt(lo)} do ${fmt(hi)} · klici + LinkedIn + mail</div></div>
-      <div class="tile hot sum"><div class="v">${fmt(mid * WIN.mid)}</div><div class="l">dobljenih projektov v sezoni</div><div class="have">razpon ${fmt(lo * WIN.lo)} do ${fmt(hi * WIN.hi)} · ob 7,9 % (2,6 do 17 %) konverziji</div></div></div>`; })();
+      <div class="tile hot sum"><div class="v">${fmt(mid * WIN.mid)}</div><div class="l">dobljenih projektov v sezoni</div><div class="have">razpon ${fmt(lo * WIN.lo)} do ${fmt(hi * WIN.hi)} · ob ${(WIN.mid * 100).toFixed(1).replace('.', ',')} % (${(WIN.lo * 100).toFixed(1).replace('.', ',')} do ${(WIN.hi * 100).toFixed(0)} %) konverziji z dokaznim dvigom</div></div></div>`; })();
   $("#c_need").innerHTML = `Dejansko na dan je povprečje oktobrskih delovnih dni iz razporeda v razdelku 3. Kontakt, ki je hkrati na mailu in na LinkedInu, šteje na obeh kanalih; vsak naslednji krog isti osebi šteje 60, 50 in 40 % stopnje prvega. Razpon so nizki in visoki konci objavljenih benchmarkov.`;
 }
 
