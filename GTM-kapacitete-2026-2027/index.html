@@ -1123,7 +1123,7 @@ function wdFmt(i) { const d = wdDate(i); return `${d.getDate()}. ${d.getMonth() 
 function qnum(id, d) { const el = $(id); const v = parseFloat((el || {}).value); return isNaN(v) ? d : v; }
 function qchk(id) { const el = $(id); return el ? el.checked : true; }
 const SEQ14 = [["e", "E1"], ["p", "L1"], ["t", "C1"], ["e", "E2"], ["p", "L2"], ["t", "C2"], ["e", "E3"], ["p", "L3"], ["t", "C3"], ["e", "E4"], ["p", "L4"], ["t", "C4"], ["e", "E5"], ["p", "L5"]];
-const HOL = [76, 90]; // delovna dneva T16 pon 14. 12. 2026 do T18 pet 1. 1. 2027
+const HOL = [84, 90]; // cet 24. 12. 2026 do pet 1. 1. 2027; december do 23. 12. poln (odlocitev 31. 8.)
 const CYCLE = 15; const CALL_CYCLE = 12; const SCN = { multi: "Multichannel", two: "2-channel", single: "Single channel" };
 const ACC = (who, dom) => ({ who, mail: `${{ Rok: "rok.kokalj", Matjaž: "matjaz.volkar", Amadej: "amadej.demsar", Nina: "nina.bernik", Gregor: "gregor.skok", Simon: "simon.bergant" }[who]}@${dom}` });
 const MARKETS = [
@@ -1264,9 +1264,9 @@ function globalPlan(P) {
       if (d >= HOL[0] && d <= HOL[1]) { left.push(b); continue; }
       // Dream 100 drugih Tomazevih trgov (UAE, NY) pride na vrsto, ko so vsi batchi prvega kroga SI in HR razporejeni
       if (b.nD > 0 && b.scn === "multi" && !b.krog && b.mk.caller === "Tomaž") { const g = all.filter(x => x.krog && x.round === 1 && x.nD > 0); if (g.some(x => x.start == null)) { left.push(b); continue; } }
-      // drugi krog: sele ko so vsi batchi prvega kroga istega sloja razporejeni in po premoru (tedni x 5) od konca zadnjega
+      // drugi krog: sele ko so vsi batchi prvega kroga istega sloja razporejeni in po premoru (privzeto 2 tedna) od konca zadnjega
       // naslednji krog: sele ko so vsi batchi prejsnjega kroga istega sloja razporejeni in po premoru (tedni x 5) od konca zadnjega
-      if (b.round > 1) { const r1 = all.filter(x => x.mk === b.mk && x.round === b.round - 1 && (x.nD > 0) === (b.nD > 0)); if (!r1.length || r1.some(x => x.start == null)) { b.block = 'krog:predhodni'; left.push(b); continue; } const r1End = Math.max(...r1.map(x => x.end)); if (d < r1End + (b.krog.pause || 5) * 5) { b.block = 'krog:premor'; left.push(b); continue; } }
+      if (b.round > 1) { const r1 = all.filter(x => x.mk === b.mk && x.round === b.round - 1 && (x.nD > 0) === (b.nD > 0)); if (!r1.length || r1.some(x => x.start == null)) { b.block = 'krog:predhodni'; left.push(b); continue; } const r1End = Math.max(...r1.map(x => x.end)); if (d < r1End + (b.krog.pause || 2) * 5) { b.block = 'krog:premor'; left.push(b); continue; } }
       // mail account: najprej predvideni account (Dream 100 ali ostali), nato drugi accounti istega trga
       const accs = (b.accs || b.mk.accounts).filter(a => a.mail); const pref = accs.length ? [b.acc, ...accs.filter(a => a !== b.acc)] : [b.acc];
       let key = null, ka = -1; for (const a of pref) { const k2 = a.mail || ("li-only:" + b.mk.trg); if (!accSlots[k2]) accSlots[k2] = [1, 2, 3]; const kk = freeSlot(accSlots[k2], d); if (kk >= 0) { key = k2; ka = kk; b.acc = a; break; } }
