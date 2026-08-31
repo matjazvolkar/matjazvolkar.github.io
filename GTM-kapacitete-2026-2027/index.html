@@ -466,17 +466,24 @@
 <p>Dvaindvajset aktivnosti iz strategije (z content machine, M10), vsaka s sezonskim številom sestankov in dobljenih projektov pri sredini javnih benchmarkov, deležem angažmaja prodajalca in marketinga (vsak seštevek je 100 %) ter vložkom v EUR z ROI. Interaktivna različica z razponi, viri in vhodnimi podatki: <a href="https://claude.ai/code/artifact/855b9f54-69ad-464f-b64d-2f5d37812074" target="_blank" rel="noopener">GTM benchmarki po aktivnostih</a>. Sestanek v projekt: mrzli vir 10,3 %, topli 19 %, priporočilo 22 %, pilot 40 %, skupina 22 %.</p>
 <style>
   #bench_tbl td, #bench_tbl th { display: table-cell; }
+  #bench_tbl details { border: 0; border-radius: 0; padding: 0; background: transparent; margin: 0; box-shadow: none; }
+  #bench_tbl details[open] { padding: 0; }
+  #bench_tbl td.name { width: 30%; padding-left: 4px; }
+  #bench_tbl tr.grp td { background: rgba(27, 146, 255, .14); padding: 10px 12px; border-bottom: 0; }
+  #bench_tbl tr.grp td { border-top: 14px solid var(--bg, #04081f); }
+  #bench_tbl tr.subtotal td:nth-child(2) { text-align: left; color: #73C7FF; }
+  #bench_tbl tr.total td:nth-child(2) { text-align: left; }
   #bench_tbl th:first-child, #bench_tbl th:nth-child(2), #bench_tbl td.name { text-align: left; }
   #bench_tbl td.name details summary { font-size: .95rem; font-weight: 600; cursor: pointer; list-style: none; }
   #bench_tbl td.name details summary::-webkit-details-marker { display: none; }
   #bench_tbl td.name details summary::after { content: " ▸"; opacity: .5; font-size: .8em; }
   #bench_tbl td.name details[open] summary::after { content: " ▾"; }
-  #bench_tbl .big { font-size: 1.15rem; }
+  #bench_tbl .big { font-size: 1.35rem; }
   #bench_tbl td.num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
   #bench_tbl .big { font-size: 1.05rem; font-weight: 600; }
   #bench_tbl .sub { display: block; font-size: .74rem; opacity: .65; font-weight: 400; white-space: normal; }
   #bench_tbl td.name { min-width: 20em; }
-  #bench_tbl tr.grp td { font-size: .72rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #73C7FF; padding-top: 16px; border-bottom: 2px solid #1B92FF; background: transparent; }
+  #bench_tbl tr.grp td { font-size: .72rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #73C7FF; }
   #bench_tbl tr.subtotal td { font-weight: 600; background: rgba(27, 146, 255, .10); }
   #bench_tbl tr.subtotal td.big { color: #73C7FF; }
   #bench_tbl tr.total td { font-weight: 700; background: rgba(27, 146, 255, .18); }
@@ -1170,7 +1177,7 @@ function globalPlan(P) {
       const accD = mk.accounts[0], accR = mk.accounts[1] || mk.accounts[0];
       B.forEach(b => { b.acc = b.nD > 0 ? accD : accR; if (b.nD === 0) { b.accs = [accR].concat(MAILBOXES.filter(a => REST_ACC_WHO.includes(a.who)), MAILBOXES.filter(a => !REST_ACC_WHO.includes(a.who))); } b.round = 1; });
       if (mk.krog2) { // druga in tretja sekvenca cez isti trg (odlocitev 31. 8.: posta polna), premor 2 tedna
-        [2, 3, 4].forEach(rn => {
+        [2, 3, 4, 5, 6].forEach(rn => {
           const B2 = composeBatches(d100.concat(rest), cfgM);
           const ra2 = MAILBOXES.filter(a => REST_ACC_WHO.includes(a.who)).concat(MAILBOXES.filter(a => !REST_ACC_WHO.includes(a.who)));
           B2.forEach(x => { x.acc = ra2[0]; x.accs = ra2; x.round = rn; x.krog = { angle: rn + ". krog", pause: 2 }; });
@@ -1204,7 +1211,7 @@ function globalPlan(P) {
       // mail account: najprej predvideni account (Dream 100 ali ostali), nato drugi accounti istega trga
       const accs = (b.accs || b.mk.accounts).filter(a => a.mail); const pref = accs.length ? [b.acc, ...accs.filter(a => a !== b.acc)] : [b.acc];
       let key = null, ka = -1; for (const a of pref) { const k2 = a.mail || ("li-only:" + b.mk.trg); if (!accSlots[k2]) accSlots[k2] = [1, 2, 3]; const kk = freeSlot(accSlots[k2], d); if (kk >= 0) { key = k2; ka = kk; b.acc = a; break; } }
-      if (ka < 0 && accs.length && (b.nD === 0 || !b.krog || b.krog.angle === "2. krog" || b.krog.angle === "3. krog" || b.krog.angle === "4. krog" || b.round >= 3)) { for (const a of spare) { if (!accSlots[a.mail]) accSlots[a.mail] = [1, 2, 3]; const kk = freeSlot(accSlots[a.mail], d); if (kk >= 0) { key = a.mail; ka = kk; b.acc = a; break; } } }
+      if (ka < 0 && accs.length && (b.nD === 0 || !b.krog || b.round >= 2)) { for (const a of spare) { if (!accSlots[a.mail]) accSlots[a.mail] = [1, 2, 3]; const kk = freeSlot(accSlots[a.mail], d); if (kk >= 0) { key = a.mail; ka = kk; b.acc = a; break; } } }
       if (ka < 0) { b.block = 'account'; left.push(b); continue; }
       let kl = -1, pn = null;
       if (b.nl > 0) {
@@ -1247,9 +1254,9 @@ function globalPlan(P) {
   const liPools = markets.filter(M => M.scnR === "single").map(M => ({ trg: M.mk.trg, n: M.cc.rest.filter(c => c.l).length })).filter(p => p.n > 0); // tudi AT (samo LinkedIn)
   const liTopup = {}; let lpi = 0, lleft = liPools.length ? liPools[0].n : 0, liPass = 0;
   Object.keys(liSlots).forEach(n => liTopup[n] = { used: 0, touches: 0, byTrg: {} });
-  for (let d = 1; d <= SEASON && liPools.length && liPass < 2; d++) { for (const n of Object.keys(liSlots)) { if (n === "Tomaž" && d < CALL_START) continue; let gap = Math.max(0, cfg.li - liLoad[n][d]); if (!gap || liPass >= 2) continue;
+  for (let d = 1; d <= SEASON && liPools.length && liPass < 4; d++) { for (const n of Object.keys(liSlots)) { if (n === "Tomaž" && d < CALL_START) continue; let gap = Math.max(0, cfg.li - liLoad[n][d]); if (!gap || liPass >= 4) continue;
       const kont = Math.min(gap / 5, lleft); const trg = liPools[lpi].trg; liTopup[n].byTrg[trg] = (liTopup[n].byTrg[trg] || 0) + kont; liTopup[n].used += kont; liTopup[n].touches += gap; load[d].msg += gap; load[d].lu = (load[d].lu || 0) + gap; load[d].luBy = load[d].luBy || {}; load[d].luBy[n] = load[d].luBy[n] || {}; load[d].luBy[n][trg] = (load[d].luBy[n][trg] || 0) + gap; lleft -= kont;
-      if (lleft <= 0.001) { lpi++; if (lpi >= liPools.length) { lpi = 0; liPass++; if (liPass >= 2) break; } lleft = liPools[lpi].n; } } }
+      if (lleft <= 0.001) { lpi++; if (lpi >= liPools.length) { lpi = 0; liPass++; if (liPass >= 4) break; } lleft = liPools[lpi].n; } } }
   const topupTotal = Object.values(topup).reduce((a, x) => a + x.used, 0); const liTopupTotal = Object.values(liTopup).reduce((a, x) => a + x.used, 0);
   markets.forEach(M => { M.lastD100 = M.bD.length ? Math.max(...M.bD.map(b => b.end)) : null; M.last = M.B.length ? Math.max(...M.B.map(b => b.end)) : null; });
   let e = 0, inv = 0, msg = 0, t = 0, tu = 0, lu = 0; const w0 = CALL_START, w1 = CALL_START + CYCLE + 4; for (let d = w0; d <= w1; d++) { e += load[d].e; inv += load[d].inv; msg += load[d].msg; t += load[d].t; tu += load[d].tu || 0; lu += load[d].lu || 0; } const nd = w1 - w0 + 1;
