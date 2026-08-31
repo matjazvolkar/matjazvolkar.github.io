@@ -463,7 +463,7 @@
 <div id="mirror"></div>
 
 <h2>2. Kapaciteta po dejanskih kanalih: klici, LinkedIn, mail</h2>
-<p>Fiksne kapacitete sezone: klici tečejo od prvega dne znotraj multichannel batchev: septembra kliče Matjaž, od 5. 10. 2026 prevzame Tomaž (30 klicev na dan; SI, HR, UAE, NY); popoldanski klicatelj kliče samo Italijo (30 na dan); 3 LinkedIn sedeži (Rok, Matjaž, Amadej), od oktobra četrti (Tomaž), generičnih sedežev ni; 18 ogretih mail accountov po 33 mailov na dan. Stopnje so javni benchmarki za mrzel outbound iz raziskave <a href="https://claude.ai/code/artifact/855b9f54-69ad-464f-b64d-2f5d37812074" target="_blank" rel="noopener">GTM benchmarki po aktivnostih</a> (31. 8. 2026): sredina in razpon, brez lastnih kampanjskih številk. Sestanek v projekt za mrzel vir 10,3 % (3,1 do 19 %): 7,9 % krat 1,3 dokaznega dviga (Index in scrape tenant kot kvantificiran dokaz, objavljena cena), po popravku 31. 8. Dejansko na dan je iz razporeda v razdelku 3 (oktober, polni pogon).</p>
+<p>Fiksne kapacitete sezone: klici tečejo od prvega dne znotraj multichannel batchev: septembra kliče Matjaž, od 5. 10. 2026 prevzame Tomaž (30 klicev na dan; SI, HR, UAE, NY); Aleš popoldne kliče samo Italijo (30 na dan); 3 LinkedIn sedeži (Rok, Matjaž, Amadej), od oktobra četrti (Tomaž), generičnih sedežev ni; 18 ogretih mail accountov po 33 mailov na dan. Stopnje so javni benchmarki za mrzel outbound iz raziskave <a href="https://claude.ai/code/artifact/855b9f54-69ad-464f-b64d-2f5d37812074" target="_blank" rel="noopener">GTM benchmarki po aktivnostih</a> (31. 8. 2026): sredina in razpon, brez lastnih kampanjskih številk. Sestanek v projekt za mrzel vir 10,3 % (3,1 do 19 %): 7,9 % krat 1,3 dokaznega dviga (Index in scrape tenant kot kvantificiran dokaz, objavljena cena), po popravku 31. 8. Dejansko na dan je iz razporeda v razdelku 3 (oktober, polni pogon).</p>
 <div id="cap_rows"></div>
 <p class="small muted" id="c_need"></p>
 
@@ -1003,7 +1003,7 @@ function renderCapacity(P, G) {
   const b2 = v => v.toFixed(2).replace(".", ",");
   const bl = (B) => `${b2(B.mid)} (${b2(B.lo)} do ${b2(B.hi)})`;
   const rows = [
-    ["tel", "Klici", cap.t, act.t, "septembra Matjaž, od 5. 10. Tomaž 30 na dan (SI, HR, UAE, NY) + popoldanski IT 30 na dan", "Dream 100 v sekvenci " + fmt(act.t - (act.tu || 0)) + " + dopolnilni klici ostalim " + fmt(act.tu || 0) + " (bazen: " + tuPool + ")", "t",
+    ["tel", "Klici", cap.t, act.t, "septembra Matjaž, od 5. 10. Tomaž 30 na dan (SI, HR, UAE, NY) + Aleš popoldne (IT) 30 na dan", "Dream 100 v sekvenci " + fmt(act.t - (act.tu || 0)) + " + dopolnilni klici ostalim " + fmt(act.tu || 0) + " (bazen: " + tuPool + ")", "t",
       `mobilna ${bl(BENCH.t_mob)}, centrala ${bl(BENCH.t_office)} sestanka na 100 kontaktov · zaupanje ${BENCH.t_mob.z} · ${BENCH.t_mob.vir}; ${BENCH.t_office.vir}`],
     ["li", "LinkedIn", cap.li, act.li, LI_SEATS + " sedeži (Rok, Matjaž, Amadej) × 25 dotikov (100 povabil na teden na sedež je zgornja meja), od oktobra četrti (Tomaž)", fmt(act.inv) + " povabil + " + fmt(act.msg) + " sporočil iz batchev + " + fmt(act.lu || 0) + " dopolnilnih dotikov ostalim (IT, GR)", "l",
       `Dream 100 ${bl(BENCH.l_d100)}, ostali ${bl(BENCH.l_rest)} sestanka na 100 povabil · zaupanje ${BENCH.l_d100.z} · ${BENCH.l_d100.vir}; ${BENCH.l_rest.vir}`],
@@ -1039,17 +1039,17 @@ const HOL = [76, 90]; // delovna dneva T16 pon 14. 12. 2026 do T18 pet 1. 1. 202
 const CYCLE = 15; const CALL_CYCLE = 12; const SCN = { multi: "Multichannel", two: "2-channel", single: "Single channel" };
 const ACC = (who, dom) => ({ who, mail: `${{ Rok: "rok.kokalj", Matjaž: "matjaz.volkar", Amadej: "amadej.demsar", Nina: "nina.bernik", Gregor: "gregor.skok", Simon: "simon.bergant" }[who]}@${dom}` });
 const MARKETS = [
-  { trg: "si", ime: "Slovenija", accounts: [ACC("Rok", "nevroncore.com"), ACC("Matjaž", "nevroncore.com")], liHome: ["Rok", "Matjaž"], caller: "Tomaž", restScn: "two",
+  { trg: "si", ime: "Slovenija", accounts: [ACC("Rok", "nevroncore.com"), ACC("Matjaž", "nevroncore.com")], liHome: ["Rok", "Matjaž"], caller: "Tomaž", restScn: "single",
     krogi: [{ angle: "Scrape", accounts: [ACC("Rok", "nevroncore.com")], li: ["Rok"] }, { angle: "Index", accounts: [ACC("Matjaž", "nevroncore.com"), ACC("Matjaž", "trynevron.com")], li: ["Matjaž", "Amadej"], pause: 3 },
             { angle: "AI", accounts: [{ who: "Rok", mail: "rok.kokalj@nevron.net" }], li: ["Rok"], pause: 3 }, { angle: "Konkurenca", accounts: [{ who: "Matjaž", mail: "sales@nevron.net" }, ACC("Matjaž", "trynevron.com")], li: ["Matjaž", "Amadej"], pause: 3 }] },
-  { trg: "hr", ime: "Hrvaška", accounts: [ACC("Rok", "getnevron.com"), ACC("Rok", "trynevron.com")], liHome: ["Rok"], caller: "Tomaž", restScn: "two",
+  { trg: "hr", ime: "Hrvaška", accounts: [ACC("Rok", "getnevron.com"), ACC("Rok", "trynevron.com")], liHome: ["Rok"], caller: "Tomaž", restScn: "single",
     krogi: [{ angle: "Index", accounts: [ACC("Rok", "getnevron.com"), ACC("Rok", "trynevron.com")], li: ["Rok"] }, { angle: "Scrape", accounts: [ACC("Matjaž", "getnevron.com"), ACC("Matjaž", "trynevron.com")], li: ["Matjaž", "Amadej"], pause: 3 },
             { angle: "AI", accounts: [ACC("Rok", "nevroncore.com"), ACC("Rok", "trynevron.com")], li: ["Rok"], pause: 3 }, { angle: "Konkurenca", accounts: [ACC("Matjaž", "nevroncore.com"), ACC("Matjaž", "getnevron.com")], li: ["Matjaž", "Amadej"], pause: 3 }] },
-  { trg: "it", ime: "Italija", accounts: [ACC("Amadej", "nevroncore.com"), ACC("Amadej", "getnevron.com")], liHome: ["Amadej"], caller: "popold. IT", restScn: "single" },
-  { trg: "gr", ime: "Grčija", accounts: [ACC("Amadej", "trynevron.com"), { who: "Matjaž", mail: "sales@nevron.net" }], liHome: [], caller: "Tomaž", restScn: "single" },
-  { trg: "uae", ime: "UAE", accounts: [ACC("Matjaž", "getnevron.com"), ACC("Gregor", "getnevron.com")], liHome: [], caller: "Tomaž", restScn: "two" },
-  { trg: "at", ime: "Avstrija", accounts: [{ who: "samo LinkedIn", mail: null }], liHome: [], caller: null, restScn: "single", d100Scn: "single" },
-  { trg: "ny", ime: "New York", accounts: [ACC("Matjaž", "trynevron.com"), ACC("Gregor", "trynevron.com")], liHome: [], caller: "Tomaž", restScn: "two" },
+  { trg: "it", ime: "Italija", accounts: [ACC("Amadej", "nevroncore.com"), ACC("Amadej", "getnevron.com")], liHome: ["Amadej"], caller: "popold. IT", restScn: "single", krog2: true },
+  { trg: "gr", ime: "Grčija", accounts: [ACC("Amadej", "trynevron.com"), { who: "Matjaž", mail: "sales@nevron.net" }], liHome: [], caller: "Tomaž", restScn: "single", krog2: true },
+  { trg: "uae", ime: "UAE", accounts: [ACC("Matjaž", "getnevron.com"), ACC("Gregor", "getnevron.com")], liHome: [], caller: "Tomaž", restScn: "two", krog2: true },
+  { trg: "at", ime: "Avstrija", accounts: [{ who: "samo LinkedIn", mail: null }], liHome: [], caller: null, restScn: "single", d100Scn: "single", krog2: true },
+  { trg: "ny", ime: "New York", accounts: [ACC("Matjaž", "trynevron.com"), ACC("Gregor", "trynevron.com")], liHome: [], caller: "Tomaž", restScn: "two", krog2: true },
 ];
 function synth(n, ne, nl, nt, layer) { const out = []; for (let i = 0; i < n; i++) { out.push({ h: "", e: i < ne, eo: false, l: ((i * 7 + 3) % Math.max(1, n)) < nl, m: false, o: ((i * 11 + 5) % Math.max(1, n)) < nt, layer, icp: "MEJNO" }); } return out; }
 // 18 ogretih mail accountov za hotele (Instantly, 26. 8. 2026). Simonovi stirje (getnevron, nevroncore, trynevron, nevron.net) so za maritime in niso tu.
@@ -1104,7 +1104,7 @@ function globalPlan(P) {
   // klicatelji: skupina "Tomaž" = polni prodajalci (SI, HR, UAE, NY), skupina "popold. IT" = popoldanski (Italija)
   const CALLERS = { "Tomaž": [], "popold. IT": [] };
   for (let i = 1; i <= Math.round(ft); i++) CALLERS["Tomaž"].push(i === 1 ? "Tomaž" : "Tomaž " + i);
-  for (let i = 1; i <= Math.round(pt); i++) CALLERS["popold. IT"].push(i === 1 ? "popold. IT" : "popold. IT " + i);
+  for (let i = 1; i <= Math.round(pt); i++) CALLERS["popold. IT"].push(i === 1 ? "Aleš popoldne (IT)" : "Aleš popoldne (IT) " + i);
   const callerOk = { "Tomaž": ft >= 1, "popold. IT": pt >= 1 };
   // Tomaz zacne klicati 5. 10. 2026 (T6); popoldanski IT klicatelj od zacetka
   const callSlots = {}; CALLERS["Tomaž"].forEach(n => callSlots[n] = [1, 2, 3]); CALLERS["popold. IT"].forEach(n => callSlots[n] = [1, 2, 3]);
@@ -1141,6 +1141,11 @@ function globalPlan(P) {
       B = composeBatches(d100.concat(rest), cfgM);
       const accD = mk.accounts[0], accR = mk.accounts[1] || mk.accounts[0];
       B.forEach(b => { b.acc = b.nD > 0 ? accD : accR; b.round = 1; });
+      if (mk.krog2) { // druga sekvenca cez isti trg (odlocitev 31. 8.), premor 3 tedne po koncu prve
+        const B2 = composeBatches(d100.concat(rest), cfgM);
+        B2.forEach(b => { b.acc = b.nD > 0 ? accD : accR; b.round = 2; b.krog = { angle: "2. krog", pause: 3 }; });
+        B = B.concat(B2);
+      }
     }
     const bD = B.filter(b => b.nD > 0), bR = B.filter(b => b.nD === 0);
     B.forEach((b, i) => { b.n = i + 1; b.layer = b.nD === b.c.length ? "d100" : (b.nD > 0 ? "mix" : "rest"); b.mk = mk; b.caller = b.nt > 0 ? caller : null; b.pri = [b.nD > 0 ? (b.round > 1 ? -0.5 : 0) : (b.scn === "single" ? 2 : (["si", "hr"].includes(mk.trg) ? 0.5 : 1)), mi, i]; all.push(b); });
@@ -1166,7 +1171,8 @@ function globalPlan(P) {
       // naslednji krog: sele ko so vsi batchi prejsnjega kroga istega sloja razporejeni in po premoru (tedni x 5) od konca zadnjega
       if (b.round > 1) { const r1 = all.filter(x => x.mk === b.mk && x.round === b.round - 1 && (x.nD > 0) === (b.nD > 0)); if (!r1.length || r1.some(x => x.start == null)) { left.push(b); continue; } const r1End = Math.max(...r1.map(x => x.end)); if (d < r1End + (b.krog.pause || 5) * 5) { left.push(b); continue; }
         if (b.nD > 0) { const prej = all.filter(x => x.krog && x.round === b.round && x.nD > 0 && MARKETS.indexOf(x.mk) < MARKETS.indexOf(b.mk)); if (prej.some(x => x.start == null)) { left.push(b); continue; } } }
-      // september: klice Matjaz znotraj multichannel batchev, od 5. 10. prevzame Tomaz (vrstica klicatelja nosi oba)
+      // september: ce je Matjazev klicni slot prost, batch obdrzi klice; sicer tece kot 2-channel in ne caka (klici pridejo v naslednjih krogih)
+      if (b.scn === "multi" && b.caller === "Tomaž" && d < CALL_START) { const anyFree = CALLERS["Tomaž"].some(cn => freeSlot(callSlots[cn], d) >= 0); if (!anyFree) { b.scn = "two"; b.nt = 0; b.nm = 0; } }
       // mail account: najprej predvideni account (Dream 100 ali ostali), nato drugi accounti istega trga
       const accs = (b.accs || b.mk.accounts).filter(a => a.mail); const pref = accs.length ? [b.acc, ...accs.filter(a => a !== b.acc)] : [b.acc];
       let key = null, ka = -1; for (const a of pref) { const k2 = a.mail || ("li-only:" + b.mk.trg); if (!accSlots[k2]) accSlots[k2] = [1, 2, 3]; const kk = freeSlot(accSlots[k2], d); if (kk >= 0) { key = k2; ka = kk; b.acc = a; break; } }
@@ -1208,12 +1214,12 @@ function globalPlan(P) {
   // ostalim v Italiji in Grciji (5 dotikov na kontakt v 14 dneh)
   const liLoad = {}; Object.keys(liSlots).forEach(n => { liLoad[n] = {}; for (let d = 1; d <= D; d++) liLoad[n][d] = 0; });
   all.forEach(b => { if (!b.li || !b.nl || !b.start || b.start > D) return; for (let dd = b.start; dd <= b.end && dd <= D; dd++) { if (SEQ14[dd - b.start][0] === "p") liLoad[b.li][dd] += b.nl; } });
-  const liPools = markets.filter(M => M.scnR === "single" && M.hasMail).map(M => ({ trg: M.mk.trg, n: M.cc.rest.filter(c => c.l).length })).filter(p => p.n > 0);
-  const liTopup = {}; let lpi = 0, lleft = liPools.length ? liPools[0].n : 0;
+  const liPools = markets.filter(M => M.scnR === "single").map(M => ({ trg: M.mk.trg, n: M.cc.rest.filter(c => c.l).length })).filter(p => p.n > 0); // tudi AT (samo LinkedIn)
+  const liTopup = {}; let lpi = 0, lleft = liPools.length ? liPools[0].n : 0, liPass = 0;
   Object.keys(liSlots).forEach(n => liTopup[n] = { used: 0, touches: 0, byTrg: {} });
-  for (let d = 1; d <= SEASON && liPools.length && lpi < liPools.length; d++) { for (const n of Object.keys(liSlots)) { if (n === "Tomaž" && d < CALL_START) continue; let gap = Math.max(0, cfg.li - liLoad[n][d]); if (!gap || lpi >= liPools.length) continue;
+  for (let d = 1; d <= SEASON && liPools.length && liPass < 2; d++) { for (const n of Object.keys(liSlots)) { if (n === "Tomaž" && d < CALL_START) continue; let gap = Math.max(0, cfg.li - liLoad[n][d]); if (!gap || liPass >= 2) continue;
       const kont = Math.min(gap / 5, lleft); const trg = liPools[lpi].trg; liTopup[n].byTrg[trg] = (liTopup[n].byTrg[trg] || 0) + kont; liTopup[n].used += kont; liTopup[n].touches += gap; load[d].msg += gap; load[d].lu = (load[d].lu || 0) + gap; load[d].luBy = load[d].luBy || {}; load[d].luBy[n] = load[d].luBy[n] || {}; load[d].luBy[n][trg] = (load[d].luBy[n][trg] || 0) + gap; lleft -= kont;
-      if (lleft <= 0.001) { lpi++; lleft = lpi < liPools.length ? liPools[lpi].n : 0; } } }
+      if (lleft <= 0.001) { lpi++; if (lpi >= liPools.length) { lpi = 0; liPass++; if (liPass >= 2) break; } lleft = liPools[lpi].n; } } }
   const topupTotal = Object.values(topup).reduce((a, x) => a + x.used, 0); const liTopupTotal = Object.values(liTopup).reduce((a, x) => a + x.used, 0);
   markets.forEach(M => { M.lastD100 = M.bD.length ? Math.max(...M.bD.map(b => b.end)) : null; M.last = M.B.length ? Math.max(...M.B.map(b => b.end)) : null; });
   let e = 0, inv = 0, msg = 0, t = 0, tu = 0, lu = 0; const w0 = CALL_START, w1 = CALL_START + CYCLE + 4; for (let d = w0; d <= w1; d++) { e += load[d].e; inv += load[d].inv; msg += load[d].msg; t += load[d].t; tu += load[d].tu || 0; lu += load[d].lu || 0; } const nd = w1 - w0 + 1;
@@ -1232,8 +1238,8 @@ function scenarioGrid(scn) {
 }
 function renderScenarios3() {
   const cards = [
-    ["multi", "Multichannel", "DREAM 100", "na vseh 7 trgih razen AT, kjer je single channel LinkedIn; SI in HR v 4 krogih (Scrape, Index, AI, Konkurenca); klice septembra Matjaž, od 5. 10. Tomaž", "Mail + LinkedIn + klic. 14 dotikov v 14 delovnih dneh: E1, L1, C1, E2, L2, C2, E3, L3, C3, E4, L4, C4, E5, L5. Štirje klici na kontakt, 30 klicev na dan; trije batchi na klicatelja hkrati, četrti vstopi, ko se prvi izteče."],
-    ["two", "2-channel", "VSI OSTALI, KI NISO DREAM 100", "na vseh 7 trgih razen AT", "Mail + LinkedIn, brez klicev. Kjer bi bil klic, je dan brez komunikacije."],
+    ["multi", "Multichannel", "DREAM 100", "na vseh 7 trgih razen AT, kjer je single channel LinkedIn; SI in HR v 4 krogih (Scrape, Index, AI, Konkurenca), ostali trgi v 2 krogih; klice septembra Matjaž (3 batchi hkrati, ostali batchi septembra tečejo brez klicev), od 5. 10. Tomaž", "Mail + LinkedIn + klic. 14 dotikov v 14 delovnih dneh: E1, L1, C1, E2, L2, C2, E3, L3, C3, E4, L4, C4, E5, L5. Štirje klici na kontakt, 30 klicev na dan; trije batchi na klicatelja hkrati, četrti vstopi, ko se prvi izteče."],
+    ["two", "2-channel", "VSI OSTALI, KI NISO DREAM 100", "na vseh 7 trgih razen AT", "Mail + LinkedIn, brez klicev. Kjer bi bil klic, je dan brez komunikacije. Ostali na SI in HR tečejo enokanalno po mailu (z info naslovi), da je ogreta pošta polno izkoriščena."],
     ["single", "Single channel", "VEČJE KOLIČINE KONTAKTOV", "IT + GR mail, AT LinkedIn", "En kanal, ista 14-dnevna kadenca. Mail: E1 do E5 vsak tretji dan, vmes prazno. LinkedIn (Avstrija): L1 do L5 vsak tretji dan, vmes prazno."],
   ];
   $("#scenarios3").innerHTML = `<div class="sc3">` + cards.map(c => `<div class="scard ${c[0]}"><h3>${c[1]}</h3><div class="use"><div class="k">Uporablja se na</div><div class="big">${c[2]}</div><div class="w">${c[3]}</div></div><p class="small" style="margin:0 0 10px">${c[4]}</p><div style="overflow-x:auto">${scenarioGrid(c[0] === "single" ? "single" : c[0])}</div></div>`).join("") + `</div>`;
@@ -1266,7 +1272,7 @@ function renderWeeks(G) {
   const mailRows = []; MAILBOXES.forEach(a => { const free = !usedMails.has(a.mail); mailRows.push({ lab: a.who, sub: a.mail + (free ? " · prost za SI in HR" : ""), mail: true, prost: free, test: b => b.acc && b.acc.mail === a.mail }); });
   [...usedMails].filter(m => m.startsWith("nov-account-")).sort().forEach(m => mailRows.push({ lab: "nov account", sub: m.replace("nov-account-", "dodatni ogreti account ") + " (ni še kupljen)", test: b => b.acc && b.acc.mail === m }));
   const liRows = Object.keys(G.liSlots).map(n => ({ lab: n, sub: n === "Tomaž" ? "LinkedIn sedež · od 5. 10." : "LinkedIn sedež", li: true, test: b => b.li === n && b.nl > 0 }));
-  const REG = { "Tomaž": "SI, HR, UAE, NY · septembra kliče Matjaž", "popold. IT": "Italija" };
+  const REG = { "Tomaž": "septembra Matjaž", "popold. IT": "Italija" };
   const callRows = Object.keys(G.CALLERS).flatMap(grp => G.CALLERS[grp].map(cn => ({ lab: cn, sub: "klicatelj · " + REG[grp], caller: true, test: b => b.callerName === cn && b.scn === "multi" && b.nt > 0 })));
   const MESECI = ["januar", "februar", "marec", "april", "maj", "junij", "julij", "avgust", "september", "oktober", "november", "december"];
   let h = `<div class="wg" style="grid-template-columns:${cols.join(" ")}"><div></div>`;
