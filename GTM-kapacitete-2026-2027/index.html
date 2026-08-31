@@ -1047,12 +1047,13 @@ const MARKETS = [
             { angle: "AI", accounts: [ACC("Rok", "nevroncore.com"), ACC("Rok", "trynevron.com")], li: ["Rok"], pause: 2 }, { angle: "Konkurenca", accounts: [ACC("Matjaž", "nevroncore.com"), ACC("Matjaž", "getnevron.com")], li: ["Matjaž", "Amadej"], pause: 2 }] },
   { trg: "it", ime: "Italija", accounts: [ACC("Amadej", "nevroncore.com"), ACC("Amadej", "getnevron.com")], liHome: ["Amadej"], caller: "popold. IT", restScn: "single", krog2: true },
   { trg: "gr", ime: "Grčija", accounts: [ACC("Amadej", "trynevron.com"), { who: "Matjaž", mail: "sales@nevron.net" }], liHome: [], caller: "Tomaž", restScn: "single", krog2: true },
-  { trg: "uae", ime: "UAE", accounts: [ACC("Matjaž", "getnevron.com"), ACC("Gregor", "getnevron.com")], liHome: [], caller: "Tomaž", restScn: "two", krog2: true },
+  { trg: "uae", ime: "UAE", accounts: [ACC("Matjaž", "getnevron.com"), ACC("Gregor", "getnevron.com")], liHome: [], caller: "Tomaž", restScn: "two", d100Scn: "two", krog2: true },
   { trg: "at", ime: "Avstrija", accounts: [{ who: "samo LinkedIn", mail: null }], liHome: [], caller: null, restScn: "single", d100Scn: "single", krog2: true },
-  { trg: "ny", ime: "New York", accounts: [ACC("Matjaž", "trynevron.com"), ACC("Gregor", "trynevron.com")], liHome: [], caller: "Tomaž", restScn: "two", krog2: true },
+  { trg: "ny", ime: "New York", accounts: [ACC("Matjaž", "trynevron.com"), ACC("Gregor", "trynevron.com")], liHome: [], caller: "Tomaž", restScn: "two", d100Scn: "two", krog2: true },
 ];
 function synth(n, ne, nl, nt, layer) { const out = []; for (let i = 0; i < n; i++) { out.push({ h: "", e: i < ne, eo: !(i < ne), l: ((i * 7 + 3) % Math.max(1, n)) < nl, m: false, o: ((i * 11 + 5) % Math.max(1, n)) < nt, layer, icp: "MEJNO" }); } return out; } // eo: hotel brez poslovnega maila ima info@ naslov (odlocitev 31. 8.)
 // 18 ogretih mail accountov za hotele (Instantly, 26. 8. 2026). Simonovi stirje (getnevron, nevroncore, trynevron, nevron.net) so za maritime in niso tu.
+const REST_ACC_WHO = ["Nina", "Gregor", "Alex"]; // eno- in dvokanalne kampanje (odlocitev 31. 8.)
 const MAILBOXES = [];
 ["Rok", "Matjaž", "Amadej", "Nina", "Gregor"].forEach(w => ["getnevron.com", "nevroncore.com", "trynevron.com"].forEach(dm => MAILBOXES.push(ACC(w, dm))));
 MAILBOXES.push({ who: "Rok", mail: "rok.kokalj@nevron.net" }, { who: "Matjaž", mail: "sales@nevron.net" }, { who: "Alex", mail: "alex@nevron.net" });
@@ -1131,30 +1132,33 @@ function globalPlan(P) {
     const scnD = mk.d100Scn || (caller ? "multi" : "two"); const scnR = mk.restScn;
     // ostali: 2-channel = mail + LinkedIn; single = samo mail (IT, GR) ali samo LinkedIn (AT)
     const restLi = scnR === "two" || !hasMail, restMail = hasMail;
-    const cfgM = Object.assign({}, cfg, { mail: hasMail, calls: caller ? cfg.calls : 0, d100Li: true, restLi, restMail });
+    const cfgM = Object.assign({}, cfg, { mail: hasMail, calls: (caller && mk.d100Scn !== "two") ? cfg.calls : 0, d100Li: true, restLi, restMail }); // UAE in NY: sekvence brez klicev, telefoni v dopolnilni bazen (klici SI in HR imajo prednost)
     let B = [];
     if (mk.krogi) {
       // SI, HR: cisti Dream 100 batchi (multichannel) in ostali v svojih 2-channel batchih; vsak krog ima svoj angle in posiljatelja
       mk.krogi.forEach((K, ki) => {
         const bd = composeBatches(d100, cfgM), br = composeBatches(rest, Object.assign({}, cfgM, { calls: 0 }));
-        bd.forEach(b => { b.round = ki + 1; b.krog = K; b.acc = K.accounts[0]; b.accs = K.accounts; b.liPref = K.li; });
-        br.forEach(b => { b.round = ki + 1; b.krog = K; b.acc = K.accounts[K.accounts.length - 1]; b.accs = K.accounts; b.liPref = K.li; });
+        bd.forEach(b => { b.round = ki + 1; b.krog = K; b.acc = K.accounts[0]; b.accs = K.accounts; b.liPref = K.li;
+          if (ki === 3 && b.nt > 0) { b.ntSkip = (b.ntSkip || 0) + b.nt; b.nt = 0; b.nm = 0; b.scn = (b.nl > 0 && b.ne + b.no > 0) ? "two" : "single"; } // 4. krog: klici prek dohitevanja, sloti za kroge 1 do 3
+        });
+        br.forEach(b => { b.round = ki + 1; b.krog = K; const ra = MAILBOXES.filter(a => REST_ACC_WHO.includes(a.who)).concat(MAILBOXES.filter(a => !REST_ACC_WHO.includes(a.who))); b.acc = ra[0]; b.accs = ra; b.liPref = K.li; });
         B = B.concat(bd, br);
       });
     } else {
       B = composeBatches(d100.concat(rest), cfgM);
       const accD = mk.accounts[0], accR = mk.accounts[1] || mk.accounts[0];
-      B.forEach(b => { b.acc = b.nD > 0 ? accD : accR; b.round = 1; });
+      B.forEach(b => { b.acc = b.nD > 0 ? accD : accR; if (b.nD === 0) { b.accs = [accR].concat(MAILBOXES.filter(a => REST_ACC_WHO.includes(a.who)), MAILBOXES.filter(a => !REST_ACC_WHO.includes(a.who))); } b.round = 1; });
       if (mk.krog2) { // druga in tretja sekvenca cez isti trg (odlocitev 31. 8.: posta polna), premor 2 tedna
-        [2, 3].forEach(rn => {
+        [2, 3, 4].forEach(rn => {
           const B2 = composeBatches(d100.concat(rest), cfgM);
-          B2.forEach(x => { x.acc = x.nD > 0 ? accD : accR; x.round = rn; x.krog = { angle: rn + ". krog", pause: 2 }; });
+          const ra2 = MAILBOXES.filter(a => REST_ACC_WHO.includes(a.who)).concat(MAILBOXES.filter(a => !REST_ACC_WHO.includes(a.who)));
+          B2.forEach(x => { x.acc = ra2[0]; x.accs = ra2; x.round = rn; x.krog = { angle: rn + ". krog", pause: 2 }; });
           B = B.concat(B2);
         });
       }
     }
     const bD = B.filter(b => b.nD > 0), bR = B.filter(b => b.nD === 0);
-    B.forEach((b, i) => { b.n = i + 1; b.layer = b.nD === b.c.length ? "d100" : (b.nD > 0 ? "mix" : "rest"); b.mk = mk; b.caller = b.nt > 0 ? caller : null; b.pri = [b.nD > 0 ? (b.round > 1 ? -0.5 : 0) : (b.scn === "single" ? 2 : (["si", "hr"].includes(mk.trg) ? 0.5 : 1)), mi, i]; all.push(b); });
+    B.forEach((b, i) => { b.n = i + 1; b.layer = b.nD === b.c.length ? "d100" : (b.nD > 0 ? "mix" : "rest"); b.mk = mk; b.caller = b.nt > 0 ? caller : null; b.pri = [b.nD > 0 ? (mk.krogi ? -1 : (b.round > 1 ? 1.5 : 0)) : (b.scn === "single" ? 2 : (["si", "hr"].includes(mk.trg) ? 0.5 : 1)), mi, i]; all.push(b); });
     markets.push({ mk, m, cc, hasMail, caller, bD, bR, B, scnD, scnR });
   });
   // razpored po dnevih: vsak dan dobi prosti vir najvisje prioritetni batch, ki ima vse potrebne vire proste
@@ -1175,28 +1179,28 @@ function globalPlan(P) {
       if (b.nD > 0 && b.scn === "multi" && !b.krog && b.mk.caller === "Tomaž") { const g = all.filter(x => x.krog && x.round === 1 && x.nD > 0); if (g.some(x => x.start == null)) { left.push(b); continue; } }
       // drugi krog: sele ko so vsi batchi prvega kroga istega sloja razporejeni in po premoru (tedni x 5) od konca zadnjega
       // naslednji krog: sele ko so vsi batchi prejsnjega kroga istega sloja razporejeni in po premoru (tedni x 5) od konca zadnjega
-      if (b.round > 1) { const r1 = all.filter(x => x.mk === b.mk && x.round === b.round - 1 && (x.nD > 0) === (b.nD > 0)); if (!r1.length || r1.some(x => x.start == null)) { left.push(b); continue; } const r1End = Math.max(...r1.map(x => x.end)); if (d < r1End + (b.krog.pause || 5) * 5) { left.push(b); continue; } }
+      if (b.round > 1) { const r1 = all.filter(x => x.mk === b.mk && x.round === b.round - 1 && (x.nD > 0) === (b.nD > 0)); if (!r1.length || r1.some(x => x.start == null)) { b.block = 'krog:predhodni'; left.push(b); continue; } const r1End = Math.max(...r1.map(x => x.end)); if (d < r1End + (b.krog.pause || 5) * 5) { b.block = 'krog:premor'; left.push(b); continue; } }
       // september: ce je Matjazev klicni slot prost, batch obdrzi klice; sicer tece kot 2-channel in ne caka (klici pridejo v naslednjih krogih)
-      if (b.scn === "multi" && b.caller === "Tomaž" && d < CALL_START) { const anyFree = CALLERS["Tomaž"].some(cn => freeSlot(callSlots[cn], d) >= 0); if (!anyFree) { b.scn = "two"; b.nt = 0; b.nm = 0; } }
+      if (b.scn === "multi" && b.caller === "Tomaž" && d < CALL_START) { const anyFree = CALLERS["Tomaž"].some(cn => freeSlot(callSlots[cn], d) >= 0); if (!anyFree) { if (b.mk.trg === "hr") { left.push(b); continue; } b.ntSkip = b.nt; b.scn = "two"; b.nt = 0; b.nm = 0; } }
       // mail account: najprej predvideni account (Dream 100 ali ostali), nato drugi accounti istega trga
       const accs = (b.accs || b.mk.accounts).filter(a => a.mail); const pref = accs.length ? [b.acc, ...accs.filter(a => a !== b.acc)] : [b.acc];
       let key = null, ka = -1; for (const a of pref) { const k2 = a.mail || ("li-only:" + b.mk.trg); if (!accSlots[k2]) accSlots[k2] = [1, 2, 3]; const kk = freeSlot(accSlots[k2], d); if (kk >= 0) { key = k2; ka = kk; b.acc = a; break; } }
-      if (ka < 0 && accs.length && (!b.krog || b.krog.angle === "2. krog" || b.krog.angle === "3. krog" || b.round >= 3)) { for (const a of spare) { if (!accSlots[a.mail]) accSlots[a.mail] = [1, 2, 3]; const kk = freeSlot(accSlots[a.mail], d); if (kk >= 0) { key = a.mail; ka = kk; b.acc = a; break; } } }
-      if (ka < 0) { left.push(b); continue; }
+      if (ka < 0 && accs.length && (b.nD === 0 || !b.krog || b.krog.angle === "2. krog" || b.krog.angle === "3. krog" || b.krog.angle === "4. krog" || b.round >= 3)) { for (const a of spare) { if (!accSlots[a.mail]) accSlots[a.mail] = [1, 2, 3]; const kk = freeSlot(accSlots[a.mail], d); if (kk >= 0) { key = a.mail; ka = kk; b.acc = a; break; } } }
+      if (ka < 0) { b.block = 'account'; left.push(b); continue; }
       let kl = -1, pn = null;
       if (b.nl > 0) {
         // LinkedIn sloti: multichannel batchi imajo prednost; za vsako skupino klicateljev je rezerviranih toliko slotov, kolikor jih cakajoci multichannel batchi rabijo (najvec 3 na klicatelja + 1)
         if (b.scn !== "multi") {
           const freeLI = Object.values(liSlots).reduce((a, sl) => a + sl.filter(f => f <= d).length, 0);
           let reserve = 0; Object.keys(CALLERS).forEach(g => { const nC = CALLERS[g].length; if (!nC) return; const activeM = all.filter(x => x.scn === "multi" && x.caller === g && x.nl > 0 && x.start != null && x.start <= d && x.start + CYCLE > d).length; const pendM = all.filter(x => x.scn === "multi" && x.caller === g && x.nl > 0 && x.start == null).length; reserve += Math.max(0, Math.min(3 * nC + 1, activeM + pendM) - activeM); });
-          if (freeLI <= reserve) { left.push(b); continue; }
+          if (freeLI <= reserve) { b.block = 'li:rezerva'; left.push(b); continue; }
         }
         const lp = b.liPref ? b.liPref.concat(Object.keys(liSlots).filter(n => !b.liPref.includes(n))) : liPref(b.mk);
         for (const n of lp.filter(n => liSlots[n])) { const k = freeSlot(liSlots[n], d); if (k >= 0) { kl = k; pn = n; break; } }
-        if (kl < 0) { left.push(b); continue; }
+        if (kl < 0) { b.block = 'li:slot'; left.push(b); continue; }
       }
       let kc = -1;
-      if (b.scn === "multi" && b.nt > 0 && b.caller) { for (const cn of CALLERS[b.caller]) { const k = freeSlot(callSlots[cn], d); if (k >= 0) { kc = k; b.callerName = cn; break; } } if (kc < 0) { left.push(b); continue; } }
+      if (b.scn === "multi" && b.nt > 0 && b.caller) { for (const cn of CALLERS[b.caller]) { const k = freeSlot(callSlots[cn], d); if (k >= 0) { kc = k; b.callerName = cn; break; } } if (kc < 0) { b.block = 'klicni slot'; left.push(b); continue; } }
       accSlots[key][ka] = d + CYCLE; if (kl >= 0) { liSlots[pn][kl] = d + CYCLE; b.li = pn; } if (kc >= 0) callSlots[b.callerName][kc] = d + CALL_CYCLE;
       b.start = d; b.end = d + SEQ14.length - 1;
       for (let dd = b.start; dd <= b.end && dd <= D; dd++) { const [ch, code] = SEQ14[dd - b.start]; if (ch === "e") load[dd].e += b.ne + b.no; else if (ch === "p" && b.nl > 0) { if (code === "L1") load[dd].inv += b.nl; else load[dd].msg += b.nl; } else if (ch === "t" && b.scn === "multi" && b.caller) load[dd].t += b.nt; }
@@ -1209,7 +1213,9 @@ function globalPlan(P) {
   // dopolnilni klici: klicatelj na vsakem dnevu z manj kot 33 klici Dream 100 klice telefonske kontakte ostalih (po trgih,
   // najprej mobilne); ko so vsi enkrat poklicani, gre drugi krog. Nikoli vec kot 33 na klicatelja na dan.
   const topup = {}; Object.keys(CALLERS).forEach(grp => { const names = CALLERS[grp]; if (!names.length) return;
-    const pools = markets.filter(M => M.caller === grp).map(M => ({ trg: M.mk.trg, n: M.cc.rest.filter(c => c.m || c.o).length })).filter(p => p.n > 0);
+    const pools = markets.filter(M => M.caller === grp).map(M => ({ trg: M.mk.trg, n: M.cc.rest.filter(c => c.m || c.o).length + (M.mk.d100Scn === "two" ? M.cc.d100.filter(c => c.m || c.o).length : 0) })).filter(p => p.n > 0);
+    const skip = {}; all.forEach(b => { if (b.mk.caller === grp && b.ntSkip) skip[b.mk.trg] = (skip[b.mk.trg] || 0) + b.ntSkip; });
+    Object.entries(skip).reverse().forEach(([trg, n]) => pools.unshift({ trg: trg + " D100 dohitevanje", n }));
     const pool = pools.reduce((a, p) => a + p.n, 0); const poolBy = {}; pools.forEach(p => poolBy[p.trg] = p.n); topup[grp] = { pool, poolBy, used: 0, byTrg: {}, rounds: 0, names }; if (!pool) return;
     let pi = 0, leftIn = pools[0].n;
     for (let d = 1; d <= SEASON; d++) { for (const cn of names) { const dayLoad = all.filter(b => b.callerName === cn && b.scn === "multi" && b.start && b.start <= d && b.end >= d && SEQ14[d - b.start][0] === "t").reduce((a, b) => a + b.nt, 0); let gap = Math.max(0, cfg.calls - dayLoad);
