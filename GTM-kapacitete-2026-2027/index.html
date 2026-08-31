@@ -480,6 +480,10 @@
   #bench_tbl td.name details[open] summary::after { content: " ▾"; }
   div.tw:has(#bench_tbl) { overflow: visible; }
   #bench_tbl thead th { position: sticky !important; top: 0 !important; z-index: 5; background: #0a1440; box-shadow: 0 1px 0 rgba(115, 199, 255, .35); }
+  #bench_tbl { border-collapse: separate; border-spacing: 0; }
+  #bench_tbl td:first-child, #bench_tbl th:first-child { padding-left: 26px; }
+  #bench_tbl td:last-child, #bench_tbl th:last-child { padding-right: 22px; }
+  #bench_tbl tr.grp td, #bench_tbl tr.subtotal td:nth-child(2) { padding-left: 26px; }
   #bench_tbl .big { font-size: 1.7rem; font-weight: 700; color: #fff; }
   #bench_tbl td { vertical-align: middle; border-left: 0 !important; border-right: 0 !important; }
   #bench_tbl td.num, #bench_tbl th.num { padding-left: 30px; }
