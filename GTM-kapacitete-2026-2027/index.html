@@ -1284,7 +1284,7 @@ function globalPlan(P) {
         const bd = composeBatches(d100, K.calls === false ? Object.assign({}, cfgM, { calls: 0 }) : cfgM), br = composeBatches(rest, Object.assign({}, cfgM, { calls: 0 })); // K.calls === false: krog brez klicev (mail + LinkedIn)
         bd.forEach(b => { b.round = ki + 1; b.krog = K; const rok = ROK_ACCS.filter(a => !K.accounts.some(x => x.mail === a.mail)); b.acc = (ROK_ACCS.find(a => K.accounts.some(x => x.mail === a.mail)) || ROK_ACCS[0]); b.accs = ROK_ACCS.concat(K.accounts.filter(a => !ROK_ACCS.some(x => x.mail === a.mail)), MAILBOXES.filter(a => ["Matjaž", "Amadej"].includes(a.who) && !K.accounts.some(x => x.mail === a.mail))); b.liPref = K.li;
 });
-        br.forEach(b => { b.round = ki + 1; b.krog = K; const ra = ROK_ACCS.concat(MAILBOXES.filter(a => REST_ACC_WHO.includes(a.who)), MAILBOXES.filter(a => !REST_ACC_WHO.includes(a.who) && a.who !== "Rok")); b.acc = ra[0]; b.accs = ra; b.liPref = K.li; });
+        br.forEach(b => { b.round = ki + 1; b.krog = K; b.pauseW = 6; const ra = ROK_ACCS.concat(MAILBOXES.filter(a => REST_ACC_WHO.includes(a.who)), MAILBOXES.filter(a => !REST_ACC_WHO.includes(a.who) && a.who !== "Rok")); b.acc = ra[0]; b.accs = ra; b.liPref = K.li; });
         B = B.concat(bd, br);
       });
     } else {
@@ -1320,9 +1320,9 @@ function globalPlan(P) {
       if (d < FIRST || (d >= HOL[0] && d <= HOL[1])) { left.push(b); continue; }
       // Dream 100 drugih Tomazevih trgov (UAE, NY) pride na vrsto, ko so vsi batchi prvega kroga SI in HR razporejeni
       if (b.nD > 0 && b.scn === "multi" && !b.krog && b.mk.caller === "Tomaž" && b.mk.trg !== "uae") { const g = all.filter(x => x.krog && x.round === 1 && x.nD > 0); if (g.some(x => x.start == null)) { left.push(b); continue; } }
-      // drugi krog: sele ko so vsi batchi prvega kroga istega sloja razporejeni in po premoru (privzeto 2 tedna) od konca zadnjega
+      // drugi krog: sele ko so vsi batchi prvega kroga istega sloja razporejeni in po premoru (privzeto 2 tedna; SI/HR ostali 6 tednov, da so stirje krogi razporejeni cez celo sezono) od konca zadnjega
       // naslednji krog: sele ko so vsi batchi prejsnjega kroga istega sloja razporejeni in po premoru (tedni x 5) od konca zadnjega
-      if (b.round > 1) { const r1 = all.filter(x => x.mk === b.mk && x.round === b.round - 1 && (x.nD > 0) === (b.nD > 0)); if (!r1.length || r1.some(x => x.start == null)) { b.block = 'krog:predhodni'; left.push(b); continue; } const r1End = Math.max(...r1.map(x => x.end)); if (d < r1End + (b.krog.pause || 2) * 5) { b.block = 'krog:premor'; left.push(b); continue; } }
+      if (b.round > 1) { const r1 = all.filter(x => x.mk === b.mk && x.round === b.round - 1 && (x.nD > 0) === (b.nD > 0)); if (!r1.length || r1.some(x => x.start == null)) { b.block = 'krog:predhodni'; left.push(b); continue; } const r1End = Math.max(...r1.map(x => x.end)); if (d < r1End + (b.pauseW || b.krog.pause || 2) * 5) { b.block = 'krog:premor'; left.push(b); continue; } }
       // mail account: najprej predvideni account (Dream 100 ali ostali), nato drugi accounti istega trga
       const accs0 = (b.accs || b.mk.accounts).filter(a => a.mail); let accs; if (b.mk.trg === "uae") accs = accs0; else if (b.copy === 'o') accs = NINA_ACCS.concat(accs0.filter(a => !ROK_MAILS.has(a.mail) && !NINA_MAILS.has(a.mail))); else if (b.copy === 'b') accs = ["si", "hr"].includes(b.mk.trg) ? ROK_ACCS.concat(MAILBOXES.filter(a => ["Matjaž", "Amadej"].includes(a.who))) : ROK_ACCS.concat(accs0.filter(a => !ROK_MAILS.has(a.mail) && !NINA_MAILS.has(a.mail))); else accs = ["si", "hr"].includes(b.mk.trg) ? accs0 : accs0.filter(a => !ROK_MAILS.has(a.mail)).concat(accs0.filter(a => ROK_MAILS.has(a.mail))); if (accs.length && b.copy && b.mk.trg !== "uae") b.acc = accs[0]; const pref = accs.length ? [b.acc, ...accs.filter(a => a !== b.acc)] : [b.acc];
       let key = null, ka = -1; for (const a of pref) { const k2 = a.mail || ("li-only:" + b.mk.trg); if (!accSlots[k2]) accSlots[k2] = [1, 2, 3]; const kk = freeSlot(accSlots[k2], d); if (kk >= 0) { key = k2; ka = kk; b.acc = a; break; } }
