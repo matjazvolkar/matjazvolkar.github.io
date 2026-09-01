@@ -597,7 +597,7 @@
 <div id="weektable"></div>
 
 <h2>5. Koledar kampanj: mesec, teden, dan</h2>
-<p>Isti razpored kot v razdelku 4, prikazan kot koledar. Vsak vnos pove kampanjo (K1 do K4 = 1. do 4. krog s svojim anglom, štiri sekvence na vsakem trgu; D = dopolnilni dotiki, s katerimi klicatelj ali LinkedIn sedež zapolni termine, ki jih redni batchi ta dan ne zasedejo), trg, kanal s korakom zaporedja (E1 do E5 mail, L1 LinkedIn povabilo, L2 do L5 LinkedIn sporočilo, C1 do C4 klic), koliko kontaktov in hotelov ta dan naslavlja in kdo pošilja. Filtri se seštevajo: ena kampanja, en trg, en kanal ali en hotel (vpiši del imena). V mesečnem in tedenskem pogledu so isti koraki iste kampanje in trga združeni v en vnos (seštevek kontaktov in število pošiljateljev), v dnevnem pogledu je vsak pošiljatelj svoja vrstica s seznamom hotelov. Klik na dan odpre dnevni pogled.</p>
+<p>Isti razpored kot v razdelku 4, prikazan kot koledar. Vsak vnos pove kampanjo (K1 do K4 = 1. do 4. krog s svojim anglom, štiri sekvence na vsakem trgu; D = dopolnilni dotiki, s katerimi klicatelj ali LinkedIn sedež zapolni termine, ki jih redni batchi ta dan ne zasedejo; nosijo angle kampanje, ki na tem trgu ta dan teče, npr. D·K2), trg, kanal s korakom zaporedja (E1 do E5 mail, L1 LinkedIn povabilo, L2 do L5 LinkedIn sporočilo, C1 do C4 klic), koliko kontaktov in hotelov ta dan naslavlja in kdo pošilja. Filtri se seštevajo: ena kampanja, en trg, en kanal ali en hotel (vpiši del imena). V mesečnem in tedenskem pogledu so isti koraki iste kampanje in trga združeni v en vnos (seštevek kontaktov in število pošiljateljev), v dnevnem pogledu je vsak pošiljatelj svoja vrstica s seznamom hotelov. Klik na dan odpre dnevni pogled.</p>
 <div id="cal" class="cal"></div>
 <datalist id="cal_hotels"></datalist>
 
@@ -1504,9 +1504,12 @@ init();
         E.push({ d, date: wdDate(d), camp, angle, trg: b.mk.trg, ime: b.mk.ime, ch, code, n, hot: b.c.length, d100: b.nD, who, scn: b.scn, start: k === 0, b });
       }
     });
+    const actR = {}; G.all.forEach(b => { if (!b.start || b.start > D) return; const t = b.mk.trg; actR[t] = actR[t] || new Array(D + 2).fill(0); for (let d = b.start; d <= Math.min(b.end, D); d++) actR[t][d] = Math.max(actR[t][d], b.round || 1); });
+    Object.values(actR).forEach(A => { for (let d = 2; d <= D; d++) if (!A[d]) A[d] = A[d - 1]; });
+    const campAt = (t, d) => (actR[t] && actR[t][d]) || 1;
     for (let d = 1; d <= D; d++) { const L = G.load[d]; if (!L) continue;
-      if (L.tuBy) Object.entries(L.tuBy).forEach(([cn, by]) => Object.entries(by).forEach(([trg, n]) => { if (n > 0) E.push({ d, date: wdDate(d), camp: 0, angle: 'dopolnilni klici ostalim', trg, ime: TRGI[trg] || trg, ch: 't', code: 'klic', n, hot: n, d100: 0, who: (d < CALL_START && cn.startsWith('Tomaž')) ? 'Matjaž (septembra)' : cn, scn: 'topup', start: false }); }));
-      if (L.luBy) Object.entries(L.luBy).forEach(([sn, by]) => Object.entries(by).forEach(([trg, n]) => { if (n > 0) E.push({ d, date: wdDate(d), camp: 0, angle: 'dopolnilni LinkedIn dotiki ostalim', trg, ime: TRGI[trg] || trg, ch: 'p', code: 'LinkedIn', n, hot: Math.round(n / 5), d100: 0, who: sn, scn: 'topup', start: false }); }));
+      if (L.tuBy) Object.entries(L.tuBy).forEach(([cn, by]) => Object.entries(by).forEach(([trg, n]) => { if (n > 0) E.push({ d, date: wdDate(d), camp: campAt(trg, d), angle: 'dopolnilni klici ostalim z anglom K' + campAt(trg, d), trg, ime: TRGI[trg] || trg, ch: 't', code: 'klic', n, hot: n, d100: 0, who: (d < CALL_START && cn.startsWith('Tomaž')) ? 'Matjaž (septembra)' : cn, scn: 'topup', start: false }); }));
+      if (L.luBy) Object.entries(L.luBy).forEach(([sn, by]) => Object.entries(by).forEach(([trg, n]) => { if (n > 0) E.push({ d, date: wdDate(d), camp: campAt(trg, d), angle: 'dopolnilni LinkedIn dotiki ostalim z anglom K' + campAt(trg, d), trg, ime: TRGI[trg] || trg, ch: 'p', code: 'LinkedIn', n, hot: Math.round(n / 5), d100: 0, who: sn, scn: 'topup', start: false }); }));
     }
     CAL.entries = E; CAL.byDate = {}; E.forEach(x => { const k = key(x.date); (CAL.byDate[k] = CAL.byDate[k] || []).push(x); });
     CAL.hotels = [...hotels].sort((a, b) => a.localeCompare(b));
@@ -1524,22 +1527,22 @@ init();
     if (!CAL.topup && x.scn === 'topup') return false;
     return match(x);
   }
-  const ord = (a, b) => ((a.camp || 99) - (b.camp || 99)) || a.trg.localeCompare(b.trg) || a.ch.localeCompare(b.ch) || a.code.localeCompare(b.code);
+  const ord = (a, b) => (a.camp - b.camp) || ((a.scn === 'topup') - (b.scn === 'topup')) || a.trg.localeCompare(b.trg) || a.ch.localeCompare(b.ch) || a.code.localeCompare(b.code);
   const dayE = d => (CAL.byDate[key(d)] || []).filter(pass).sort(ord);
   function grp(list) { const m = new Map(); list.forEach(x => { const k = [x.scn === 'topup' ? 'T' : 'K', x.camp, x.trg, x.ch, x.code, x.d100 > 0 ? (x.d100 === x.hot ? 'd' : 'm') : 'r'].join('|');
       let g = m.get(k); if (!g) { g = Object.assign({}, x, { n: 0, hot: 0, d100: 0, cntv: 0, whos: new Set(), b: null, parts: [] }); m.set(k, g); }
       g.n += x.n; g.hot += x.hot; g.d100 += x.d100; g.cntv += cnt(x); if (x.who) g.whos.add(x.who.split(' · ')[0]); g.start = g.start || x.start; g.parts.push(x); });
     return [...m.values()].map(g => { g.who = g.whos.size > 1 ? g.whos.size + ' pošiljateljev (' + [...g.whos].join(', ') + ')' : [...g.whos][0] || ''; return g; }).sort(ord); }
   const kcls = x => x.scn === 'topup' ? 'k0' : 'k' + Math.min(x.camp, 6);
-  const campLbl = x => x.scn === 'topup' ? 'Dopolnilno' : 'K' + x.camp + ' · ' + x.angle;
+  const campLbl = x => x.scn === 'topup' ? 'D · K' + x.camp + ' dopolnilno' : 'K' + x.camp + ' · ' + x.angle;
   const chLbl = x => x.scn === 'topup' ? (x.ch === 't' ? 'dopolnilni klici' : 'dopolnilni LinkedIn dotiki') : (x.code + ' ' + (x.ch === 'e' ? 'mail' : (x.ch === 't' ? 'klic' : (x.code === 'L1' ? 'LinkedIn povabilo' : 'LinkedIn sporočilo'))));
   const sloj = x => x.scn === 'topup' ? 'ostali' : (x.d100 === x.hot ? 'Dream 100' : (x.d100 > 0 ? 'Dream 100 + ostali' : 'ostali'));
   const scls = x => x.scn === 'topup' ? 'sr' : (x.d100 === x.hot ? 'sd' : (x.d100 > 0 ? 'sm' : 'sr'));
-  const chip = (x, full) => `<div class="ce ${kcls(x)} ${scls(x)}" title="${esc(campLbl(x) + ' · ' + x.ime + ' · ' + chLbl(x) + ' · ' + fmtN(x.n) + ' kontaktov, ' + fmtN(cnt(x)) + ' hotelov · ' + sloj(x) + ' · ' + x.who)}"><b>${esc((x.scn === 'topup' ? 'D' : 'K' + x.camp) + ' ' + x.trg.toUpperCase())}</b> ${esc(full ? chLbl(x) : x.code)}<span>${fmtN(full ? x.n : cnt(x))}${full ? ' kont. · ' + fmtN(cnt(x)) + ' hot.' : ' hot.'}</span>${full ? '<small>' + esc((x.scn === 'topup' ? x.angle : x.angle + ' · ' + sloj(x)) + ' · ' + x.who) + '</small>' : ''}</div>`;
+  const chip = (x, full) => `<div class="ce ${kcls(x)} ${scls(x)}" title="${esc(campLbl(x) + ' · ' + x.ime + ' · ' + chLbl(x) + ' · ' + fmtN(x.n) + ' kontaktov, ' + fmtN(cnt(x)) + ' hotelov · ' + sloj(x) + ' · ' + x.who)}"><b>${esc((x.scn === 'topup' ? 'D·K' + x.camp : 'K' + x.camp) + ' ' + x.trg.toUpperCase())}</b> ${esc(full ? chLbl(x) : x.code)}<span>${fmtN(full ? x.n : cnt(x))}${full ? ' kont. · ' + fmtN(cnt(x)) + ' hot.' : ' hot.'}</span>${full ? '<small>' + esc((x.scn === 'topup' ? x.angle : x.angle + ' · ' + sloj(x)) + ' · ' + x.who) + '</small>' : ''}</div>`;
   function sums(list) { const t = { e: 0, p: 0, t: 0, hot: 0, n: 0 }; list.forEach(x => { t[x.ch] += x.n; t.hot += cnt(x); t.n++; }); return `${t.n} vnosov · mail ${fmtN(t.e)} · LinkedIn ${fmtN(t.p)} · klici ${fmtN(t.t)} · naslovljenih hotelov (vsota dotikov) ${fmtN(t.hot)}`; }
 
   function toolbar() {
-    const camps = [1, 2, 3, 4].map(k => `<button class="cch k${k} ${CAL.camp.has(k) ? 'on' : ''}" data-f="camp" data-v="${k}">K${k}</button>`).join('') + `<button class="cch k0 ${CAL.camp.has(0) ? 'on' : ''}" data-f="camp" data-v="0">D</button>`;
+    const camps = [1, 2, 3, 4].map(k => `<button class="cch k${k} ${CAL.camp.has(k) ? 'on' : ''}" data-f="camp" data-v="${k}">K${k}</button>`).join('') + `<button class="cch k0 ${CAL.topup ? 'on' : ''}" data-f="topup" title="dopolnilni dotiki: prikaži ali skrij">D</button>`;
     const trgs = Object.keys(TRGI).map(t => `<button class="cch ${CAL.trg.has(t) ? 'on' : ''}" data-f="trg" data-v="${t}">${t.toUpperCase()}</button>`).join('');
     const chs = [['e', 'Mail'], ['p', 'LinkedIn'], ['t', 'Klic']].map(([c, l]) => `<button class="cch ${CAL.ch.has(c) ? 'on' : ''}" data-f="ch" data-v="${c}">${l}</button>`).join('');
     return `<div class="ctb">
@@ -1548,14 +1551,15 @@ init();
       <button class="cbtn ${CAL.view === 'month' ? 'on' : ''}" data-act="view" data-v="month">Mesec</button><button class="cbtn ${CAL.view === 'week' ? 'on' : ''}" data-act="view" data-v="week">Teden</button><button class="cbtn ${CAL.view === 'day' ? 'on' : ''}" data-act="view" data-v="day">Dan</button>
       <button class="cbtn" data-act="reset" style="margin-left:auto">Počisti filtre</button></div>
       <div class="cf"><span class="lb">Kampanja</span>${camps}<span class="lb">Trg</span>${trgs}<span class="lb">Kanal</span>${chs}<span class="lb">Sloj</span><button class="cch ${CAL.sloj.has('d') ? 'on' : ''}" data-f="sloj" data-v="d">Dream 100</button><button class="cch ${CAL.sloj.has('r') ? 'on' : ''}" data-f="sloj" data-v="r">Ostali</button><span class="lb">Hotel</span><input class="chot" list="cal_hotels" placeholder="del imena hotela" value="${esc(CAL.hotel)}">
-      <label class="cch ${CAL.starts ? 'on' : ''}" data-f="starts">samo začetki sekvenc</label><label class="cch ${CAL.topup ? 'on' : ''}" data-f="topup">dopolnilni dotiki</label></div>`;
+      <label class="cch ${CAL.starts ? 'on' : ''}" data-f="starts">samo začetki sekvenc</label></div>`;
   }
   function month() {
     const first = new Date(CAL.cur.getFullYear(), CAL.cur.getMonth(), 1); let d = monday(first); const today = key(new Date());
     let h = `<div class="cm">${DNI7.map(x => `<div class="ch7">${x}</div>`).join('')}`; const all = [];
-    for (let i = 0; i < 42; i++) { const wd = (d.getDay() + 6) % 7; const out = d.getMonth() !== first.getMonth(); const raw = wd < 5 && !out ? dayE(d) : []; raw.forEach(x => all.push(x)); const list = grp(raw);
+    for (let i = 0; i < 42; i++) { const wd = (d.getDay() + 6) % 7; const out = d.getMonth() !== first.getMonth(); const raw = wd < 5 && !out ? dayE(d) : []; raw.forEach(x => all.push(x)); const glist = grp(raw); const list = glist.filter(x => x.scn !== 'topup'); const tops = glist.filter(x => x.scn === 'topup');
       const shown = list.slice(0, 6);
-      h += `<div class="cd ${wd >= 5 ? 'we' : ''} ${out ? 'out' : ''} ${key(d) === today ? 'today' : ''}"><div class="dn" data-act="day" data-d="${key(d)}"><span>${d.getDate()}.</span><small>${list.length ? list.length + ' vn.' : ''}</small></div>${shown.map(x => chip(x, false)).join('')}${list.length > 6 ? `<div class="more" data-act="day" data-d="${key(d)}">+ ${list.length - 6} več</div>` : ''}</div>`;
+      const dline = tops.length ? `<div class="ce k0 sr" title="${esc(tops.map(x => campLbl(x) + ' · ' + x.ime + ' · ' + chLbl(x) + ' · ' + fmtN(x.n) + ' kontaktov · ' + x.who).join(' | '))}"><b>D</b> ${esc(tops.map(x => 'K' + x.camp + ' ' + x.trg.toUpperCase() + ' ' + (x.ch === 't' ? 'klic' : 'LI') + ' ' + fmtN(x.n)).join(' · '))}</div>` : '';
+      h += `<div class="cd ${wd >= 5 ? 'we' : ''} ${out ? 'out' : ''} ${key(d) === today ? 'today' : ''}"><div class="dn" data-act="day" data-d="${key(d)}"><span>${d.getDate()}.</span><small>${list.length ? list.length + ' vn.' : ''}</small></div>${shown.map(x => chip(x, false)).join('')}${list.length > 6 ? `<div class="more" data-act="day" data-d="${key(d)}">+ ${list.length - 6} več</div>` : ''}${dline}</div>`;
       d = addD(d, 1); if (i >= 34 && d.getMonth() !== first.getMonth()) break;
     }
     return { ttl: MES[first.getMonth()] + ' ' + first.getFullYear(), body: h + '</div>', sum: sums(all) };
@@ -1576,7 +1580,7 @@ init();
       list.forEach(x => { t[x.ch] += x.n; t.hot += cnt(x);
         const q = CAL.hotel.toLowerCase(); const names = x.b ? x.b.c.map(c => c.h).filter(n => n && (!q || n.toLowerCase().includes(q))) : [];
         const uniq = [...new Set(names)];
-        h += `<tr><td><span class="kk ${kcls(x)}">${esc(x.scn === 'topup' ? 'D' : 'K' + x.camp)}</span> ${esc(x.angle)}</td><td>${esc(x.ime)}</td><td>${esc(chLbl(x))}</td><td class="n">${fmtN(x.n)}</td><td class="n">${fmtN(cnt(x))}</td><td>${esc(sloj(x))}</td><td>${esc(x.who)}</td><td>${uniq.length ? `<details><summary>${uniq.length} hotelov</summary>${esc(uniq.join(', '))}</details>` : ''}</td></tr>`; });
+        h += `<tr><td><span class="kk ${kcls(x)}">${esc(x.scn === 'topup' ? 'D·K' + x.camp : 'K' + x.camp)}</span> ${esc(x.angle)}</td><td>${esc(x.ime)}</td><td>${esc(chLbl(x))}</td><td class="n">${fmtN(x.n)}</td><td class="n">${fmtN(cnt(x))}</td><td>${esc(sloj(x))}</td><td>${esc(x.who)}</td><td>${uniq.length ? `<details><summary>${uniq.length} hotelov</summary>${esc(uniq.join(', '))}</details>` : ''}</td></tr>`; });
       h += `<tr class="tot"><td colspan="3">Skupaj ta dan: mail ${fmtN(t.e)} · LinkedIn ${fmtN(t.p)} · klici ${fmtN(t.t)}</td><td class="n">${fmtN(t.e + t.p + t.t)}</td><td class="n">${fmtN(t.hot)}</td><td colspan="3"></td></tr></tbody></table>`;
     }
     return { ttl: DNI7[wd] + ' ' + dfmt(d), body: h + '</div>', sum: sums(list) };
@@ -1585,7 +1589,7 @@ init();
     const root = document.getElementById('cal'); if (!root || !CAL.G) return;
     const v = CAL.view === 'month' ? month() : (CAL.view === 'week' ? week() : day());
     root.innerHTML = toolbar() + `<p class="csum">${v.sum}</p>` + v.body +
-      `<div class="cleg"><i class="k1"></i>K1 <i class="k2"></i>K2 <i class="k3"></i>K3 <i class="k4"></i>K4 = kampanja 1 do 4 (krog s svojim anglom; SI: K1 Scrape, K2 Index, K3 AI, K4 Konkurenca; HR: K1 Index, K2 Scrape, K3 AI, K4 Konkurenca; ostali trgi: štirje krogi z istim anglom) · <i class="k0"></i>D = dopolnilni dotiki: klici ali LinkedIn dotiki na dodatne hotele iz sloja ostali, s katerimi klicatelj ali sedež zapolni termine, ki jih redni batchi ta dan ne zasedejo; niso del zaporedja E1 do L5 · "N vn." = število vnosov tistega dne ob izbranih filtrih · številka desno na vnosu v mesecu = število hotelov, ki jih ta korak ta dan naslovi (v tednu: kontakti in hoteli posebej) · črtica na desnem robu vnosa: oranžna = Dream 100, bela = ostali, pol oranžna pol bela = Dream 100 + ostali v istem batchu · klici do 2. 10. kliče Matjaž, od 5. 10. Tomaž.</div>`;
+      `<div class="cleg"><i class="k1"></i>K1 <i class="k2"></i>K2 <i class="k3"></i>K3 <i class="k4"></i>K4 = kampanja 1 do 4 (krog s svojim anglom; SI: K1 Scrape, K2 Index, K3 AI, K4 Konkurenca; HR: K1 Index, K2 Scrape, K3 AI, K4 Konkurenca; ostali trgi: štirje krogi z istim anglom) · <i class="k0"></i>D = dopolnilni dotiki: klici ali LinkedIn dotiki na dodatne hotele iz sloja ostali, s katerimi klicatelj ali sedež zapolni termine, ki jih redni batchi ta dan ne zasedejo; niso del zaporedja E1 do L5, nosijo pa angle kampanje, ki na tem trgu ta dan teče (oznaka D·K2 = dopolnilni dotiki z anglom kampanje 2); v mesecu ima vsak dan svojo sivo vrstico D, gumb D jih pokaže ali skrije · "N vn." = število vnosov tistega dne ob izbranih filtrih · številka desno na vnosu v mesecu = število hotelov, ki jih ta korak ta dan naslovi (v tednu: kontakti in hoteli posebej) · črtica na desnem robu vnosa: oranžna = Dream 100, bela = ostali, pol oranžna pol bela = Dream 100 + ostali v istem batchu · klici do 2. 10. kliče Matjaž, od 5. 10. Tomaž.</div>`;
     document.getElementById('cal_ttl').textContent = v.ttl;
   }
   function bind() {
