@@ -464,7 +464,11 @@
   .cal .cw .ce, .cal .cday .ce { white-space: normal; }
   .cal .ce b { font-weight: 800; } .cal .ce span { float: right; font-weight: 700; } .cal .ce small { display: block; opacity: .8; font-size: .64rem; }
   .cal .k1 { background: #FFB05E; } .cal .k2 { background: #73C7FF; } .cal .k3 { background: #7DE8A0; } .cal .k4 { background: #F6A900; } .cal .k5 { background: #C3A6FF; } .cal .k6 { background: #FF9A9D; } .cal .k0 { background: #9fb3d1; }
-  .cal .ce.sd { border-left: 4px solid #fff; } .cal .ce.sm { border-left: 4px dashed #fff; } .cal .ce.sr { border-left: 4px solid rgba(255,255,255,.18); }
+  .cal .ce { position: relative; padding-right: 12px; }
+  .cal .ce::after { content: ""; position: absolute; right: 3px; top: 3px; bottom: 3px; width: 4px; border-radius: 2px; box-shadow: 0 0 0 1px rgba(0, 0, 0, .35); }
+  .cal .ce.sd::after { background: var(--n-orange, #F6A900); }
+  .cal .ce.sr::after { background: var(--n-white, #fff); }
+  .cal .ce.sm::after { background: linear-gradient(to bottom, var(--n-orange, #F6A900) 0 50%, var(--n-white, #fff) 50% 100%); }
   .cal .more { font-size: .66rem; color: var(--accent); cursor: pointer; margin-top: 3px; font-weight: 700; }
   .cal .cday table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: .82rem; }
   .cal .cday td, .cal .cday th { display: table-cell; padding: 6px 8px; text-align: left; white-space: normal; border-bottom: 1px solid var(--line-2); vertical-align: top; }
@@ -1581,7 +1585,7 @@ init();
     const root = document.getElementById('cal'); if (!root || !CAL.G) return;
     const v = CAL.view === 'month' ? month() : (CAL.view === 'week' ? week() : day());
     root.innerHTML = toolbar() + `<p class="csum">${v.sum}</p>` + v.body +
-      `<div class="cleg"><i class="k1"></i>K1 <i class="k2"></i>K2 <i class="k3"></i>K3 <i class="k4"></i>K4 = kampanja 1 do 4 (krog s svojim anglom; SI: K1 Scrape, K2 Index, K3 AI, K4 Konkurenca; HR: K1 Index, K2 Scrape, K3 AI, K4 Konkurenca; ostali trgi: štirje krogi z istim anglom) · <i class="k0"></i>D = dopolnilni dotiki: klici ali LinkedIn dotiki na dodatne hotele iz sloja ostali, s katerimi klicatelj ali sedež zapolni termine, ki jih redni batchi ta dan ne zasedejo; niso del zaporedja E1 do L5 · "N vn." = število vnosov tistega dne ob izbranih filtrih · številka desno na vnosu v mesecu = število hotelov, ki jih ta korak ta dan naslovi (v tednu: kontakti in hoteli posebej) · leva črta vnosa: bela = Dream 100, črtkana = Dream 100 + ostali, brez = ostali · klici do 2. 10. kliče Matjaž, od 5. 10. Tomaž.</div>`;
+      `<div class="cleg"><i class="k1"></i>K1 <i class="k2"></i>K2 <i class="k3"></i>K3 <i class="k4"></i>K4 = kampanja 1 do 4 (krog s svojim anglom; SI: K1 Scrape, K2 Index, K3 AI, K4 Konkurenca; HR: K1 Index, K2 Scrape, K3 AI, K4 Konkurenca; ostali trgi: štirje krogi z istim anglom) · <i class="k0"></i>D = dopolnilni dotiki: klici ali LinkedIn dotiki na dodatne hotele iz sloja ostali, s katerimi klicatelj ali sedež zapolni termine, ki jih redni batchi ta dan ne zasedejo; niso del zaporedja E1 do L5 · "N vn." = število vnosov tistega dne ob izbranih filtrih · številka desno na vnosu v mesecu = število hotelov, ki jih ta korak ta dan naslovi (v tednu: kontakti in hoteli posebej) · črtica na desnem robu vnosa: oranžna = Dream 100, bela = ostali, pol oranžna pol bela = Dream 100 + ostali v istem batchu · klici do 2. 10. kliče Matjaž, od 5. 10. Tomaž.</div>`;
     document.getElementById('cal_ttl').textContent = v.ttl;
   }
   function bind() {
