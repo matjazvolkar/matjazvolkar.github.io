@@ -353,7 +353,7 @@
   .qtab { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; margin: 10px 0; }
   .qleg { display: flex; flex-wrap: wrap; gap: 12px; font-size: 0.78rem; color: var(--ink-2); margin: 6px 0 10px; }
   .qleg i { display: inline-block; width: 11px; height: 11px; border-radius: 3px; margin-right: 5px; vertical-align: -1px; }
-  .stat.tel .sub { font-size: 0.72rem; color: var(--ink-2); margin-top: 2px; }
+  .stat.tel .sub, .stat.email .sub, .stat .sub { font-size: 0.72rem; color: var(--ink-2); margin-top: 2px; line-height: 1.35; }
 
   /* ---------- v6: batchi ---------- */
   .bt2 { width: 100%; font-size: 0.82rem; }
@@ -598,7 +598,7 @@
 <div id="weektable"></div>
 
 <h2>5. Koledar kampanj: mesec, teden, dan</h2>
-<p>Isti razpored kot v razdelku 4, prikazan kot koledar. Vsak vnos pove kampanjo (K1 do K4 = 1. do 4. krog, štiri sekvence na vsakem trgu; vsebina je po sloju: Dream 100 Scrape, Index, AI, Konkurenca, ostali hoteli Pain 1 do Pain 4; D = dopolnilni dotiki, s katerimi klicatelj ali LinkedIn sedež zapolni termine, ki jih redni batchi ta dan ne zasedejo; nosijo angle kampanje, ki na tem trgu ta dan teče, npr. D·K2), trg, kanal s korakom zaporedja (E1 do E5 mail, L1 LinkedIn povabilo, L2 do L5 LinkedIn sporočilo, C1 do C4 klic), koliko hotelov ta dan dejansko doseže in kdo pošilja. Filtri se seštevajo: ena kampanja, en trg, en kanal ali en hotel (vpiši del imena). V mesečnem in tedenskem pogledu so isti koraki iste kampanje in trga združeni v en vnos (seštevek hotelov in število pošiljateljev), v dnevnem pogledu je vsak pošiljatelj svoja vrstica s seznamom hotelov. Klik na dan odpre dnevni pogled.</p>
+<p>Isti razpored kot v razdelku 4 v obliki koledarja: vsak vnos pove kampanjo, trg, kanal s korakom, koliko hotelov ta dan doseže in kdo pošilja; filtri se seštevajo, klik na dan odpre dnevni pogled, podrobnosti so v legendi spodaj.</p>
 <div id="cal" class="cal"></div>
 <datalist id="cal_hotels"></datalist>
 
