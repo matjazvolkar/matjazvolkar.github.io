@@ -1409,6 +1409,7 @@ function renderQueues(P, G) {
   renderScenarios3();
 }
 function renderWeeks(G) {
+  const actR = {}; G.all.forEach(b => { if (!b.start || b.start > 200) return; const t = b.mk.trg; actR[t] = actR[t] || new Array(202).fill(0); for (let d = b.start; d <= Math.min(b.end, 200); d++) actR[t][d] = Math.max(actR[t][d], b.round || 1); }); Object.values(actR).forEach(A => { for (let d = 2; d <= 200; d++) if (!A[d]) A[d] = A[d - 1]; }); const roundAt = (t, d) => (actR[t] && actR[t][d]) || 1; // kampanja, ki na trgu tece ta dan (za dopolnilne celice)
   const W = weeksBetween(new Date(2026, 7, 31), new Date(2027, 3, 30)); const groups = [10, 10, 10, W - 30];
   const cols = ["230px"]; groups.forEach((n, gi) => { for (let i = 0; i < n; i++) cols.push("minmax(22px, 1fr)"); if (gi < groups.length - 1) cols.push("8px"); });
   const doms = ["getnevron.com", "nevroncore.com", "trynevron.com"]; const people = ["Rok", "Matjaž", "Amadej", "Nina", "Gregor", "Simon"];
@@ -1435,7 +1436,7 @@ function renderWeeks(G) {
       for (let w = 1; w <= W; w++) {
         const ws = (w - 1) * 5 + 1, we = w * 5; const act = G.all.filter(b => r.test(b) && b.start <= we && b.end >= ws);
         if (!act.length) { const by = {}; for (let d = ws; d <= we; d++) { const L = G.load[d]; if (!L) continue; const src = r.caller ? (L.tuBy && L.tuBy[r.lab]) : (r.li ? (L.luBy && L.luBy[r.lab]) : null); if (src) Object.entries(src).forEach(([k, v]) => { by[k] = (by[k] || 0) + v; }); }
-          const ks = Object.keys(by); if (ks.length) h += `<div class="c single" style="flex-direction:column;gap:1px" title="${r.caller ? "dopolnilni klici ostalim (bela črta): " : "dopolnilni LinkedIn dotiki ostalim (bela črta): "}${ks.map(k => k.toUpperCase() + " " + fmt(by[k])).join(", ")}">${ks.map(k => `<span>${k.toUpperCase()}</span>`).join("")}${mark(false, true)}</div>`; else h += `<div class="c"></div>`; }
+          const ks = Object.keys(by); if (ks.length) h += `<div class="c single" style="flex-direction:column;gap:1px" title="${r.caller ? "dopolnilni klici ostalim (bela črta): " : "dopolnilni LinkedIn dotiki ostalim (bela črta): "}${ks.map(k => k.toUpperCase() + " K" + roundAt(k, we) + (r.caller ? "o" : "") + " " + fmt(by[k])).join(", ")}">${ks.map(k => `<span>${k.toUpperCase()}</span><span>${roundAt(k, we)}${r.caller ? "o" : ""}</span>`).join("")}${mark(false, true)}</div>`; else h += `<div class="c"></div>`; }
         else { const scn = act[0].scn; const r2 = act.some(b => b.round > 1); const trgs = [...new Set(act.map(b => b.mk.trg.toUpperCase() + "|" + (b.round || 1) + ((b.ne + (b.nm || 0)) === 0 && (b.no + (b.nt - (b.nm || 0))) > 0 ? "o" : "")))];
           // sloj celice: batch je lahko cist Dream 100, cisti ostali ali mesan (Dream 100 + polnila)
           const hasD = act.some(b => b.nD > 0), hasR = act.some(b => b.c.length - b.nD > 0);
