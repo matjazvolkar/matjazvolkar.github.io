@@ -464,6 +464,7 @@
   .cal .cw .ce, .cal .cday .ce { white-space: normal; }
   .cal .ce b { font-weight: 800; } .cal .ce span { float: right; font-weight: 700; } .cal .ce small { display: block; opacity: .8; font-size: .64rem; }
   .cal .k1 { background: #FFB05E; } .cal .k2 { background: #73C7FF; } .cal .k3 { background: #7DE8A0; } .cal .k4 { background: #F6A900; } .cal .k5 { background: #C3A6FF; } .cal .k6 { background: #FF9A9D; } .cal .k0 { background: #9fb3d1; }
+  .cal .ce.sd { border-left: 4px solid #fff; } .cal .ce.sm { border-left: 4px dashed #fff; } .cal .ce.sr { border-left: 4px solid rgba(255,255,255,.18); }
   .cal .more { font-size: .66rem; color: var(--accent); cursor: pointer; margin-top: 3px; font-weight: 700; }
   .cal .cday table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: .82rem; }
   .cal .cday td, .cal .cday th { display: table-cell; padding: 6px 8px; text-align: left; white-space: normal; border-bottom: 1px solid var(--line-2); vertical-align: top; }
@@ -587,7 +588,7 @@
 <h2>3. Sekvence po batchih: trije scenariji</h2>
 <div id="scenarios3"></div>
 <h2>4. Trgi po tednih: klicatelji, LinkedIn profili, mail accounti</h2>
-<p>Vrstica je vir, stolpec teden (T1 = 31. 8. 2026). Barva pove scenarij, oznaka trg in kampanjo (SI|2 = Slovenija, kampanja 2 = 2. krog; številka je vedno prisotna, tudi za 1. krog). Rdeča celica brez batcha so dopolnilni dotiki ostalim. Prazna celica je prost vir.</p>
+<p>Vrstica je vir, stolpec teden (T1 = 31. 8. 2026; prvi dan kampanje je petek 4. 9. 2026). Barva pove scenarij, oznaka trg in kampanjo (SI|2 = Slovenija, kampanja 2 = 2. krog; številka je vedno prisotna, tudi za 1. krog). Rdeča celica brez batcha so dopolnilni dotiki ostalim. Prazna celica je prost vir.</p>
 <div class="qleg"><i style="background:var(--sc-multi)"></i>Multichannel <i style="background:var(--sc-two)"></i>2-channel <i style="background:var(--sc-single)"></i>Single channel <span class="qsep"></span><i class="lin" style="background:var(--n-orange)"></i>Dream 100 <i class="lin" style="background:var(--n-white)"></i>ostali <i class="lin split"></i>oba sloja v istem tednu</div>
 <div id="weektable"></div>
 
@@ -1158,6 +1159,7 @@ function wdFmt(i) { const d = wdDate(i); return `${d.getDate()}. ${d.getMonth() 
 function qnum(id, d) { const el = $(id); const v = parseFloat((el || {}).value); return isNaN(v) ? d : v; }
 function qchk(id) { const el = $(id); return el ? el.checked : true; }
 const SEQ14 = [["e", "E1"], ["p", "L1"], ["t", "C1"], ["e", "E2"], ["p", "L2"], ["t", "C2"], ["e", "E3"], ["p", "L3"], ["t", "C3"], ["e", "E4"], ["p", "L4"], ["t", "C4"], ["e", "E5"], ["p", "L5"]];
+const FIRST = 5; // pet 4. 9. 2026: prvi dan kampanje (odlocitev 1. 9.); 31. 8. do 3. 9. brez dotikov
 const HOL = [84, 90]; // cet 24. 12. 2026 do pet 1. 1. 2027; december do 23. 12. poln (odlocitev 31. 8.)
 const CYCLE = 15; const CALL_CYCLE = 12; const SCN = { multi: "Multichannel", two: "2-channel", single: "Single channel" };
 const ACC = (who, dom) => ({ who, mail: `${{ Rok: "rok.kokalj", Matjaž: "matjaz.volkar", Amadej: "amadej.demsar", Nina: "nina.bernik", Gregor: "gregor.skok", Simon: "simon.bergant" }[who]}@${dom}` });
@@ -1296,7 +1298,7 @@ function globalPlan(P) {
     const left = [];
     for (const b of pending) {
       // prazniki: od 14. 12. do 1. 1. (T16 do T18) se novi batchi ne zacenjajo
-      if (d >= HOL[0] && d <= HOL[1]) { left.push(b); continue; }
+      if (d < FIRST || (d >= HOL[0] && d <= HOL[1])) { left.push(b); continue; }
       // Dream 100 drugih Tomazevih trgov (UAE, NY) pride na vrsto, ko so vsi batchi prvega kroga SI in HR razporejeni
       if (b.nD > 0 && b.scn === "multi" && !b.krog && b.mk.caller === "Tomaž") { const g = all.filter(x => x.krog && x.round === 1 && x.nD > 0); if (g.some(x => x.start == null)) { left.push(b); continue; } }
       // drugi krog: sele ko so vsi batchi prvega kroga istega sloja razporejeni in po premoru (privzeto 2 tedna) od konca zadnjega
@@ -1338,7 +1340,7 @@ function globalPlan(P) {
     Object.entries(skip).reverse().forEach(([trg, n]) => { const ex = pools.find(p2 => p2.trg === trg); if (ex) ex.n += n; else pools.unshift({ trg, n }); });
     const pool = pools.reduce((a, p) => a + p.n, 0); const poolBy = {}; pools.forEach(p => poolBy[p.trg] = p.n); topup[grp] = { pool, poolBy, used: 0, byTrg: {}, rounds: 0, names }; if (!pool) return;
     let pi = 0, leftIn = pools[0].n;
-    for (let d = 1; d <= SEASON; d++) { for (const cn of names) { const dayLoad = all.filter(b => b.callerName === cn && b.scn === "multi" && b.start && b.start <= d && b.end >= d && SEQ14[d - b.start][0] === "t").reduce((a, b) => a + b.nt, 0); let gap = Math.max(0, cfg.calls - dayLoad);
+    for (let d = FIRST; d <= SEASON; d++) { for (const cn of names) { const dayLoad = all.filter(b => b.callerName === cn && b.scn === "multi" && b.start && b.start <= d && b.end >= d && SEQ14[d - b.start][0] === "t").reduce((a, b) => a + b.nt, 0); let gap = Math.max(0, cfg.calls - dayLoad);
       while (gap > 0) { const add = Math.min(gap, leftIn); const trg = pools[pi].trg; topup[grp].byTrg[trg] = (topup[grp].byTrg[trg] || 0) + add; topup[grp].used += add; load[d].t += add; load[d].tu = (load[d].tu || 0) + add; load[d].tuBy = load[d].tuBy || {}; load[d].tuBy[cn] = load[d].tuBy[cn] || {}; load[d].tuBy[cn][trg] = (load[d].tuBy[cn][trg] || 0) + add; gap -= add; leftIn -= add;
         if (leftIn <= 0) { pi++; if (pi >= pools.length) { pi = 0; topup[grp].rounds++; } leftIn = pools[pi].n; } } } } });
   // dopolnilni LinkedIn dotiki: vsak profil na vsakem dnevu z manj kot 25 dotiki iz batchev doda single channel LinkedIn dotike
@@ -1348,7 +1350,7 @@ function globalPlan(P) {
   const liPools = markets.filter(M => M.scnR === "single").map(M => ({ trg: M.mk.trg, n: M.cc.rest.filter(c => c.l).length })).filter(p => p.n > 0); // tudi AT (samo LinkedIn)
   const liTopup = {}; let lpi = 0, lleft = liPools.length ? liPools[0].n : 0, liPass = 0;
   Object.keys(liSlots).forEach(n => liTopup[n] = { used: 0, touches: 0, byTrg: {} });
-  for (let d = 1; d <= SEASON && liPools.length && liPass < 4; d++) { for (const n of Object.keys(liSlots)) { if (n === "Tomaž" && d < CALL_START) continue; let gap = Math.max(0, cfg.li - liLoad[n][d]); if (!gap || liPass >= 4) continue;
+  for (let d = FIRST; d <= SEASON && liPools.length && liPass < 4; d++) { for (const n of Object.keys(liSlots)) { if (n === "Tomaž" && d < CALL_START) continue; let gap = Math.max(0, cfg.li - liLoad[n][d]); if (!gap || liPass >= 4) continue;
       const kont = Math.min(gap / 5, lleft); const trg = liPools[lpi].trg; liTopup[n].byTrg[trg] = (liTopup[n].byTrg[trg] || 0) + kont; liTopup[n].used += kont; liTopup[n].touches += gap; load[d].msg += gap; load[d].lu = (load[d].lu || 0) + gap; load[d].luBy = load[d].luBy || {}; load[d].luBy[n] = load[d].luBy[n] || {}; load[d].luBy[n][trg] = (load[d].luBy[n][trg] || 0) + gap; lleft -= kont;
       if (lleft <= 0.001) { lpi++; if (lpi >= liPools.length) { lpi = 0; liPass++; if (liPass >= 4) break; } lleft = liPools[lpi].n; } } }
   const topupTotal = Object.values(topup).reduce((a, x) => a + x.used, 0); const liTopupTotal = Object.values(liTopup).reduce((a, x) => a + x.used, 0);
@@ -1469,7 +1471,7 @@ init();
 
 <script>
 (function () {
-  const CAL = { view: 'month', cur: null, camp: new Set(), trg: new Set(), ch: new Set(), hotel: '', starts: false, topup: true, G: null, entries: [], byDate: {}, hotels: [], built: false };
+  const CAL = { view: 'month', cur: null, camp: new Set(), trg: new Set(), ch: new Set(), sloj: new Set(), hotel: '', starts: false, topup: true, G: null, entries: [], byDate: {}, hotels: [], built: false };
   const TRGI = { si: 'Slovenija', hr: 'Hrvaška', it: 'Italija', gr: 'Grčija', uae: 'UAE', at: 'Avstrija', ny: 'New York' };
   const MES = ['januar', 'februar', 'marec', 'april', 'maj', 'junij', 'julij', 'avgust', 'september', 'oktober', 'november', 'december'];
   const DNI7 = ['pon', 'tor', 'sre', 'čet', 'pet', 'sob', 'ned'];
@@ -1493,13 +1495,13 @@ init();
         const [ch, code] = SEQ14[k]; let n = 0, who = '';
         if (ch === 'e') { n = b.ne + b.no; who = b.acc ? (b.acc.who + (b.acc.mail ? ' · ' + b.acc.mail : '')) : ''; }
         else if (ch === 'p') { n = b.nl; who = b.li || ''; }
-        else { n = (b.scn === 'multi' && b.callerName) ? b.nt : 0; who = b.callerName || ''; }
+        else { n = (b.scn === 'multi' && b.callerName) ? b.nt : 0; who = (d < CALL_START && b.callerName && b.callerName.startsWith('Tomaž')) ? 'Matjaž (septembra)' : (b.callerName || ''); }
         if (!n) continue;
         E.push({ d, date: wdDate(d), camp, angle, trg: b.mk.trg, ime: b.mk.ime, ch, code, n, hot: b.c.length, d100: b.nD, who, scn: b.scn, start: k === 0, b });
       }
     });
     for (let d = 1; d <= D; d++) { const L = G.load[d]; if (!L) continue;
-      if (L.tuBy) Object.entries(L.tuBy).forEach(([cn, by]) => Object.entries(by).forEach(([trg, n]) => { if (n > 0) E.push({ d, date: wdDate(d), camp: 0, angle: 'dopolnilni klici ostalim', trg, ime: TRGI[trg] || trg, ch: 't', code: 'klic', n, hot: n, d100: 0, who: cn, scn: 'topup', start: false }); }));
+      if (L.tuBy) Object.entries(L.tuBy).forEach(([cn, by]) => Object.entries(by).forEach(([trg, n]) => { if (n > 0) E.push({ d, date: wdDate(d), camp: 0, angle: 'dopolnilni klici ostalim', trg, ime: TRGI[trg] || trg, ch: 't', code: 'klic', n, hot: n, d100: 0, who: (d < CALL_START && cn.startsWith('Tomaž')) ? 'Matjaž (septembra)' : cn, scn: 'topup', start: false }); }));
       if (L.luBy) Object.entries(L.luBy).forEach(([sn, by]) => Object.entries(by).forEach(([trg, n]) => { if (n > 0) E.push({ d, date: wdDate(d), camp: 0, angle: 'dopolnilni LinkedIn dotiki ostalim', trg, ime: TRGI[trg] || trg, ch: 'p', code: 'LinkedIn', n, hot: Math.round(n / 5), d100: 0, who: sn, scn: 'topup', start: false }); }));
     }
     CAL.entries = E; CAL.byDate = {}; E.forEach(x => { const k = key(x.date); (CAL.byDate[k] = CAL.byDate[k] || []).push(x); });
@@ -1513,6 +1515,7 @@ init();
     if (CAL.camp.size && !CAL.camp.has(x.camp)) return false;
     if (CAL.trg.size && !CAL.trg.has(x.trg)) return false;
     if (CAL.ch.size && !CAL.ch.has(x.ch)) return false;
+    if (CAL.sloj.size) { const isD = x.d100 > 0, isR = x.scn === 'topup' || x.hot - x.d100 > 0; if (!((CAL.sloj.has('d') && isD) || (CAL.sloj.has('r') && isR))) return false; }
     if (CAL.starts && !x.start) return false;
     if (!CAL.topup && x.scn === 'topup') return false;
     return match(x);
@@ -1527,7 +1530,8 @@ init();
   const campLbl = x => x.scn === 'topup' ? 'Dopolnilno' : 'K' + x.camp + ' · ' + x.angle;
   const chLbl = x => x.scn === 'topup' ? (x.ch === 't' ? 'dopolnilni klici' : 'dopolnilni LinkedIn dotiki') : (x.code + ' ' + (x.ch === 'e' ? 'mail' : (x.ch === 't' ? 'klic' : (x.code === 'L1' ? 'LinkedIn povabilo' : 'LinkedIn sporočilo'))));
   const sloj = x => x.scn === 'topup' ? 'ostali' : (x.d100 === x.hot ? 'Dream 100' : (x.d100 > 0 ? 'Dream 100 + ostali' : 'ostali'));
-  const chip = (x, full) => `<div class="ce ${kcls(x)}" title="${esc(campLbl(x) + ' · ' + x.ime + ' · ' + chLbl(x) + ' · ' + fmtN(x.n) + ' kontaktov, ' + fmtN(cnt(x)) + ' hotelov · ' + sloj(x) + ' · ' + x.who)}"><b>${esc((x.scn === 'topup' ? 'D' : 'K' + x.camp) + ' ' + x.trg.toUpperCase())}</b> ${esc(full ? chLbl(x) : x.code)}<span>${fmtN(full ? x.n : cnt(x))}${full ? ' kont. · ' + fmtN(cnt(x)) + ' hot.' : ' hot.'}</span>${full ? '<small>' + esc((x.scn === 'topup' ? x.angle : x.angle + ' · ' + sloj(x)) + ' · ' + x.who) + '</small>' : ''}</div>`;
+  const scls = x => x.scn === 'topup' ? 'sr' : (x.d100 === x.hot ? 'sd' : (x.d100 > 0 ? 'sm' : 'sr'));
+  const chip = (x, full) => `<div class="ce ${kcls(x)} ${scls(x)}" title="${esc(campLbl(x) + ' · ' + x.ime + ' · ' + chLbl(x) + ' · ' + fmtN(x.n) + ' kontaktov, ' + fmtN(cnt(x)) + ' hotelov · ' + sloj(x) + ' · ' + x.who)}"><b>${esc((x.scn === 'topup' ? 'D' : 'K' + x.camp) + ' ' + x.trg.toUpperCase())}</b> ${esc(full ? chLbl(x) : x.code)}<span>${fmtN(full ? x.n : cnt(x))}${full ? ' kont. · ' + fmtN(cnt(x)) + ' hot.' : ' hot.'}</span>${full ? '<small>' + esc((x.scn === 'topup' ? x.angle : x.angle + ' · ' + sloj(x)) + ' · ' + x.who) + '</small>' : ''}</div>`;
   function sums(list) { const t = { e: 0, p: 0, t: 0, hot: 0, n: 0 }; list.forEach(x => { t[x.ch] += x.n; t.hot += cnt(x); t.n++; }); return `${t.n} vnosov · mail ${fmtN(t.e)} · LinkedIn ${fmtN(t.p)} · klici ${fmtN(t.t)} · naslovljenih hotelov (vsota dotikov) ${fmtN(t.hot)}`; }
 
   function toolbar() {
@@ -1539,7 +1543,7 @@ init();
       <span class="ttl" id="cal_ttl"></span>
       <button class="cbtn ${CAL.view === 'month' ? 'on' : ''}" data-act="view" data-v="month">Mesec</button><button class="cbtn ${CAL.view === 'week' ? 'on' : ''}" data-act="view" data-v="week">Teden</button><button class="cbtn ${CAL.view === 'day' ? 'on' : ''}" data-act="view" data-v="day">Dan</button>
       <button class="cbtn" data-act="reset" style="margin-left:auto">Počisti filtre</button></div>
-      <div class="cf"><span class="lb">Kampanja</span>${camps}<span class="lb">Trg</span>${trgs}<span class="lb">Kanal</span>${chs}<span class="lb">Hotel</span><input class="chot" list="cal_hotels" placeholder="del imena hotela" value="${esc(CAL.hotel)}">
+      <div class="cf"><span class="lb">Kampanja</span>${camps}<span class="lb">Trg</span>${trgs}<span class="lb">Kanal</span>${chs}<span class="lb">Sloj</span><button class="cch ${CAL.sloj.has('d') ? 'on' : ''}" data-f="sloj" data-v="d">Dream 100</button><button class="cch ${CAL.sloj.has('r') ? 'on' : ''}" data-f="sloj" data-v="r">Ostali</button><span class="lb">Hotel</span><input class="chot" list="cal_hotels" placeholder="del imena hotela" value="${esc(CAL.hotel)}">
       <label class="cch ${CAL.starts ? 'on' : ''}" data-f="starts">samo začetki sekvenc</label><label class="cch ${CAL.topup ? 'on' : ''}" data-f="topup">dopolnilni dotiki</label></div>`;
   }
   function month() {
@@ -1577,7 +1581,7 @@ init();
     const root = document.getElementById('cal'); if (!root || !CAL.G) return;
     const v = CAL.view === 'month' ? month() : (CAL.view === 'week' ? week() : day());
     root.innerHTML = toolbar() + `<p class="csum">${v.sum}</p>` + v.body +
-      `<div class="cleg"><i class="k1"></i>K1 <i class="k2"></i>K2 <i class="k3"></i>K3 <i class="k4"></i>K4 = kampanja 1 do 4 (krog s svojim anglom; SI: K1 Scrape, K2 Index, K3 AI, K4 Konkurenca; HR: K1 Index, K2 Scrape, K3 AI, K4 Konkurenca; ostali trgi: štirje krogi z istim anglom) · <i class="k0"></i>D = dopolnilni dotiki: klici ali LinkedIn dotiki na dodatne hotele iz sloja ostali, s katerimi klicatelj ali sedež zapolni termine, ki jih redni batchi ta dan ne zasedejo; niso del zaporedja E1 do L5 · "N vn." = število vnosov tistega dne ob izbranih filtrih · številka desno na vnosu v mesecu = število hotelov, ki jih ta korak ta dan naslovi (v tednu: kontakti in hoteli posebej).</div>`;
+      `<div class="cleg"><i class="k1"></i>K1 <i class="k2"></i>K2 <i class="k3"></i>K3 <i class="k4"></i>K4 = kampanja 1 do 4 (krog s svojim anglom; SI: K1 Scrape, K2 Index, K3 AI, K4 Konkurenca; HR: K1 Index, K2 Scrape, K3 AI, K4 Konkurenca; ostali trgi: štirje krogi z istim anglom) · <i class="k0"></i>D = dopolnilni dotiki: klici ali LinkedIn dotiki na dodatne hotele iz sloja ostali, s katerimi klicatelj ali sedež zapolni termine, ki jih redni batchi ta dan ne zasedejo; niso del zaporedja E1 do L5 · "N vn." = število vnosov tistega dne ob izbranih filtrih · številka desno na vnosu v mesecu = število hotelov, ki jih ta korak ta dan naslovi (v tednu: kontakti in hoteli posebej) · leva črta vnosa: bela = Dream 100, črtkana = Dream 100 + ostali, brez = ostali · klici do 2. 10. kliče Matjaž, od 5. 10. Tomaž.</div>`;
     document.getElementById('cal_ttl').textContent = v.ttl;
   }
   function bind() {
@@ -1589,7 +1593,7 @@ init();
         else if (a === 'today') CAL.cur = clamp(new Date());
         else if (a === 'prev' || a === 'next') { const s = a === 'prev' ? -1 : 1; if (CAL.view === 'month') CAL.cur = clamp(new Date(CAL.cur.getFullYear(), CAL.cur.getMonth() + s, 1)); else CAL.cur = clamp(addD(CAL.cur, CAL.view === 'week' ? 7 * s : s)); }
         else if (a === 'day') { const [y, m, dd] = el.dataset.d.split('-').map(Number); CAL.cur = clamp(new Date(y, m - 1, dd)); CAL.view = 'day'; }
-        else if (a === 'reset') { CAL.camp.clear(); CAL.trg.clear(); CAL.ch.clear(); CAL.hotel = ''; CAL.starts = false; CAL.topup = true; }
+        else if (a === 'reset') { CAL.camp.clear(); CAL.trg.clear(); CAL.ch.clear(); CAL.sloj.clear(); CAL.hotel = ''; CAL.starts = false; CAL.topup = true; }
         draw(); return; }
       const f = el.dataset.f;
       if (f === 'starts') CAL.starts = !CAL.starts; else if (f === 'topup') CAL.topup = !CAL.topup;
