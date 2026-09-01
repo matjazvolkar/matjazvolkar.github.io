@@ -1570,9 +1570,9 @@ init();
     const first = new Date(CAL.cur.getFullYear(), CAL.cur.getMonth(), 1); let d = monday(first); const today = key(new Date());
     let h = `<div class="cm">${DNI7.map(x => `<div class="ch7">${x}</div>`).join('')}`; const all = [];
     for (let i = 0; i < 42; i++) { const wd = (d.getDay() + 6) % 7; const out = d.getMonth() !== first.getMonth(); const raw = wd < 5 && !out ? dayE(d) : []; raw.forEach(x => all.push(x)); const glist = grp(raw); const list = glist.filter(x => x.scn !== 'topup'); const tops = glist.filter(x => x.scn === 'topup');
-      const shown = list.slice(0, 6);
+      const shown = list.slice(0, 7);
       const dline = tops.length ? `<div class="ce k0 sr" title="${esc(tops.map(x => campLbl(x) + ' · ' + x.ime + ' · ' + chLbl(x) + ' · ' + fmtN(x.n) + ' kontaktov · ' + x.who).join(' | '))}"><b>D</b> ${tops.map(x => kn(x) + ' ' + flag(x.trg) + ' ' + (x.ch === 't' ? 'klic' : 'LI') + ' ' + fmtN(x.n)).join(' · ')}</div>` : '';
-      h += `<div class="cd ${wd >= 5 ? 'we' : ''} ${out ? 'out' : ''} ${key(d) === today ? 'today' : ''}"><div class="dn" data-act="day" data-d="${key(d)}"><span>${d.getDate()}.</span><small>${list.length ? list.length + ' vn.' : ''}</small></div>${shown.map(x => chip(x, false)).join('')}${list.length > 6 ? `<div class="more" data-act="day" data-d="${key(d)}">+ ${list.length - 6} več</div>` : ''}${dline}</div>`;
+      h += `<div class="cd ${wd >= 5 ? 'we' : ''} ${out ? 'out' : ''} ${key(d) === today ? 'today' : ''}"><div class="dn" data-act="day" data-d="${key(d)}"><span>${d.getDate()}.</span><small>${list.length ? list.length + ' vn.' : ''}</small></div>${shown.map(x => chip(x, false)).join('')}${list.length > 7 ? `<div class="more" data-act="day" data-d="${key(d)}">+ ${list.length - 7} več</div>` : ''}${dline}</div>`;
       d = addD(d, 1); if (i >= 34 && d.getMonth() !== first.getMonth()) break;
     }
     return { ttl: MES[first.getMonth()] + ' ' + first.getFullYear(), body: h + '</div>', sum: sums(all) };
@@ -1605,7 +1605,7 @@ init();
       `<div class="cleg">
       <span><i class="k1"></i>K1 <i class="k2"></i>K2 <i class="k3"></i>K3 <i class="k4"></i>K4 = kampanja 1 do 4 (štiri sekvence na vsakem trgu). <b>Mala črka o (K1o)</b> = office različica: mail na info@ naslov ali klic na centralo hotela, z drugačnim copyjem in scenarijem kot poslovni mail ali klic na mobilno; isti korak istega batcha je zato prikazan kot dva vnosa, K1 s poslovnimi in K1o z office kontakti. Dopolnilni klici gredo na centrale (D·K1o).</span>
       <span><b>Vsebina po sloju:</b> Dream 100 dobi Scrape, Index, AI, Konkurenca (HR: Index, Scrape, AI, Konkurenca), ker sta scrape tenant in Index link narejena samo za Dream 100; ostali hoteli dobijo Pain 1 do Pain 4; mešan batch (Dream 100 + polnilo ostalih) nosi oboje.</span>
-      <span><i class="k0"></i><b>D = dopolnilni dotiki:</b> klici ali LinkedIn dotiki na dodatne hotele iz sloja ostali, s katerimi klicatelj ali sedež zapolni termine, ki jih redni batchi ta dan ne zasedejo; niso del zaporedja E1 do L5, nosijo pa angle kampanje, ki na tem trgu ta dan teče (D·K2). V mesecu ima vsak dan svojo sivo vrstico D, gumb D jih pokaže ali skrije.</span>
+      <span><i class="k0"></i><b>D = dopolnilni dotiki:</b> klici ali LinkedIn dotiki na dodatne hotele iz sloja ostali, s katerimi klicatelj ali sedež zapolni termine, ki jih redni batchi ta dan ne zasedejo; niso del zaporedja E1 do L5, nosijo pa angle kampanje, ki na tem trgu ta dan teče (D·K2). V mesecu je na dan največ 7 vnosov (ostalo pod + N več) in svoja siva vrstica D, gumb D jih pokaže ali skrije.</span>
       <span><b>Številka na vnosu</b> = hoteli, ki jih ta korak ta dan dejansko doseže (mail: hoteli z mailom, LinkedIn: s profilom, klic: s telefonsko številko). <b>"N vn."</b> = število vnosov dneva ob izbranih filtrih.</span>
       <span><b>Črtica na desnem robu:</b> oranžna = Dream 100, bela = ostali, pol oranžna pol bela = Dream 100 + ostali v istem batchu.</span>
       <span><b>Klicatelji:</b> septembra Matjaž (najprej UAE po sekvenci, s preostankom SI in HR), od 5. 10. SI in HR kliče Tomaž, Italijo ves čas Aleš popoldne.</span>
