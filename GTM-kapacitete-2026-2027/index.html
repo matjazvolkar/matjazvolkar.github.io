@@ -1350,7 +1350,7 @@ function globalPlan(P) {
     Object.entries(skip).reverse().forEach(([trg, n]) => { const ex = pools.find(p2 => p2.trg === trg); if (ex) ex.n += n; else pools.unshift({ trg, n }); });
     const pool = pools.reduce((a, p) => a + p.n, 0); const poolBy = {}; pools.forEach(p => poolBy[p.trg] = p.n); topup[grp] = { pool, poolBy, used: 0, byTrg: {}, rounds: 0, names }; if (!pool) return;
     let pi = 0, leftIn = pools[0].n;
-    for (let d = FIRST; d <= SEASON; d++) { for (const cn of names) { const dayLoad = all.filter(b => b.callerName === cn && b.scn === "multi" && b.start && b.start <= d && b.end >= d && SEQ14[d - b.start][0] === "t").reduce((a, b) => a + b.nt, 0); let gap = Math.max(0, cfg.calls - dayLoad);
+    for (let d = FIRST; d <= SEASON; d++) { for (const cn of names) { if (cn.startsWith("Nov SDR") && d < NEW_SDR_START) continue; const dayLoad = all.filter(b => b.callerName === cn && b.scn === "multi" && b.start && b.start <= d && b.end >= d && SEQ14[d - b.start][0] === "t").reduce((a, b) => a + b.nt, 0); let gap = Math.max(0, cfg.calls - dayLoad);
       while (gap > 0) { const add = Math.min(gap, leftIn); const trg = pools[pi].trg; topup[grp].byTrg[trg] = (topup[grp].byTrg[trg] || 0) + add; topup[grp].used += add; load[d].t += add; load[d].tu = (load[d].tu || 0) + add; load[d].tuBy = load[d].tuBy || {}; load[d].tuBy[cn] = load[d].tuBy[cn] || {}; load[d].tuBy[cn][trg] = (load[d].tuBy[cn][trg] || 0) + add; gap -= add; leftIn -= add;
         if (leftIn <= 0) { pi++; if (pi >= pools.length) { pi = 0; topup[grp].rounds++; } leftIn = pools[pi].n; } } } } });
   // dopolnilni LinkedIn dotiki: vsak profil na vsakem dnevu z manj kot 25 dotiki iz batchev doda single channel LinkedIn dotike
