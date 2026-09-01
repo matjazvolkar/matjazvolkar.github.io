@@ -1308,10 +1308,11 @@ function globalPlan(P) {
       }
     }
     const bD = B.filter(b => b.nD > 0), bR = B.filter(b => b.nD === 0);
-    B.forEach((b, i) => { b.n = i + 1; b.layer = b.nD === b.c.length ? "d100" : (b.nD > 0 ? "mix" : "rest"); b.mk = mk; b.caller = b.nt > 0 ? caller : null; b.pri = [mk.trg === "uae" ? (b.nD > 0 ? (b.round > 1 ? -1.5 : -2) : -0.9) : b.nD > 0 ? (mk.krogi ? (b.copy === 'o' ? -0.95 : -1) : (b.round > 1 ? 1.5 : 0)) : (b.scn === "single" ? 2 : (["si", "hr"].includes(mk.trg) ? 0.5 : 1)), mi, i]; all.push(b); });
+    B.forEach((b, i) => { b.n = i + 1; b.layer = b.nD === b.c.length ? "d100" : (b.nD > 0 ? "mix" : "rest"); b.mk = mk; b.caller = b.nt > 0 ? caller : null; b.pri = [mk.trg === "uae" ? (b.nD > 0 ? (b.round > 1 ? -1.5 : -2) : -0.9) : b.nD > 0 ? (mk.krogi ? (b.copy === 'o' ? -0.95 : -1) : (mk.trg === "it" ? (b.round > 1 ? -0.88 : -0.92) : (b.round > 1 ? 0.5 : -0.6))) : (b.scn === "single" ? 2 : (["si", "hr"].includes(mk.trg) ? 0.5 : 1)), mi, i]; all.push(b); });
     markets.push({ mk, m, cc, hasMail, caller, bD, bR, B, scnD, scnR });
   });
   // razpored po dnevih: vsak dan dobi prosti vir najvisje prioritetni batch, ki ima vse potrebne vire proste
+  // prioriteta: UAE D100 -2/-1.5, SI/HR D100 -1/-0.95, IT D100 -0.92/-0.88, UAE ostali -0.9, GR/NY/AT D100 -0.6/0.5, SI/HR ostali 0.5, drugi ostali 1-2
   all.sort((x, y) => x.pri[0] - y.pri[0] || x.pri[1] - y.pri[1] || x.pri[2] - y.pri[2]);
   const D = 200; const load = {}; for (let d = 1; d <= D; d++) load[d] = { e: 0, inv: 0, msg: 0, t: 0 };
   const liPref = mk => { const p = mk.trg === "si" ? ["Rok", "Matjaž", "Amadej"] : (mk.trg === "hr" ? ["Rok", "Amadej", "Matjaž"] : (mk.trg === "uae" ? ["Rok", "Matjaž", "Amadej"] : ["Amadej", "Rok", "Matjaž"])); return p.concat(Object.keys(liSlots).filter(n => !p.includes(n))); };
