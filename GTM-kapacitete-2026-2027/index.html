@@ -1221,7 +1221,8 @@ function grpOf(c) { const e = c.e, tel = c.m || c.o; const n = (e ? 1 : 0) + (c.
 function composeBatches(pool, cfg) { // odlocitev 1. 9.: poslovni maili (K) in office maili (Ko) v locenih batchih, da jih posiljata razlicna racuna
   if (!cfg.mail) return composeBatchesRaw(pool, cfg);
   const b1 = composeBatchesRaw(pool.filter(c => c.e), cfg); b1.forEach(b => { b.copy = 'b'; });
-  const b2 = composeBatchesRaw(pool.filter(c => !c.e), cfg); b2.forEach(b => { b.copy = 'o'; });
+  const seen = new Set(); pool.forEach(c => { if (c.e && c.h) seen.add(c.h); }); const poolO = pool.filter(c => !c.e).map(c => { if (c.h && c.eo) { if (seen.has(c.h)) return Object.assign({}, c, { eo: false }); seen.add(c.h); } return c; }); // info@ je en na hotel, ne na osebo, in samo za hotele brez poslovnega maila
+  const b2 = composeBatchesRaw(poolO, cfg); b2.forEach(b => { b.copy = 'o'; });
   return b1.concat(b2);
 }
 function composeBatchesRaw(pool, cfg) {
@@ -1300,7 +1301,7 @@ function globalPlan(P) {
       }
     }
     const bD = B.filter(b => b.nD > 0), bR = B.filter(b => b.nD === 0);
-    B.forEach((b, i) => { b.n = i + 1; b.layer = b.nD === b.c.length ? "d100" : (b.nD > 0 ? "mix" : "rest"); b.mk = mk; b.caller = b.nt > 0 ? caller : null; b.pri = [mk.trg === "uae" ? (b.round > 1 ? -1.5 : -2) : b.nD > 0 ? (mk.krogi ? -1 : (b.round > 1 ? 1.5 : 0)) : (b.scn === "single" ? 2 : (["si", "hr"].includes(mk.trg) ? 0.5 : 1)), mi, i]; all.push(b); });
+    B.forEach((b, i) => { b.n = i + 1; b.layer = b.nD === b.c.length ? "d100" : (b.nD > 0 ? "mix" : "rest"); b.mk = mk; b.caller = b.nt > 0 ? caller : null; b.pri = [mk.trg === "uae" ? (b.nD > 0 ? (b.round > 1 ? -1.5 : -2) : -0.9) : b.nD > 0 ? (mk.krogi ? (b.copy === 'o' ? -0.95 : -1) : (b.round > 1 ? 1.5 : 0)) : (b.scn === "single" ? 2 : (["si", "hr"].includes(mk.trg) ? 0.5 : 1)), mi, i]; all.push(b); });
     markets.push({ mk, m, cc, hasMail, caller, bD, bR, B, scnD, scnR });
   });
   // razpored po dnevih: vsak dan dobi prosti vir najvisje prioritetni batch, ki ima vse potrebne vire proste
