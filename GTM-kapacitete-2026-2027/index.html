@@ -1178,7 +1178,7 @@ const MARKETS = [
             { angle: "AI", accounts: [ACC("Rok", "nevroncore.com"), ACC("Rok", "trynevron.com")], li: ["Rok"], pause: 2 }, { angle: "Konkurenca", accounts: [ACC("Matjaž", "nevroncore.com"), ACC("Matjaž", "getnevron.com")], li: ["Matjaž", "Amadej"], pause: 2 }] },
   { trg: "it", ime: "Italija", accounts: [ACC("Amadej", "nevroncore.com"), ACC("Amadej", "getnevron.com")], liHome: ["Amadej"], caller: "popold. IT", restScn: "single", krog2: true },
   { trg: "gr", ime: "Grčija", accounts: [ACC("Amadej", "trynevron.com"), { who: "Matjaž", mail: "sales@nevron.net" }], liHome: [], caller: "Tomaž", restScn: "single", krog2: true },
-  { trg: "uae", ime: "UAE", accounts: [ACC("Matjaž", "getnevron.com"), ACC("Gregor", "getnevron.com")], liHome: [], caller: null, restScn: "two", d100Scn: "two", krog2: true },
+  { trg: "uae", ime: "UAE", accounts: [ACC("Rok", "getnevron.com"), ACC("Rok", "trynevron.com"), ACC("Rok", "nevroncore.com"), { who: "Rok", mail: "rok.kokalj@nevron.net" }], /* Rok gre oktobra v Dubaj: vsa UAE posta z njegovih nabiralnikov (odlocitev 1. 9.) */ liHome: [], caller: null, restScn: "two", d100Scn: "two", krog2: true },
   { trg: "at", ime: "Avstrija", accounts: [{ who: "samo LinkedIn", mail: null }], liHome: [], caller: null, restScn: "single", d100Scn: "single", krog2: true },
   { trg: "ny", ime: "New York", accounts: [ACC("Matjaž", "trynevron.com"), ACC("Gregor", "trynevron.com")], liHome: [], caller: null, restScn: "two", d100Scn: "two", krog2: true },
 ];
@@ -1277,12 +1277,12 @@ function globalPlan(P) {
     } else {
       B = composeBatches(d100.concat(rest), cfgM);
       const accD = mk.accounts[0], accR = mk.accounts[1] || mk.accounts[0];
-      B.forEach(b => { b.acc = b.nD > 0 ? accD : accR; if (b.nD === 0) { b.accs = [accR].concat(MAILBOXES.filter(a => REST_ACC_WHO.includes(a.who)), MAILBOXES.filter(a => !REST_ACC_WHO.includes(a.who))); } b.round = 1; });
+      B.forEach(b => { b.acc = b.nD > 0 ? accD : accR; if (b.nD === 0) { b.accs = [accR].concat(MAILBOXES.filter(a => REST_ACC_WHO.includes(a.who)), MAILBOXES.filter(a => !REST_ACC_WHO.includes(a.who))); } if (mk.trg === "uae") { b.acc = mk.accounts[0]; b.accs = mk.accounts; } b.round = 1; });
       if (mk.krog2) { // druga in tretja sekvenca cez isti trg (odlocitev 31. 8.: posta polna), premor 2 tedna
         [2, 3, 4].forEach(rn => { // 4 sekvence s 4 angli na vsakem trgu (odlocitev 1. 9.: brez 5. in 6. kroga)
           const B2 = composeBatches(d100.concat(rest), cfgM);
           const ra2 = MAILBOXES.filter(a => REST_ACC_WHO.includes(a.who)).concat(MAILBOXES.filter(a => !REST_ACC_WHO.includes(a.who)));
-          B2.forEach(x => { x.acc = ra2[0]; x.accs = ra2; x.round = rn; x.krog = { angle: rn + ". krog", pause: 2 }; });
+          B2.forEach(x => { x.acc = ra2[0]; x.accs = ra2; if (mk.trg === "uae") { x.acc = mk.accounts[0]; x.accs = mk.accounts; } x.round = rn; x.krog = { angle: rn + ". krog", pause: 2 }; });
           B = B.concat(B2);
         });
       }
@@ -1313,8 +1313,8 @@ function globalPlan(P) {
       // mail account: najprej predvideni account (Dream 100 ali ostali), nato drugi accounti istega trga
       const accs = (b.accs || b.mk.accounts).filter(a => a.mail); const pref = accs.length ? [b.acc, ...accs.filter(a => a !== b.acc)] : [b.acc];
       let key = null, ka = -1; for (const a of pref) { const k2 = a.mail || ("li-only:" + b.mk.trg); if (!accSlots[k2]) accSlots[k2] = [1, 2, 3]; const kk = freeSlot(accSlots[k2], d); if (kk >= 0) { key = k2; ka = kk; b.acc = a; break; } }
-      if (ka < 0 && accs.length && (b.nD === 0 || !b.krog || b.round >= 2)) { for (const a of spare) { if (!accSlots[a.mail]) accSlots[a.mail] = [1, 2, 3]; const kk = freeSlot(accSlots[a.mail], d); if (kk >= 0) { key = a.mail; ka = kk; b.acc = a; break; } } }
-      if (ka < 0 && b.mk.trg === "uae") { for (const a of MAILBOXES) { if (!a.mail) continue; if (!accSlots[a.mail]) accSlots[a.mail] = [1, 2, 3]; const kk = freeSlot(accSlots[a.mail], d); if (kk >= 0) { key = a.mail; ka = kk; b.acc = a; break; } } } // UAE sme na katerikoli ogret account
+      if (ka < 0 && accs.length && b.mk.trg !== "uae" && (b.nD === 0 || !b.krog || b.round >= 2)) { for (const a of spare) { if (!accSlots[a.mail]) accSlots[a.mail] = [1, 2, 3]; const kk = freeSlot(accSlots[a.mail], d); if (kk >= 0) { key = a.mail; ka = kk; b.acc = a; break; } } }
+      if (ka < 0 && b.mk.trg === "uae") { for (const a of MAILBOXES.filter(a => a.who === "Rok")) { if (!a.mail) continue; if (!accSlots[a.mail]) accSlots[a.mail] = [1, 2, 3]; const kk = freeSlot(accSlots[a.mail], d); if (kk >= 0) { key = a.mail; ka = kk; b.acc = a; break; } } } // UAE sme samo na Rokove nabiralnike
       if (ka < 0) { b.block = 'account'; left.push(b); continue; }
       let kl = -1, pn = null;
       if (b.nl > 0) {
