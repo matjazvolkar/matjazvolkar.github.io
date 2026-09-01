@@ -592,7 +592,7 @@
 <div id="weektable"></div>
 
 <h2>5. Koledar kampanj: mesec, teden, dan</h2>
-<p>Isti razpored kot v razdelku 4, prikazan kot koledar. Vsak vnos pove kampanjo (K1 do K4 = 1. do 4. krog s svojim anglom; K5 in K6 dodatna kroga ostalih trgov; D = dopolnilni dotiki ostalim, ki polnijo proste termine), trg, kanal s korakom zaporedja (E1 do E5 mail, L1 LinkedIn povabilo, L2 do L5 LinkedIn sporočilo, C1 do C4 klic), koliko kontaktov in hotelov ta dan naslavlja in kdo pošilja. Filtri se seštevajo: ena kampanja, en trg, en kanal ali en hotel (vpiši del imena). V mesečnem in tedenskem pogledu so isti koraki iste kampanje in trga združeni v en vnos (seštevek kontaktov in število pošiljateljev), v dnevnem pogledu je vsak pošiljatelj svoja vrstica s seznamom hotelov. Klik na dan odpre dnevni pogled.</p>
+<p>Isti razpored kot v razdelku 4, prikazan kot koledar. Vsak vnos pove kampanjo (K1 do K4 = 1. do 4. krog s svojim anglom, štiri sekvence na vsakem trgu; D = dopolnilni dotiki, s katerimi klicatelj ali LinkedIn sedež zapolni termine, ki jih redni batchi ta dan ne zasedejo), trg, kanal s korakom zaporedja (E1 do E5 mail, L1 LinkedIn povabilo, L2 do L5 LinkedIn sporočilo, C1 do C4 klic), koliko kontaktov in hotelov ta dan naslavlja in kdo pošilja. Filtri se seštevajo: ena kampanja, en trg, en kanal ali en hotel (vpiši del imena). V mesečnem in tedenskem pogledu so isti koraki iste kampanje in trga združeni v en vnos (seštevek kontaktov in število pošiljateljev), v dnevnem pogledu je vsak pošiljatelj svoja vrstica s seznamom hotelov. Klik na dan odpre dnevni pogled.</p>
 <div id="cal" class="cal"></div>
 <datalist id="cal_hotels"></datalist>
 
@@ -1271,7 +1271,7 @@ function globalPlan(P) {
       const accD = mk.accounts[0], accR = mk.accounts[1] || mk.accounts[0];
       B.forEach(b => { b.acc = b.nD > 0 ? accD : accR; if (b.nD === 0) { b.accs = [accR].concat(MAILBOXES.filter(a => REST_ACC_WHO.includes(a.who)), MAILBOXES.filter(a => !REST_ACC_WHO.includes(a.who))); } b.round = 1; });
       if (mk.krog2) { // druga in tretja sekvenca cez isti trg (odlocitev 31. 8.: posta polna), premor 2 tedna
-        [2, 3, 4, 5, 6].forEach(rn => {
+        [2, 3, 4].forEach(rn => { // 4 sekvence s 4 angli na vsakem trgu (odlocitev 1. 9.: brez 5. in 6. kroga)
           const B2 = composeBatches(d100.concat(rest), cfgM);
           const ra2 = MAILBOXES.filter(a => REST_ACC_WHO.includes(a.who)).concat(MAILBOXES.filter(a => !REST_ACC_WHO.includes(a.who)));
           B2.forEach(x => { x.acc = ra2[0]; x.accs = ra2; x.round = rn; x.krog = { angle: rn + ". krog", pause: 2 }; });
@@ -1527,11 +1527,11 @@ init();
   const campLbl = x => x.scn === 'topup' ? 'Dopolnilno' : 'K' + x.camp + ' · ' + x.angle;
   const chLbl = x => x.scn === 'topup' ? (x.ch === 't' ? 'dopolnilni klici' : 'dopolnilni LinkedIn dotiki') : (x.code + ' ' + (x.ch === 'e' ? 'mail' : (x.ch === 't' ? 'klic' : (x.code === 'L1' ? 'LinkedIn povabilo' : 'LinkedIn sporočilo'))));
   const sloj = x => x.scn === 'topup' ? 'ostali' : (x.d100 === x.hot ? 'Dream 100' : (x.d100 > 0 ? 'Dream 100 + ostali' : 'ostali'));
-  const chip = (x, full) => `<div class="ce ${kcls(x)}" title="${esc(campLbl(x) + ' · ' + x.ime + ' · ' + chLbl(x) + ' · ' + fmtN(x.n) + ' kontaktov, ' + fmtN(cnt(x)) + ' hotelov · ' + sloj(x) + ' · ' + x.who)}"><b>${esc((x.scn === 'topup' ? 'D' : 'K' + x.camp) + ' ' + x.trg.toUpperCase())}</b> ${esc(full ? chLbl(x) : x.code)}<span>${fmtN(full ? x.n : cnt(x))}${full ? ' kont. · ' + fmtN(cnt(x)) + ' hot.' : ''}</span>${full ? '<small>' + esc((x.scn === 'topup' ? x.angle : x.angle + ' · ' + sloj(x)) + ' · ' + x.who) + '</small>' : ''}</div>`;
+  const chip = (x, full) => `<div class="ce ${kcls(x)}" title="${esc(campLbl(x) + ' · ' + x.ime + ' · ' + chLbl(x) + ' · ' + fmtN(x.n) + ' kontaktov, ' + fmtN(cnt(x)) + ' hotelov · ' + sloj(x) + ' · ' + x.who)}"><b>${esc((x.scn === 'topup' ? 'D' : 'K' + x.camp) + ' ' + x.trg.toUpperCase())}</b> ${esc(full ? chLbl(x) : x.code)}<span>${fmtN(full ? x.n : cnt(x))}${full ? ' kont. · ' + fmtN(cnt(x)) + ' hot.' : ' hot.'}</span>${full ? '<small>' + esc((x.scn === 'topup' ? x.angle : x.angle + ' · ' + sloj(x)) + ' · ' + x.who) + '</small>' : ''}</div>`;
   function sums(list) { const t = { e: 0, p: 0, t: 0, hot: 0, n: 0 }; list.forEach(x => { t[x.ch] += x.n; t.hot += cnt(x); t.n++; }); return `${t.n} vnosov · mail ${fmtN(t.e)} · LinkedIn ${fmtN(t.p)} · klici ${fmtN(t.t)} · naslovljenih hotelov (vsota dotikov) ${fmtN(t.hot)}`; }
 
   function toolbar() {
-    const camps = [1, 2, 3, 4, 5, 6].map(k => `<button class="cch k${k} ${CAL.camp.has(k) ? 'on' : ''}" data-f="camp" data-v="${k}">K${k}</button>`).join('') + `<button class="cch k0 ${CAL.camp.has(0) ? 'on' : ''}" data-f="camp" data-v="0">D</button>`;
+    const camps = [1, 2, 3, 4].map(k => `<button class="cch k${k} ${CAL.camp.has(k) ? 'on' : ''}" data-f="camp" data-v="${k}">K${k}</button>`).join('') + `<button class="cch k0 ${CAL.camp.has(0) ? 'on' : ''}" data-f="camp" data-v="0">D</button>`;
     const trgs = Object.keys(TRGI).map(t => `<button class="cch ${CAL.trg.has(t) ? 'on' : ''}" data-f="trg" data-v="${t}">${t.toUpperCase()}</button>`).join('');
     const chs = [['e', 'Mail'], ['p', 'LinkedIn'], ['t', 'Klic']].map(([c, l]) => `<button class="cch ${CAL.ch.has(c) ? 'on' : ''}" data-f="ch" data-v="${c}">${l}</button>`).join('');
     return `<div class="ctb">
@@ -1577,7 +1577,7 @@ init();
     const root = document.getElementById('cal'); if (!root || !CAL.G) return;
     const v = CAL.view === 'month' ? month() : (CAL.view === 'week' ? week() : day());
     root.innerHTML = toolbar() + `<p class="csum">${v.sum}</p>` + v.body +
-      `<div class="cleg"><i class="k1"></i>K1 <i class="k2"></i>K2 <i class="k3"></i>K3 <i class="k4"></i>K4 <i class="k5"></i>K5 <i class="k6"></i>K6 <i class="k0"></i>D dopolnilni dotiki · angle kampanje piše na vsakem vnosu v tedenskem in dnevnem pogledu (SI: K1 Scrape, K2 Index, K3 AI, K4 Konkurenca; HR: K1 Index, K2 Scrape, K3 AI, K4 Konkurenca; ostali trgi: krogi 1 do 6 z istim anglom).</div>`;
+      `<div class="cleg"><i class="k1"></i>K1 <i class="k2"></i>K2 <i class="k3"></i>K3 <i class="k4"></i>K4 = kampanja 1 do 4 (krog s svojim anglom; SI: K1 Scrape, K2 Index, K3 AI, K4 Konkurenca; HR: K1 Index, K2 Scrape, K3 AI, K4 Konkurenca; ostali trgi: štirje krogi z istim anglom) · <i class="k0"></i>D = dopolnilni dotiki: klici ali LinkedIn dotiki na dodatne hotele iz sloja ostali, s katerimi klicatelj ali sedež zapolni termine, ki jih redni batchi ta dan ne zasedejo; niso del zaporedja E1 do L5 · "N vn." = število vnosov tistega dne ob izbranih filtrih · številka desno na vnosu v mesecu = število hotelov, ki jih ta korak ta dan naslovi (v tednu: kontakti in hoteli posebej).</div>`;
     document.getElementById('cal_ttl').textContent = v.ttl;
   }
   function bind() {
