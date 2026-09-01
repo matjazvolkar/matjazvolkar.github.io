@@ -1363,7 +1363,7 @@ function globalPlan(P) {
   // dopolnilni klici: klicatelj na vsakem dnevu z manj kot 33 klici Dream 100 klice telefonske kontakte ostalih (po trgih,
   // najprej mobilne); ko so vsi enkrat poklicani, gre drugi krog. Nikoli vec kot 33 na klicatelja na dan.
   const topup = {}; Object.keys(CALLERS).forEach(grp => { const names = CALLERS[grp]; if (!names.length) return;
-    const pools = markets.filter(M => M.caller === grp).map(M => ({ trg: M.mk.trg, n: M.cc.rest.filter(c => c.m || c.o).length + (M.mk.d100Scn === "two" ? M.cc.d100.filter(c => c.m || c.o).length : 0) })).filter(p => p.n > 0);
+    const pools = markets.filter(M => M.caller === grp || (grp === "Tomaž" && M.mk.trg === "ny")).map(M => ({ trg: M.mk.trg, n: M.cc.rest.filter(c => c.m || c.o).length + (M.mk.d100Scn === "two" ? M.cc.d100.filter(c => c.m || c.o).length : 0) })).filter(p => p.n > 0);
     const skip = {}; all.forEach(b => { if (b.mk.caller === grp && b.ntSkip) skip[b.mk.trg] = (skip[b.mk.trg] || 0) + b.ntSkip; });
     Object.entries(skip).reverse().forEach(([trg, n]) => { const ex = pools.find(p2 => p2.trg === trg); if (ex) ex.n += n; else pools.unshift({ trg, n }); });
     const pool = pools.reduce((a, p) => a + p.n, 0); const poolBy = {}; pools.forEach(p => poolBy[p.trg] = p.n); topup[grp] = { pool, poolBy, used: 0, byTrg: {}, rounds: 0, names }; if (!pool) return;
@@ -1628,7 +1628,7 @@ init();
       <span><b>Številka na vnosu</b> = hoteli, ki jih ta korak ta dan dejansko doseže (mail: hoteli z mailom, LinkedIn: s profilom, klic: s telefonsko številko). <b>"N vn."</b> = število vnosov dneva ob izbranih filtrih.</span>
       <span><b>Črtica na desnem robu:</b> oranžna = Dream 100, bela = ostali, pol oranžna pol bela = Dream 100 + ostali v istem batchu.</span>
       <span><b>Pošiljatelji mailov:</b> poslovni maili (K) z Rokovih računov, office maili (Ko) z Nininih, UAE v celoti Rok.</span>
-      <span><b>Klicatelji:</b> septembra Matjaž (najprej UAE po sekvenci, s preostankom SI in HR), od 5. 10. SI in HR kliče Tomaž, Italijo ves čas Aleš popoldne.</span>
+      <span><b>Klicatelji:</b> septembra Matjaž (najprej UAE po sekvenci, s preostankom SI in HR), od 5. 10. SI in HR kliče Tomaž, Italijo ves čas Aleš popoldne. Dopolnilni klici Tomaža (ko mu na dan ostane manj kot 30 klicev): najprej ostali SI in HR, nato ostali UAE in New York (mobilne in centrale).</span>
     </div>`;
     document.getElementById('cal_ttl').textContent = v.ttl;
   }
