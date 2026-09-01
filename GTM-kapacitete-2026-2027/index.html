@@ -597,7 +597,7 @@
 <div id="weektable"></div>
 
 <h2>5. Koledar kampanj: mesec, teden, dan</h2>
-<p>Isti razpored kot v razdelku 4, prikazan kot koledar. Vsak vnos pove kampanjo (K1 do K4 = 1. do 4. krog s svojim anglom, štiri sekvence na vsakem trgu; D = dopolnilni dotiki, s katerimi klicatelj ali LinkedIn sedež zapolni termine, ki jih redni batchi ta dan ne zasedejo; nosijo angle kampanje, ki na tem trgu ta dan teče, npr. D·K2), trg, kanal s korakom zaporedja (E1 do E5 mail, L1 LinkedIn povabilo, L2 do L5 LinkedIn sporočilo, C1 do C4 klic), koliko kontaktov in hotelov ta dan naslavlja in kdo pošilja. Filtri se seštevajo: ena kampanja, en trg, en kanal ali en hotel (vpiši del imena). V mesečnem in tedenskem pogledu so isti koraki iste kampanje in trga združeni v en vnos (seštevek kontaktov in število pošiljateljev), v dnevnem pogledu je vsak pošiljatelj svoja vrstica s seznamom hotelov. Klik na dan odpre dnevni pogled.</p>
+<p>Isti razpored kot v razdelku 4, prikazan kot koledar. Vsak vnos pove kampanjo (K1 do K4 = 1. do 4. krog, štiri sekvence na vsakem trgu; vsebina je po sloju: Dream 100 Scrape, Index, AI, Konkurenca, ostali hoteli Pain 1 do Pain 4; D = dopolnilni dotiki, s katerimi klicatelj ali LinkedIn sedež zapolni termine, ki jih redni batchi ta dan ne zasedejo; nosijo angle kampanje, ki na tem trgu ta dan teče, npr. D·K2), trg, kanal s korakom zaporedja (E1 do E5 mail, L1 LinkedIn povabilo, L2 do L5 LinkedIn sporočilo, C1 do C4 klic), koliko kontaktov in hotelov ta dan naslavlja in kdo pošilja. Filtri se seštevajo: ena kampanja, en trg, en kanal ali en hotel (vpiši del imena). V mesečnem in tedenskem pogledu so isti koraki iste kampanje in trga združeni v en vnos (seštevek kontaktov in število pošiljateljev), v dnevnem pogledu je vsak pošiljatelj svoja vrstica s seznamom hotelov. Klik na dan odpre dnevni pogled.</p>
 <div id="cal" class="cal"></div>
 <datalist id="cal_hotels"></datalist>
 
@@ -740,6 +740,8 @@ function num(id, d) { const el = $(id); const v = parseFloat((el || {}).value); 
 // Fiksne kapacitete (31. 8. 2026, zvecer): 18 ogretih mail accountov, 3 LinkedIn sedezi (Rok, Matjaz, Amadej) + Tomaz od oktobra,
 // 1 polni prodajalec (Tomaz od 5. 10.; septembra klice Matjaz), 1 popoldanski (Italija). Vhodnih polj ni vec.
 const WARM = 18, LI_SEATS = 3, FT = 1, PT = 1;
+const D100ANG = ["Scrape", "Index", "AI", "Konkurenca"]; // Dream 100 na trgih brez imenovanih krogov; scrape in Index link obstajata samo za Dream 100
+function angleOf(b) { const r = b.round || 1; const dA = (b.krog && b.mk && b.mk.krogi) ? b.krog.angle : D100ANG[r - 1]; const rA = "Pain " + r; const nD = b.nD || 0, n = b.c ? b.c.length : 0; return nD === n ? dA : (nD > 0 ? dA + " + " + rA : rA); } // ostali hoteli: Pain 1 do 4 (odlocitev 1. 9.)
 const CALL_START = 26; // delovni dan 26 = pon 5. 10. 2026 (T6): Tomaz prevzame klice; septembra klice Matjaz, batchi ostanejo multichannel
 function params() {
   return {
@@ -1432,7 +1434,7 @@ function renderWeeks(G) {
         else { const scn = act[0].scn; const r2 = act.some(b => b.round > 1); const trgs = [...new Set(act.map(b => b.mk.trg.toUpperCase() + "|" + (b.round || 1)))];
           // sloj celice: batch je lahko cist Dream 100, cisti ostali ali mesan (Dream 100 + polnila)
           const hasD = act.some(b => b.nD > 0), hasR = act.some(b => b.c.length - b.nD > 0);
-          h += `<div class="c ${scn}" style="flex-direction:column;gap:1px" title="${act.map(b => b.mk.ime + " B" + b.n + " (" + SCN[b.scn] + ", " + slojIme(b.nD > 0, b.c.length - b.nD > 0) + (b.krog ? ", " + b.round + ". krog " + b.krog.angle + ", " + b.acc.who : "") + ")").join(", ")}">${trgs.map(t => t.split("|").map(x => `<span>${x}</span>`).join("")).join("")}${mark(hasD, hasR)}</div>`; }
+          h += `<div class="c ${scn}" style="flex-direction:column;gap:1px" title="${act.map(b => b.mk.ime + " B" + b.n + " (" + SCN[b.scn] + ", " + slojIme(b.nD > 0, b.c.length - b.nD > 0) + (b.mk ? ", K" + (b.round || 1) + " " + angleOf(b) + ", " + b.acc.who : "") + ")").join(", ")}">${trgs.map(t => t.split("|").map(x => `<span>${x}</span>`).join("")).join("")}${mark(hasD, hasR)}</div>`; }
         if ((w === 10 || w === 20 || w === 30) && w < W) h += `<div class="gapc"></div>`;
       }
     });
@@ -1493,7 +1495,7 @@ init();
     CAL.G = G; const E = []; const hotels = new Set(); const D = 200;
     G.all.forEach(b => {
       if (!b.start || b.start > D) return;
-      const angle = b.krog ? b.krog.angle : '1. krog'; const camp = b.round || 1;
+      const angle = angleOf(b); const camp = b.round || 1;
       b.c.forEach(c => { if (c.h) hotels.add(c.h); });
       for (let k = 0; k < SEQ14.length; k++) {
         const d = b.start + k; if (d > D) break;
@@ -1581,7 +1583,7 @@ init();
       list.forEach(x => { t[x.ch] += x.n; t.hot += cnt(x);
         const q = CAL.hotel.toLowerCase(); const names = x.b ? x.b.c.map(c => c.h).filter(n => n && (!q || n.toLowerCase().includes(q))) : [];
         const uniq = [...new Set(names)];
-        h += `<tr><td><span class="kk ${kcls(x)}">${esc(x.scn === 'topup' ? 'D·K' + x.camp : 'K' + x.camp)}</span> ${esc(x.angle)}</td><td>${esc(x.ime)}</td><td>${esc(chLbl(x))}</td><td class="n">${fmtN(x.n)}</td><td class="n">${fmtN(cnt(x))}</td><td>${esc(sloj(x))}</td><td>${esc(x.who)}</td><td>${uniq.length ? `<details><summary>${uniq.length} hotelov</summary>${esc(uniq.join(', '))}</details>` : ''}</td></tr>`; });
+        h += `<tr><td><span class="kk ${kcls(x)}">${esc(x.scn === 'topup' ? 'D·K' + x.camp : 'K' + x.camp)}</span> ${esc(x.angle)}</td><td>${esc(x.ime)}</td><td>${esc(chLbl(x))}</td><td class="n">${fmtN(x.n)}</td><td class="n">${fmtN(cnt(x))}</td><td>${esc(sloj(x))}</td><td>${esc(x.who)}</td><td>${uniq.length ? `<details><summary>${uniq.length} hotelov</summary>${esc(uniq.join(', '))}</details>` : (cnt(x) ? `<span class="small muted">${fmtN(cnt(x))} hotelov, imena niso v tem prikazu (sloj iz registra ali Attia)</span>` : '')}</td></tr>`; });
       h += `<tr class="tot"><td colspan="3">Skupaj ta dan: mail ${fmtN(t.e)} · LinkedIn ${fmtN(t.p)} · klici ${fmtN(t.t)}</td><td class="n">${fmtN(t.e + t.p + t.t)}</td><td class="n">${fmtN(t.hot)}</td><td colspan="3"></td></tr></tbody></table>`;
     }
     return { ttl: DNI7[wd] + ' ' + dfmt(d), body: h + '</div>', sum: sums(list) };
@@ -1590,7 +1592,7 @@ init();
     const root = document.getElementById('cal'); if (!root || !CAL.G) return;
     const v = CAL.view === 'month' ? month() : (CAL.view === 'week' ? week() : day());
     root.innerHTML = toolbar() + `<p class="csum">${v.sum}</p>` + v.body +
-      `<div class="cleg"><i class="k1"></i>K1 <i class="k2"></i>K2 <i class="k3"></i>K3 <i class="k4"></i>K4 = kampanja 1 do 4 (krog s svojim anglom; SI: K1 Scrape, K2 Index, K3 AI, K4 Konkurenca; HR: K1 Index, K2 Scrape, K3 AI, K4 Konkurenca; ostali trgi: štirje krogi z istim anglom) · <i class="k0"></i>D = dopolnilni dotiki: klici ali LinkedIn dotiki na dodatne hotele iz sloja ostali, s katerimi klicatelj ali sedež zapolni termine, ki jih redni batchi ta dan ne zasedejo; niso del zaporedja E1 do L5, nosijo pa angle kampanje, ki na tem trgu ta dan teče (oznaka D·K2 = dopolnilni dotiki z anglom kampanje 2); v mesecu ima vsak dan svojo sivo vrstico D, gumb D jih pokaže ali skrije · "N vn." = število vnosov tistega dne ob izbranih filtrih · številka desno na vnosu v mesecu = število hotelov, ki jih ta korak ta dan naslovi (v tednu: kontakti in hoteli posebej) · črtica na desnem robu vnosa: oranžna = Dream 100, bela = ostali, pol oranžna pol bela = Dream 100 + ostali v istem batchu · klici do 2. 10. kliče Matjaž, od 5. 10. Tomaž.</div>`;
+      `<div class="cleg"><i class="k1"></i>K1 <i class="k2"></i>K2 <i class="k3"></i>K3 <i class="k4"></i>K4 = kampanja 1 do 4; vsebina po sloju: Dream 100 dobi Scrape, Index, AI, Konkurenca (HR: Index, Scrape, AI, Konkurenca), ker sta scrape tenant in Index link narejena samo za Dream 100; ostali hoteli dobijo Pain 1, Pain 2, Pain 3, Pain 4; mešan batch (Dream 100 + polnilo ostalih) nosi oboje · <i class="k0"></i>D = dopolnilni dotiki: klici ali LinkedIn dotiki na dodatne hotele iz sloja ostali, s katerimi klicatelj ali sedež zapolni termine, ki jih redni batchi ta dan ne zasedejo; niso del zaporedja E1 do L5, nosijo pa angle kampanje, ki na tem trgu ta dan teče (oznaka D·K2 = dopolnilni dotiki z anglom kampanje 2); v mesecu ima vsak dan svojo sivo vrstico D, gumb D jih pokaže ali skrije · "N vn." = število vnosov tistega dne ob izbranih filtrih · številka desno na vnosu v mesecu = število hotelov, ki jih ta korak ta dan naslovi (v tednu: kontakti in hoteli posebej) · črtica na desnem robu vnosa: oranžna = Dream 100, bela = ostali, pol oranžna pol bela = Dream 100 + ostali v istem batchu · klici do 2. 10. kliče Matjaž, od 5. 10. Tomaž.</div>`;
     document.getElementById('cal_ttl').textContent = v.ttl;
   }
   function bind() {
