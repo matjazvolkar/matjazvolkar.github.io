@@ -593,7 +593,7 @@
 <h2>3. Sekvence po batchih: trije scenariji</h2>
 <div id="scenarios3"></div>
 <h2>4. Trgi po tednih: klicatelji, LinkedIn profili, mail accounti</h2>
-<p>Vrstica je vir, stolpec teden (T1 = 31. 8. 2026; prvi dan kampanje je petek 4. 9. 2026). UAE ima časovno prednost pred vsemi trgi, Rokove nabiralnike in Rokov LinkedIn sedež: Rok je oktobra v Dubaju in bo morebitne sestanke opravil osebno; septembra kliče Matjaž: najprej UAE po sekvenci (kampanja 1 je s klici, 2 do 4 brez), s preostankom svojih 30 klicev na dan pa že septembra začne tudi sekvence SI in HR; od 5. 10. klice SI in HR prevzame Tomaž (odločitev 1. 9.). Barva pove scenarij, oznaka trg in kampanjo (SI|2 = Slovenija, kampanja 2 = 2. krog; številka je vedno prisotna, tudi za 1. krog). Rdeča celica brez batcha so dopolnilni dotiki ostalim. Prazna celica je prost vir.</p>
+<p>Vrstica je vir, stolpec teden (T1 = 31. 8. 2026; prvi dan kampanje je petek 4. 9. 2026). UAE ima časovno prednost pred vsemi trgi, Rokove nabiralnike in Rokov LinkedIn sedež: Rok je oktobra v Dubaju in bo morebitne sestanke opravil osebno; septembra kliče Matjaž: najprej UAE po sekvenci (kampanja 1 je s klici, 2 do 4 brez), s preostankom svojih 30 klicev na dan pa že septembra začne tudi sekvence SI in HR; od 5. 10. klice SI in HR prevzameta Tomaž in Nov SDR, dva klicatelja po 30 klicev na dan (odločitev 1. 9.). Barva pove scenarij, oznaka trg in kampanjo (SI|2 = Slovenija, kampanja 2 = 2. krog; številka je vedno prisotna, tudi za 1. krog). Rdeča celica brez batcha so dopolnilni dotiki ostalim. Prazna celica je prost vir.</p>
 <div class="qleg"><i style="background:var(--sc-multi)"></i>Multichannel <i style="background:var(--sc-two)"></i>2-channel <i style="background:var(--sc-single)"></i>Single channel <span class="qsep"></span><i class="lin" style="background:var(--n-orange)"></i>Dream 100 <i class="lin" style="background:var(--n-white)"></i>ostali <i class="lin split"></i>oba sloja v istem tednu</div>
 <div id="weektable"></div>
 
@@ -740,7 +740,8 @@ const CH = { email: "Email", linkedin: "LinkedIn", telefon: "Telefon" };
 function num(id, d) { const el = $(id); const v = parseFloat((el || {}).value); return isNaN(v) ? d : v; }
 // Fiksne kapacitete (31. 8. 2026, zvecer): 18 ogretih mail accountov, 3 LinkedIn sedezi (Rok, Matjaz, Amadej) + Tomaz od oktobra,
 // 1 polni prodajalec (Tomaz od 5. 10.; septembra klice Matjaz), 1 popoldanski (Italija). Vhodnih polj ni vec.
-const WARM = 18, LI_SEATS = 3, FT = 1, PT = 1;
+const WARM = 18, LI_SEATS = 3, FT = 2, PT = 1; // FT 2: Tomaz + Nov SDR (SI, HR), odlocitev 1. 9.
+const NEW_SDR_START = 26; // Nov SDR klice od pon 5. 10. 2026
 const D100ANG = ["Scrape", "Index", "AI", "Konkurenca"]; // Dream 100 na trgih brez imenovanih krogov; scrape in Index link obstajata samo za Dream 100
 function angleOf(b) { const r = b.round || 1; const dA = (b.krog && b.mk && b.mk.krogi) ? b.krog.angle : D100ANG[r - 1]; const rA = "Pain " + r; const nD = b.nD || 0, n = b.c ? b.c.length : 0; return nD === n ? dA : (nD > 0 ? dA + " + " + rA : rA); } // ostali hoteli: Pain 1 do 4 (odlocitev 1. 9.)
 const CALL_START = 26; // delovni dan 26 = pon 5. 10. 2026 (T6): Tomaz prevzame klice; septembra klice Matjaz, batchi ostanejo multichannel
@@ -1240,11 +1241,11 @@ function globalPlan(P) {
   const ft = FT, pt = PT;
   // klicatelji: skupina "Tomaž" = polni prodajalci (SI, HR, UAE, NY), skupina "popold. IT" = popoldanski (Italija)
   const CALLERS = { "Tomaž": [], "popold. IT": [] };
-  for (let i = 1; i <= Math.round(ft); i++) CALLERS["Tomaž"].push(i === 1 ? "Tomaž" : "Tomaž " + i);
+  for (let i = 1; i <= Math.round(ft); i++) CALLERS["Tomaž"].push(i === 1 ? "Tomaž" : (i === 2 ? "Nov SDR" : "Nov SDR " + (i - 1)));
   for (let i = 1; i <= Math.round(pt); i++) CALLERS["popold. IT"].push(i === 1 ? "Aleš popoldne (IT)" : "Aleš popoldne (IT) " + i);
   const callerOk = { "Tomaž": ft >= 1, "popold. IT": pt >= 1 };
   // Tomaz zacne klicati 5. 10. 2026 (T6); popoldanski IT klicatelj od zacetka
-  const callSlots = {}; CALLERS["Tomaž"].forEach(n => callSlots[n] = [1, 2, 3]); CALLERS["popold. IT"].forEach(n => callSlots[n] = [1, 2, 3]);
+  const callSlots = {}; CALLERS["Tomaž"].forEach(n => callSlots[n] = n === "Tomaž" ? [1, 2, 3] : [NEW_SDR_START, NEW_SDR_START + 1, NEW_SDR_START + 2]); CALLERS["popold. IT"].forEach(n => callSlots[n] = [1, 2, 3]);
   // LinkedIn sedezi: trije imenovani (Rok, Matjaz, Amadej); Tomaz od oktobra; genericnih sedezev ni (odlocitev 31. 8.)
   const liNames = ["Rok", "Matjaž", "Amadej"];
   const liSlots = {}; liNames.forEach(n => liSlots[n] = [1, 2, 3]); liSlots["Tomaž"] = [CALL_START, CALL_START + 1, CALL_START + 2]; liNames.push("Tomaž");
@@ -1415,7 +1416,7 @@ function renderWeeks(G) {
   [...usedMails].filter(m => m.startsWith("nov-account-")).sort().forEach(m => mailRows.push({ lab: "nov account", sub: m.replace("nov-account-", "dodatni ogreti account ") + " (ni še kupljen)", test: b => b.acc && b.acc.mail === m }));
   const liRows = Object.keys(G.liSlots).map(n => ({ lab: n, sub: n === "Tomaž" ? "LinkedIn sedež · od 5. 10." : "LinkedIn sedež", li: true, test: b => b.li === n && b.nl > 0 }));
   const REG = { "Tomaž": "septembra Matjaž", "popold. IT": "Italija" };
-  const callRows = Object.keys(G.CALLERS).flatMap(grp => G.CALLERS[grp].map(cn => ({ lab: cn, sub: "klicatelj · " + REG[grp], caller: true, test: b => b.callerName === cn && b.scn === "multi" && b.nt > 0 })));
+  const callRows = Object.keys(G.CALLERS).flatMap(grp => G.CALLERS[grp].map(cn => ({ lab: cn, sub: cn.startsWith("Nov SDR") ? "klicatelj · SI in HR · od 5. 10." : "klicatelj · " + REG[grp], caller: true, test: b => b.callerName === cn && b.scn === "multi" && b.nt > 0 })));
   const MESECI = ["januar", "februar", "marec", "april", "maj", "junij", "julij", "avgust", "september", "oktober", "november", "december"];
   let h = `<div class="wg" style="grid-template-columns:${cols.join(" ")}"><div></div>`;
   // meseci: teden pripada mesecu svojega ponedeljka
@@ -1601,7 +1602,7 @@ init();
       <span><i class="k0"></i><b>D = dopolnilni dotiki:</b> klici ali LinkedIn dotiki na dodatne hotele iz sloja ostali, s katerimi klicatelj ali sedež zapolni termine, ki jih redni batchi ta dan ne zasedejo; niso del zaporedja E1 do L5, nosijo pa angle kampanje, ki na tem trgu ta dan teče (D·K2). V mesecu ima vsak dan svojo sivo vrstico D, gumb D jih pokaže ali skrije.</span>
       <span><b>Številka na vnosu</b> = hoteli, ki jih ta korak ta dan dejansko doseže (mail: hoteli z mailom, LinkedIn: s profilom, klic: s telefonsko številko). <b>"N vn."</b> = število vnosov dneva ob izbranih filtrih.</span>
       <span><b>Črtica na desnem robu:</b> oranžna = Dream 100, bela = ostali, pol oranžna pol bela = Dream 100 + ostali v istem batchu.</span>
-      <span><b>Klicatelji:</b> septembra Matjaž (najprej UAE po sekvenci, s preostankom SI in HR), od 5. 10. SI in HR kliče Tomaž, Italijo ves čas Aleš popoldne.</span>
+      <span><b>Klicatelji:</b> septembra Matjaž (najprej UAE po sekvenci, s preostankom SI in HR), od 5. 10. SI in HR kličeta Tomaž in Nov SDR, Italijo ves čas Aleš popoldne.</span>
     </div>`;
     document.getElementById('cal_ttl').textContent = v.ttl;
   }
