@@ -593,7 +593,7 @@
 <h2>3. Sekvence po batchih: trije scenariji</h2>
 <div id="scenarios3"></div>
 <h2>4. Trgi po tednih: klicatelji, LinkedIn profili, mail accounti</h2>
-<p>Vrstica je vir (klicatelj, LinkedIn sedež ali mail account), stolpec teden od 4. 9. 2026; oznaka pove trg in kampanjo (SI|2; mala črka o = batch samo na office naslove ali centrale, torej office copy), barva scenarij, rdeča celica brez batcha dopolnilne dotike, prazna celica prost vir.</p>
+<p>Vrstica je vir (klicatelj, LinkedIn sedež ali mail account), stolpec teden od 4. 9. 2026; oznaka pove trg in kampanjo (SI|2; mala črka o = batch samo na office naslove ali centrale, torej office copy; poslovne maile pošilja Rok, office maile Nina, UAE v celoti Rok), barva scenarij, rdeča celica brez batcha dopolnilne dotike, prazna celica prost vir.</p>
 <div class="qleg"><i style="background:var(--sc-multi)"></i>Multichannel <i style="background:var(--sc-two)"></i>2-channel <i style="background:var(--sc-single)"></i>Single channel <span class="qsep"></span><i class="lin" style="background:var(--n-orange)"></i>Dream 100 <i class="lin" style="background:var(--n-white)"></i>ostali <i class="lin split"></i>oba sloja v istem tednu</div>
 <div id="weektable"></div>
 
@@ -1218,7 +1218,13 @@ function marketContacts(mk, P) {
 function grpOf(c) { const e = c.e, tel = c.m || c.o; const n = (e ? 1 : 0) + (c.l ? 1 : 0) + (tel ? 1 : 0); if (n === 3) return 1; if (c.l && tel && !e) return 2; if (n === 2) return 3; if (n === 1) return 4; return c.eo ? 4 : 5; }
 // hibridni batch: Dream 100 kontakti najprej (mail, LinkedIn, klic), prosta mesta na mailu in LinkedInu
 // dopolnijo ostali (2-channel ali single), klici samo za Dream 100
-function composeBatches(pool, cfg) {
+function composeBatches(pool, cfg) { // odlocitev 1. 9.: poslovni maili (K) in office maili (Ko) v locenih batchih, da jih posiljata razlicna racuna
+  if (!cfg.mail) return composeBatchesRaw(pool, cfg);
+  const b1 = composeBatchesRaw(pool.filter(c => c.e), cfg); b1.forEach(b => { b.copy = 'b'; });
+  const b2 = composeBatchesRaw(pool.filter(c => !c.e), cfg); b2.forEach(b => { b.copy = 'o'; });
+  return b1.concat(b2);
+}
+function composeBatchesRaw(pool, cfg) {
   pool.forEach(c => { delete c._info; });
   const batches = []; let rest = pool.slice();
   while (rest.length) {
@@ -1253,6 +1259,7 @@ function globalPlan(P) {
   const liSlots = {}; liNames.forEach(n => liSlots[n] = [1, 2, 3]); liSlots["Tomaž"] = [CALL_START, CALL_START + 1, CALL_START + 2]; liNames.push("Tomaž");
   // prosti ogreti accounti: vsi ogreti accounti, ki niso dodeljeni trgu, prevzamejo zaostanek (najprej trgi z visjo prioriteto)
   const dedicated = new Set(MARKETS.flatMap(m => m.accounts.map(a => a.mail).filter(Boolean)));
+  const NINA_ACCS = MAILBOXES.filter(a => a.who === "Nina"); const NINA_MAILS = new Set(NINA_ACCS.map(a => a.mail)); // office (info@) maile posilja Nina
   const ROK_MAILS = new Set(["rok.kokalj@getnevron.com", "rok.kokalj@trynevron.com", "rok.kokalj@nevroncore.com", "rok.kokalj@nevron.net"]); // Rokovi racuni: UAE, nato SI/HR zacetki kampanj, nikoli prazni (odlocitev 1. 9.)
   const spareReal = MAILBOXES.filter(a => !dedicated.has(a.mail));
   const nSpare = Math.max(0, Math.round(P.warm) - dedicated.size);
@@ -1316,9 +1323,9 @@ function globalPlan(P) {
       // naslednji krog: sele ko so vsi batchi prejsnjega kroga istega sloja razporejeni in po premoru (tedni x 5) od konca zadnjega
       if (b.round > 1) { const r1 = all.filter(x => x.mk === b.mk && x.round === b.round - 1 && (x.nD > 0) === (b.nD > 0)); if (!r1.length || r1.some(x => x.start == null)) { b.block = 'krog:predhodni'; left.push(b); continue; } const r1End = Math.max(...r1.map(x => x.end)); if (d < r1End + (b.krog.pause || 2) * 5) { b.block = 'krog:premor'; left.push(b); continue; } }
       // mail account: najprej predvideni account (Dream 100 ali ostali), nato drugi accounti istega trga
-      const accs0 = (b.accs || b.mk.accounts).filter(a => a.mail); const accs = ["si", "hr", "uae"].includes(b.mk.trg) ? accs0 : accs0.filter(a => !ROK_MAILS.has(a.mail)).concat(accs0.filter(a => ROK_MAILS.has(a.mail))); const pref = accs.length ? [b.acc, ...accs.filter(a => a !== b.acc)] : [b.acc];
+      const accs0 = (b.accs || b.mk.accounts).filter(a => a.mail); let accs; if (b.mk.trg === "uae") accs = accs0; else if (b.copy === 'o') accs = NINA_ACCS.concat(accs0.filter(a => !ROK_MAILS.has(a.mail) && !NINA_MAILS.has(a.mail))); else if (b.copy === 'b') accs = ["si", "hr"].includes(b.mk.trg) ? ROK_ACCS.concat(MAILBOXES.filter(a => ["Matjaž", "Amadej"].includes(a.who))) : ROK_ACCS.concat(accs0.filter(a => !ROK_MAILS.has(a.mail) && !NINA_MAILS.has(a.mail))); else accs = ["si", "hr"].includes(b.mk.trg) ? accs0 : accs0.filter(a => !ROK_MAILS.has(a.mail)).concat(accs0.filter(a => ROK_MAILS.has(a.mail))); if (accs.length && b.copy && b.mk.trg !== "uae") b.acc = accs[0]; const pref = accs.length ? [b.acc, ...accs.filter(a => a !== b.acc)] : [b.acc];
       let key = null, ka = -1; for (const a of pref) { const k2 = a.mail || ("li-only:" + b.mk.trg); if (!accSlots[k2]) accSlots[k2] = [1, 2, 3]; const kk = freeSlot(accSlots[k2], d); if (kk >= 0) { key = k2; ka = kk; b.acc = a; break; } }
-      if (ka < 0 && accs.length && b.mk.trg !== "uae" && (b.nD === 0 || !b.krog || b.round >= 2)) { for (const a of spare) { if (!accSlots[a.mail]) accSlots[a.mail] = [1, 2, 3]; const kk = freeSlot(accSlots[a.mail], d); if (kk >= 0) { key = a.mail; ka = kk; b.acc = a; break; } } }
+      if (ka < 0 && accs.length && b.mk.trg !== "uae" && (b.nD === 0 || !b.krog || b.round >= 2)) { for (const a of spare.filter(a => b.copy !== 'b' || !NINA_MAILS.has(a.mail))) { if (!accSlots[a.mail]) accSlots[a.mail] = [1, 2, 3]; const kk = freeSlot(accSlots[a.mail], d); if (kk >= 0) { key = a.mail; ka = kk; b.acc = a; break; } } }
       if (ka < 0 && b.mk.trg === "uae") { for (const a of MAILBOXES.filter(a => a.who === "Rok")) { if (!a.mail) continue; if (!accSlots[a.mail]) accSlots[a.mail] = [1, 2, 3]; const kk = freeSlot(accSlots[a.mail], d); if (kk >= 0) { key = a.mail; ka = kk; b.acc = a; break; } } } // UAE sme samo na Rokove nabiralnike
       if (ka < 0) { b.block = 'account'; left.push(b); continue; }
       let kl = -1, pn = null;
@@ -1608,6 +1615,7 @@ init();
       <span><i class="k0"></i><b>D = dopolnilni dotiki:</b> klici ali LinkedIn dotiki na dodatne hotele iz sloja ostali, s katerimi klicatelj ali sedež zapolni termine, ki jih redni batchi ta dan ne zasedejo; niso del zaporedja E1 do L5, nosijo pa angle kampanje, ki na tem trgu ta dan teče (D·K2). V mesecu je na dan največ 7 vnosov (ostalo pod + N več) in svoja siva vrstica D, gumb D jih pokaže ali skrije.</span>
       <span><b>Številka na vnosu</b> = hoteli, ki jih ta korak ta dan dejansko doseže (mail: hoteli z mailom, LinkedIn: s profilom, klic: s telefonsko številko). <b>"N vn."</b> = število vnosov dneva ob izbranih filtrih.</span>
       <span><b>Črtica na desnem robu:</b> oranžna = Dream 100, bela = ostali, pol oranžna pol bela = Dream 100 + ostali v istem batchu.</span>
+      <span><b>Pošiljatelji mailov:</b> poslovni maili (K) z Rokovih računov, office maili (Ko) z Nininih, UAE v celoti Rok.</span>
       <span><b>Klicatelji:</b> septembra Matjaž (najprej UAE po sekvenci, s preostankom SI in HR), od 5. 10. SI in HR kliče Tomaž, Italijo ves čas Aleš popoldne.</span>
     </div>`;
     document.getElementById('cal_ttl').textContent = v.ttl;
