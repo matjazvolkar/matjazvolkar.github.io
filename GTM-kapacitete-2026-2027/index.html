@@ -592,7 +592,7 @@
 <h2>3. Sekvence po batchih: trije scenariji</h2>
 <div id="scenarios3"></div>
 <h2>4. Trgi po tednih: klicatelji, LinkedIn profili, mail accounti</h2>
-<p>Vrstica je vir, stolpec teden (T1 = 31. 8. 2026; prvi dan kampanje je petek 4. 9. 2026). Barva pove scenarij, oznaka trg in kampanjo (SI|2 = Slovenija, kampanja 2 = 2. krog; številka je vedno prisotna, tudi za 1. krog). Rdeča celica brez batcha so dopolnilni dotiki ostalim. Prazna celica je prost vir.</p>
+<p>Vrstica je vir, stolpec teden (T1 = 31. 8. 2026; prvi dan kampanje je petek 4. 9. 2026). UAE ima časovno prednost pred vsemi trgi in Rokov LinkedIn sedež: Rok je oktobra v Dubaju in bo morebitne sestanke opravil osebno (odločitev 1. 9.). Barva pove scenarij, oznaka trg in kampanjo (SI|2 = Slovenija, kampanja 2 = 2. krog; številka je vedno prisotna, tudi za 1. krog). Rdeča celica brez batcha so dopolnilni dotiki ostalim. Prazna celica je prost vir.</p>
 <div class="qleg"><i style="background:var(--sc-multi)"></i>Multichannel <i style="background:var(--sc-two)"></i>2-channel <i style="background:var(--sc-single)"></i>Single channel <span class="qsep"></span><i class="lin" style="background:var(--n-orange)"></i>Dream 100 <i class="lin" style="background:var(--n-white)"></i>ostali <i class="lin split"></i>oba sloja v istem tednu</div>
 <div id="weektable"></div>
 
@@ -1286,13 +1286,13 @@ function globalPlan(P) {
       }
     }
     const bD = B.filter(b => b.nD > 0), bR = B.filter(b => b.nD === 0);
-    B.forEach((b, i) => { b.n = i + 1; b.layer = b.nD === b.c.length ? "d100" : (b.nD > 0 ? "mix" : "rest"); b.mk = mk; b.caller = b.nt > 0 ? caller : null; b.pri = [b.nD > 0 ? (mk.krogi ? -1 : (b.round > 1 ? 1.5 : 0)) : (b.scn === "single" ? 2 : (["si", "hr"].includes(mk.trg) ? 0.5 : 1)), mi, i]; all.push(b); });
+    B.forEach((b, i) => { b.n = i + 1; b.layer = b.nD === b.c.length ? "d100" : (b.nD > 0 ? "mix" : "rest"); b.mk = mk; b.caller = b.nt > 0 ? caller : null; b.pri = [mk.trg === "uae" ? (b.round > 1 ? -1.5 : -2) : b.nD > 0 ? (mk.krogi ? -1 : (b.round > 1 ? 1.5 : 0)) : (b.scn === "single" ? 2 : (["si", "hr"].includes(mk.trg) ? 0.5 : 1)), mi, i]; all.push(b); });
     markets.push({ mk, m, cc, hasMail, caller, bD, bR, B, scnD, scnR });
   });
   // razpored po dnevih: vsak dan dobi prosti vir najvisje prioritetni batch, ki ima vse potrebne vire proste
   all.sort((x, y) => x.pri[0] - y.pri[0] || x.pri[1] - y.pri[1] || x.pri[2] - y.pri[2]);
   const D = 200; const load = {}; for (let d = 1; d <= D; d++) load[d] = { e: 0, inv: 0, msg: 0, t: 0 };
-  const liPref = mk => { const p = mk.trg === "si" ? ["Rok", "Matjaž", "Amadej"] : (mk.trg === "hr" ? ["Rok", "Amadej", "Matjaž"] : ["Amadej", "Rok", "Matjaž"]); return p.concat(Object.keys(liSlots).filter(n => !p.includes(n))); };
+  const liPref = mk => { const p = mk.trg === "si" ? ["Rok", "Matjaž", "Amadej"] : (mk.trg === "hr" ? ["Rok", "Amadej", "Matjaž"] : (mk.trg === "uae" ? ["Rok", "Matjaž", "Amadej"] : ["Amadej", "Rok", "Matjaž"])); return p.concat(Object.keys(liSlots).filter(n => !p.includes(n))); };
   // vsak slot ima fazo (dan 1, 2, 3 in nato vsak tretji dan): batch v slotu k sme zaceti samo na dan z isto fazo,
   // tako je vsak dan najvec en batch na kanalu (33 mailov, 25 LinkedIn, 33 klicev)
   const freeSlot = (slots, d) => { const k = (d - 1) % 3; return k < slots.length && slots[k] <= d ? k : -1; };
@@ -1312,11 +1312,12 @@ function globalPlan(P) {
       const accs = (b.accs || b.mk.accounts).filter(a => a.mail); const pref = accs.length ? [b.acc, ...accs.filter(a => a !== b.acc)] : [b.acc];
       let key = null, ka = -1; for (const a of pref) { const k2 = a.mail || ("li-only:" + b.mk.trg); if (!accSlots[k2]) accSlots[k2] = [1, 2, 3]; const kk = freeSlot(accSlots[k2], d); if (kk >= 0) { key = k2; ka = kk; b.acc = a; break; } }
       if (ka < 0 && accs.length && (b.nD === 0 || !b.krog || b.round >= 2)) { for (const a of spare) { if (!accSlots[a.mail]) accSlots[a.mail] = [1, 2, 3]; const kk = freeSlot(accSlots[a.mail], d); if (kk >= 0) { key = a.mail; ka = kk; b.acc = a; break; } } }
+      if (ka < 0 && b.mk.trg === "uae") { for (const a of MAILBOXES) { if (!a.mail) continue; if (!accSlots[a.mail]) accSlots[a.mail] = [1, 2, 3]; const kk = freeSlot(accSlots[a.mail], d); if (kk >= 0) { key = a.mail; ka = kk; b.acc = a; break; } } } // UAE sme na katerikoli ogret account
       if (ka < 0) { b.block = 'account'; left.push(b); continue; }
       let kl = -1, pn = null;
       if (b.nl > 0) {
         // LinkedIn sloti: multichannel batchi imajo prednost; za vsako skupino klicateljev je rezerviranih toliko slotov, kolikor jih cakajoci multichannel batchi rabijo (najvec 3 na klicatelja + 1)
-        if (b.scn !== "multi") {
+        if (b.scn !== "multi" && b.mk.trg !== "uae") { // UAE je izvzet iz LinkedIn rezerve (Rok v Dubaju oktobra, odlocitev 1. 9.)
           const freeLI = Object.values(liSlots).reduce((a, sl) => a + sl.filter(f => f <= d).length, 0);
           let reserve = 0; Object.keys(CALLERS).forEach(g => { const nC = CALLERS[g].length; if (!nC) return; const activeM = all.filter(x => x.scn === "multi" && x.caller === g && x.nl > 0 && x.start != null && x.start <= d && x.start + CYCLE > d).length; const pendM = all.filter(x => x.scn === "multi" && x.caller === g && x.nl > 0 && x.start == null).length; reserve += Math.max(0, Math.min(3 * nC + 1, activeM + pendM) - activeM); });
           if (freeLI <= reserve) { b.block = 'li:rezerva'; left.push(b); continue; }
