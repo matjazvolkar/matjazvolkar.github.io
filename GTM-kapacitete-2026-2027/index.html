@@ -483,7 +483,7 @@
   .cal .ce { font-size: .68rem; border-radius: 5px; padding: 2px 6px; margin-top: 3px; color: #04102e; line-height: 1.25; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .cal .cw .ce, .cal .cday .ce { white-space: normal; }
   .cal .ce b { font-weight: 800; } .cal .ce span { float: right; font-weight: 700; } .cal .ce small { display: block; opacity: .8; font-size: .64rem; }
-  .cal .ce.e3 { outline: 1.5px solid #fff; outline-offset: -1px; box-shadow: 0 0 6px rgba(255, 255, 255, 0.35); }
+  .cal .ce.e3 { outline: 2.5px solid #fff; outline-offset: -1px; box-shadow: 0 0 9px rgba(255, 255, 255, 0.55); }
   .cal .cday tr.e3r > td:first-child { box-shadow: inset 3px 0 0 #fff; }
   .cal .k1 { background: #FFB05E; } .cal .k2 { background: #73C7FF; } .cal .k3 { background: #7DE8A0; } .cal .k4 { background: #F6A900; } .cal .k5 { background: #C3A6FF; } .cal .k6 { background: #FF9A9D; } .cal .k0 { background: #9fb3d1; }
   .cal .ce { position: relative; padding-right: 12px; }
@@ -1376,7 +1376,7 @@ function globalPlan(P) {
       if (d < FIRST || (d >= HOL[0] && d <= HOL[1])) { left.push(b); continue; }
       if (b.mk.trg === "it" && d < IT_START) { b.block = 'it:Ales'; left.push(b); continue; } // IT sele od 3. tedna (aktivacija Alesa)
       // Dream 100 drugih Tomazevih trgov (UAE, NY) pride na vrsto, ko so vsi batchi prvega kroga SI in HR razporejeni
-      if (b.nD > 0 && b.scn === "multi" && !b.krog && b.mk.caller === "Tomaž" && b.mk.trg !== "uae") { const g = all.filter(x => x.krog && x.round === 1 && x.nD > 0); if (g.some(x => x.start == null)) { left.push(b); continue; } }
+      if (["gr", "ny"].includes(b.mk.trg)) { const g = all.filter(x => x.round === 1 && x.nD > 0 && (x.krog || x.mk.trg === "uae")); if (g.some(x => x.start == null)) { b.block = 'cakanje:SI-HR-UAE'; left.push(b); continue; } } /* prvi tedni pripadajo SI, HR in UAE (odlocitev 2. 9.); IT ima svoj IT_START */
       // drugi krog: sele ko so vsi batchi prvega kroga istega sloja razporejeni in po premoru (privzeto 2 tedna; SI/HR ostali 6 tednov, da so stirje krogi razporejeni cez celo sezono) od konca zadnjega
       // naslednji krog: sele ko so vsi batchi prejsnjega kroga istega sloja razporejeni in po premoru (tedni x 5) od konca zadnjega
       if (b.round > 1) { const r1 = all.filter(x => x.mk === b.mk && x.round === b.round - 1 && (b.extraFull ? x.nF > 0 : (x.nD > 0) === (b.nD > 0))); /* E+L+C kroga 5 in 6 cakata le na batche s polnimi kontakti prejsnjega kroga (ti so prvi), ne na konec celega kroga (odlocitev 2. 9.) */ if (!r1.length || r1.some(x => x.start == null)) { b.block = 'krog:predhodni'; left.push(b); continue; } const r1End = Math.max(...r1.map(x => x.end)); if (d < r1End + (b.pauseW || b.krog.pause || 2) * 5) { b.block = 'krog:premor'; left.push(b); continue; } }
@@ -1603,7 +1603,7 @@ init();
     if (!CAL.topup && x.scn === 'topup') return false;
     return match(x);
   }
-  const TRG_ORD = { uae: 0, si: 1, hr: 2, it: 3, gr: 4, at: 5, ny: 6 };
+  const TRG_ORD = { si: 0, hr: 1, uae: 2, it: 3, gr: 4, at: 5, ny: 6 }; // SI in HR vedno na vrhu dneva (odlocitev 2. 9.)
   const ord = (a, b) => (a.camp - b.camp) || ((a.scn === 'topup') - (b.scn === 'topup')) || ((TRG_ORD[a.trg] ?? 9) - (TRG_ORD[b.trg] ?? 9)) || a.ch.localeCompare(b.ch) || a.code.localeCompare(b.code) || ((a.off ? 1 : 0) - (b.off ? 1 : 0));
   const dayE = d => (CAL.byDate[key(d)] || []).filter(pass).sort(ord);
   function grp(list) { const m = new Map(); list.forEach(x => { const k = [x.scn === 'topup' ? 'T' : 'K', x.camp, x.trg, x.ch, x.code, x.lay || 'r', x.off ? 'o' : 'b'].join('|');
