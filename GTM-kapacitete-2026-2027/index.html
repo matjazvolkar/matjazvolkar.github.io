@@ -441,6 +441,8 @@
   .scn.multi { background: var(--sc-multi); color: #1a1200; } .scn.two { background: var(--sc-two); } .scn.single { background: var(--sc-single); }
 
   /* ---------- razdelek 5: koledar kampanj ---------- */
+  #tbl81 td, #tbl81 th { white-space: normal; vertical-align: top; line-height: 1.45; }
+  #tbl81 { table-layout: auto; }
   .cal { border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--surface); padding: 12px 14px; box-shadow: var(--sh-sm); }
   .cal .ctb { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 8px; }
   .cal .ctb .ttl { font-weight: 800; font-size: 1.15rem; margin: 0 6px; min-width: 190px; }
@@ -688,7 +690,7 @@
 
 <h3 style="margin:26px 0 6px">8.1 Od kod je 15.872 kontaktov: viri podatkov in njihov strošek</h3>
 <p>Stanje 2. 9. 2026: 15.872 kanalnih kontaktov (1.654 poslovnih mailov, 6.191 LinkedIn profilov, 883 mobilnih, 7.099 central in info@ naslovov, 45 osebnih mailov samo za občinstva) na 7.010 imenovanih odločevalcih in 5.908 hotelih. Pripis posameznemu viru je ocena iz cevovoda obogatitve: en kontakt gre pogosto skozi več orodij (register da hotel, Firecrawl najde osebo, Drago jo potrdi, Apollo razkrije številko).</p>
-<div class="tw"><table>
+<div class="tw"><table id="tbl81">
 <thead><tr><th class="l" style="min-width:210px">Platforma / vir</th><th class="l">Kaj je prinesla</th><th style="min-width:120px">Kontaktov (ocena)</th><th class="l" style="min-width:170px">Strošek</th><th class="l">Opomba</th></tr></thead>
 <tbody>
 <tr><td class="l">Javni registri (AJPES RNO, IT Registro Imprese, data.ny.gov, GR in HR registri)</td><td class="l">seznami hotelov, info@ maili, telefonske centrale</td><td>~4.700 central in info@ + seznami 5.908 hotelov</td><td class="l">0,00 € za podatke (strošek scrapa je v Firecrawl naročnini)</td><td class="l">brezplačni javni viri; NY register brez funkcionarjev</td></tr>
