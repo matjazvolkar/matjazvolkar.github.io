@@ -685,6 +685,26 @@
 
 
 
+
+<h3 style="margin:26px 0 6px">8.1 Od kod je 15.872 kontaktov: viri podatkov in njihov strošek</h3>
+<p>Stanje 2. 9. 2026: 15.872 kanalnih kontaktov (1.654 poslovnih mailov, 6.191 LinkedIn profilov, 883 mobilnih, 7.099 central in info@ naslovov, 45 osebnih mailov samo za občinstva) na 7.010 imenovanih odločevalcih in 5.908 hotelih. Pripis posameznemu viru je ocena iz cevovoda obogatitve: en kontakt gre pogosto skozi več orodij (register da hotel, Firecrawl najde osebo, Drago jo potrdi, Apollo razkrije številko).</p>
+<div class="tw"><table>
+<thead><tr><th class="l" style="min-width:210px">Platforma / vir</th><th class="l">Kaj je prinesla</th><th style="min-width:120px">Kontaktov (ocena)</th><th class="l" style="min-width:170px">Strošek</th><th class="l">Opomba</th></tr></thead>
+<tbody>
+<tr><td class="l">Javni registri (AJPES RNO, IT Registro Imprese, data.ny.gov, GR in HR registri)</td><td class="l">seznami hotelov, info@ maili, telefonske centrale</td><td>~4.700 central in info@ + seznami 5.908 hotelov</td><td class="l">0 € za podatke (scrape prek Firecrawla)</td><td class="l">brezplačni javni viri; NY register brez funkcionarjev</td></tr>
+<tr><td class="l">Google Places API</td><td class="l">telefonske centrale hotelov</td><td>~2.400 central (IT 1.539, UAE 434, SI 222, HR 170, AT 90, GR 36, NY 34)</td><td class="l">~80 € enkratno (Place Details klici)</td><td class="l">1. 9., ko je Apollo ostal brez mobile kreditov</td></tr>
+<tr><td class="l">Firecrawl</td><td class="l">LinkedIn iskanje odločevalcev, Booking seznami, hotelske spletne strani, scrape registrov</td><td>~6.200 LinkedIn profilov</td><td class="l">342 €/mes (avgusta nadgradnja s 85 €); ~60 % za sourcing</td><td class="l">glavno orodje obogatitve; tudi vhod za scrape tenant stroj</td></tr>
+<tr><td class="l">Drago (Claude agenti, Max plan)</td><td class="l">potrjevanje imenovanih odločevalcev: ime, funkcija, trije viri na osebo</td><td>905 potrjenih Dream 100 + del imenovanih ostalih</td><td class="l">znotraj Claude Max naročnine; tokeni niso merjeni ločeno</td><td class="l">samo 1. 9.: 21 paketov (15 + 6), 15 napačnih oseb ovrženih</td></tr>
+<tr><td class="l">Apollo</td><td class="l">razkritja mobilnih prek webhooka, org-by-domain, NY in UAE osebe</td><td>~600 mobilnih + ~300 poslovnih mailov</td><td class="l">naročnina + dokup 5.000 kreditov; razkritje številke = 8 kreditov</td><td class="l">mobile krediti porabljeni 1. 9.; nov dokup čaka odločitev</td></tr>
+<tr><td class="l">Lusha</td><td class="l">dopolnilna razkritja telefonov SI in HR</td><td>~150 mobilnih</td><td class="l">naročnina + krediti</td><td class="l">revealPhones obvezen parameter, sicer kredit brez rezultata</td></tr>
+<tr><td class="l">Skrapp</td><td class="l">poslovni maili NY in UAE, množična verifikacija vseh mail seznamov</td><td>~260 mailov + verifikacija ~3.000</td><td class="l">naročnina (paket s HeyReach)</td><td class="l">catch-all kontrolni naslov v vsaki seriji</td></tr>
+<tr><td class="l">Sales Navigator</td><td class="l">iskanja odločevalcev po računih (3 sedeži: Rok, Simon, Amadej)</td><td>vhod za ~800 poslovnih kontaktov v dosjejih</td><td class="l">~250 €/mes za 3 sedeže</td><td class="l">salesApiLeadSearch; četrti sedež za Tomaža od oktobra</td></tr>
+<tr><td class="l">Attio (CRM)</td><td class="l">obstoječa baza SI in HR iz preteklih kampanj</td><td>~350 kontaktov</td><td class="l">naročnina</td><td class="l">26 obstoječih strank izključenih iz outreacha</td></tr>
+<tr><td class="l">Dosjeji Dream 100 (ročno + Booking prek Firecrawla)</td><td class="l">izhodiščnih 700 hotelov z ocenami in posebnostmi</td><td>700 hotelov</td><td class="l">delo, ne licenca</td><td class="l">dosje se nikoli ne regenerira</td></tr>
+</tbody>
+</table></div>
+<p class="small muted">Tokenski strošek Claude agentov (Drago, preštevanje, gradnja te strani) teče znotraj Max naročnine in ni merjen po opravilu; edini ločeno merjeni potroški so krediti (Apollo, Lusha, Skrapp) in API klici (Google Places). Vsota ocen po virih je večja od 15.872, ker isti kontakt prispeva več orodij.</p>
+
 <h2>9. Kontekst novih trgov, viri in metoda</h2>
 <div id="ctx"></div>
 
