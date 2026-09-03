@@ -381,7 +381,8 @@
   .hero .tile .v { white-space: nowrap; }
   .hero .tile .have { font-size: 0.76rem; }
   .tile.hot { border-top: 4px solid var(--accent); }
-  .mrow .mid .flag { width: 42px; height: 28px; margin-bottom: 6px; border-radius: 3px; overflow: hidden; border: 1px solid var(--line); } .mrow .mid .flag svg { width: 100%; height: 100%; display: block; }
+  .mrow .mid .flag { display: block; width: 42px; height: 28px; margin-bottom: 6px; border-radius: 3px; overflow: hidden; border: 1px solid var(--line); cursor: pointer; }
+  .mrow .mid a.flag:hover { border-color: var(--accent); box-shadow: 0 0 8px rgba(115, 199, 255, 0.45); } .mrow .mid .flag svg { width: 100%; height: 100%; display: block; }
 
   /* ---------- v7 ---------- */
   .tile.cap { background: transparent; border: 2px solid var(--line); } .tile.cap .v { color: var(--ink-2); }
@@ -907,8 +908,8 @@ function renderMirror(P) {
     gr: `<svg viewBox="0 0 30 20"><rect width="30" height="20" fill="#fff"/><path d="M0 0h30v2.22H0zM0 4.44h30v2.22H0zM0 8.89h30v2.22H0zM0 13.33h30v2.22H0zM0 17.78h30V20H0z" fill="#0d5eaf"/><rect width="11.11" height="11.11" fill="#0d5eaf"/><path d="M4.44 0h2.22v11.11H4.44zM0 4.44h11.11v2.22H0z" fill="#fff"/></svg>`,
     at: `<svg viewBox="0 0 30 20"><rect width="30" height="20" fill="#ed2939"/><rect y="6.67" width="30" height="6.67" fill="#fff"/></svg>`,
   };
-  const mid = (m, sub, id) => `<div class="mid">${id && FLAG[id] ? `<div class="flag">${FLAG[id]}</div>` : ""}<div class="t">${m}</div><div class="s">${sub}</div></div>`;
-  let h = `<div class="mhead"><div>Ostali zunaj izbora (ICP pas + 3 zvezdice pri SI in HR)</div><div style="text-align:center">Trg</div><div class="r">Dream 100</div></div><div class="mirror">`;
+  const mid = (m, sub, id) => `<div class="mid">${id && FLAG[id] ? `<a class="flag" href="dream100/${id}.html" title="Odpri Dream 100 dosje: ${m}">${FLAG[id]}</a>` : ""}<div class="t">${m}</div><div class="s">${sub}</div></div>`; /* zastavica = povezava na dosje (odlocitev 3. 9.) */
+  let h = `<div class="mhead"><div>Ostali zunaj izbora (ICP pas + 3 zvezdice pri SI in HR)</div><div style="text-align:center">Trg</div><div class="r"><a href="dream100/index.html" style="color:inherit;text-decoration:underline dotted;text-underline-offset:3px" title="Kazalo Dream 100 dosjejev">Dream 100</a></div></div><div class="mirror">`;
   const chan = (m) => m.id === "at" ? "samo LinkedIn, mail in klic prepovedana (§ 174 TKG)" : `${m.kanali.email ? "mail" : "brez maila"} · LinkedIn · ${m.kanali.telefon ? "klic" : "brez klica"}`;
   rows.forEach(r => { h += `<div class="mrow">${side(r, "O", "left")}${mid(r.m.ime.replace("Združeni arabski emirati", "UAE"), chan(r.m), r.m.id)}${side(r, "D", "right")}</div>`; });
   h += `<div class="mrow total">${side({ D: tot.D, O: tot.O }, "O", "left")}${mid("Vsi trgi", rows.length + " trgov skupaj · brez avstrijskih mailov in telefonov (§ 174 TKG)")}${side({ D: tot.D, O: tot.O }, "D", "right")}</div>`;
