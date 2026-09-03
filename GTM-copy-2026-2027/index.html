@@ -29,6 +29,9 @@ aside{position:sticky;top:52px;width:272px;flex:0 0 272px;max-height:calc(100vh 
 .zas-txt{width:16px;flex:0 0 16px;text-align:center;color:var(--mut);font-size:11px}
 .kaz-stat{font-size:9.5px;color:var(--mut);font-weight:400;white-space:nowrap}
 .kaz-stat b.z{color:var(--ok)}
+.kaz-skupaj{display:flex;align-items:center;gap:4px;padding:4px 5px;margin-top:5px;border-top:1px solid var(--rob);font-weight:600;font-size:11.5px}
+.kaz-skupaj .kaz-ime{flex:1}
+.kaz-skupaj .zas-txt{color:var(--ok)}
 .kaz-sek{margin:3px 0 0 12px;font-size:8.5px;text-transform:uppercase;letter-spacing:.3px;color:var(--mut)}
 .kot{color:var(--txt);font-weight:700}
 @media (prefers-color-scheme: dark){.kot{color:#fff}}
@@ -591,7 +594,9 @@ footer{color:var(--mut);font-size:12.5px;text-align:center;padding:20px}
 <a class='kaz' href='#primeri--aktivacija-si-hotel-maestoso-lipica-klic-k-a-odprl-ni-aktivi--blok' data-id='primeri--aktivacija-si-hotel-maestoso-lipica-klic-k-a-odprl-ni-aktivi--blok'><i></i>AKTIVACIJA · SI · Hotel Maestoso, Lipica (kl…</a>
 <div class='kaz-sek'>AKTIVACIJA · SI · Hotel Maestoso (klic K-C: prehod na plačilo, dan ~30)</div>
 <a class='kaz' href='#primeri--aktivacija-si-hotel-maestoso-klic-k-c-prehod-na-placilo-dan---blok' data-id='primeri--aktivacija-si-hotel-maestoso-klic-k-c-prehod-na-placilo-dan---blok'><i></i>AKTIVACIJA · SI · Hotel Maestoso (klic K-C: …</a>
-</details></aside>
+</details>
+<div class="kaz-skupaj"><span class="zas-txt">✓</span><span class="kaz-ime">Copy-jev skupaj</span><span class="kaz-stat" id="kaz-skupaj-stat"></span></div>
+</aside>
 <main>
 <p class="trg-intro">Vsak blok ima gumba <b>V redu</b> / <b>Popravi</b> in polje za komentar. V kazalu levo je potrjen copy <b style="color:var(--ok)">zelen</b>, nepregledan ali za popravit <b style="color:var(--no)">rdeč</b> (klicaj = Popravi). Ocene se shranjujejo v tem brskalniku; ko končaš, klikni <b>Izvozi feedback</b> in mi besedilo prilepi v sejo (ali prenesi .txt). Variable v copyju so označene <span class="tok">{takole}</span>.</p>
 <section class='trg' id='trg-sistem'>
@@ -2898,7 +2903,7 @@ footer{color:var(--mut);font-size:12.5px;text-align:center;padding:20px}
 </div>
 
 <div class="blok" id="uae--k1-scrape-email-posilja-rok--e4-dan-10-en-odgovor-dokonca">
-  <div class="blok-glava"><h4>E4 · dan 10 · en odgovor dokonča</h4><span class='badge'>69 besed</span>
+  <div class="blok-glava"><h4>E4 · dan 10 · en odgovor dokonča</h4><span class='badge'>89 besed</span>
     <div class="fb">
       <button class="fb-ok" onclick="fbSet('uae--k1-scrape-email-posilja-rok--e4-dan-10-en-odgovor-dokonca','ok')">V redu</button>
       <button class="fb-no" onclick="fbSet('uae--k1-scrape-email-posilja-rok--e4-dan-10-en-odgovor-dokonca','popravi')">Popravi</button>
@@ -2907,9 +2912,9 @@ footer{color:var(--mut);font-size:12.5px;text-align:center;padding:20px}
   <div class="vsebina"><p><strong>Zadeva A:</strong> one reply finishes it<br><strong>Zadeva B:</strong> finishing <span class="tok">{hotel_kratko}</span>'s app</p>
 <p><strong>Telo:</strong></p>
 <p><span class="tok">{Hi|Hello}</span> <span class="tok">{ime}</span>,</p>
-<p>If the preview looks close, one reply with "finish it" is all it takes. We complete <span class="tok">{hotel}</span>'s app; your team only approves the content. The first 30 days are free, after that you pay per guest interaction. If guests do not use it, you pay nothing.</p>
+<p>If the preview looks close, I suggest 15 minutes: we walk through it together, fill in what is missing and agree the launch. The first 30 days are free, then you pay per guest interaction; if guests do not use it, you pay nothing.</p>
 <p>No project, no IT, nothing to install. The preview is here if you want another look: <span class="tok">{scrape_link}</span></p>
-<p>Should we finish it?</p></div>
+<p>If you would rather skip the meeting, the shortcut is simple: reply "finish it" and we handle the rest. When would those 15 minutes suit you?</p></div>
   <textarea class="fb-kom" data-id="uae--k1-scrape-email-posilja-rok--e4-dan-10-en-odgovor-dokonca" placeholder="Komentar (npr. skrajšaj drugi odstavek, drugačna zadeva ...)" oninput="fbKom('uae--k1-scrape-email-posilja-rok--e4-dan-10-en-odgovor-dokonca',this.value)"></textarea>
 </div>
 
@@ -4760,7 +4765,7 @@ footer{color:var(--mut);font-size:12.5px;text-align:center;padding:20px}
 </div>
 
 <div class="blok" id="ny--k1-scrape-email-posiljata-matjaz-in-gregor--e4-dan-10-en-odgovor-dokonca">
-  <div class="blok-glava"><h4>E4 · dan 10 · en odgovor dokonča</h4><span class='badge'>77 besed</span>
+  <div class="blok-glava"><h4>E4 · dan 10 · en odgovor dokonča</h4><span class='badge'>97 besed</span>
     <div class="fb">
       <button class="fb-ok" onclick="fbSet('ny--k1-scrape-email-posiljata-matjaz-in-gregor--e4-dan-10-en-odgovor-dokonca','ok')">V redu</button>
       <button class="fb-no" onclick="fbSet('ny--k1-scrape-email-posiljata-matjaz-in-gregor--e4-dan-10-en-odgovor-dokonca','popravi')">Popravi</button>
@@ -4769,9 +4774,9 @@ footer{color:var(--mut);font-size:12.5px;text-align:center;padding:20px}
   <div class="vsebina"><p><strong>Zadeva A:</strong> one reply finishes it<br><strong>Zadeva B:</strong> finishing <span class="tok">{hotel_kratko}</span>'s app</p>
 <p><strong>Telo:</strong></p>
 <p><span class="tok">{Hi|Hello}</span> <span class="tok">{ime}</span>,</p>
-<p>if the preview looks close, one reply with "finish it" is all it takes. We complete <span class="tok">{hotel}</span>'s app; your team only approves the content. The first 30 days are free, after that you pay per guest interaction. If guests do not use it, you pay nothing.</p>
+<p>if the preview looks close, I suggest 15 minutes: we walk through it together, fill in what is missing and agree the launch. The first 30 days are free, then you pay per guest interaction; if guests do not use it, you pay nothing.</p>
 <p>No project, no IT, nothing on property to install. Everything happens remotely, which is exactly how we built the preview in the first place: <span class="tok">{scrape_link}</span></p>
-<p>Should we finish it?</p></div>
+<p>If you would rather skip the meeting, the shortcut is simple: reply "finish it" and we handle the rest. When would those 15 minutes suit you?</p></div>
   <textarea class="fb-kom" data-id="ny--k1-scrape-email-posiljata-matjaz-in-gregor--e4-dan-10-en-odgovor-dokonca" placeholder="Komentar (npr. skrajšaj drugi odstavek, drugačna zadeva ...)" oninput="fbKom('ny--k1-scrape-email-posiljata-matjaz-in-gregor--e4-dan-10-en-odgovor-dokonca',this.value)"></textarea>
 </div>
 
@@ -5254,7 +5259,7 @@ footer{color:var(--mut);font-size:12.5px;text-align:center;padding:20px}
 </div>
 
 <div class="blok" id="gr--k1-scrape-email-posiljata-amadej-in-matjaz--e4-dan-10-en-odgovor-dokonca">
-  <div class="blok-glava"><h4>E4 · dan 10 · en odgovor dokonča</h4><span class='badge'>76 besed</span>
+  <div class="blok-glava"><h4>E4 · dan 10 · en odgovor dokonča</h4><span class='badge'>96 besed</span>
     <div class="fb">
       <button class="fb-ok" onclick="fbSet('gr--k1-scrape-email-posiljata-amadej-in-matjaz--e4-dan-10-en-odgovor-dokonca','ok')">V redu</button>
       <button class="fb-no" onclick="fbSet('gr--k1-scrape-email-posiljata-amadej-in-matjaz--e4-dan-10-en-odgovor-dokonca','popravi')">Popravi</button>
@@ -5263,10 +5268,10 @@ footer{color:var(--mut);font-size:12.5px;text-align:center;padding:20px}
   <div class="vsebina"><p><strong>Zadeva A:</strong> one reply finishes it<br><strong>Zadeva B:</strong> ready before next season</p>
 <p><strong>Telo:</strong></p>
 <p><span class="tok">{Hi|Hello}</span> <span class="tok">{ime}</span>,</p>
-<p>if the preview looks close, one reply with "finish it" is all it takes. We complete <span class="tok">{hotel}</span>'s app; your team only approves the content. The first 30 days are free, after that you pay per guest interaction. If guests do not use it, you pay nothing.</p>
+<p>if the preview looks close, I suggest 15 minutes: we walk through it together, fill in what is missing and agree the launch. The first 30 days are free, then you pay per guest interaction; if guests do not use it, you pay nothing.</p>
 <p>This is exactly the kind of decision that fits the quiet months: live and tested long before the first charter lands.</p>
 <p>The preview: <span class="tok">{scrape_link}</span></p>
-<p>Should we finish it?</p></div>
+<p>If you would rather skip the meeting, the shortcut is simple: reply "finish it" and we handle the rest. When would those 15 minutes suit you?</p></div>
   <textarea class="fb-kom" data-id="gr--k1-scrape-email-posiljata-amadej-in-matjaz--e4-dan-10-en-odgovor-dokonca" placeholder="Komentar (npr. skrajšaj drugi odstavek, drugačna zadeva ...)" oninput="fbKom('gr--k1-scrape-email-posiljata-amadej-in-matjaz--e4-dan-10-en-odgovor-dokonca',this.value)"></textarea>
 </div>
 
@@ -6333,7 +6338,12 @@ function osveziKazalo(){
     let ok=0,no=0;
     linki.forEach(a=>{const st=FB[a.dataset.id]&&FB[a.dataset.id].v;if(st==='ok')ok++;else if(st==='popravi')no++});
     const s=dt.querySelector('.kaz-stat');
-    if(s)s.innerHTML='<b class="z">'+ok+'</b>/'+linki.length+(no?' · '+no+'!':'')})}
+    if(s)s.innerHTML='<b class="z">'+ok+'</b>/'+linki.length+(no?' · '+no+'!':'')});
+  const vsiL=document.querySelectorAll('a.kaz');
+  let sOk=0,sNo=0;
+  vsiL.forEach(a=>{const st=FB[a.dataset.id]&&FB[a.dataset.id].v;if(st==='ok')sOk++;else if(st==='popravi')sNo++});
+  const sk=document.getElementById('kaz-skupaj-stat');
+  if(sk)sk.innerHTML='<b class="z">'+sOk+'</b>/'+vsiL.length+(sNo?' · '+sNo+'!':'')}
 function osveziVse(){
   document.querySelectorAll('.blok').forEach(b=>osveziBlok(b.id));
   osveziKazalo();
