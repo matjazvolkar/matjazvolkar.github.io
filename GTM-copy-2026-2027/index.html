@@ -569,8 +569,8 @@ footer{color:var(--mut);font-size:12.5px;text-align:center;padding:20px}
 <a class='kaz' href='#primeri--it-uptown-palace-milano-k1-index-posilja-amadej--blok' data-id='primeri--it-uptown-palace-milano-k1-index-posilja-amadej--blok'><i></i>IT · Uptown Palace, Milano (K1 Index, pošilj…</a>
 <div class='kaz-sek'>UAE · Beach Walk Hotel, Dubai (K1 Scrape, pošilja Rok)</div>
 <a class='kaz' href='#primeri--uae-beach-walk-hotel-dubai-k1-scrape-posilja-rok--blok' data-id='primeri--uae-beach-walk-hotel-dubai-k1-scrape-posilja-rok--blok'><i></i>UAE · Beach Walk Hotel, Dubai (K1 Scrape, po…</a>
-<div class='kaz-sek'>NY · The Hotel Chelsea, New York (K1 Scrape, brez <code>posebnost</code>, fallback prva vrstica)</div>
-<a class='kaz' href='#primeri--ny-the-hotel-chelsea-new-york-k1-scrape-brez-posebnost-fallb--blok' data-id='primeri--ny-the-hotel-chelsea-new-york-k1-scrape-brez-posebnost-fallb--blok'><i></i>NY · The Hotel Chelsea, New York (K1 Scrape,…</a>
+<div class='kaz-sek'>NY · The Hotel Chelsea, New York (K1 Scrape, FALLBACK varianta brez <span class="tok">{posebnost_vrstica}</span>; NY ima po 3. 9. posebnost pri 98/100, ta primer kaže pot za preostala 2)</div>
+<a class='kaz' href='#primeri--ny-the-hotel-chelsea-new-york-k1-scrape-fallback-varianta-br--blok' data-id='primeri--ny-the-hotel-chelsea-new-york-k1-scrape-fallback-varianta-br--blok'><i></i>NY · The Hotel Chelsea, New York (K1 Scrape,…</a>
 <div class='kaz-sek'>GR · Adrina Resort, Skopelos (K1 Scrape, pošilja Amadej)</div>
 <a class='kaz' href='#primeri--gr-adrina-resort-skopelos-k1-scrape-posilja-amadej--blok' data-id='primeri--gr-adrina-resort-skopelos-k1-scrape-posilja-amadej--blok'><i></i>GR · Adrina Resort, Skopelos (K1 Scrape, poš…</a>
 <div class='kaz-sek'>AT · Hotel Gassner, Neukirchen (K1 Scrape, LinkedIn povabilo, EN)</div>
@@ -631,7 +631,7 @@ footer{color:var(--mut);font-size:12.5px;text-align:center;padding:20px}
       <button class="fb-no" onclick="fbSet('sistem--2-sloti-gradniki-ki-jih-generator-vstavi-v-master-predloge--blok','popravi')">Popravi</button>
     </div>
   </div>
-  <div class="vsebina"><div class='tw'><table><tr><th>Slot</th><th>Vir v ROWS (dossier)</th><th>Opomba</th></tr><tr><td><span class="tok">{ime}</span></td><td>odlocevalec (prvo ime)</td><td>EN/LinkedIn pozdrav</td></tr><tr><td><span class="tok">{priimek}</span> + <span class="tok">{g_ga}</span></td><td>odlocevalec</td><td>SI: "g./ga. Priimek"; HR: "g. / gđo"; IT: "Sig./Sig.ra, Dott./Dott.ssa"</td></tr><tr><td><span class="tok">{hotel}</span></td><td>hotel</td><td>polno ime, brez okrajšav</td></tr><tr><td><span class="tok">{mesto}</span> / <span class="tok">{regija}</span></td><td>mesto, regija</td><td>SI/HR NIKOLI surovo v stavek (sklanjatev); uporabi "v vaši regiji"</td></tr><tr><td><span class="tok">{posebnost_vrstica}</span></td><td>posebnost</td><td>prva vrstica maila; pred uporabo JEZIKOVNA NORMALIZACIJA (hr/it/at/uae mešano sl/tuji jezik; NY prazno 0/100!) in preoblikovanje v nagovor</td></tr><tr><td><span class="tok">{scrape_link}</span></td><td>scrape_pwa_url (Amadejev paket)</td><td>tenant predogled, vsak hotel svoj</td></tr><tr><td><span class="tok">{index_link}</span></td><td>index_url</td><td>Index pregled, vsak hotel svoj</td></tr><tr><td><span class="tok">{scrape_zna}</span> / <span class="tok">{scrape_ne_zna}</span></td><td>ročni pregled tenanta</td><td>konkreten primer, ki deluje / vrzel (kot IT predloga: "specific example that works / specific gap")</td></tr><tr><td><span class="tok">{index_stevilka}</span></td><td>iz Index pregleda</td><td>en konkreten teaser: "parkiranje se v <span class="tok">{ocen}</span> ocenah pojavi 76-krat"</td></tr><tr><td><span class="tok">{posebnost_index}</span></td><td>Index pregled (Prednosti + Slabosti)</td><td>NOVO 3. 9.: ena poved "kaj gostje najbolj hvalijo + katera slabost se ponavlja" (primer: "Gostje so si enotni: savna je vrhunska, pospravljanje sob pa zaostaja."). Za zadevo kratki obliki <span class="tok">{index_dobro}</span> / <span class="tok">{index_slabo}</span> (1-3 besede). OBVEZNO dejansko iz Indexa tega hotela, nikoli izmišljeno; fallback brez = stara verzija E1</td></tr><tr><td><span class="tok">{posebnost_scrape}</span></td><td>pregled tenanta</td><td>NOVO 3. 9.: ena poved "kaj aplikacija tega hotela že zna + ena vrzel" (kompozit iz <span class="tok">{scrape_zna}</span> in <span class="tok">{scrape_ne_zna}</span>); samostojen stolpec v bazi; V COPYJU: zadeva Scrape E2 prek kratkih oblik <span class="tok">{scrape_zna_kratko}</span>/<span class="tok">{scrape_ne_zna_kratko}</span> (dodano 3. 9.)</td></tr><tr><td><span class="tok">{ocen}</span> / <span class="tok">{booking}</span></td><td>ocen, booking</td><td>število Booking mnenj / ocena</td></tr><tr><td><span class="tok">{sobe}</span></td><td>sobe</td><td>za "hotel vaše velikosti"</td></tr></table></div>
+  <div class="vsebina"><div class='tw'><table><tr><th>Slot</th><th>Vir v ROWS (dossier)</th><th>Opomba</th></tr><tr><td><span class="tok">{ime}</span></td><td>odlocevalec (prvo ime)</td><td>EN/LinkedIn pozdrav</td></tr><tr><td><span class="tok">{priimek}</span> + <span class="tok">{g_ga}</span></td><td>odlocevalec</td><td>SI: "g./ga. Priimek"; HR: "g. / gđo"; IT: "Sig./Sig.ra, Dott./Dott.ssa"</td></tr><tr><td><span class="tok">{hotel}</span></td><td>hotel</td><td>polno ime, brez okrajšav</td></tr><tr><td><span class="tok">{mesto}</span> / <span class="tok">{regija}</span></td><td>mesto, regija</td><td>SI/HR NIKOLI surovo v stavek (sklanjatev); uporabi "v vaši regiji"</td></tr><tr><td><span class="tok">{posebnost_vrstica}</span></td><td>posebnost</td><td>prva vrstica maila; pred uporabo JEZIKOVNA NORMALIZACIJA (hr/it/at/uae mešano sl/tuji jezik) in preoblikovanje v nagovor; pokritost po obogatitvi 3. 9.: 848/919, NY 98/100</td></tr><tr><td><span class="tok">{scrape_link}</span></td><td>scrape_pwa_url (Amadejev paket)</td><td>tenant predogled, vsak hotel svoj</td></tr><tr><td><span class="tok">{index_link}</span></td><td>index_url</td><td>Index pregled, vsak hotel svoj</td></tr><tr><td><span class="tok">{scrape_zna}</span> / <span class="tok">{scrape_ne_zna}</span></td><td>ročni pregled tenanta</td><td>konkreten primer, ki deluje / vrzel (kot IT predloga: "specific example that works / specific gap")</td></tr><tr><td><span class="tok">{index_stevilka}</span></td><td>iz Index pregleda</td><td>en konkreten teaser: "parkiranje se v <span class="tok">{ocen}</span> ocenah pojavi 76-krat"</td></tr><tr><td><span class="tok">{posebnost_index}</span></td><td>Index pregled (Prednosti + Slabosti)</td><td>NOVO 3. 9.: ena poved "kaj gostje najbolj hvalijo + katera slabost se ponavlja" (primer: "Gostje so si enotni: savna je vrhunska, pospravljanje sob pa zaostaja."). Za zadevo kratki obliki <span class="tok">{index_dobro}</span> / <span class="tok">{index_slabo}</span> (1-3 besede). OBVEZNO dejansko iz Indexa tega hotela, nikoli izmišljeno; fallback brez = stara verzija E1</td></tr><tr><td><span class="tok">{posebnost_scrape}</span></td><td>pregled tenanta</td><td>NOVO 3. 9.: ena poved "kaj aplikacija tega hotela že zna + ena vrzel" (kompozit iz <span class="tok">{scrape_zna}</span> in <span class="tok">{scrape_ne_zna}</span>); samostojen stolpec v bazi; V COPYJU: zadeva Scrape E2 prek kratkih oblik <span class="tok">{scrape_zna_kratko}</span>/<span class="tok">{scrape_ne_zna_kratko}</span> (dodano 3. 9.)</td></tr><tr><td><span class="tok">{ocen}</span> / <span class="tok">{booking}</span></td><td>ocen, booking</td><td>število Booking mnenj / ocena</td></tr><tr><td><span class="tok">{sobe}</span></td><td>sobe</td><td>za "hotel vaše velikosti"</td></tr></table></div>
 <p>Pravilo: personalizacija mora biti vezana na problem. Če <span class="tok">{posebnost_vrstica}</span> odstraniš in mail še vedno deluje, ne dela svojega dela.</p>
 <p>Dream 100 baza (izvozni CSV in lead variable) dobi 3. 9. dva NOVA stolpca: <code>posebnost_index</code> in <code>posebnost_scrape</code> (glej tabelo). Index angle s tem dobi personalizirano ZADEVO po vzorcu "vaši gostje: <span class="tok">{index_dobro}</span> ja, <span class="tok">{index_slabo}</span> ne" (npr. "vaši gostje: savna ja, pospravljanje ne").</p></div>
   <textarea class="fb-kom" data-id="sistem--2-sloti-gradniki-ki-jih-generator-vstavi-v-master-predloge--blok" placeholder="Komentar (npr. skrajšaj drugi odstavek, drugačna zadeva ...)" oninput="fbKom('sistem--2-sloti-gradniki-ki-jih-generator-vstavi-v-master-predloge--blok',this.value)"></textarea>
@@ -693,7 +693,7 @@ footer{color:var(--mut);font-size:12.5px;text-align:center;padding:20px}
   </div>
   <div class="vsebina"><p class='li'><b>1.</b> IME ARTEFAKTA: GTM stran pravi "Hostfulness Index", dejanski artefakt (Bled Rose, Sava) pa "Nevron Hospitality Index". Copy zdaj uporablja nevtralno "Index pregled za <span class="tok">{hotel}</span>"; poenotiti pred pošiljanjem.</p>
 <p class='li'><b>2.</b> JEZIK INDEX PREGLEDOV: Bled Rose in Sava sta v slovenščini. V katerem jeziku bodo generirani pregledi za HR/IT/UAE/NY/GR/AT? Copy obljublja pregled v jeziku maila.</p>
-<p class='li'><b>3.</b> NY: polje posebnost je prazno pri vseh 100 hotelih. Pred NY K1 rabi personalizacijski pas (iz raziskava_opomba + Booking) ali pisanje posebnosti.</p>
+<p class='li'><b>3.</b> REŠENO 3. 9.: NY posebnost napolnjena z nočno obogatitvijo (98/100); NY copy uporablja <span class="tok">{posebnost_vrstica}</span> kot vsi trgi. Odprtih ostaja 71 vrzeli, skoraj vse hrvaške (hrost 30, siost 17, HR 15).</p>
 <p class='li'><b>4.</b> AT jezik: naročeno v angleščini; market.md pravi, da alpski Familienbetrieb bere samo nemško, dunajski in mlajši management pa angleško. LinkedIn populacija AT se prekriva z drugo skupino, zato EN vzdrži; nemška varianta not je pripravljena kot rezerva.</p>
 <p class='li'><b>5.</b> IT klici: markets/italy/compliance.md ima še "default: do not cold-call"; novi plan ima popoldanskega IT klicatelja. Pred klici uskladiti compliance zapis (RPO preverba).</p>
 <p class='li'><b>6.</b> posebnost: jezikovno mešana (hr/it/at/uae) in za AT pisana brez preglasov; pred uploadom normalizacija v jezik kampanje.</p></div>
@@ -4698,11 +4698,11 @@ footer{color:var(--mut);font-size:12.5px;text-align:center;padding:20px}
 </section>
 <section class='trg' id='trg-ny'>
 <h2>New York · Dream 100 · vsi krogi (angleščina)</h2>
-<div class='trg-intro'><p>2-channel trg: email + LinkedIn, BREZ klicev. Maili: Matjaž + Gregor (@trynevron.com). Office: Nina. Trg BREZ strank: nobenih customer claimov; dovoljen izrecni sklic "in Europe / in Slovenia". POZOR: NY nima nobene <code>posebnost</code> (0/100), zato E1 tu NE računa na <span class="tok">{posebnost_vrstica}</span>; prva vrstica gradi na Booking oceni/velikosti ali se izpusti. Posebnost NY: veliko objektov vodi management company, zato copy nikoli ne predpostavlja, da je naslovnik "at the property".</p></div>
+<div class='trg-intro'><p>2-channel trg: email + LinkedIn, BREZ klicev. Maili: Matjaž + Gregor (@trynevron.com). Office: Nina. Trg BREZ strank: nobenih customer claimov; dovoljen izrecni sklic "in Europe / in Slovenia". Posodobitev 3. 9.: po nočni obogatitvi ima NY <code>posebnost</code> pri 98/100 hotelih, zato E1 uporablja <span class="tok">{posebnost_vrstica}</span> kot vsi trgi (fallback brez nje za preostala 2). Posebnost NY: veliko objektov vodi management company, zato copy nikoli ne predpostavlja, da je naslovnik "at the property".</p></div>
 <h3 id='ny--k1-scrape-email-posiljata-matjaz-in-gregor'>K1 · Scrape · Email (pošiljata Matjaž in Gregor)</h3>
 
 <div class="blok" id="ny--k1-scrape-email-posiljata-matjaz-in-gregor--e1-dan-1-different-times">
-  <div class="blok-glava"><h4>E1 · dan 1 · different times</h4><span class='badge'>92 besed</span>
+  <div class="blok-glava"><h4>E1 · dan 1 · different times</h4><span class='badge'>93 besed</span>
     <div class="fb">
       <button class="fb-ok" onclick="fbSet('ny--k1-scrape-email-posiljata-matjaz-in-gregor--e1-dan-1-different-times','ok')">V redu</button>
       <button class="fb-no" onclick="fbSet('ny--k1-scrape-email-posiljata-matjaz-in-gregor--e1-dan-1-different-times','popravi')">Popravi</button>
@@ -4711,10 +4711,11 @@ footer{color:var(--mut);font-size:12.5px;text-align:center;padding:20px}
   <div class="vsebina"><p><strong>Zadeva A:</strong> what only chains could afford<br><strong>Zadeva B:</strong> guest apps stopped being expensive<br><strong>Zadeva C:</strong> different times in hotel tech</p>
 <p><strong>Telo:</strong></p>
 <p><span class="tok">{Hi|Hello}</span> <span class="tok">{ime}</span>,</p>
+<p><span class="tok">{posebnost_vrstica}</span></p>
 <p>a few years ago a guest app meant expensive development, months of work and a budget only the big chains had. Those times are over: today such an app is more capable than theirs and costs next to nothing, because you pay per use.</p>
 <p>So it does not stay theory: yours is already live, built from <span class="tok">{hotel}</span>'s own website: <span class="tok">{scrape_link}</span></p>
 <p>It only knows what your website says; wherever it is wrong, the fix takes 30 seconds. If it answers something badly, tell me and we fix it the same day.</p>
-<p><strong>Sloti:</strong> NY nima <code>posebnost</code>; opcijska prva vrstica iz podatkov: "Guests give <span class="tok">{hotel}</span> a <span class="tok">{booking}</span> on Booking; the app below is built from the same pages they book on." Opomba: "že zgrajeno" NI angle, je dokaz; angle je dostopnost ("prej verige, zdaj vi"), feedback 3. 9.</p></div>
+<p><strong>Sloti:</strong> <span class="tok">{posebnost_vrstica}</span> = ena poved iz <code>posebnost</code> v EN, obrnjena v nagovor (pokritost NY 98/100 po 3. 9.); fallback: izpusti. Opomba: "že zgrajeno" NI angle, je dokaz; angle je dostopnost ("prej verige, zdaj vi"), feedback 3. 9.</p></div>
   <textarea class="fb-kom" data-id="ny--k1-scrape-email-posiljata-matjaz-in-gregor--e1-dan-1-different-times" placeholder="Komentar (npr. skrajšaj drugi odstavek, drugačna zadeva ...)" oninput="fbKom('ny--k1-scrape-email-posiljata-matjaz-in-gregor--e1-dan-1-different-times',this.value)"></textarea>
 </div>
 
@@ -4866,7 +4867,7 @@ footer{color:var(--mut);font-size:12.5px;text-align:center;padding:20px}
 <h3 id='ny--k3-ai-email-posiljata-matjaz-in-gregor'>K3 · AI · Email (pošiljata Matjaž in Gregor)</h3>
 
 <div class="blok" id="ny--k3-ai-email-posiljata-matjaz-in-gregor--e1-dan-1-ob-2h-zjutraj">
-  <div class="blok-glava"><h4>E1 · dan 1 · ob 2h zjutraj</h4><span class='badge'>85 besed</span>
+  <div class="blok-glava"><h4>E1 · dan 1 · ob 2h zjutraj</h4><span class='badge'>86 besed</span>
     <div class="fb">
       <button class="fb-ok" onclick="fbSet('ny--k3-ai-email-posiljata-matjaz-in-gregor--e1-dan-1-ob-2h-zjutraj','ok')">V redu</button>
       <button class="fb-no" onclick="fbSet('ny--k3-ai-email-posiljata-matjaz-in-gregor--e1-dan-1-ob-2h-zjutraj','popravi')">Popravi</button>
@@ -4875,6 +4876,7 @@ footer{color:var(--mut);font-size:12.5px;text-align:center;padding:20px}
   <div class="vsebina"><p><strong>Zadeva A:</strong> 2am at <span class="tok">{hotel_kratko}</span><br><strong>Zadeva B:</strong> the night shift question</p>
 <p><strong>Telo:</strong></p>
 <p><span class="tok">{Hi|Hello}</span> <span class="tok">{ime}</span>,</p>
+<p><span class="tok">{posebnost_vrstica}</span></p>
 <p>here is a question we ask every hotelier: what happens at <span class="tok">{hotel}</span> when a guest wants something at 2am? Late checkout, a pharmacy, a taxi, in Mandarin?</p>
 <p>They call the front desk. Or they do not call, and the review says it for them.</p>
 <p>We build AI concierges for independent hotels: instant answers, any language, around the clock, nobody woken up. Guests get looked after; your team gets their night back.</p>
@@ -6085,13 +6087,13 @@ footer{color:var(--mut);font-size:12.5px;text-align:center;padding:20px}
 <p>It only knows what your website says; wherever it is wrong, the fix takes 30 seconds. If it answers something badly, tell me and we fix it the same day.</p></div>
   <textarea class="fb-kom" data-id="primeri--uae-beach-walk-hotel-dubai-k1-scrape-posilja-rok--blok" placeholder="Komentar (npr. skrajšaj drugi odstavek, drugačna zadeva ...)" oninput="fbKom('primeri--uae-beach-walk-hotel-dubai-k1-scrape-posilja-rok--blok',this.value)"></textarea>
 </div>
-<h3 id='primeri--ny-the-hotel-chelsea-new-york-k1-scrape-brez-posebnost-fallb'>NY · The Hotel Chelsea, New York (K1 Scrape, brez <code>posebnost</code>, fallback prva vrstica)</h3>
+<h3 id='primeri--ny-the-hotel-chelsea-new-york-k1-scrape-fallback-varianta-br'>NY · The Hotel Chelsea, New York (K1 Scrape, FALLBACK varianta brez <span class="tok">{posebnost_vrstica}</span>; NY ima po 3. 9. posebnost pri 98/100, ta primer kaže pot za preostala 2)</h3>
 
-<div class="blok" id="primeri--ny-the-hotel-chelsea-new-york-k1-scrape-brez-posebnost-fallb--blok">
-  <div class="blok-glava"><h4>NY · The Hotel Chelsea, New York (K1 Scrape, brez <code>posebnost</code>, fallback prva vrstica)</h4><span class='badge'>94 besed</span>
+<div class="blok" id="primeri--ny-the-hotel-chelsea-new-york-k1-scrape-fallback-varianta-br--blok">
+  <div class="blok-glava"><h4>NY · The Hotel Chelsea, New York (K1 Scrape, FALLBACK varianta brez <span class="tok">{posebnost_vrstica}</span>; NY ima po 3. 9. posebnost pri 98/100, ta primer kaže pot za preostala 2)</h4><span class='badge'>94 besed</span>
     <div class="fb">
-      <button class="fb-ok" onclick="fbSet('primeri--ny-the-hotel-chelsea-new-york-k1-scrape-brez-posebnost-fallb--blok','ok')">V redu</button>
-      <button class="fb-no" onclick="fbSet('primeri--ny-the-hotel-chelsea-new-york-k1-scrape-brez-posebnost-fallb--blok','popravi')">Popravi</button>
+      <button class="fb-ok" onclick="fbSet('primeri--ny-the-hotel-chelsea-new-york-k1-scrape-fallback-varianta-br--blok','ok')">V redu</button>
+      <button class="fb-no" onclick="fbSet('primeri--ny-the-hotel-chelsea-new-york-k1-scrape-fallback-varianta-br--blok','popravi')">Popravi</button>
     </div>
   </div>
   <div class="vsebina"><p><strong>Prejemnik:</strong> Marcus Nicolaidis</p>
@@ -6101,7 +6103,7 @@ footer{color:var(--mut);font-size:12.5px;text-align:center;padding:20px}
 <p>a few years ago a guest app meant expensive development, months of work and a budget only the big chains had. Those times are over: today such an app is more capable than theirs and costs next to nothing, because you pay per use.</p>
 <p>So it does not stay theory: yours is already live, built from The Hotel Chelsea's own website: <span class="tok slot">⟦scrape_link⟧</span></p>
 <p>It only knows what your website says; wherever it is wrong, the fix takes 30 seconds. If it answers something badly, tell me and we fix it the same day.</p></div>
-  <textarea class="fb-kom" data-id="primeri--ny-the-hotel-chelsea-new-york-k1-scrape-brez-posebnost-fallb--blok" placeholder="Komentar (npr. skrajšaj drugi odstavek, drugačna zadeva ...)" oninput="fbKom('primeri--ny-the-hotel-chelsea-new-york-k1-scrape-brez-posebnost-fallb--blok',this.value)"></textarea>
+  <textarea class="fb-kom" data-id="primeri--ny-the-hotel-chelsea-new-york-k1-scrape-fallback-varianta-br--blok" placeholder="Komentar (npr. skrajšaj drugi odstavek, drugačna zadeva ...)" oninput="fbKom('primeri--ny-the-hotel-chelsea-new-york-k1-scrape-fallback-varianta-br--blok',this.value)"></textarea>
 </div>
 <h3 id='primeri--gr-adrina-resort-skopelos-k1-scrape-posilja-amadej'>GR · Adrina Resort, Skopelos (K1 Scrape, pošilja Amadej)</h3>
 
