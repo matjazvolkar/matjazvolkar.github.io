@@ -1607,7 +1607,8 @@ init();
     return match(x);
   }
   const TRG_ORD = { si: 0, hr: 1, uae: 2, it: 3, gr: 4, at: 5, ny: 6 }; // SI in HR vedno na vrhu dneva (odlocitev 2. 9.)
-  const ord = (a, b) => (a.camp - b.camp) || ((a.scn === 'topup') - (b.scn === 'topup')) || ((TRG_ORD[a.trg] ?? 9) - (TRG_ORD[b.trg] ?? 9)) || a.ch.localeCompare(b.ch) || a.code.localeCompare(b.code) || ((a.off ? 1 : 0) - (b.off ? 1 : 0));
+  const bnMin = x => x.bns && x.bns.size ? Math.min(...x.bns) : (x.bn || 999); /* dnevni vrstni red (odlocitev 3. 9.): trgi skupaj po TRG_ORD; znotraj trga najprej batchi z vsemi tremi kontakti, nato po narascajoci stevilki batcha, office (K1o) na koncu bloka trga; dopolnilni cisto zadaj */
+  const ord = (a, b) => ((a.scn === 'topup') - (b.scn === 'topup')) || ((TRG_ORD[a.trg] ?? 9) - (TRG_ORD[b.trg] ?? 9)) || ((a.off ? 1 : 0) - (b.off ? 1 : 0)) || ((a.lay === 'r' ? 1 : 0) - (b.lay === 'r' ? 1 : 0)) || ((b.k3 ? 1 : 0) - (a.k3 ? 1 : 0)) || (bnMin(a) - bnMin(b)) || (a.camp - b.camp) || a.code.localeCompare(b.code);
   const dayE = d => (CAL.byDate[key(d)] || []).filter(pass).sort(ord);
   function grp(list) { const m = new Map(); list.forEach(x => { const k = [x.scn === 'topup' ? 'T' : 'K', x.camp, x.trg, x.ch, x.code, x.lay || 'r', x.off ? 'o' : 'b'].join('|');
       let g = m.get(k); if (!g) { g = Object.assign({}, x, { n: 0, hot: 0, d100: 0, cntv: 0, whos: new Set(), bns: new Set(), b: null, parts: [] }); m.set(k, g); }
