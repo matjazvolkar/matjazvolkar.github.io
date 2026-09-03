@@ -484,7 +484,7 @@
   .cal .ce { font-size: .68rem; border-radius: 5px; padding: 2px 6px; margin-top: 3px; color: #04102e; line-height: 1.25; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .cal .cw .ce, .cal .cday .ce { white-space: normal; }
   .cal .ce b { font-weight: 800; } .cal .ce span { float: right; font-weight: 700; } .cal .ce small { display: block; opacity: .8; font-size: .64rem; }
-  .cal .bn { font: 700 8.5px/1 var(--mono, monospace); opacity: 0.8; margin-left: 3px; font-style: normal; letter-spacing: 0.02em; }
+  .cal .bn { font: 700 8.5px/1 var(--mono, monospace); opacity: 0.8; margin-left: 8px; font-style: normal; letter-spacing: 0.02em; }
   .cal .ce.e3 { outline: 2.5px solid #fff; outline-offset: -1px; box-shadow: 0 0 9px rgba(255, 255, 255, 0.55); }
   .cal .cday tr.e3r > td:first-child { box-shadow: inset 3px 0 0 #fff; }
   .cal .k1 { background: #FFB05E; } .cal .k2 { background: #73C7FF; } .cal .k3 { background: #7DE8A0; } .cal .k4 { background: #F6A900; } .cal .k5 { background: #C3A6FF; } .cal .k6 { background: #FF9A9D; } .cal .k0 { background: #9fb3d1; }
@@ -1230,7 +1230,7 @@ const MARKETS = [
     krogi: [{ angle: "Index", accounts: [ACC("Rok", "getnevron.com"), ACC("Rok", "trynevron.com")], li: ["Rok"] }, { angle: "Scrape", accounts: [ACC("Matjaž", "getnevron.com"), ACC("Matjaž", "trynevron.com")], li: ["Matjaž", "Amadej"], pause: 2 },
             { angle: "AI", accounts: [ACC("Amadej", "trynevron.com"), ACC("Matjaž", "getnevron.com")], li: ["Rok"], pause: 2 }, { angle: "Revenue", accounts: [ACC("Matjaž", "nevroncore.com"), ACC("Matjaž", "getnevron.com")], li: ["Matjaž", "Amadej"], pause: 2 }] },
   { trg: "it", ime: "Italija", accounts: [ACC("Amadej", "nevroncore.com"), ACC("Amadej", "getnevron.com")], liHome: ["Amadej"], caller: "popold. IT", restScn: "single", krog2: true },
-  { trg: "gr", ime: "Grčija", accounts: [ACC("Amadej", "trynevron.com"), { who: "Matjaž", mail: "sales@nevron.net" }], liHome: [], caller: "Tomaž", restScn: "single", krog2: true },
+  { trg: "gr", ime: "Grčija", accounts: [ACC("Amadej", "trynevron.com"), { who: "Matjaž", mail: "sales@nevron.net" }], liHome: [], caller: "Tomaž", restScn: "single", d100Scn: "two", krog2: true }, /* GR brez klicev v sekvencah (telefon je ozko grlo), stevilke gredo v Tomazev dopolnilni bazen (odlocitev 3. 9.) */
   { trg: "uae", ime: "UAE", accounts: [ACC("Rok", "getnevron.com"), ACC("Rok", "trynevron.com"), ACC("Rok", "nevroncore.com"), { who: "Rok", mail: "rok.kokalj@nevron.net" }], /* Rok gre oktobra v Dubaj: vsa UAE posta z njegovih nabiralnikov (odlocitev 1. 9.) */ liHome: [], caller: "Tomaž", restScn: "two", d100Scn: "multi", krog2: true }, /* UAE K1 s klici: septembra klice Matjaz (odlocitev 1. 9.); K2-K4 brez klicev */
   { trg: "at", ime: "Avstrija", accounts: [{ who: "samo LinkedIn", mail: null }], liHome: [], caller: null, restScn: "single", d100Scn: "single", krog2: true },
   { trg: "ny", ime: "New York", accounts: [ACC("Matjaž", "trynevron.com"), ACC("Gregor", "trynevron.com")], liHome: [], caller: null, restScn: "two", d100Scn: "two", krog2: true },
@@ -1353,6 +1353,7 @@ function globalPlan(P) {
         });
       }
     }
+    if (!mk.krogi && !restLi) B.forEach(bb => { if (bb.nD === 0 && bb.nl > 0) { bb.nlSkip = bb.nl; bb.nl = 0; bb.scn = bb.nt > 0 ? "multi" : ((bb.nl > 0 && bb.ne + bb.no > 0) ? "two" : "single"); } }); /* repni batchi ostalih s polnimi kontakti brez LinkedIna: sedezev zanje ni, mail in klic ostaneta, sicer en sam tak batch blokira vse naslednje kroge (odlocitev 3. 9.) */
     const bD = B.filter(b => b.nD > 0), bR = B.filter(b => b.nD === 0);
     B.forEach((b, i) => { b.n = i + 1; b.nF = b.c.filter(c => c.e && c.l && c.m).length; b.layer = b.nD === b.c.length ? "d100" : (b.nD > 0 ? "mix" : "rest"); b.mk = mk; b.caller = b.nt > 0 ? caller : null; b.pri = [mk.trg === "uae" ? (b.nD > 0 ? (b.copy === 'o' ? -0.95 : -1) : -0.9) : b.nD > 0 ? (mk.krogi ? (b.copy === 'o' ? -0.95 : -1) : (mk.trg === "it" ? (b.round > 1 ? -0.88 : -1) : (b.round > 1 ? 0.5 : -0.6))) : (b.scn === "single" ? 2 : (["si", "hr"].includes(mk.trg) ? 0.5 : 1)), i, mi]; all.push(b); }); /* i pred mi: znotraj razreda najprej PRVI batchi vseh trgov (SI b1, HR b1, UAE b1), sele nato drugi; SI, HR in UAE startajo isti teden (odlocitev 3. 9.) */
     markets.push({ mk, m, cc, hasMail, caller, bD, bR, B, scnD, scnR });
@@ -1362,6 +1363,8 @@ function globalPlan(P) {
   all.sort((x, y) => x.pri[0] - y.pri[0] || x.pri[1] - y.pri[1] || x.pri[2] - y.pri[2]);
   const itFirstB = all.find(x => x.mk.trg === "it"); /* rezervacija za IT start v 3. tednu (odlocitev 3. 9.): dokler prvi IT batch ni razporejen, Amadejev LinkedIn sedez in nabiralniki na fazi dneva IT_START ostanejo prosti */
   const itHold = d => itFirstB && itFirstB.start == null && d <= IT_START + 6 && (d - 1) % 3 === (IT_START - 1) % 3;
+  const NEW_MKTS = ["gr", "ny", "at"]; /* Tomazev 4. sedez od 5. 10. najprej za nove trge, dokler njihovi K1 LinkedIn batchi niso razporejeni (odlocitev 3. 9.) */
+  const newMktPending = () => all.some(x => NEW_MKTS.includes(x.mk.trg) && x.round === 1 && x.nD > 0 && x.nl > 0 && x.start == null); /* samo D100 K1 novih trgov; potem je sedez spet skupen */
   const D = 200; const load = {}; for (let d = 1; d <= D; d++) load[d] = { e: 0, inv: 0, msg: 0, t: 0 };
   const liPref = mk => { const p = mk.trg === "si" ? ["Rok", "Matjaž", "Amadej"] : (mk.trg === "hr" ? ["Rok", "Amadej", "Matjaž"] : (mk.trg === "uae" ? ["Rok", "Matjaž", "Amadej"] : ["Amadej", "Rok", "Matjaž"])); return p.concat(Object.keys(liSlots).filter(n => !p.includes(n))); };
   // vsak slot ima fazo (dan 1, 2, 3 in nato vsak tretji dan): batch v slotu k sme zaceti samo na dan z isto fazo,
@@ -1389,13 +1392,13 @@ function globalPlan(P) {
       let kl = -1, pn = null;
       if (b.nl > 0) {
         // LinkedIn sloti: multichannel batchi imajo prednost; za vsako skupino klicateljev je rezerviranih toliko slotov, kolikor jih cakajoci multichannel batchi rabijo (najvec 3 na klicatelja + 1)
-        if (b.scn !== "multi" && b.mk.trg !== "uae") { // UAE je izvzet iz LinkedIn rezerve (Rok v Dubaju oktobra, odlocitev 1. 9.)
+        if (b.scn !== "multi" && b.mk.trg !== "uae" && !NEW_MKTS.includes(b.mk.trg)) { /* novi trgi so izvzeti iz LinkedIn rezerve, sicer Tomazevega sedeza ne morejo prevzeti */ // UAE je izvzet iz LinkedIn rezerve (Rok v Dubaju oktobra, odlocitev 1. 9.)
           const freeLI = Object.values(liSlots).reduce((a, sl) => a + sl.filter(f => f <= d).length, 0);
           let reserve = 0; Object.keys(CALLERS).forEach(g => { const nC = CALLERS[g].length; if (!nC) return; const activeM = all.filter(x => x.scn === "multi" && x.caller === g && x.nl > 0 && x.start != null && x.start <= d && x.start + CYCLE > d).length; const pendM = all.filter(x => x.scn === "multi" && x.caller === g && x.nl > 0 && x.start == null).length; reserve += Math.max(0, Math.min(3 * nC + 1, activeM + pendM) - activeM); });
           if (freeLI <= reserve) { b.block = 'li:rezerva'; left.push(b); continue; }
         }
         const lp = b.liPref ? b.liPref.concat(Object.keys(liSlots).filter(n => !b.liPref.includes(n))) : liPref(b.mk);
-        for (const n of lp.filter(n => liSlots[n])) { if (n === "Amadej" && b.mk.trg !== "it" && itHold(d)) continue; const k = freeSlot(liSlots[n], d); if (k >= 0) { kl = k; pn = n; break; } }
+        for (const n of lp.filter(n => liSlots[n])) { if (n === "Amadej" && b.mk.trg !== "it" && itHold(d)) continue; if (n === "Tomaž" && !NEW_MKTS.includes(b.mk.trg) && newMktPending()) continue; const k = freeSlot(liSlots[n], d); if (k >= 0) { kl = k; pn = n; break; } }
         if (kl < 0) { b.block = 'li:slot'; left.push(b); continue; }
       }
       let kc = -1;
