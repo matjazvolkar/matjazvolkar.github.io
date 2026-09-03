@@ -781,7 +781,7 @@ function num(id, d) { const el = $(id); const v = parseFloat((el || {}).value); 
 // 1 polni prodajalec (Tomaz od 5. 10.; septembra klice Matjaz), 1 popoldanski (Italija). Vhodnih polj ni vec.
 const WARM = 18, LI_SEATS = 3, FT = 1, PT = 1; // FT 1: samo Tomaz za SI/HR (Nov SDR umaknjen 1. 9.)
 const NEW_SDR_START = 26; // Nov SDR klice od pon 5. 10. 2026
-const D100ANG = ["Scrape", "Index", "AI", "Konkurenca"]; // Dream 100 na trgih brez imenovanih krogov; scrape in Index link obstajata samo za Dream 100
+const D100ANG = ["Scrape", "Index", "AI", "Revenue"]; // Dream 100 na trgih brez imenovanih krogov; scrape in Index link obstajata samo za Dream 100
 function angleOf(b) { const r = b.round || 1; const dA = (b.krog && b.mk && b.mk.krogi) ? b.krog.angle : D100ANG[r - 1]; const rA = "Pain " + r; const nD = b.nD || 0, n = b.c ? b.c.length : 0; return nD === n ? dA : (nD > 0 ? dA + " + " + rA : rA); } // ostali hoteli: Pain 1 do 4 (odlocitev 1. 9.)
 const CALL_START = 26; // delovni dan 26 = pon 5. 10. 2026 (T6): Tomaz prevzame klice; septembra klice Matjaz, batchi ostanejo multichannel
 function params() {
@@ -1451,7 +1451,7 @@ function scenarioGrid(scn) {
 }
 function renderScenarios3() {
   const cards = [
-    ["multi", "Multichannel", "DREAM 100", "na vseh 7 trgih razen AT, kjer je single channel LinkedIn; SI in HR v 4 krogih (Scrape, Index, AI, Konkurenca), ostali trgi prav tako v 4 krogih; klice septembra Matjaž (3 batchi hkrati, ostali batchi septembra tečejo brez klicev), od 5. 10. Tomaž", "Mail + LinkedIn + klic. 14 dotikov v 14 delovnih dneh: E1, L1, C1, E2, L2, C2, E3, L3, C3, E4, L4, C4, E5, L5. Štirje klici na kontakt, 30 klicev na dan; trije batchi na klicatelja hkrati, četrti vstopi, ko se prvi izteče."],
+    ["multi", "Multichannel", "DREAM 100", "na vseh 7 trgih razen AT, kjer je single channel LinkedIn; SI in HR v 4 krogih (Scrape, Index, AI, Revenue), ostali trgi prav tako v 4 krogih; klice septembra Matjaž (3 batchi hkrati, ostali batchi septembra tečejo brez klicev), od 5. 10. Tomaž", "Mail + LinkedIn + klic. 14 dotikov v 14 delovnih dneh: E1, L1, C1, E2, L2, C2, E3, L3, C3, E4, L4, C4, E5, L5. Štirje klici na kontakt, 30 klicev na dan; trije batchi na klicatelja hkrati, četrti vstopi, ko se prvi izteče."],
     ["two", "2-channel", "VSI OSTALI, KI NISO DREAM 100", "na vseh 7 trgih razen AT", "Mail + LinkedIn, brez klicev. Kjer bi bil klic, je dan brez komunikacije. Ostali na SI in HR tečejo enokanalno po mailu (z info naslovi), da je ogreta pošta polno izkoriščena."],
     ["single", "Single channel", "VEČJE KOLIČINE KONTAKTOV", "IT + GR mail, AT LinkedIn", "En kanal, ista 14-dnevna kadenca. Mail: E1 do E5 vsak tretji dan, vmes prazno. LinkedIn (Avstrija): L1 do L5 vsak tretji dan, vmes prazno."],
   ];
