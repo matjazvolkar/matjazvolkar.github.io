@@ -627,7 +627,7 @@ footer{color:var(--mut);font-size:12.5px;text-align:center;padding:20px}
       <button class="fb-no" onclick="fbSet('sistem--2-sloti-gradniki-ki-jih-generator-vstavi-v-master-predloge--blok','popravi')">Popravi</button>
     </div>
   </div>
-  <div class="vsebina"><div class='tw'><table><tr><th>Slot</th><th>Vir v ROWS (dossier)</th><th>Opomba</th></tr><tr><td><span class="tok">{ime}</span></td><td>odlocevalec (prvo ime)</td><td>EN/LinkedIn pozdrav</td></tr><tr><td><span class="tok">{priimek}</span> + <span class="tok">{g_ga}</span></td><td>odlocevalec</td><td>SI: "g./ga. Priimek"; HR: "g. / gđo"; IT: "Sig./Sig.ra, Dott./Dott.ssa"</td></tr><tr><td><span class="tok">{hotel}</span></td><td>hotel</td><td>polno ime, brez okrajšav</td></tr><tr><td><span class="tok">{mesto}</span> / <span class="tok">{regija}</span></td><td>mesto, regija</td><td>SI/HR NIKOLI surovo v stavek (sklanjatev); uporabi "v vaši regiji"</td></tr><tr><td><span class="tok">{posebnost_vrstica}</span></td><td>posebnost</td><td>prva vrstica maila; pred uporabo JEZIKOVNA NORMALIZACIJA (hr/it/at/uae mešano sl/tuji jezik; NY prazno 0/100!) in preoblikovanje v nagovor</td></tr><tr><td><span class="tok">{scrape_link}</span></td><td>scrape_pwa_url (Amadejev paket)</td><td>tenant predogled, vsak hotel svoj</td></tr><tr><td><span class="tok">{index_link}</span></td><td>index_url</td><td>Index pregled, vsak hotel svoj</td></tr><tr><td><span class="tok">{scrape_zna}</span> / <span class="tok">{scrape_ne_zna}</span></td><td>ročni pregled tenanta</td><td>konkreten primer, ki deluje / vrzel (kot IT predloga: "specific example that works / specific gap")</td></tr><tr><td><span class="tok">{index_stevilka}</span></td><td>iz Index pregleda</td><td>en konkreten teaser: "parkiranje se v <span class="tok">{ocen}</span> ocenah pojavi 76-krat"</td></tr><tr><td><span class="tok">{posebnost_index}</span></td><td>Index pregled (Prednosti + Slabosti)</td><td>NOVO 3. 9.: ena poved "kaj gostje najbolj hvalijo + katera slabost se ponavlja" (primer: "Gostje so si enotni: savna je vrhunska, pospravljanje sob pa zaostaja."). Za zadevo kratki obliki <span class="tok">{index_dobro}</span> / <span class="tok">{index_slabo}</span> (1-3 besede). OBVEZNO dejansko iz Indexa tega hotela, nikoli izmišljeno; fallback brez = stara verzija E1</td></tr><tr><td><span class="tok">{posebnost_scrape}</span></td><td>pregled tenanta</td><td>NOVO 3. 9.: ena poved "kaj aplikacija tega hotela že zna + ena vrzel" (kompozit iz <span class="tok">{scrape_zna}</span> in <span class="tok">{scrape_ne_zna}</span>); samostojen stolpec v bazi za zadeve in LinkedIn</td></tr><tr><td><span class="tok">{ocen}</span> / <span class="tok">{booking}</span></td><td>ocen, booking</td><td>število Booking mnenj / ocena</td></tr><tr><td><span class="tok">{sobe}</span></td><td>sobe</td><td>za "hotel vaše velikosti"</td></tr></table></div>
+  <div class="vsebina"><div class='tw'><table><tr><th>Slot</th><th>Vir v ROWS (dossier)</th><th>Opomba</th></tr><tr><td><span class="tok">{ime}</span></td><td>odlocevalec (prvo ime)</td><td>EN/LinkedIn pozdrav</td></tr><tr><td><span class="tok">{priimek}</span> + <span class="tok">{g_ga}</span></td><td>odlocevalec</td><td>SI: "g./ga. Priimek"; HR: "g. / gđo"; IT: "Sig./Sig.ra, Dott./Dott.ssa"</td></tr><tr><td><span class="tok">{hotel}</span></td><td>hotel</td><td>polno ime, brez okrajšav</td></tr><tr><td><span class="tok">{mesto}</span> / <span class="tok">{regija}</span></td><td>mesto, regija</td><td>SI/HR NIKOLI surovo v stavek (sklanjatev); uporabi "v vaši regiji"</td></tr><tr><td><span class="tok">{posebnost_vrstica}</span></td><td>posebnost</td><td>prva vrstica maila; pred uporabo JEZIKOVNA NORMALIZACIJA (hr/it/at/uae mešano sl/tuji jezik; NY prazno 0/100!) in preoblikovanje v nagovor</td></tr><tr><td><span class="tok">{scrape_link}</span></td><td>scrape_pwa_url (Amadejev paket)</td><td>tenant predogled, vsak hotel svoj</td></tr><tr><td><span class="tok">{index_link}</span></td><td>index_url</td><td>Index pregled, vsak hotel svoj</td></tr><tr><td><span class="tok">{scrape_zna}</span> / <span class="tok">{scrape_ne_zna}</span></td><td>ročni pregled tenanta</td><td>konkreten primer, ki deluje / vrzel (kot IT predloga: "specific example that works / specific gap")</td></tr><tr><td><span class="tok">{index_stevilka}</span></td><td>iz Index pregleda</td><td>en konkreten teaser: "parkiranje se v <span class="tok">{ocen}</span> ocenah pojavi 76-krat"</td></tr><tr><td><span class="tok">{posebnost_index}</span></td><td>Index pregled (Prednosti + Slabosti)</td><td>NOVO 3. 9.: ena poved "kaj gostje najbolj hvalijo + katera slabost se ponavlja" (primer: "Gostje so si enotni: savna je vrhunska, pospravljanje sob pa zaostaja."). Za zadevo kratki obliki <span class="tok">{index_dobro}</span> / <span class="tok">{index_slabo}</span> (1-3 besede). OBVEZNO dejansko iz Indexa tega hotela, nikoli izmišljeno; fallback brez = stara verzija E1</td></tr><tr><td><span class="tok">{posebnost_scrape}</span></td><td>pregled tenanta</td><td>NOVO 3. 9.: ena poved "kaj aplikacija tega hotela že zna + ena vrzel" (kompozit iz <span class="tok">{scrape_zna}</span> in <span class="tok">{scrape_ne_zna}</span>); samostojen stolpec v bazi; V COPYJU: zadeva Scrape E2 prek kratkih oblik <span class="tok">{scrape_zna_kratko}</span>/<span class="tok">{scrape_ne_zna_kratko}</span> (dodano 3. 9.)</td></tr><tr><td><span class="tok">{ocen}</span> / <span class="tok">{booking}</span></td><td>ocen, booking</td><td>število Booking mnenj / ocena</td></tr><tr><td><span class="tok">{sobe}</span></td><td>sobe</td><td>za "hotel vaše velikosti"</td></tr></table></div>
 <p>Pravilo: personalizacija mora biti vezana na problem. Če <span class="tok">{posebnost_vrstica}</span> odstraniš in mail še vedno deluje, ne dela svojega dela.</p>
 <p>Dream 100 baza (izvozni CSV in lead variable) dobi 3. 9. dva NOVA stolpca: <code>posebnost_index</code> in <code>posebnost_scrape</code> (glej tabelo). Index angle s tem dobi personalizirano ZADEVO po vzorcu "vaši gostje: <span class="tok">{index_dobro}</span> ja, <span class="tok">{index_slabo}</span> ne" (npr. "vaši gostje: savna ja, pospravljanje ne").</p></div>
   <textarea class="fb-kom" data-id="sistem--2-sloti-gradniki-ki-jih-generator-vstavi-v-master-predloge--blok" placeholder="Komentar (npr. skrajšaj drugi odstavek, drugačna zadeva ...)" oninput="fbKom('sistem--2-sloti-gradniki-ki-jih-generator-vstavi-v-master-predloge--blok',this.value)"></textarea>
@@ -954,11 +954,12 @@ footer{color:var(--mut);font-size:12.5px;text-align:center;padding:20px}
       <button class="fb-no" onclick="fbSet('si--k1-scrape-email-posilja-rok--e2-dan-4-deluje-vrzel','popravi')">Popravi</button>
     </div>
   </div>
-  <div class="vsebina"><p><strong>Zadeva A:</strong> kaj že zna odgovoriti<br><strong>Zadeva B:</strong> re: aplikacija za vaše goste</p>
+  <div class="vsebina"><p><strong>Zadeva A:</strong> <span class="tok">{scrape_zna_kratko}</span> zna, <span class="tok">{scrape_ne_zna_kratko}</span> še ne<br><strong>Zadeva B:</strong> kaj že zna odgovoriti<br><strong>Zadeva C:</strong> re: aplikacija za vaše goste</p>
 <p><strong>Telo:</strong></p>
 <p>Pozdravljeni, <span class="tok">{g_ga}</span> <span class="tok">{priimek}</span>,</p>
 <p>predogled že zna odgovoriti na <span class="tok">{scrape_zna}</span>, neposredno iz vaše spletne strani. Ne ve pa še <span class="tok">{scrape_ne_zna}</span>, ker tega nikjer javno ne piše. Vnos traja 30 sekund znotraj predogleda.</p>
-<p>Pet minut z vašo lastno različico vam pove več kot karkoli, kar lahko napišem: <span class="tok">{scrape_link}</span></p></div>
+<p>Pet minut z vašo lastno različico vam pove več kot karkoli, kar lahko napišem: <span class="tok">{scrape_link}</span></p>
+<p><strong>Sloti:</strong> <span class="tok">{scrape_zna_kratko}</span>/<span class="tok">{scrape_ne_zna_kratko}</span> = kratki obliki za zadevo (1-3 besede); polna poved = <span class="tok">{posebnost_scrape}</span>, stolpec v bazi (za LinkedIn in klice). OBVEZNO iz dejanskega pregleda tenanta. Fallback brez: zadeva B.</p></div>
   <textarea class="fb-kom" data-id="si--k1-scrape-email-posilja-rok--e2-dan-4-deluje-vrzel" placeholder="Komentar (npr. skrajšaj drugi odstavek, drugačna zadeva ...)" oninput="fbKom('si--k1-scrape-email-posilja-rok--e2-dan-4-deluje-vrzel',this.value)"></textarea>
 </div>
 
@@ -1991,11 +1992,12 @@ footer{color:var(--mut);font-size:12.5px;text-align:center;padding:20px}
       <button class="fb-no" onclick="fbSet('hr--k2-scrape-email-posilja-matjaz--e2-dan-4-deluje-vrzel','popravi')">Popravi</button>
     </div>
   </div>
-  <div class="vsebina"><p><strong>Zadeva A:</strong> što već zna odgovoriti<br><strong>Zadeva B:</strong> re: aplikacija za vaše goste</p>
+  <div class="vsebina"><p><strong>Zadeva A:</strong> <span class="tok">{scrape_zna_kratko}</span> zna, <span class="tok">{scrape_ne_zna_kratko}</span> još ne<br><strong>Zadeva B:</strong> što već zna odgovoriti<br><strong>Zadeva C:</strong> re: aplikacija za vaše goste</p>
 <p><strong>Telo:</strong></p>
 <p><span class="tok">{postovani_vrstica}</span></p>
 <p>pregled već zna odgovoriti na <span class="tok">{scrape_zna}</span>, izravno iz vaše web stranice. Još ne zna <span class="tok">{scrape_ne_zna}</span>, jer to nigdje javno ne piše. Unos traje 30 sekundi unutar pregleda.</p>
-<p>Pet minuta s vlastitom verzijom reći će vam više nego išta što mogu napisati: <span class="tok">{scrape_link}</span></p></div>
+<p>Pet minuta s vlastitom verzijom reći će vam više nego išta što mogu napisati: <span class="tok">{scrape_link}</span></p>
+<p><strong>Sloti:</strong> <span class="tok">{scrape_zna_kratko}</span>/<span class="tok">{scrape_ne_zna_kratko}</span> = kratki obliki za zadevo (1-3 besede); polna poved = <span class="tok">{posebnost_scrape}</span>, stolpec v bazi (za LinkedIn in klice). OBVEZNO iz dejanskega pregleda tenanta. Fallback brez: zadeva B.</p></div>
   <textarea class="fb-kom" data-id="hr--k2-scrape-email-posilja-matjaz--e2-dan-4-deluje-vrzel" placeholder="Komentar (npr. skrajšaj drugi odstavek, drugačna zadeva ...)" oninput="fbKom('hr--k2-scrape-email-posilja-matjaz--e2-dan-4-deluje-vrzel',this.value)"></textarea>
 </div>
 
@@ -2861,12 +2863,12 @@ footer{color:var(--mut);font-size:12.5px;text-align:center;padding:20px}
       <button class="fb-no" onclick="fbSet('uae--k1-scrape-email-posilja-rok--e2-dan-4-deluje-vrzel','popravi')">Popravi</button>
     </div>
   </div>
-  <div class="vsebina"><p><strong>Zadeva A:</strong> what it already answers<br><strong>Zadeva B:</strong> re: <span class="tok">{hotel_kratko}</span>'s guest app</p>
+  <div class="vsebina"><p><strong>Zadeva A:</strong> <span class="tok">{scrape_zna_kratko}</span> yes, <span class="tok">{scrape_ne_zna_kratko}</span> not yet<br><strong>Zadeva B:</strong> what it already answers<br><strong>Zadeva C:</strong> re: <span class="tok">{hotel_kratko}</span>'s guest app</p>
 <p><strong>Telo:</strong></p>
 <p><span class="tok">{Hi|Hello again}</span> <span class="tok">{ime}</span>,</p>
 <p>The preview already handles <span class="tok">{scrape_zna}</span>, straight from your website. It does not yet know <span class="tok">{scrape_ne_zna}</span>, because that is not written anywhere public. Typing it in takes 30 seconds inside the preview.</p>
 <p>Five minutes with your own version will tell you more than anything I can write here: <span class="tok">{scrape_link}</span></p>
-<p><strong>Sloti:</strong> <span class="tok">{scrape_zna}</span> npr. "your room types and spa hours", <span class="tok">{scrape_ne_zna}</span> npr. "your exact check-in time or pet policy". Par mora biti resničen za ta hotel (pregled tenanta).</p></div>
+<p><strong>Sloti:</strong> <span class="tok">{scrape_zna}</span> npr. "your room types and spa hours", <span class="tok">{scrape_ne_zna}</span> npr. "your exact check-in time or pet policy". Par mora biti resničen za ta hotel (pregled tenanta). Kratki obliki za zadevo: <span class="tok">{scrape_zna_kratko}</span>/<span class="tok">{scrape_ne_zna_kratko}</span>; polna poved = <span class="tok">{posebnost_scrape}</span> (stolpec v bazi).</p></div>
   <textarea class="fb-kom" data-id="uae--k1-scrape-email-posilja-rok--e2-dan-4-deluje-vrzel" placeholder="Komentar (npr. skrajšaj drugi odstavek, drugačna zadeva ...)" oninput="fbKom('uae--k1-scrape-email-posilja-rok--e2-dan-4-deluje-vrzel',this.value)"></textarea>
 </div>
 
@@ -3860,11 +3862,12 @@ footer{color:var(--mut);font-size:12.5px;text-align:center;padding:20px}
       <button class="fb-no" onclick="fbSet('it--k2-scrape-email-posilja-amadej--e2-dan-4-deluje-vrzel','popravi')">Popravi</button>
     </div>
   </div>
-  <div class="vsebina"><p><strong>Zadeva A:</strong> cosa sa già rispondere<br><strong>Zadeva B:</strong> re: l'app per i Suoi ospiti</p>
+  <div class="vsebina"><p><strong>Zadeva A:</strong> <span class="tok">{scrape_zna_kratko}</span> sì, <span class="tok">{scrape_ne_zna_kratko}</span> non ancora<br><strong>Zadeva B:</strong> cosa sa già rispondere<br><strong>Zadeva C:</strong> re: l'app per i Suoi ospiti</p>
 <p><strong>Telo:</strong></p>
 <p><span class="tok">{gentile_vrstica}</span></p>
 <p>l'anteprima sa già rispondere su <span class="tok">{scrape_zna}</span>, direttamente dal Suo sito. Non conosce ancora <span class="tok">{scrape_ne_zna}</span>, perché non è scritto da nessuna parte pubblicamente. Inserirlo richiede 30 secondi all'interno dell'anteprima.</p>
-<p>Cinque minuti con la Sua versione Le diranno più di qualsiasi cosa io possa scrivere: <span class="tok">{scrape_link}</span></p></div>
+<p>Cinque minuti con la Sua versione Le diranno più di qualsiasi cosa io possa scrivere: <span class="tok">{scrape_link}</span></p>
+<p><strong>Sloti:</strong> <span class="tok">{scrape_zna_kratko}</span>/<span class="tok">{scrape_ne_zna_kratko}</span> = kratki obliki za zadevo (1-3 besede); polna poved = <span class="tok">{posebnost_scrape}</span>, stolpec v bazi (za LinkedIn in klice). OBVEZNO iz dejanskega pregleda tenanta. Fallback brez: zadeva B.</p></div>
   <textarea class="fb-kom" data-id="it--k2-scrape-email-posilja-amadej--e2-dan-4-deluje-vrzel" placeholder="Komentar (npr. skrajšaj drugi odstavek, drugačna zadeva ...)" oninput="fbKom('it--k2-scrape-email-posilja-amadej--e2-dan-4-deluje-vrzel',this.value)"></textarea>
 </div>
 
@@ -4718,11 +4721,12 @@ footer{color:var(--mut);font-size:12.5px;text-align:center;padding:20px}
       <button class="fb-no" onclick="fbSet('ny--k1-scrape-email-posiljata-matjaz-in-gregor--e2-dan-4-deluje-vrzel','popravi')">Popravi</button>
     </div>
   </div>
-  <div class="vsebina"><p><strong>Zadeva A:</strong> what it already answers<br><strong>Zadeva B:</strong> re: <span class="tok">{hotel_kratko}</span>'s guest app</p>
+  <div class="vsebina"><p><strong>Zadeva A:</strong> <span class="tok">{scrape_zna_kratko}</span> yes, <span class="tok">{scrape_ne_zna_kratko}</span> not yet<br><strong>Zadeva B:</strong> what it already answers<br><strong>Zadeva C:</strong> re: <span class="tok">{hotel_kratko}</span>'s guest app</p>
 <p><strong>Telo:</strong></p>
 <p><span class="tok">{Hi|Hello again}</span> <span class="tok">{ime}</span>,</p>
 <p>the preview already handles <span class="tok">{scrape_zna}</span>, straight from the website. It does not yet know <span class="tok">{scrape_ne_zna}</span>, because that is not written anywhere public. Typing it in takes 30 seconds inside the preview.</p>
-<p>Five minutes with your own version will tell you more than anything I can write here: <span class="tok">{scrape_link}</span></p></div>
+<p>Five minutes with your own version will tell you more than anything I can write here: <span class="tok">{scrape_link}</span></p>
+<p><strong>Sloti:</strong> <span class="tok">{scrape_zna_kratko}</span>/<span class="tok">{scrape_ne_zna_kratko}</span> = kratki obliki za zadevo (1-3 besede); polna poved = <span class="tok">{posebnost_scrape}</span>, stolpec v bazi (za LinkedIn in klice). OBVEZNO iz dejanskega pregleda tenanta. Fallback brez: zadeva B.</p></div>
   <textarea class="fb-kom" data-id="ny--k1-scrape-email-posiljata-matjaz-in-gregor--e2-dan-4-deluje-vrzel" placeholder="Komentar (npr. skrajšaj drugi odstavek, drugačna zadeva ...)" oninput="fbKom('ny--k1-scrape-email-posiljata-matjaz-in-gregor--e2-dan-4-deluje-vrzel',this.value)"></textarea>
 </div>
 
@@ -5210,11 +5214,12 @@ footer{color:var(--mut);font-size:12.5px;text-align:center;padding:20px}
       <button class="fb-no" onclick="fbSet('gr--k1-scrape-email-posiljata-amadej-in-matjaz--e2-dan-4-deluje-vrzel','popravi')">Popravi</button>
     </div>
   </div>
-  <div class="vsebina"><p><strong>Zadeva A:</strong> what it already answers<br><strong>Zadeva B:</strong> re: <span class="tok">{hotel_kratko}</span>'s guest app</p>
+  <div class="vsebina"><p><strong>Zadeva A:</strong> <span class="tok">{scrape_zna_kratko}</span> yes, <span class="tok">{scrape_ne_zna_kratko}</span> not yet<br><strong>Zadeva B:</strong> what it already answers<br><strong>Zadeva C:</strong> re: <span class="tok">{hotel_kratko}</span>'s guest app</p>
 <p><strong>Telo:</strong></p>
 <p><span class="tok">{Hi|Hello again}</span> <span class="tok">{ime}</span>,</p>
 <p>the preview already handles <span class="tok">{scrape_zna}</span>, straight from your website. It does not yet know <span class="tok">{scrape_ne_zna}</span>, because that is not written anywhere public. Typing it in takes 30 seconds inside the preview.</p>
-<p>Five minutes with your own version will tell you more than anything I can write here: <span class="tok">{scrape_link}</span></p></div>
+<p>Five minutes with your own version will tell you more than anything I can write here: <span class="tok">{scrape_link}</span></p>
+<p><strong>Sloti:</strong> <span class="tok">{scrape_zna_kratko}</span>/<span class="tok">{scrape_ne_zna_kratko}</span> = kratki obliki za zadevo (1-3 besede); polna poved = <span class="tok">{posebnost_scrape}</span>, stolpec v bazi (za LinkedIn in klice). OBVEZNO iz dejanskega pregleda tenanta. Fallback brez: zadeva B.</p></div>
   <textarea class="fb-kom" data-id="gr--k1-scrape-email-posiljata-amadej-in-matjaz--e2-dan-4-deluje-vrzel" placeholder="Komentar (npr. skrajšaj drugi odstavek, drugačna zadeva ...)" oninput="fbKom('gr--k1-scrape-email-posiljata-amadej-in-matjaz--e2-dan-4-deluje-vrzel',this.value)"></textarea>
 </div>
 
