@@ -618,7 +618,7 @@
 <h2>3. Sekvence po batchih: trije scenariji</h2>
 <div id="scenarios3"></div>
 <h2>4. Trgi po tednih: klicatelji, LinkedIn profili, mail accounti</h2>
-<p>Vrstica je vir (klicatelj, LinkedIn sedež ali mail account), stolpec teden od 4. 9. 2026; oznaka pove trg in kampanjo (SI|2; mala črka o = batch samo na office naslove ali centrale, torej office copy; poslovne maile pošilja Rok, office maile Nina, UAE v celoti Rok), barva scenarij, rdeča celica brez batcha dopolnilne dotike, prazna celica prost vir.</p>
+<p>Vrstica je vir (klicatelj, LinkedIn sedež ali mail account), stolpec teden od 31. 8. 2026, prvi dotiki gredo ven 7. 9.; oznaka pove trg in kampanjo (SI|2; mala črka o = batch samo na office naslove ali centrale, torej office copy; poslovne maile pošilja Rok, office maile Nina, UAE v celoti Rok), barva scenarij, rdeča celica brez batcha dopolnilne dotike, prazna celica prost vir.</p>
 <div class="qleg"><i style="background:var(--sc-multi)"></i>Multichannel <i style="background:var(--sc-two)"></i>2-channel <i style="background:var(--sc-single)"></i>Single channel <span class="qsep"></span><i class="lin" style="background:var(--n-orange)"></i>Dream 100 <i class="lin" style="background:var(--n-white)"></i>ostali <i class="lin split"></i>oba sloja v istem tednu</div>
 <div id="weektable"></div>
 
@@ -1216,8 +1216,8 @@ const ICO = {
 };
 function stepIco(code) { const c0 = String(code)[0]; const ch = c0 === 'E' ? 'e' : (c0 === 'L' ? 'p' : (c0 === 'C' ? 't' : null)); if (!ch) return code; return `<i class="si ${ch}" title="${code}">${ICO[ch]}</i><b class="sn">${String(code).slice(1)}</b>`; }
 const SEQ14 = [["e", "E1"], ["p", "L1"], ["t", "C1"], ["e", "E2"], ["p", "L2"], ["t", "C2"], ["e", "E3"], ["p", "L3"], ["t", "C3"], ["e", "E4"], ["p", "L4"], ["t", "C4"], ["e", "E5"], ["p", "L5"]];
-const FIRST = 5; // pet 4. 9. 2026: prvi dan kampanje (odlocitev 1. 9.); 31. 8. do 3. 9. brez dotikov
-const IT_START = 11; // pon 14. 9. 2026: Italija sele v 3. tednu, da se prej aktivira Ales kot klicatelj v italijanscini (odlocitev 2. 9.)
+const FIRST = 6; // pon 7. 9. 2026: prvi dan kampanje (prestavljeno s petka 4. 9., odlocitev 4. 9.); do 4. 9. brez dotikov
+const IT_START = 12; // tor 15. 9. 2026: Italija sele v 3. tednu (premik za en delovni dan s startom 7. 9.), da se prej aktivira Ales kot klicatelj v italijanscini (odlocitev 2. 9.)
 const HOL = [84, 90]; // cet 24. 12. 2026 do pet 1. 1. 2027; december do 23. 12. poln (odlocitev 31. 8.)
 const CYCLE = 15; const CALL_CYCLE = 12; const SCN = { multi: "Multichannel", two: "2-channel", single: "Single channel" };
 const ACC = (who, dom) => ({ who, mail: `${{ Rok: "rok.kokalj", Matjaž: "matjaz.volkar", Amadej: "amadej.demsar", Nina: "nina.bernik", Gregor: "gregor.skok", Simon: "simon.bergant" }[who]}@${dom}` });
