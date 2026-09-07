@@ -164,20 +164,20 @@ function vrsticaDetajl(r){
  var lnk=sl?('<a href="'+sl+'" target="_blank" rel="noopener">'+sl+'</a>'):'<span class="var manjka">{scrape_link}</span>';
  // E1 okvirji po jeziku trga (masterji 7. 9. zvecer); HR in IT nosita posebnost_vrstica v K2 Scrape
  var FR={
-  si:{lbl:'K1 Scrape E1 (dan 1)',zad:'hotelska tehnologija, ki so jo uporabljali samo največji, zdaj dostopna tudi vam',
-   p1:'celovita platforma za goste je še pred nekaj leti pomenila drag razvoj, mesece dela in proračun, ki so ga premogli samo največji. Ti časi so mimo: danes je takšna platforma zmogljivejša od tistih, ki so si jih takrat privoščili le največji, stane pa skoraj nič, ker se plačuje po uporabi.',
+  si:{most:'Odlično bi bilo, če bi imeli celovito platformo za goste, da bi jim to zgodbo lahko predstavili na več kanalih hkrati in povsod enako.',lbl:'K1 Scrape E1 (dan 1)',zad:'hotelska tehnologija, ki so jo uporabljali samo največji, zdaj dostopna tudi vam',
+   p1:'Celovita platforma za goste je še pred nekaj leti pomenila drag razvoj, mesece dela in proračun, ki so ga premogli samo največji. Ti časi so mimo: danes je takšna platforma zmogljivejša od tistih, ki so si jih takrat privoščili le največji, stane pa skoraj nič, ker se plačuje po uporabi.',
    p2:'Da ne ostane pri besedah: platformo za vas smo postavili, aplikacijo pa si lahko pogledate že kar zdaj: ',
    p3:'Ve samo to, kar piše na vaši spletni strani. Če najdete karkoli, kar ni pravilno, nam pišite in takoj brezplačno popravimo.'},
-  hr:{lbl:'K2 Scrape E1 (dan 1)',zad:'hotelska tehnologija koju su prije koristili samo najveći, sada dostupna i vama',
-   p1:'cjelovita platforma za goste još je prije nekoliko godina značila skup razvoj, mjesece posla i budžet kakav su imali samo najveći. Ta su vremena prošla: danas je takva platforma moćnija od onih koje su si tada mogli priuštiti najveći, a ne košta gotovo ništa, jer se plaća po korištenju.',
+  hr:{most:'Bilo bi odlično kad biste imali cjelovitu platformu za goste i tu priču mogli ispričati na više kanala istodobno, i to svugdje na isti način.',lbl:'K2 Scrape E1 (dan 1)',zad:'hotelska tehnologija koju su prije koristili samo najveći, sada dostupna i vama',
+   p1:'Cjelovita platforma za goste još je prije nekoliko godina značila skup razvoj, mjesece posla i budžet kakav su imali samo najveći. Ta su vremena prošla: danas je takva platforma moćnija od onih koje su si tada mogli priuštiti najveći, a ne košta gotovo ništa, jer se plaća po korištenju.',
    p2:'Da ne ostane na riječima: platformu smo za vas postavili, a aplikaciju možete pogledati već sada: ',
    p3:'Zna samo ono što piše na vašoj web stranici. Ako pronađete bilo što netočno, javite nam i odmah besplatno ispravljamo.'},
-  it:{lbl:'K2 Scrape E1 (giorno 1)',zad:'la tecnologia alberghiera che prima usavano solo i più grandi, ora accessibile anche a Lei',
-   p1:'una piattaforma completa per gli ospiti fino a pochi anni fa significava sviluppo costoso, mesi di lavoro e un budget che avevano solo i più grandi. Quei tempi sono finiti: oggi una piattaforma così è più capace di quelle che allora potevano permettersi solo i più grandi, e costa quasi nulla, perché si paga in base all\'utilizzo.',
+  it:{most:'Per raccontare questa storia su tutti i canali, sempre con la stessa voce, servirebbe una piattaforma completa per i Suoi ospiti.',lbl:'K2 Scrape E1 (giorno 1)',zad:'la tecnologia alberghiera che prima usavano solo i più grandi, ora accessibile anche a Lei',
+   p1:'Una piattaforma completa per gli ospiti fino a pochi anni fa significava sviluppo costoso, mesi di lavoro e un budget che avevano solo i più grandi. Quei tempi sono finiti: oggi una piattaforma così è più capace di quelle che allora potevano permettersi solo i più grandi, e costa quasi nulla, perché si paga in base all\'utilizzo.',
    p2:'Perché non resti teoria: la piattaforma è già configurata per Lei, e l\'app può vederla subito: ',
    p3:'Sa solo ciò che è scritto sul Suo sito. Se trova qualcosa che non è corretto, ci scriva e correggiamo subito, gratuitamente.'},
-  en:{lbl:'K1 Scrape E1 (day 1)',zad:'hotel tech that only the biggest could afford, now within your reach',
-   p1:'a complete guest platform used to mean expensive development, months of work and a budget only the biggest had. Those times are over: today such a platform is more capable than what the biggest ran back then, and it costs next to nothing, because you pay per use.',
+  en:{most:'Telling that story to your guests on every channel, in the same voice, is exactly what a guest platform is for.',lbl:'K1 Scrape E1 (day 1)',zad:'hotel tech that only the biggest could afford, now within your reach',
+   p1:'A complete guest platform used to mean expensive development, months of work and a budget only the biggest had. Those times are over: today such a platform is more capable than what the biggest ran back then, and it costs next to nothing, because you pay per use.',
    p2:'So it does not stay theory: the platform is set up for you, and you can open the app right now: ',
    p3:'It only knows what your website says. If you find anything that is not right, write to us and we will fix it immediately, free of charge.'}};
  var F=FR[TRG]||FR.en;
@@ -185,7 +185,7 @@ function vrsticaDetajl(r){
  if(r.pv){
   e1='<div class="primer"><b>Primer: '+F.lbl+'</b>'+
    '<div class="zadeva"><span class="meta">zadeva</span> '+F.zad+'</div>'+
-   '<div class="telo">'+vv(r.poz)+'<br><br>'+vv(r.pv)+'<br><br>'+F.p1+'<br><br>'+F.p2+vv(lnk)+'<br><br>'+F.p3+'</div></div>';
+   '<div class="telo">'+vv(r.poz)+'<br><br>'+vv(r.pv)+(F.most?('<br><br>'+F.most):'')+'<br><br>'+F.p1+'<br><br>'+F.p2+vv(lnk)+'<br><br>'+F.p3+'</div></div>';
  }
  var e2='';
  if(r.v1 && r.v2 && r.nzt){
