@@ -135,10 +135,10 @@ function vrsticaDetajl(r){
   primer='<div class="primer"><b>Primer: K1 Scrape E2 (dan 4)</b>'+
    '<div class="zadeva"><span class="meta">zadeva</span> '+zad+'</div>'+
    '<div class="telo">Pozdravljeni, {g_ga} '+vv(pr)+',<br><br>'+
-   'aplikacija za vaše goste že zna povedati tole: '+vv(r.sz)+'. Vse to je pobrala z vaše spletne strani. '+
-   'Tega pa še ne zna: '+vv(r.sn)+'. Na vaši strani tega nikjer ne piše, zato podatek vpiševa ročno, v pol minute.<br><br>'+
-   'Odprite jo in ji zastavite vprašanje, kakršno slišite od gostov: '+vv(lnk)+'<br><br>'+
-   'Če kaj manjka ali je narobe, mi napišite in greva skupaj čez. Pet minut je dovolj.</div></div>';
+   'AI pomočnik znotraj platforme za goste že zna povedati tole: '+vv(r.sz)+'. Vse to smo pobrali z vaše spletne strani. '+
+   'Tega pa še ne zna: '+vv(r.sn)+'. Na vaši strani tega nikjer ne piše, zato podatek lahko vpišemo ročno.<br><br>'+
+   'Odprite AI pomočnika in mu zastavite vprašanje, kakršnega slišite od gostov: '+vv(lnk)+'<br><br>'+
+   'Če kaj manjka ali je narobe, nam napišite in gremo skupaj čez.</div></div>';
  }
  return '<tr class="detail"><td colspan="13"><div class="dgrid">'+
   sek('Identiteta',[p('polno ime',r.polno||r.h),p('kraj',r.k),p('regija',r.reg),p('tip',r.tip),
