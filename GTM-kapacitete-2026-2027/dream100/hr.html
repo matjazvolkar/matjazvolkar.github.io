@@ -198,7 +198,22 @@ function vrsticaDetajl(r){
    '<div class="telo">'+vv(r.poz)+'<br><br>'+vv(r.pv)+(F.most?('<br><br>'+F.most):'')+'<br><br>'+F.p1+'<br><br>'+F.p2+vv(lnk)+'<br><br>'+F.p3+'</div></div>';
  }
  var e2='';
- if(r.v1 && r.v2 && r.nzt){
+ var TOK=function(x){return '<span class="var manjka">{'+x+'}</span>';};
+ if(TRG==='hr'){
+  // K2 Scrape E2 (master 12-hr-d100.md, 8. 9.): vrednosti se pridejo s scrape linki; do takrat zetoni
+  var v1h=r.v1?vv(r.v1):TOK('vprasanje_1'), v2h=r.v2?vv(r.v2):TOK('vprasanje_2'), nzth=r.nzt?vv(r.nzt):TOK('ne_zna_tema');
+  var manjkaHr=(r.snt==='napaka')
+    ?('Jednu je stvar pri prijenosu promašila: '+nzth+'. To je naša greška, ne vaše stranice, i odmah je besplatno ispravljamo.')
+    :('Što joj još nedostaje: '+nzth+'. Na vašoj stranici to nije zapisano, pa to dodajemo mi, čim nam pošaljete što nedostaje.');
+  e2='<div class="primer"><b>Primer: K2 Scrape E2 (dan 4)</b>'+
+   '<div class="zadeva"><span class="meta">zadeva</span> kad gost pita '+v1h+', platforma već odgovara</div>'+
+   '<div class="telo">'+vv(r.poz)+'<br><br>'+
+   'u prošloj poruci smo za vaš hotel postavili cjelovitu platformu za goste. Danas je stavite na kušnju.<br><br>'+
+   'Pitajte je '+v1h+'. Ili '+v2h+'. Odgovorit će odmah, jer je pročitala vašu web stranicu. Provjerite sada, uživo: '+vv(lnk)+'<br><br>'+
+   manjkaHr+'<br><br>'+
+   'Ako negdje odgovori bilo što pogrešno, pošaljite nam to i odmah ispravljamo.</div></div>';
+ }
+ else if(r.v1 && r.v2 && r.nzt){
   // E2 prenova 7. 9. zvecer: "dajte jo na preizkusnjo" (master 11-si-d100.md)
   var manjka=(r.snt==='napaka')
     ?('Eno stvar pa je pri prenosu zgrešila: '+vv(r.nzt)+'. To je naša napaka, ne vaše strani, in jo odpravimo takoj, brezplačno.')
@@ -211,9 +226,9 @@ function vrsticaDetajl(r){
    manjka+'<br><br>'+
    'Če kje odgovori karkoli narobe, nam to pošljite in takoj popravimo.</div></div>';
  }
- // Obrazec za popravke (samo SI, Matjaz 8. 9.): en pod vsakim primerom; enkratna oddaja do osvezitve.
+ // Obrazec za popravke (SI + HR, Matjaz 8. 9.): en pod vsakim primerom; enkratna oddaja do osvezitve.
  function formPop(oznaka){
-  if(TRG!=='si') return '';
+  if(TRG!=='si'&&TRG!=='hr') return '';
   var k=r.h+'|'+oznaka;
   if(window.POSLANO && window.POSLANO.has(k))
    return '<div class="popform poslano">Popravek oddan. Za nov popravek osveži stran.</div>';
@@ -224,12 +239,12 @@ function vrsticaDetajl(r){
     '<button class="chip oddaj" type="button">Oddaj popravke</button>'+
    '</div></div>';
  }
- if(e1) e1=e1.replace(/<\/div>$/,'')+formPop('K1 Scrape E1 (dan 1)')+'</div>';
- if(e2) e2=e2.replace(/<\/div>$/,'')+formPop('K1 Scrape E2 (dan 4)')+'</div>';
+ if(e1) e1=e1.replace(/<\/div>$/,'')+formPop(F.lbl)+'</div>';
+ if(e2) e2=e2.replace(/<\/div>$/,'')+formPop(TRG==='hr'?'K2 Scrape E2 (dan 4)':'K1 Scrape E2 (dan 4)')+'</div>';
  var primer=(e1||e2)?('<div class="primeri">'+e1+e2+'</div>'):'';
  var idx='';
  if(r.iu && KOPIJA && KOPIJA.index && KOPIJA.index.e1){
-  idx='<div class="primeri par">'+primerKopije(KOPIJA.index.e1,r)+primerKopije(KOPIJA.index.e2,r)+'</div>';
+  idx='<div class="primeri par">'+primerKopije(KOPIJA.index.e1,r).replace(/<\/div>$/,'')+formPop(KOPIJA.index.e1.oznaka)+'</div>'+primerKopije(KOPIJA.index.e2,r).replace(/<\/div>$/,'')+formPop(KOPIJA.index.e2.oznaka)+'</div>'+'</div>';
  }
  return '<tr class="detail"><td colspan="13"><div class="dgrid">'+
   sek('Identiteta',[p('polno ime',r.polno||r.h),p('kraj',r.k),p('regija',r.reg),p('tip',r.tip),
