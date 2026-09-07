@@ -300,6 +300,7 @@ Array.prototype.forEach.call(document.querySelectorAll("[data-s]"),function(t){t
  var p=t.dataset.s; smer=(p===polje)?-smer:1; polje=p; risi();};});
 ["q","icp","zv"].forEach(function(i){document.getElementById(i).addEventListener("input",risi);});
 window.POSLANO=window.POSLANO||new Set();
+var POPRAVKI_URL="https://hub.nevron.co/copy-hook/3020655ba5d4e657fb91a7c53a1ffd82";
 document.getElementById("telo").addEventListener("click",function(ev){
  var b=ev.target.closest("button.oddaj"); if(!b) return;
  var f=b.closest(".popform");
@@ -307,9 +308,15 @@ document.getElementById("telo").addEventListener("click",function(ev){
  var im=f.querySelector("input[type=radio]:checked");
  if(!t){alert("Vpiši popravek.");return;}
  if(!im){alert("Označi svoje ime (Simon, Amadej ali Rok).");return;}
- var body="Hotel: "+f.dataset.hotel+"\nPrimer: "+f.dataset.oznaka+"\nPopravlja: "+im.value+"\n\nPopravek:\n"+t;
- window.location.href="mailto:matjaz.volkar@nevron.eu?subject="+encodeURIComponent("Copy popravek")+"&body="+encodeURIComponent(body);
- POSLANO.add(f.dataset.k); risi();
+ b.disabled=true;b.textContent="Pošiljam ...";
+ fetch(POPRAVKI_URL,{method:"POST",headers:{"Content-Type":"application/json"},
+  body:JSON.stringify({hotel:f.dataset.hotel,primer:f.dataset.oznaka,ime:im.value,popravek:t,trg:TRG})})
+ .then(function(r){return r.json();})
+ .then(function(j){
+  if(j&&j.ok){POSLANO.add(f.dataset.k);risi();}
+  else{b.disabled=false;b.textContent="Oddaj popravke";alert("Oddaja ni uspela: "+((j&&j.napaka)||"neznana napaka"));}
+ })
+ .catch(function(){b.disabled=false;b.textContent="Oddaj popravke";alert("Oddaja ni uspela (povezava). Poskusi znova.");});
 });
 document.getElementById("reset").onclick=function(){F.clear();odprt=null;
  Array.prototype.forEach.call(document.querySelectorAll("[data-f]"),function(b){b.classList.remove("on");});
