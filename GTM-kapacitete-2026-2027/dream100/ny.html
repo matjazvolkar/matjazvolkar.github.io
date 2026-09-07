@@ -65,6 +65,13 @@ tbody tr.vrstica:hover{background:rgba(27,146,255,.07)}
 .primer .telo{font-size:12.5px;line-height:1.65;color:var(--ink2)}
 .primer .var{color:var(--ok);background:rgba(55,211,153,.08);border-radius:4px;padding:0}
 .primer .var.manjka{color:var(--ink3);background:rgba(255,255,255,.05);font-style:italic}
+.popform{margin-top:12px;padding-top:10px;border-top:1px solid var(--line2)}
+.popform textarea{width:100%;font-family:inherit;font-size:12.5px;background:rgba(255,255,255,.05);color:var(--ink);
+  border:1px solid var(--line);border-radius:10px;padding:8px 10px;resize:vertical}
+.popform .poprow{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:8px}
+.popform label{font-size:12px;color:var(--ink2);cursor:pointer;display:flex;align-items:center;gap:4px}
+.popform .oddaj{border-color:var(--m3);color:#fff}
+.popform.poslano{color:var(--ok);font-size:12.5px}
 .tag{display:inline-block;font-size:10px;padding:1.5px 7px;border-radius:20px;
   border:1px solid var(--line);color:var(--ink2);white-space:nowrap;margin:1px 3px 1px 0}
 .t1{border-color:rgba(55,211,153,.5);color:var(--ok);background:rgba(55,211,153,.10)}
@@ -201,6 +208,21 @@ function vrsticaDetajl(r){
    manjka+'<br><br>'+
    'Če kje odgovori narobe, nam napišite. Popravimo isti dan, brezplačno.</div></div>';
  }
+ // Obrazec za popravke (samo SI, Matjaz 8. 9.): en pod vsakim primerom; enkratna oddaja do osvezitve.
+ function formPop(oznaka){
+  if(TRG!=='si') return '';
+  var k=r.h+'|'+oznaka;
+  if(window.POSLANO && window.POSLANO.has(k))
+   return '<div class="popform poslano">Popravek oddan. Za nov popravek osveži stran.</div>';
+  return '<div class="popform" data-k="'+k.replace(/"/g,'&quot;')+'" data-oznaka="'+oznaka+'" data-hotel="'+r.h.replace(/"/g,'&quot;')+'">'+
+   '<textarea rows="3" placeholder="Morebitni popravki za '+oznaka+'"></textarea>'+
+   '<div class="poprow">'+
+    ['Simon','Amadej','Rok'].map(function(n){return '<label><input type="radio" name="ime_'+encodeURIComponent(k).replace(/[^a-zA-Z0-9]/g,'')+'" value="'+n+'"> '+n+'</label>';}).join('')+
+    '<button class="chip oddaj" type="button">Oddaj popravke</button>'+
+   '</div></div>';
+ }
+ if(e1) e1=e1.replace(/<\/div>$/,'')+formPop('K1 Scrape E1 (dan 1)')+'</div>';
+ if(e2) e2=e2.replace(/<\/div>$/,'')+formPop('K1 Scrape E2 (dan 4)')+'</div>';
  var primer=(e1||e2)?('<div class="primeri">'+e1+e2+'</div>'):'';
  var idx='';
  if(r.iu && KOPIJA && KOPIJA.index && KOPIJA.index.e1){
@@ -277,6 +299,18 @@ Array.prototype.forEach.call(document.querySelectorAll("[data-f]"),function(b){b
 Array.prototype.forEach.call(document.querySelectorAll("[data-s]"),function(t){t.onclick=function(){
  var p=t.dataset.s; smer=(p===polje)?-smer:1; polje=p; risi();};});
 ["q","icp","zv"].forEach(function(i){document.getElementById(i).addEventListener("input",risi);});
+window.POSLANO=window.POSLANO||new Set();
+document.getElementById("telo").addEventListener("click",function(ev){
+ var b=ev.target.closest("button.oddaj"); if(!b) return;
+ var f=b.closest(".popform");
+ var t=f.querySelector("textarea").value.trim();
+ var im=f.querySelector("input[type=radio]:checked");
+ if(!t){alert("Vpiši popravek.");return;}
+ if(!im){alert("Označi svoje ime (Simon, Amadej ali Rok).");return;}
+ var body="Hotel: "+f.dataset.hotel+"\nPrimer: "+f.dataset.oznaka+"\nPopravlja: "+im.value+"\n\nPopravek:\n"+t;
+ window.location.href="mailto:matjaz.volkar@nevron.eu?subject="+encodeURIComponent("Copy popravek")+"&body="+encodeURIComponent(body);
+ POSLANO.add(f.dataset.k); risi();
+});
 document.getElementById("reset").onclick=function(){F.clear();odprt=null;
  Array.prototype.forEach.call(document.querySelectorAll("[data-f]"),function(b){b.classList.remove("on");});
  document.getElementById("q").value="";document.getElementById("icp").value="";document.getElementById("zv").value="";risi();};
