@@ -200,7 +200,7 @@ function vrsticaDetajl(r){
  var e2='';
  var TOK=function(x){return '<span class="var manjka">{'+x+'}</span>';};
  if(TRG==='hr'){
-  // K2 Scrape E2 (master 12-hr-d100.md, 8. 9.): vrednosti se pridejo s scrape linki; do takrat zetoni
+  // K2 Scrape E2 (master 12-hr-d100.md, 8. 9.): vrednosti pridejo s scrape linki; do takrat zetoni
   var v1h=r.v1?vv(r.v1):TOK('vprasanje_1'), v2h=r.v2?vv(r.v2):TOK('vprasanje_2'), nzth=r.nzt?vv(r.nzt):TOK('ne_zna_tema');
   var manjkaHr=(r.snt==='napaka')
     ?('Jednu je stvar pri prijenosu promašila: '+nzth+'. To je naša greška, ne vaše stranice, i odmah je besplatno ispravljamo.')
