@@ -120,16 +120,25 @@ function tagi(r){
  return t.join('');
 }
 function priimekIz(d){var p=String(d||'').trim().split(/\s+/);return p.length?p[p.length-1]:'';}
+function imeIz(d){var p=String(d||'').trim().split(/\s+/);return p.length?p[0]:'';}
 function zetonVrednost(ime,r){
  var lnk=function(u,b){return u?('<a href="'+u+'" target="_blank" rel="noopener">'+b+'</a>'):'';};
  // index_link in scrape_link kot CEL URL (Matjazev nalog 8. 9., prenos popravka seje Copy b96f0f5)
+ // Kanonicni slovar (copy/00-uskladitev-variabel.md, 8. 9. 2026): hotel_name, city, booking_rating,
+ // review_count, demo_url, index_url, firstName/lastName. Stara imena ostanejo kot prehodni aliasi,
+ // dokler GTM-copy masterji ne prevzamejo slovarja (korak 1, seja Copy).
+ var demo=lnk(r.su||r.pu,r.su||r.pu);
  var m={postovani_vrstica:r.poz,posebnost_index:r.pi,index_dobro:r.ido,index_slabo:r.isl,
-        index_stevilka:r.ist,ocen:r.oc,index_link:lnk(r.iu,r.iu),
+        index_stevilka:r.ist,index_link:lnk(r.iu,r.iu),index_url:lnk(r.iu,r.iu),
         posebnost_vrstica:r.pv,posebnost_scrape:r.ps,scrape_zna:r.sz,scrape_ne_zna:r.sn,
         scrape_zna_kratko:r.szk,scrape_ne_zna_kratko:r.snk,
         ukrep_1:r.u1,dvig_ocene:r.dvo,vprasanje_1:r.v1,vprasanje_2:r.v2,ne_zna_tema:r.nzt,
         jeziki_vrstica:r.jv,
-        scrape_link:lnk(r.su||r.pu,r.su||r.pu),priimek:priimekIz(r.d)};
+        hotel_name:r.h,hotel:r.h,hotel_kratko:r.h,
+        city:r.k,mesto:r.k,
+        booking_rating:r.b,booking:r.b,review_count:r.oc,ocen:r.oc,
+        demo_url:demo,scrape_link:demo,
+        firstName:imeIz(r.d),ime:imeIz(r.d),lastName:priimekIz(r.d),priimek:priimekIz(r.d)};
  return m[ime];
 }
 function vstavi(t,r){
@@ -171,7 +180,7 @@ function vrsticaDetajl(r){
  // Maestoso ima demo na pwa.nevron.co in ne scrape tenanta; stolpec scrape ze bere su||pu,
  // zato mora tudi primer, sicer se v mailu izpise gol zeton namesto povezave.
  var sl=r.su||r.pu;
- var lnk=sl?('<a href="'+sl+'" target="_blank" rel="noopener">'+sl+'</a>'):'<span class="var manjka">{scrape_link}</span>';
+ var lnk=sl?('<a href="'+sl+'" target="_blank" rel="noopener">'+sl+'</a>'):'<span class="var manjka">{demo_url}</span>';
  // E1 okvirji po jeziku trga (masterji 7. 9. zvecer); HR in IT nosita posebnost_vrstica v K2 Scrape
  var FR={
   si:{most:'Odlično bi bilo, če bi imeli celovito platformo za goste, da bi jim to zgodbo lahko predstavili na več kanalih hkrati in povsod enako.',lbl:'K1 Scrape E1 (dan 1)',zad:'hotelska tehnologija, ki so jo uporabljali samo največji, zdaj dostopna tudi vam',
