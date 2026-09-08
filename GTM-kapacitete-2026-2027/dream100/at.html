@@ -183,57 +183,57 @@ function vrsticaDetajl(r){
  var lnk=sl?('<a href="'+sl+'" target="_blank" rel="noopener">'+sl+'</a>'):'<span class="var manjka">{demo_url}</span>';
  // E1 okvirji po jeziku trga (masterji 7. 9. zvecer); HR in IT nosita posebnost_vrstica v K2 Scrape
  var FR={
-  si:{most:'Odlično bi bilo, če bi imeli celovito platformo za goste, da bi jim to zgodbo lahko predstavili na več kanalih hkrati in povsod enako.',lbl:'K1 Scrape E1 (dan 1)',zad:'hotelska tehnologija, ki so jo uporabljali samo največji, zdaj dostopna tudi vam',
-   p1:'Celovita platforma za goste je še pred nekaj leti pomenila drag razvoj, mesece dela in proračun, ki so ga premogli samo največji. Ti časi so mimo: danes je takšna platforma zmogljivejša od tistih, ki so si jih takrat privoščili le največji, stane pa skoraj nič, ker se plačuje po uporabi.',
-   p2:'Da ne ostane pri besedah: platformo za vas smo že kar postavili, aplikacijo pa si lahko pogledate tukaj: ',
-   p3:'Ve samo to, kar piše na vaši spletni strani. Če najdete karkoli, kar ni pravilno, nam pišite in takoj popravimo.'},
-  hr:{most:'Bilo bi odlično kad biste imali cjelovitu platformu za goste i tu priču mogli ispričati na više kanala istodobno, i to svugdje na isti način.',lbl:'K2 Scrape E1 (dan 1)',zad:'hotelska tehnologija koju su prije koristili samo najveći, sada dostupna i vama',
-   p1:'Cjelovita platforma za goste još je prije nekoliko godina značila skup razvoj, mjesece posla i budžet kakav su imali samo najveći. Ta su vremena prošla: danas je takva platforma moćnija od onih koje su si tada mogli priuštiti najveći, a ne košta gotovo ništa, jer se plaća po korištenju.',
-   p2:'Da ne ostane na riječima: platformu smo za vas već postavili, a aplikaciju možete pogledati ovdje: ',
-   p3:'Zna samo ono što piše na vašoj web stranici. Ako pronađete bilo što netočno, javite nam i odmah ispravljamo.'},
-  it:{most:'Per raccontare questa storia su tutti i canali, sempre con la stessa voce, servirebbe una piattaforma completa per i Suoi ospiti.',lbl:'K2 Scrape E1 (giorno 1)',zad:'la tecnologia alberghiera che prima usavano solo i più grandi, ora accessibile anche a Lei',
-   p1:'Una piattaforma completa per gli ospiti fino a pochi anni fa significava sviluppo costoso, mesi di lavoro e un budget che avevano solo i più grandi. Quei tempi sono finiti: oggi una piattaforma così è più capace di quelle che allora potevano permettersi solo i più grandi, e costa quasi nulla, perché si paga in base all\'utilizzo.',
-   p2:'Perché non resti teoria: la piattaforma è già configurata per Lei, e l\'app può vederla qui: ',
-   p3:'Sa solo ciò che è scritto sul Suo sito. Se trova qualcosa che non è corretto, ci scriva e correggiamo subito.'},
-  en:{most:'Telling that story to your guests on every channel, in the same voice, is exactly what a guest platform is for.',lbl:'K1 Scrape E1 (day 1)',zad:'hotel tech that only the biggest could afford, now within your reach',
-   p1:'A complete guest platform used to mean expensive development, months of work and a budget only the biggest had. Those times are over: today such a platform is more capable than what the biggest ran back then, and it costs next to nothing, because you pay per use.',
-   p2:'So it does not stay theory: the platform is already set up for you, and you can see the app here: ',
-   p3:'It only knows what your website says. If you find anything that is not right, write to us and we will fix it immediately.'}};
+  si:{most:'Odnos z gosti je ključnega pomena za povečanje njihovega zadovoljstva, rast vaših prihodkov in razbremenitev zaposlenih. Celovita platforma za goste je ključna za doseganje teh ciljev.',lbl:'K1 Scrape E1 (dan 1)',zad:'hotelska tehnologija, ki so jo uporabljali samo največji, zdaj dostopna tudi vam',
+   p1:'Celovita platforma za goste je še pred nekaj leti pomenila drag razvoj, mesece dela in proračun, ki so ga premogli samo največji. Včasih so si, celo manj zmogljivo platformo, lahko privoščili le največji, vi pa zdaj lahko koristite njene zmogljivosti za zanemarljiv mesečni strošek.',
+   p2a:'Personalizirano platformo za ',p2b:' in mobilno aplikacijo za goste kot del platforme smo že kar postavili: ',
+   p3:'Platforma vključuje samo vsebino z vaše spletne strani. Če najdete karkoli, kar ni pravilno, nam pišite in takoj popravimo ali dopolnimo.'},
+  hr:{most:'Odnos s gostima ključan je za veće zadovoljstvo gostiju, rast vaših prihoda i rasterećenje zaposlenih. Cjelovita platforma za goste ključna je za postizanje tih ciljeva.',lbl:'K2 Scrape E1 (dan 1)',zad:'hotelska tehnologija koju su prije koristili samo najveći, sada dostupna i vama',
+   p1:'Cjelovita platforma za goste još je prije nekoliko godina značila skup razvoj, mjesece posla i budžet kakav su imali samo najveći. Nekad su si i manje moćnu platformu mogli priuštiti samo najveći, a vi sada njezine mogućnosti koristite uz zanemariv mjesečni trošak.',
+   p2a:'Personaliziranu platformu za ',p2b:' i mobilnu aplikaciju za goste kao dio platforme već smo postavili: ',
+   p3:'Platforma uključuje samo sadržaj s vaše web stranice. Ako pronađete bilo što netočno, javite nam i odmah ispravljamo ili dopunjavamo.'},
+  it:{most:'Il rapporto con gli ospiti è decisivo per aumentarne la soddisfazione, far crescere i ricavi e alleggerire il personale. Una piattaforma completa per gli ospiti è la chiave per raggiungere questi obiettivi.',lbl:'K2 Scrape E1 (giorno 1)',zad:'la tecnologia alberghiera che prima usavano solo i più grandi, ora accessibile anche a Lei',
+   p1:'Una piattaforma completa per gli ospiti fino a pochi anni fa significava sviluppo costoso, mesi di lavoro e un budget che avevano solo i più grandi. Un tempo perfino una piattaforma meno capace era alla portata solo dei più grandi; Lei oggi ne usa le capacità per un costo mensile trascurabile.',
+   p2a:'La piattaforma personalizzata per ',p2b:', con l'app mobile per gli ospiti come sua parte, è già configurata: ',
+   p3:'La piattaforma include solo i contenuti del Suo sito. Se trova qualcosa che non è corretto, ci scriva e correggiamo o integriamo subito.'},
+  en:{most:'Guest relationships are key to higher guest satisfaction, growing revenue and a lighter load on your team. A complete guest platform is central to reaching those goals.',lbl:'K1 Scrape E1 (day 1)',zad:'hotel tech that only the biggest could afford, now within your reach',
+   p1:'A complete guest platform used to mean expensive development, months of work and a budget only the biggest had. There was a time when even a less capable platform was something only the biggest could afford; you can now use its capabilities for a negligible monthly cost.',
+   p2a:'We have already set up the personalised platform for ',p2b:', with the guest mobile app as part of it: ',
+   p3:'The platform includes only content from your website. If you find anything that is not right, write to us and we will fix or extend it right away.'}};
  var F=FR[TRG]||FR.en;
  var e1='';
  if(r.pv){
   e1='<div class="primer"><b>Primer: '+F.lbl+'</b>'+
    '<div class="zadeva"><span class="meta">zadeva</span> '+F.zad+'</div>'+
-   '<div class="telo">'+vv(r.poz)+'<br><br>'+vv(r.pv)+(F.most?('<br><br>'+F.most):'')+'<br><br>'+F.p1+'<br><br>'+F.p2+vv(lnk)+'<br><br>'+F.p3+'</div></div>';
+   '<div class="telo">'+vv(r.poz)+'<br><br>'+vv(r.pv)+(F.most?('<br><br>'+F.most):'')+'<br><br>'+F.p1+'<br><br>'+F.p2a+vv(r.h)+F.p2b+vv(lnk)+'<br><br>'+F.p3+'</div></div>';
  }
  var e2='';
  var TOK=function(x){return '<span class="var manjka">{'+x+'}</span>';};
  if(TRG==='hr'){
-  // K2 Scrape E2 (master 12-hr-d100.md, 8. 9.): vrednosti pridejo s scrape linki; do takrat zetoni
+  // K2 Scrape E2 (master 12-hr-d100.md, prenova 8. 9. ponoci: AI asistent)
   var v1h=r.v1?vv(r.v1):TOK('vprasanje_1'), v2h=r.v2?vv(r.v2):TOK('vprasanje_2'), nzth=r.nzt?vv(r.nzt):TOK('ne_zna_tema');
   var manjkaHr=(r.snt==='napaka')
-    ?('Jednu je stvar pri prijenosu promašila: '+nzth+'. To je naša greška, ne vaše stranice, i odmah je besplatno ispravljamo.')
-    :('Što joj još nedostaje: '+nzth+'. Na vašoj stranici to nije zapisano, pa to dodajemo mi, čim nam pošaljete što nedostaje.');
+    ?('Jednu je stvar pri prijenosu promašio: '+nzth+'. To je naša greška, ne vaše stranice, i odmah je besplatno ispravljamo.')
+    :('Koji mu podaci još nedostaju: '+nzth+'. Na vašoj web stranici to nije zapisano. Pošaljite nam informacije koje nedostaju i odmah ćemo njima obogatiti memoriju AI asistenta.');
   e2='<div class="primer"><b>Primer: K2 Scrape E2 (dan 4)</b>'+
-   '<div class="zadeva"><span class="meta">zadeva</span> kad gost pita '+v1h+', platforma već odgovara</div>'+
+   '<div class="zadeva"><span class="meta">zadeva</span> kad gost pita '+v1h+', AI asistent već odgovara</div>'+
    '<div class="telo">'+vv(r.poz)+'<br><br>'+
-   'u prošloj poruci smo za vaš hotel postavili cjelovitu platformu za goste. Danas je stavite na kušnju.<br><br>'+
-   'Pitajte je '+v1h+'. Ili '+v2h+'. Odgovorit će odmah, jer je pročitala vašu web stranicu. Provjerite sada, uživo: '+vv(lnk)+'<br><br>'+
+   'u prošloj poruci smo za vaš hotel postavili cjelovitu platformu za goste. Danas stavite njezina AI asistenta na kušnju.<br><br>'+
+   'Pitajte ga '+v1h+'. Ili '+v2h+'. AI asistent odgovorit će odmah, jer poznaje sadržaj vaše web stranice. Provjerite sada, uživo: '+vv(lnk)+'<br><br>'+
    manjkaHr+'<br><br>'+
-   'Ako negdje odgovori bilo što pogrešno, pošaljite nam to i odmah ispravljamo.</div></div>';
+   'Možete poslati i bilo kakve dodatne materijale i sadržaje, pa i to dodajemo u kontekst znanja vašeg AI asistenta.</div></div>';
  }
  else if(r.v1 && r.v2 && r.nzt){
-  // E2 prenova 7. 9. zvecer: "dajte jo na preizkusnjo" (master 11-si-d100.md)
+  // E2 prenova 8. 9. ponoci: AI pomocnik (master 11-si-d100.md)
   var manjka=(r.snt==='napaka')
-    ?('Eno stvar pa je pri prenosu zgrešila: '+vv(r.nzt)+'. To je naša napaka, ne vaše strani, in jo odpravimo takoj, brezplačno.')
-    :('Kaj ji še manjka: '+vv(r.nzt)+'. Na vaši spletni strani tega ni zapisanega, zato to dodamo mi, takoj, ko nam manjkajoče pošljete.');
+    ?('Eno stvar pa je pri prenosu zgrešil: '+vv(r.nzt)+'. To je naša napaka, ne vaše strani, in jo odpravimo takoj, brezplačno.')
+    :('Kateri podatki mu še manjkajo: '+vv(r.nzt)+'. Na vaši spletni strani to ni zapisano. Pošljite nam manjkajoče informacije in bomo z njimi takoj obogatili spomin AI pomočnika.');
   e2='<div class="primer"><b>Primer: K1 Scrape E2 (dan 4)</b>'+
-   '<div class="zadeva"><span class="meta">zadeva</span> ko gost vpraša, '+vv(r.v1)+', platforma že odgovori</div>'+
+   '<div class="zadeva"><span class="meta">zadeva</span> ko gost vpraša, '+vv(r.v1)+', AI pomočnik že odgovori</div>'+
    '<div class="telo">'+vv(r.poz)+'<br><br>'+
-   'v prejšnjem sporočilu smo za vaš hotel postavili celovito platformo za goste. Danes jo dajte na preizkušnjo.<br><br>'+
-   'Vprašajte jo, '+vv(r.v1)+'. Ali pa '+vv(r.v2)+'. Odgovorila bo takoj, ker je prebrala vašo spletno stran. Preverite zdaj, v živo: '+vv(lnk)+'<br><br>'+
+   'v prejšnjem sporočilu smo za vaš hotel postavili celovito platformo za goste. Danes dajte njenega AI pomočnika na preizkušnjo.<br><br>'+
+   'Vprašajte ga, '+vv(r.v1)+'. Ali '+vv(r.v2)+'. AI pomočnik bo odgovoril takoj, ker pozna vsebino vaše spletne strani. Preverite zdaj, v živo: '+vv(lnk)+'<br><br>'+
    manjka+'<br><br>'+
-   'Če kje odgovori karkoli narobe, nam to pošljite in takoj popravimo.</div></div>';
+   'Lahko pošljete tudi kakršnekoli dodatne materiale in vsebine in tudi to dodamo v kontekst znanja vašega AI pomočnika.</div></div>';
  }
  // Obrazec za popravke (SI + HR, Matjaz 8. 9.): en pod vsakim primerom; enkratna oddaja do osvezitve.
  function formPop(oznaka){
