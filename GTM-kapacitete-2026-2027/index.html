@@ -755,7 +755,7 @@
     <div><label class="f">Faktor kontaktov pri verižnih hotelih</label><input type="number" id="arh_p_chain" value="0.7" step="0.05"><div class="hint">Pri mednarodnih verigah odloča uprava, na objektu ostane GM</div></div>
     <div><label class="f">Dodatni ogreti accounti</label><input type="number" id="arh_p_extra" value="6"></div>
     <div><label class="f">Dodatni na voljo od</label><input type="date" id="arh_p_extra_od" value="2026-10-05"></div>
-    <div><label class="f">Začetek pošiljanja</label><input type="date" id="arh_p_start" value="2026-09-08"></div>
+    <div><label class="f">Začetek pošiljanja</label><input type="date" id="arh_p_start" value="2026-09-09"></div>
     <div><label class="f">Konec prodajnega okna</label><input type="date" id="arh_p_end" value="2027-04-30"></div>
     <div><label class="f">Cilj: Dream 100 oba angla v (tednih)</label><input type="number" id="arh_p_goalw" value="8"></div>
   </div>
@@ -1222,8 +1222,8 @@ const ICO = {
 };
 function stepIco(code) { const c0 = String(code)[0]; const ch = c0 === 'E' ? 'e' : (c0 === 'L' ? 'p' : (c0 === 'C' ? 't' : null)); if (!ch) return code; return `<i class="si ${ch}" title="${code}">${ICO[ch]}</i><b class="sn">${String(code).slice(1)}</b>`; }
 const SEQ14 = [["e", "E1"], ["p", "L1"], ["t", "C1"], ["e", "E2"], ["p", "L2"], ["t", "C2"], ["e", "E3"], ["p", "L3"], ["t", "C3"], ["e", "E4"], ["p", "L4"], ["t", "C4"], ["e", "E5"], ["p", "L5"]];
-const FIRST = 7; // tor 8. 9. 2026: prvi dan kampanje (prestavljeno s pon 7. 9., odlocitev 7. 9.: copyji se niso potrjeni); do 7. 9. brez dotikov
-const IT_START = 13; // sre 16. 9. 2026: Italija sele v 3. tednu (premik za en delovni dan s startom 8. 9.), da se prej aktivira Ales kot klicatelj v italijanscini (odlocitev 2. 9.)
+const FIRST = 8; // sre 9. 9. 2026: prvi dan kampanje (drugi zamik: 7. 9. -> 8. 9. -> 9. 9., odlocitev 8. 9. zvecer prek seje Inbox health); do 8. 9. brez dotikov
+const IT_START = 14; // cet 17. 9. 2026: Italija sele v 3. tednu (premik za en delovni dan s startom 9. 9.), da se prej aktivira Ales kot klicatelj v italijanscini (odlocitev 2. 9.)
 const HOL = [84, 90]; // cet 24. 12. 2026 do pet 1. 1. 2027; december do 23. 12. poln (odlocitev 31. 8.)
 const CYCLE = 15; const CALL_CYCLE = 12; const SCN = { multi: "Multichannel", two: "2-channel", single: "Single channel" };
 const ACC = (who, dom) => ({ who, mail: `${{ Rok: "rok.kokalj", Matjaž: "matjaz.volkar", Amadej: "amadej.demsar", Nina: "nina.bernik", Gregor: "gregor.skok", Simon: "simon.bergant" }[who]}@${dom}` });
