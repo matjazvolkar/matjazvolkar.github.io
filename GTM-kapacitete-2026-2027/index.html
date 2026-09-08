@@ -880,8 +880,12 @@ function renderSloji3(P) {
 function renderMirror(P) {
   const T = trgi().filter(m => m.vir !== "manjka");
   const rows = T.map(m => {
-    const kD = kontakti(m, "d100", P), kO = sumK([kontakti(m, "rest", P), kontakti(m, "intl", P)]);
-    const hD = m.d100.hotelov, hO = restHotels(m);
+    // Kartica ostalih steje ISTO mnozico kot povezan seznam ostali-<trg>.html: samo sloj
+    // "ostali" (top 200), BREZ mednarodnih verig iz registra. Do 8. 9. je stevec pristeval
+    // se intl (SI 122 = 114 + 8, HR 181 = 158 + 23), seznam pa jih ne kaze; Matjazev nalog.
+    // Mednarodne ostanejo v sekciji 7 (sloji) in v podrobni tabeli kontaktov.
+    const kD = kontakti(m, "d100", P), kO = kontakti(m, "rest", P);
+    const hD = m.d100.hotelov, hO = (m.rest || {}).hotelov || 0;
     const infoD = Math.min(Math.max(hD - kD.biz, 0), kD.office), infoO = Math.min(Math.max(hO - kO.biz, 0), kO.office); // info@ = hoteli brez poslovnega maila z office kontaktom (isto pravilo kot razporejevalnik)
     return { m, D: { hot: hD, dm: Math.round(kD.dm), mail: kD.biz, info: infoD, mailT: kD.biz + infoD, li: kD.li, tel: telCount(kD, hD), mob: kD.mob, off: Math.min(hD, kD.office) }, O: { hot: hO, dm: Math.round(kO.dm), mail: kO.biz, info: infoO, mailT: kO.biz + infoO, li: kO.li, tel: telCount(kO, hO), mob: kO.mob, off: Math.min(hO, kO.office) } };
   });
