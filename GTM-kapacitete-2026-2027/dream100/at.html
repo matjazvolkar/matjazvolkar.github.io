@@ -142,7 +142,7 @@ function zetonVrednost(ime,r){
  return m[ime];
 }
 function vstavi(t,r){
- return String(t||'').replace(/\{\{([a-z0-9_]+)\}\}/g,function(_,ime){
+ return String(t||'').replace(/\{\{([a-zA-Z0-9_]+)\}\}/g,function(_,ime){
   var v=zetonVrednost(ime,r);
   return (v===undefined||v===null||v==='')
    ?'<span class="var manjka">{'+ime+'}</span>'
@@ -201,7 +201,7 @@ function vrsticaDetajl(r){
    p3:'The platform includes only content from your website. If you find anything that is not right, write to us and we will fix or extend it right away.'}};
  var F=FR[TRG]||FR.en;
  var e1='';
- if(r.pv){
+ if(r.pv && !(KOPIJA&&KOPIJA.pain)){
   e1='<div class="primer"><b>Primer: '+F.lbl+'</b>'+
    '<div class="zadeva"><span class="meta">zadeva</span> '+F.zad+'</div>'+
    '<div class="telo">'+vv(r.poz)+'<br><br>'+vv(r.pv)+(F.most?('<br><br>'+F.most):'')+'<br><br>'+F.p1+'<br><br>'+F.p2a+vv(r.h)+F.p2b+vv(lnk)+'<br><br>'+F.p3+'</div></div>';
@@ -255,6 +255,16 @@ function vrsticaDetajl(r){
  if(r.iu && KOPIJA && KOPIJA.index && KOPIJA.index.e1){
   idx='<div class="primeri par">'+primerKopije(KOPIJA.index.e1,r).replace(/<\/div>$/,'')+formPop(KOPIJA.index.e1.oznaka)+'</div>'+primerKopije(KOPIJA.index.e2,r).replace(/<\/div>$/,'')+formPop(KOPIJA.index.e2.oznaka)+'</div>'+'</div>';
  }
+ // Sloj ostali: primera Pain 1 E1 (levo) in Pain 2 E1 (desno) iz strani GTM-copy.
+ // {primer_scrape_link}/{primer_index_link} ostaneta oznacena kot manjkajoca, dokler
+ // Matjaz ne potrdi javnih primerov artefaktov.
+ var pain='';
+ if(r.pv && KOPIJA && KOPIJA.pain && KOPIJA.pain.p1 && KOPIJA.pain.p1.e1){
+  var pe=[KOPIJA.pain.p1.e1,(KOPIJA.pain.p2||{}).e1].filter(Boolean);
+  pain='<div class="primeri par">'+pe.map(function(b){
+   return primerKopije(b,r).replace(/<\/div>$/,'')+formPop(b.oznaka)+'</div>';
+  }).join('')+'</div>';
+ }
  return '<tr class="detail"><td colspan="13"><div class="dgrid">'+
   sek('Identiteta',[p('polno ime',r.polno||r.h),p('kraj',r.k),p('regija',r.reg),p('tip',r.tip),
                     p('skupina ali znamka',r.ver),p('podjetje',r.pod),p('domena',dom)])+
@@ -268,6 +278,7 @@ function vrsticaDetajl(r){
   '</div>'+
   (pers.length?('<div class="perso"><b>Personalizacija</b>'+pers.join('')+'</div>'):'')+
   idx+
+  pain+
   primer+
   '</td></tr>';
 }
