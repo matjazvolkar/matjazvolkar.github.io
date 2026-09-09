@@ -1225,6 +1225,9 @@ const SEQ14 = [["e", "E1"], ["p", "L1"], ["t", "C1"], ["e", "E2"], ["p", "L2"], 
 const FIRST = 8; // sre 9. 9. 2026: prvi dan kampanje (drugi zamik: 7. 9. -> 8. 9. -> 9. 9., odlocitev 8. 9. zvecer prek seje Inbox health); do 8. 9. brez dotikov
 const IT_START = 14; // cet 17. 9. 2026: Italija sele v 3. tednu (premik za en delovni dan s startom 9. 9.), da se prej aktivira Ales kot klicatelj v italijanscini (odlocitev 2. 9.)
 const HOL = [84, 90]; // cet 24. 12. 2026 do pet 1. 1. 2027; december do 23. 12. poln (odlocitev 31. 8.)
+const BATCH_ZAMIK = 1;   // batch n startaa naslednji delovni dan po batchu n-1 (Matjazeva odlocitev 9. 9.)
+const BATCH_V_ZRAKU = 3; // najvec 3 batchi istega trga/kroga/sloja hkrati; tako je vsak dan en batch na mailu, en na LinkedInu, en na klicih
+const SI_D100_B2_NAJPREJ = 11; // pon 14. 9. 2026: SI K1 D100 B2 in B3 ne moreta v cet/pet, ker za nove hotele se ni scrape linkov
 const KROG_CIKEL = 22; // 30 koledarskih dni = 22 delovnih: batch naslednjega kroga starta 30 dni po E1 startu ISTEGA batcha prejsnjega kroga (odlocitev 9. 9.); premor batcha = od zadnjega dotika sekvence do dneva 22 po njegovem E1
 const CYCLE = 15; const CALL_CYCLE = 12; const SCN = { multi: "Multichannel", two: "2-channel", single: "Single channel" };
 const ACC = (who, dom) => ({ who, mail: `${{ Rok: "rok.kokalj", Matjaž: "matjaz.volkar", Amadej: "amadej.demsar", Nina: "nina.bernik", Gregor: "gregor.skok", Simon: "simon.bergant" }[who]}@${dom}` });
@@ -1394,6 +1397,17 @@ function globalPlan(P) {
       // (30 koledarskih dni) od E1 starta ISTEGA batcha prejsnjega kroga; ne caka vec konca celega kroga in ne premora od konca.
       // Premor batcha je torej od zadnjega dotika njegove sekvence do dneva KROG_CIKEL po njegovem E1; vrstni red batchev ostane enak.
       if (b.round > 1) { const prev = all.filter(x => x.mk === b.mk && x.round === b.round - 1 && (x.nD > 0) === (b.nD > 0)); const pb = prev.find(x => x.ord === b.ord) || prev[prev.length - 1]; if (!pb || pb.start == null) { b.block = 'krog:predhodni'; left.push(b); continue; } if (d < pb.start + KROG_CIKEL) { b.block = 'krog:premor'; left.push(b); continue; } }
+      // ENODNEVNI ZAMIK BATCHEV (Matjaz 9. 9.): batch n istega trga, kroga in sloja sme startati sele
+      // naslednji delovni dan po batchu n-1, hkrati pa jih je najvec BATCH_V_ZRAKU. Tako vsak dan tece
+      // en batch po mailu, en po LinkedInu in en po telefonu, kot v shemi zamikov.
+      if (b.ord > 1) {
+        const druzina = all.filter(x => x.mk === b.mk && x.round === b.round && (x.nD > 0) === (b.nD > 0));
+        const prej = druzina.find(x => x.ord === b.ord - 1);
+        if (!prej || prej.start == null || d < prej.start + BATCH_ZAMIK) { b.block = 'zamik:predhodni batch'; left.push(b); continue; }
+        if (druzina.filter(x => x.start != null && x.start <= d && x.end >= d).length >= BATCH_V_ZRAKU) { b.block = 'zamik:polno (3 v zraku)'; left.push(b); continue; }
+      }
+      // izjema 9. 9.: SI Dream 100 K1 nima scrape linkov za B2 in B3, zato ne moreta v cetrtek in petek
+      if (b.mk.trg === "si" && b.round === 1 && b.nD > 0 && b.ord > 1 && d < SI_D100_B2_NAJPREJ) { b.block = 'si:manjkajo scrape linki'; left.push(b); continue; }
       // mail account: najprej predvideni account (Dream 100 ali ostali), nato drugi accounti istega trga
       const accs0 = (b.accs || b.mk.accounts).filter(a => a.mail); let accs; if (b.mk.trg === "uae") accs = accs0; else if (b.copy === 'o') accs = NINA_ACCS.concat(accs0.filter(a => !ROK_MAILS.has(a.mail) && !NINA_MAILS.has(a.mail))); else if (b.copy === 'b') accs = ["si", "hr"].includes(b.mk.trg) ? ROK_ACCS.concat(MAILBOXES.filter(a => ["Matjaž", "Amadej"].includes(a.who))) : ROK_ACCS.concat(accs0.filter(a => !ROK_MAILS.has(a.mail) && !NINA_MAILS.has(a.mail))); else accs = ["si", "hr"].includes(b.mk.trg) ? accs0 : accs0.filter(a => !ROK_MAILS.has(a.mail)).concat(accs0.filter(a => ROK_MAILS.has(a.mail))); if (accs.length && b.copy && b.mk.trg !== "uae") b.acc = accs[0]; const pref = accs.length ? [b.acc, ...accs.filter(a => a !== b.acc)] : [b.acc];
       let key = null, ka = -1; for (const a of pref) { if (b.mk.trg !== "it" && itHold(d) && a.mail && a.mail.startsWith("amadej.")) continue; const k2 = a.mail || ("li-only:" + b.mk.trg); if (!accSlots[k2]) accSlots[k2] = [1, 2, 3]; const kk = freeSlot(accSlots[k2], d); if (kk >= 0) { key = k2; ka = kk; b.acc = a; break; } }
