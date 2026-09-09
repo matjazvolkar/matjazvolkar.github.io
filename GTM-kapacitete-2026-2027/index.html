@@ -1231,8 +1231,11 @@ const BATCH_V_ZRAKU = 99; // batchi se nizajo z enodnevnim zamikom, dokler jih n
 const TRGI_AKTIVNI = ["si", "hr", "uae"];
 // Sloj "ostali" je v celoti odstranjen, razen hotelov z VSEMI TREMI kanali: SI 11, HR 14, UAE nic.
 const OSTALI_SAMO_FULL3 = { si: true, hr: true, uae: false };
-// Septembra se NE klice (Matjaz brez casa, Tomaz se ni zaposlen): batchi, ki startajo pred CALL_START, so 2-kanalni.
-const KLICI_OD = 26; // delovni dan 26 = pon 5. 10. 2026
+// Klicev zaenkrat NI (Matjaz 9. 9.: tudi oktobra ne racunamo nanje). Vsi batchi so 2-kanalni: mail + LinkedIn.
+// Ko se klicatelj dejansko zaposli, se stevilka postavi na njegov prvi delovni dan.
+const KLICI_OD = 9999;
+// Zamaknjeni zacetki po trgih: SI je startal 9. 9., HR in UAE sta ta dan odpadla (Matjaz 9. 9.).
+const TRG_START = { si: 8, hr: 9, uae: 10 }; // 8 = sre 9. 9., 9 = cet 10. 9., 10 = pet 11. 9.
 const DOPOLNILNI_DOTIKI = false; // vrstice D (dopolnilni klici in LinkedIn dotiki ostalim) so izklopljene
 const SI_D100_B2_NAJPREJ = 11; // pon 14. 9. 2026: SI K1 D100 B2 in B3 ne moreta v cet/pet, ker za nove hotele se ni scrape linkov
 const KROG_CIKEL = 22; // 30 koledarskih dni = 22 delovnih: batch naslednjega kroga starta 30 dni po E1 startu ISTEGA batcha prejsnjega kroga (odlocitev 9. 9.); premor batcha = od zadnjega dotika sekvence do dneva 22 po njegovem E1
@@ -1415,6 +1418,8 @@ function globalPlan(P) {
         if (!prej || prej.start == null || d < prej.start + BATCH_ZAMIK) { b.block = 'zamik:predhodni batch'; left.push(b); continue; }
         if (druzina.filter(x => x.start != null && x.start <= d && x.end >= d).length >= BATCH_V_ZRAKU) { b.block = 'zamik:polno (3 v zraku)'; left.push(b); continue; }
       }
+      // zamaknjeni zacetki trgov: HR od 10. 9., UAE od 11. 9. (prvi E1 na oba trga je 9. 9. odpadel)
+      if (TRG_START[b.mk.trg] && d < TRG_START[b.mk.trg]) { b.block = 'trg:zacetek'; left.push(b); continue; }
       // izjema 9. 9.: SI Dream 100 K1 nima scrape linkov za B2 in B3, zato ne moreta v cetrtek in petek
       if (b.mk.trg === "si" && b.round === 1 && b.nD > 0 && b.ord > 1 && d < SI_D100_B2_NAJPREJ) { b.block = 'si:manjkajo scrape linki'; left.push(b); continue; }
       // mail account: najprej predvideni account (Dream 100 ali ostali), nato drugi accounti istega trga
@@ -1721,7 +1726,8 @@ init();
       <span><b>B3 na vnosu</b> = zaporedna številka batcha na trgu. Kampanja traja več tednov, ker batchi startajo zamaknjeno: na en mail račun, en LinkedIn sedež in enega klicatelja lahko na dan starta samo en batch (33 mailov, 25 povabil, 33 klicev), naslednji pride na vrsto naslednji prosti dan.</span>
       <span><b>Bel okvir na vnosu</b> = batch vsebuje hotele z vsemi tremi kanali (poslovni mail + LinkedIn + mobilna); filter E+L+C pri kanalih pokaže samo te.</span>
       <span><b>Pošiljatelji mailov:</b> poslovni maili (K) z Rokovih računov, office maili (Ko) z Nininih, UAE v celoti Rok.</span>
-      <span><b>Klicatelji:</b> septembra se NE kliče (Matjaž nima časa, Tomaž še ni zaposlen), zato so septembrski batchi dvokanalni: mail in LinkedIn. Klici se vklopijo 5. 10. 2026, ko začne Tomaž.</span>
+      <span><b>Klici:</b> zaenkrat jih ni v načrtu, niti oktobra (odločitev 9. 9. 2026). Vsi batchi so dvokanalni: mail in LinkedIn. Klicna vrstica se vrne, ko bo klicatelj dejansko na voljo.</span>
+      <span><b>Zamaknjeni začetki:</b> SI je startal v sredo 9. 9., HR starta v četrtek 10. 9., UAE v petek 11. 9. (prvi mail na HR in UAE je 9. 9. odpadel).</span>
       <span><b>Obseg koledarja (9. 9. 2026):</b> samo SI, HR in UAE, torej trgi, za katere gradimo scrape tenante in Index poročila. Iz sloja ostali so vključeni samo hoteli z vsemi tremi kanali (SI 11, HR 14); UAE ostalih nima. Batchi se nizajo z enodnevnim zamikom, dokler jih ne zmanjka. Izjema: SI Dream 100 K1 B2 in B3 ne moreta pred 14. 9., ker za nove hotele še ni scrape linkov.</span>
     </div>`;
     document.getElementById('cal_ttl').textContent = v.ttl;
