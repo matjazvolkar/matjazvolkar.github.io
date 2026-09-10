@@ -134,7 +134,7 @@ function zetonVrednost(ime,r){
         scrape_zna_kratko:r.szk,scrape_ne_zna_kratko:r.snk,
         ukrep_1:r.u1,dvig_ocene:r.dvo,vprasanje_1:r.v1,vprasanje_2:r.v2,ne_zna_tema:r.nzt,
         jeziki_vrstica:r.jv,
-        hotel_name:r.h,hotel:r.h,hotel_kratko:r.h,
+        hotel_name:(r.hk||r.h),hotel:(r.hk||r.h),hotel_kratko:(r.hk||r.h),
         city:r.k,mesto:r.k,
         booking_rating:r.b,booking:r.b,review_count:r.oc,ocen:r.oc,
         demo_url:demo,scrape_link:demo,
