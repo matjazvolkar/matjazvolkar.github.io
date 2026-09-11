@@ -1229,7 +1229,7 @@ const BATCH_ZAMIK = 1;    // batch n startaa naslednji delovni dan po batchu n-1
 const BATCH_V_ZRAKU = 99; // batchi se nizajo z enodnevnim zamikom, dokler jih ne zmanjka; meja so viri (mail racuni, LinkedIn sedezi), ne stevilo
 // Poenostavitev 9. 9. 2026 (Matjaz): koledar kaze SAMO trge, za katere gradimo scrape tenante in Index porocila.
 const TRGI_AKTIVNI = ["si", "hr", "uae"];
-// Sloj "ostali" je v celoti odstranjen, razen hotelov z VSEMI TREMI kanali: SI 11, HR 14, UAE nic.
+// Sloj "ostali": od 11. 9. sodelujejo hoteli z E+L (poslovni mail + LinkedIn): SI 18-1 (brez Bernardina/Sava), HR 37-1 (brez Tuhlja/Cretnik), UAE nic.
 const OSTALI_SAMO_FULL3 = { si: true, hr: true, uae: false };
 // Klicev zaenkrat NI (Matjaz 9. 9.: tudi oktobra ne racunamo nanje). Vsi batchi so 2-kanalni: mail + LinkedIn.
 // Ko se klicatelj dejansko zaposli, se stevilka postavi na njegov prvi delovni dan.
@@ -1345,7 +1345,10 @@ function globalPlan(P) {
     // prioriteta znotraj bazena: 1. vsi trije kanali (najprej D100, nato ostali), 2. mail + LinkedIn brez mobilne (najprej D100, nato ostali), 3. drugi po grpOf (odlocitev 2. 9.)
     const rank = c => (full3(c) ? 0 : (c.e && c.l ? 100 : 200)) + (c.layer === "d100" ? 0 : 50) + grpOf(c) * 10 + (c.icp === "DA" ? 0 : (c.icp === "MEJNO" ? 1 : 2));
     // sloj ostali: samo hoteli z vsemi tremi kanali (SI in HR), UAE brez ostalih (Matjaz 9. 9.)
-    const restAll = OSTALI_SAMO_FULL3[mk.trg] ? cc.rest.filter(c => grpOf(c) < 5 && full3(c)) : [];
+    const elFilter = c => !!(c.e && c.l); // E+L: poslovni mail + LinkedIn (razsiritev 11. 9., Matjaz: ostali z obema kanaloma gredo v K1 batche)
+    let restAll = OSTALI_SAMO_FULL3[mk.trg] ? cc.rest.filter(c => grpOf(c) < 5 && elFilter(c)) : [];
+    if (mk.trg === "hr" && restAll.length) restAll = restAll.slice(0, restAll.length - 1); // minus Terme Tuhelj (Cretnik, pogovori za vse njegove hotele; 11. 9.)
+    if (mk.trg === "si" && restAll.length) restAll = restAll.slice(0, restAll.length - 1); // minus Grand Hotel Bernardin (Sava Hotels; 11. 9.)
     const fullR = restAll.slice(); const fullRSet = new Set(fullR); // polni kontakti ostalih gredo v multichannel batche z Dream 100 (odlocitev 2. 9.)
     const d100 = cc.d100.filter(c => grpOf(c) < 5).concat(fullR).sort((x, y) => rank(x) - rank(y)); const rest = restAll.filter(c => !fullRSet.has(c)).sort((x, y) => rank(x) - rank(y));
     const scnD = mk.d100Scn || (caller ? "multi" : "two"); const scnR = mk.restScn;
