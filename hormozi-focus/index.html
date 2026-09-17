@@ -1,0 +1,601 @@
+<!doctype html>
+<html lang="sl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Hormozi Focus</title>
+<meta name="description" content="Dnevna razporeditev časa po 15-minutnih blokih, s koledarjem in statistiko. Podatki ostanejo samo v tem brskalniku.">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='18' fill='%232F7D6E'/><text x='50' y='72' font-size='58' font-family='Georgia,serif' fill='%23FAF8F4' text-anchor='middle'>H</text></svg>">
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+
+  :root {
+    --bg:       #FAF8F4;
+    --line:     #E4E0D7;
+    --line-2:   #EFECE4;
+    --ink:      #16191C;
+    --ink-2:    #565C60;
+    --ink-3:    #8A8F8C;
+    --accent:   #2F7D6E;
+    --accent-2: #E4F0EC;
+    --warn-fg:  #7A6320;
+    --warn-bg:  #F5EFDC;
+    --mono: ui-monospace, "Cascadia Mono", "SF Mono", Menlo, Consolas, monospace;
+    --sans: ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg:       #10141A;
+      --line:     #262D38;
+      --line-2:   #1E242D;
+      --ink:      #E9E7E2;
+      --ink-2:    #A2A8A6;
+      --ink-3:    #6D7375;
+      --accent:   #5FB3A1;
+      --accent-2: #12211E;
+      --warn-fg:  #D9BC6A;
+      --warn-bg:  #241F12;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg:       #10141A;
+    --line:     #262D38;
+    --line-2:   #1E242D;
+    --ink:      #E9E7E2;
+    --ink-2:    #A2A8A6;
+    --ink-3:    #6D7375;
+    --accent:   #5FB3A1;
+    --accent-2: #12211E;
+    --warn-fg:  #D9BC6A;
+    --warn-bg:  #241F12;
+  }
+
+  body {
+    margin: 0; min-height: 100vh;
+    background: var(--bg); color: var(--ink);
+    font-family: var(--sans); font-size: 15.5px; line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 40px 24px 72px; }
+
+  header { border-bottom: 2px solid var(--ink); padding-bottom: 20px; margin-bottom: 28px; }
+  .back { font-family: var(--mono); font-size: 12px; color: var(--ink-3); text-decoration: none; }
+  .back:hover { color: var(--accent); }
+  .name {
+    margin: 10px 0 0; font-family: var(--serif); font-weight: 600;
+    font-size: clamp(28px, 4.4vw, 42px); line-height: 1.05; letter-spacing: -.015em;
+  }
+  .tagline { margin: 10px 0 0; color: var(--ink-2); max-width: 68ch; font-size: 15px; }
+
+  .layout { display: grid; grid-template-columns: 1fr 360px; gap: 28px; align-items: start; }
+  @media (max-width: 920px) { .layout { grid-template-columns: 1fr; } }
+
+  .panel {
+    border: 1px solid var(--line); border-radius: 10px; background: var(--bg);
+    padding: 18px 20px; margin-bottom: 20px;
+  }
+  .panel h2 {
+    margin: 0 0 4px; font-family: var(--mono); font-size: 11px; font-weight: 700;
+    letter-spacing: .13em; text-transform: uppercase; color: var(--accent);
+  }
+  .panel h3 {
+    margin: 0 0 8px; font-size: 13px; font-weight: 700; color: var(--ink-2);
+  }
+
+  /* table panel */
+  .panel-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 14px; margin-bottom: 12px; }
+  .panel-head h2 { margin: 0; text-transform: none; letter-spacing: 0; font-size: 17px; font-family: var(--serif); color: var(--ink); font-weight: 620; }
+  .panel-head .datelabel { color: var(--accent); }
+  .fill-live { font-family: var(--mono); font-size: 12.5px; color: var(--ink-2); white-space: nowrap; }
+  .fill-live strong { color: var(--ink); }
+
+  .table-scroll { max-height: 66vh; overflow: auto; border: 1px solid var(--line-2); border-radius: 8px; }
+  table { border-collapse: collapse; width: 100%; min-width: 620px; font-size: 13.5px; }
+  thead th {
+    position: sticky; top: 0; background: var(--bg); z-index: 1;
+    text-align: left; font-family: var(--mono); font-size: 10.5px; letter-spacing: .07em; text-transform: uppercase;
+    color: var(--ink-3); padding: 8px 8px; border-bottom: 1px solid var(--line);
+  }
+  tbody td { padding: 4px 8px; border-bottom: 1px solid var(--line-2); vertical-align: middle; }
+  tbody tr:hover td { background: var(--line-2); }
+  .c-num { width: 34px; color: var(--ink-3); font-family: var(--mono); font-size: 12px; text-align: right; }
+  .c-time { width: 108px; font-family: var(--mono); font-size: 12px; color: var(--ink-2); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .c-ai { width: 44px; text-align: center; }
+  th.th-ai { text-align: center; }
+
+  input[type="text"] {
+    width: 100%; border: none; border-bottom: 1px solid transparent; background: transparent;
+    color: var(--ink); font: inherit; font-size: 13.5px; padding: 5px 2px; border-radius: 3px;
+  }
+  input[type="text"]:hover { border-bottom-color: var(--line); }
+  input[type="text"]:focus { outline: none; border-bottom-color: var(--accent); background: var(--line-2); }
+  input[type="checkbox"] { width: 17px; height: 17px; accent-color: var(--accent); cursor: pointer; }
+
+  .panel-foot { display: flex; align-items: center; gap: 14px; margin-top: 14px; flex-wrap: wrap; }
+  .btn-primary {
+    font-family: var(--mono); font-size: 12.5px; font-weight: 700; letter-spacing: .04em;
+    color: var(--bg); background: var(--accent); border: none; border-radius: 7px;
+    padding: 11px 20px; cursor: pointer;
+  }
+  .btn-primary:hover { opacity: .88; }
+  .btn-ghost {
+    font-family: var(--mono); font-size: 11.5px; font-weight: 700; letter-spacing: .04em;
+    color: var(--ink-2); background: transparent; border: 1px solid var(--line); border-radius: 7px;
+    padding: 8px 14px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
+  }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+  .send-status { font-size: 12.5px; color: var(--ink-3); }
+
+  /* calendar panel */
+  .cal-head { display: flex; align-items: center; justify-content: space-between; margin: 10px 0 12px; }
+  .cal-head button { background: none; border: 1px solid var(--line); border-radius: 6px; color: var(--ink-2); width: 28px; height: 28px; cursor: pointer; font-size: 15px; line-height: 1; }
+  .cal-head button:hover { border-color: var(--accent); color: var(--accent); }
+  #calMonthLabel { font-family: var(--mono); font-size: 12.5px; text-transform: capitalize; color: var(--ink); }
+
+  .cal-weekdays, .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+  .cal-weekdays { font-family: var(--mono); font-size: 10px; color: var(--ink-3); text-align: center; margin-bottom: 4px; }
+  .cal-cell.day {
+    position: relative; aspect-ratio: 1; border: 1px solid var(--line-2); border-radius: 6px;
+    background: none; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 3px; color: var(--ink); font-size: 12.5px; font-family: var(--mono);
+  }
+  .cal-cell.day:hover { border-color: var(--accent); }
+  .cal-cell.empty { visibility: hidden; }
+  .cal-cell.is-today { font-weight: 700; box-shadow: inset 0 0 0 1.5px var(--ink-3); }
+  .cal-cell.is-selected { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+  .cal-cell.is-selected .cal-dot { background: var(--bg); }
+  .cal-dot { width: 6px; height: 6px; border-radius: 50%; }
+  .cal-cell.full .cal-dot { background: var(--accent); }
+  .cal-cell.partial .cal-dot { background: var(--accent); opacity: .4; }
+  .cal-cell.zero .cal-dot { background: none; box-shadow: inset 0 0 0 1.5px var(--ink-3); }
+  .cal-cell.draft .cal-dot { background: var(--warn-fg); }
+  .cal-cell.none .cal-dot { visibility: hidden; }
+  #calToday { margin-top: 12px; width: 100%; }
+
+  /* stats panel */
+  .stats-list { margin: 10px 0 18px; padding: 0; }
+  .stat { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--line-2); }
+  .stat dt { margin: 0; color: var(--ink-2); font-size: 13px; max-width: 20ch; }
+  .stat dd { margin: 0; font-family: var(--mono); font-size: 13px; color: var(--ink); text-align: right; white-space: nowrap; }
+  .top5 ol { margin: 0; padding: 0 0 0 18px; }
+  .top5 li { display: flex; justify-content: space-between; gap: 10px; font-size: 13px; padding: 4px 0; color: var(--ink); }
+  .top5 li.muted { color: var(--ink-3); list-style: none; margin-left: -18px; }
+  .t5-count { font-family: var(--mono); color: var(--ink-3); white-space: nowrap; }
+
+  /* backup panel */
+  .backup-panel .note { margin: 6px 0 12px; color: var(--ink-3); font-size: 12.5px; }
+  .backup-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+  .file-label { cursor: pointer; }
+
+  footer {
+    margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--line);
+    color: var(--ink-3); font-size: 12.5px; max-width: 80ch;
+  }
+  footer p { margin: 0 0 6px; }
+  footer a { color: var(--ink-2); }
+  footer a:hover { color: var(--accent); }
+
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <a class="back" href="https://matjazvolkar.github.io/">← matjazvolkar.github.io</a>
+    <h1 class="name">Hormozi Focus</h1>
+    <p class="tagline">
+      Dan, razrezan na 76 kosov po 15 minut, od 5.00 do polnoči. Vsak dan izberi na koledarju,
+      zapiši, kaj si počel v posameznem bloku, in pošlji. Kar meriš, to izboljšaš.
+    </p>
+  </header>
+
+  <div class="layout">
+
+    <section class="panel table-panel">
+      <div class="panel-head">
+        <h2>Razpored za <span class="datelabel" id="selDateLabel">-</span></h2>
+        <div class="fill-live">Zapolnjeno: <strong id="liveFilled">0</strong>/76</div>
+      </div>
+      <div class="table-scroll">
+        <table id="slotsTable">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Čas</th>
+              <th>Opis dela</th>
+              <th class="th-ai">AI</th>
+            </tr>
+          </thead>
+          <tbody id="slotsBody"></tbody>
+        </table>
+      </div>
+      <div class="panel-foot">
+        <button id="sendBtn" class="btn-primary">Pošlji v koledar</button>
+        <span class="send-status" id="sendStatus"></span>
+      </div>
+    </section>
+
+    <aside class="sidebar">
+
+      <section class="panel cal-panel">
+        <h2>Koledar</h2>
+        <div class="cal-head">
+          <button id="calPrev" type="button" aria-label="Prejšnji mesec">‹</button>
+          <div id="calMonthLabel">-</div>
+          <button id="calNext" type="button" aria-label="Naslednji mesec">›</button>
+        </div>
+        <div class="cal-weekdays"><span>Po</span><span>To</span><span>Sr</span><span>Če</span><span>Pe</span><span>So</span><span>Ne</span></div>
+        <div class="cal-grid" id="calGrid"></div>
+        <button id="calToday" class="btn-ghost" type="button">Danes</button>
+      </section>
+
+      <section class="panel stats-panel">
+        <h2>Statistika</h2>
+        <dl class="stats-list">
+          <div class="stat"><dt>Povprečno zapolnjenih na dan</dt><dd id="statAvg">-</dd></div>
+          <div class="stat"><dt>Zaporednih polnih dni (76/76)</dt><dd id="statStreak">-</dd></div>
+          <div class="stat"><dt>Prazni dnevi, zadnjih 30</dt><dd id="statEmpty">-</dd></div>
+        </dl>
+        <h3>Top 5 opisov dela</h3>
+        <ol id="top5List"></ol>
+      </section>
+
+      <section class="panel backup-panel">
+        <h2>Varnostna kopija</h2>
+        <p class="note">Podatki so shranjeni samo v tem brskalniku (localStorage), nikamor se ne pošiljajo. Če počistiš podatke brskalnika ali zamenjaš napravo, jih izgubiš brez izvoza.</p>
+        <div class="backup-actions">
+          <button id="exportBtn" class="btn-ghost" type="button">Izvozi JSON</button>
+          <label class="btn-ghost file-label">Uvozi JSON<input type="file" id="importFile" accept="application/json" hidden></label>
+        </div>
+      </section>
+
+    </aside>
+  </div>
+
+  <footer>
+    <p>Stran teče v celoti v brskalniku, brez strežnika. Nič se ne naloži nikamor razen na to napravo.</p>
+    <p>Koda: <a href="https://github.com/matjazvolkar/matjazvolkar.github.io/tree/main/hormozi-focus">github.com/matjazvolkar/matjazvolkar.github.io</a></p>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  var LS_DAYS = "hormoziFocus.days.v1";
+  var SLOT_COUNT = 76;
+  var START_MIN = 5 * 60;
+
+  var slotLabels = buildSlotLabels();
+  var days = loadJSON(LS_DAYS, {});
+  var selectedDate = startOfDay(new Date());
+  var calendarViewDate = new Date(selectedDate);
+  var currentRows = blankRows();
+
+  var el = {
+    body: document.getElementById("slotsBody"),
+    selDateLabel: document.getElementById("selDateLabel"),
+    liveFilled: document.getElementById("liveFilled"),
+    sendBtn: document.getElementById("sendBtn"),
+    sendStatus: document.getElementById("sendStatus"),
+    calPrev: document.getElementById("calPrev"),
+    calNext: document.getElementById("calNext"),
+    calToday: document.getElementById("calToday"),
+    calMonthLabel: document.getElementById("calMonthLabel"),
+    calGrid: document.getElementById("calGrid"),
+    statAvg: document.getElementById("statAvg"),
+    statStreak: document.getElementById("statStreak"),
+    statEmpty: document.getElementById("statEmpty"),
+    top5List: document.getElementById("top5List"),
+    exportBtn: document.getElementById("exportBtn"),
+    importFile: document.getElementById("importFile")
+  };
+
+  function buildSlotLabels(){
+    var labels = [];
+    for (var i = 0; i < SLOT_COUNT; i++){
+      labels.push(fmtMin(START_MIN + i * 15) + "-" + fmtMin(START_MIN + i * 15 + 15));
+    }
+    return labels;
+    function fmtMin(min){
+      var h = Math.floor(min / 60), m = min % 60;
+      if (h === 24) return "24:00";
+      return pad2(h) + ":" + pad2(m);
+    }
+  }
+
+  function pad2(n){ return String(n).padStart(2, "0"); }
+  function startOfDay(d){ var r = new Date(d); r.setHours(0,0,0,0); return r; }
+  function addDays(d, n){ var r = new Date(d); r.setDate(r.getDate() + n); return r; }
+  function toKey(d){ return d.getFullYear() + "-" + pad2(d.getMonth()+1) + "-" + pad2(d.getDate()); }
+  function fromKey(key){ var p = key.split("-").map(Number); return new Date(p[0], p[1]-1, p[2]); }
+  function blankRows(){
+    var r = [];
+    for (var i = 0; i < SLOT_COUNT; i++) r.push({ opis:"", ai:false });
+    return r;
+  }
+  function deepCopyRows(rows){ return rows.map(function(r){ return { opis:r.opis||"", ai:!!r.ai }; }); }
+  function countFilled(rows){ return rows.filter(function(r){ return r.opis && r.opis.trim() !== ""; }).length; }
+
+  function loadJSON(key, fallback){
+    try {
+      var raw = localStorage.getItem(key);
+      return raw ? JSON.parse(raw) : fallback;
+    } catch (e) { return fallback; }
+  }
+  function saveJSON(key, val){
+    try { localStorage.setItem(key, JSON.stringify(val)); }
+    catch (e) { alert("Shranjevanje ni uspelo (localStorage poln ali blokiran). Izvozi podatke, da jih ne izgubiš."); }
+  }
+
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, function(c){
+      return { "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c];
+    });
+  }
+
+  function dayWord(n){
+    n = Math.abs(n);
+    var m = n % 100;
+    if (m === 1) return "dan";
+    if (m === 2) return "dneva";
+    if (m === 3 || m === 4) return "dnevi";
+    return "dni";
+  }
+
+  function formatDateSl(d){
+    return d.toLocaleDateString("sl-SI", { day:"numeric", month:"long", year:"numeric" });
+  }
+  function formatDateTimeSl(iso){
+    var d = new Date(iso);
+    return formatDateSl(d) + " ob " + pad2(d.getHours()) + ":" + pad2(d.getMinutes());
+  }
+
+  function ensureDay(key){
+    if (!days[key]) days[key] = { rows: blankRows(), updatedAt: null, sentAt: null };
+    return days[key];
+  }
+
+  function loadDayData(key){
+    var entry = days[key];
+    if (!entry) return { rows: blankRows(), sentAt: null };
+    return { rows: deepCopyRows(entry.rows), sentAt: entry.sentAt };
+  }
+
+  function renderTableRows(rows){
+    var html = "";
+    for (var i = 0; i < rows.length; i++){
+      var r = rows[i];
+      html += '<tr data-idx="' + i + '">'
+        + '<td class="c-num">' + (i+1) + '</td>'
+        + '<td class="c-time">' + slotLabels[i] + '</td>'
+        + '<td class="c-opis"><input type="text" data-field="opis" value="' + escapeHtml(r.opis) + '" placeholder="Opis dela …"></td>'
+        + '<td class="c-ai"><input type="checkbox" data-field="ai"' + (r.ai ? " checked" : "") + '></td>'
+        + '</tr>';
+    }
+    el.body.innerHTML = html;
+  }
+
+  function updateLiveCount(){
+    el.liveFilled.textContent = countFilled(currentRows);
+  }
+
+  function persistCurrentRows(){
+    var key = toKey(selectedDate);
+    var entry = ensureDay(key);
+    entry.rows = currentRows;
+    entry.updatedAt = new Date().toISOString();
+    saveJSON(LS_DAYS, days);
+  }
+
+  function loadAndRenderDay(key){
+    var data = loadDayData(key);
+    currentRows = data.rows;
+    renderTableRows(currentRows);
+    updateLiveCount();
+    el.selDateLabel.textContent = formatDateSl(fromKey(key));
+    el.sendStatus.textContent = data.sentAt
+      ? "Nazadnje poslano " + formatDateTimeSl(data.sentAt)
+      : "Ta dan še ni bil poslan v koledar.";
+  }
+
+  function selectDate(key){
+    selectedDate = fromKey(key);
+    loadAndRenderDay(key);
+    renderCalendar();
+  }
+
+  el.body.addEventListener("input", function(e){
+    var field = e.target.dataset.field;
+    if (field !== "opis") return;
+    var idx = Number(e.target.closest("tr").dataset.idx);
+    currentRows[idx][field] = e.target.value;
+    persistCurrentRows();
+    updateLiveCount();
+    renderCalendar();
+    computeStats();
+  });
+
+  el.body.addEventListener("change", function(e){
+    if (e.target.dataset.field !== "ai") return;
+    var tr = e.target.closest("tr");
+    var idx = Number(tr.dataset.idx);
+    currentRows[idx].ai = e.target.checked;
+    persistCurrentRows();
+    renderCalendar();
+    computeStats();
+  });
+
+  el.sendBtn.addEventListener("click", function(){
+    var key = toKey(selectedDate);
+    var now = new Date().toISOString();
+    var entry = ensureDay(key);
+    entry.rows = deepCopyRows(currentRows);
+    entry.updatedAt = now;
+    entry.sentAt = now;
+    saveJSON(LS_DAYS, days);
+    el.sendStatus.textContent = "Poslano ✓ · " + formatDateTimeSl(now);
+    renderCalendar();
+    computeStats();
+  });
+
+  function renderCalendar(){
+    var y = calendarViewDate.getFullYear(), m = calendarViewDate.getMonth();
+    el.calMonthLabel.textContent = calendarViewDate.toLocaleDateString("sl-SI", { month:"long", year:"numeric" });
+    var first = new Date(y, m, 1);
+    var firstIdx = (first.getDay() + 6) % 7;
+    var daysInMonth = new Date(y, m+1, 0).getDate();
+    var todayKey = toKey(startOfDay(new Date()));
+    var selKey = toKey(selectedDate);
+    var html = "";
+    for (var i = 0; i < firstIdx; i++) html += '<div class="cal-cell empty"></div>';
+    for (var d = 1; d <= daysInMonth; d++){
+      var dateObj = new Date(y, m, d);
+      var key = toKey(dateObj);
+      var entry = days[key];
+      var statusClass = "none";
+      if (entry && entry.sentAt){
+        var filled = countFilled(entry.rows);
+        statusClass = filled === SLOT_COUNT ? "full" : (filled > 0 ? "partial" : "zero");
+      } else if (entry) {
+        statusClass = "draft";
+      }
+      var cls = "cal-cell day " + statusClass
+        + (key === todayKey ? " is-today" : "")
+        + (key === selKey ? " is-selected" : "");
+      html += '<button type="button" class="' + cls + '" data-date="' + key + '">'
+        + '<span>' + d + '</span><span class="cal-dot"></span>'
+        + '</button>';
+    }
+    el.calGrid.innerHTML = html;
+  }
+
+  el.calGrid.addEventListener("click", function(e){
+    var btn = e.target.closest(".cal-cell.day");
+    if (!btn) return;
+    selectDate(btn.dataset.date);
+  });
+  el.calPrev.addEventListener("click", function(){
+    calendarViewDate = new Date(calendarViewDate.getFullYear(), calendarViewDate.getMonth() - 1, 1);
+    renderCalendar();
+  });
+  el.calNext.addEventListener("click", function(){
+    calendarViewDate = new Date(calendarViewDate.getFullYear(), calendarViewDate.getMonth() + 1, 1);
+    renderCalendar();
+  });
+  el.calToday.addEventListener("click", function(){
+    calendarViewDate = startOfDay(new Date());
+    selectDate(toKey(calendarViewDate));
+  });
+
+  function sentEntries(){
+    return Object.keys(days).filter(function(k){ return days[k].sentAt; }).sort();
+  }
+
+  function computeStats(){
+    var keys = sentEntries();
+
+    if (keys.length === 0){
+      el.statAvg.textContent = "ni podatkov";
+      el.statStreak.textContent = "0 " + dayWord(0);
+      el.statEmpty.textContent = "-";
+      el.top5List.innerHTML = '<li class="muted">Ni še podatkov.</li>';
+      return;
+    }
+
+    var totalFilled = keys.reduce(function(sum, k){ return sum + countFilled(days[k].rows); }, 0);
+    var avg = totalFilled / keys.length;
+    el.statAvg.textContent = avg.toFixed(1) + " / 76 (" + keys.length + " " + dayWord(keys.length) + ")";
+
+    var streak = 0, cursor = startOfDay(new Date()), first = true;
+    while (true){
+      var key = toKey(cursor);
+      var entry = days[key] && days[key].sentAt ? days[key] : null;
+      if (!entry){
+        if (first){ first = false; cursor = addDays(cursor, -1); continue; }
+        break;
+      }
+      first = false;
+      if (countFilled(entry.rows) === SLOT_COUNT){ streak++; cursor = addDays(cursor, -1); }
+      else break;
+    }
+    el.statStreak.textContent = streak + " " + dayWord(streak) + " zapored";
+
+    var emptyCount = 0;
+    for (var i = 1; i <= 30; i++){
+      var d = addDays(startOfDay(new Date()), -i);
+      var k2 = toKey(d);
+      var e2 = days[k2] && days[k2].sentAt ? days[k2] : null;
+      var filled2 = e2 ? countFilled(e2.rows) : 0;
+      if (filled2 === 0) emptyCount++;
+    }
+    el.statEmpty.textContent = emptyCount + " / 30 (do včeraj)";
+
+    var freq = {};
+    keys.forEach(function(k){
+      days[k].rows.forEach(function(r){
+        var t = (r.opis || "").trim();
+        if (!t) return;
+        var lk = t.toLowerCase();
+        if (!freq[lk]) freq[lk] = { label:t, count:0 };
+        freq[lk].count++;
+      });
+    });
+    var top5 = Object.keys(freq).map(function(k){ return freq[k]; })
+      .sort(function(a,b){ return b.count - a.count; }).slice(0, 5);
+    el.top5List.innerHTML = top5.length
+      ? top5.map(function(x){ return '<li><span>' + escapeHtml(x.label) + '</span><span class="t5-count">' + x.count + '×</span></li>'; }).join("")
+      : '<li class="muted">Ni še podatkov.</li>';
+  }
+
+  el.exportBtn.addEventListener("click", function(){
+    var payload = { exportedAt: new Date().toISOString(), days: days };
+    var blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url;
+    a.download = "hormozi-focus-backup-" + toKey(new Date()) + ".json";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
+
+  el.importFile.addEventListener("change", function(e){
+    var file = e.target.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function(){
+      try {
+        var parsed = JSON.parse(reader.result);
+        var incoming = parsed && parsed.days ? parsed.days : null;
+        if (!incoming) throw new Error("manjka polje days");
+        var n = Object.keys(incoming).length;
+        if (!confirm("Uvozim " + n + " dni iz datoteke? Obstoječi dnevi z enakim datumom bodo prepisani.")) return;
+        Object.keys(incoming).forEach(function(k){ days[k] = incoming[k]; });
+        saveJSON(LS_DAYS, days);
+        renderCalendar();
+        computeStats();
+        loadAndRenderDay(toKey(selectedDate));
+        alert("Uvoz končan.");
+      } catch (err){
+        alert("Datoteka ni veljaven izvoz Hormozi Focus (" + err.message + ").");
+      }
+      e.target.value = "";
+    };
+    reader.readAsText(file);
+  });
+
+  loadAndRenderDay(toKey(selectedDate));
+  renderCalendar();
+  computeStats();
+})();
+</script>
+</body>
+</html>
