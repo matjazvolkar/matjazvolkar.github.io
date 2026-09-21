@@ -1312,15 +1312,15 @@ footer{color:var(--mut);font-size:12.5px;text-align:center;padding:20px}
       <button class="fb-no" onclick="fbSet('si--k2-index-email-posilja-matjaz--e2-dan-4-akcijski-nacrt-brez-stroska','popravi')">Popravi</button>
     </div>
   </div>
-  <div class="vsebina"><p><strong>Zadeva A:</strong> <span class="tok">{index_slabo}</span>: popravek, ki ne stane nič<br><strong>Zadeva B:</strong> prvi korak načrta lahko uvedete že ta teden</p>
+  <div class="vsebina"><p><strong>Zadeva A:</strong> <span class="tok">{index_slabo}</span>: popravek, ki ne stane nič<br><strong>Zadeva B:</strong> prva faza načrta ne stane nič</p>
 <p><strong>Telo:</strong></p>
 <p>Pozdravljeni, <span class="tok">{g_ga}</span> <span class="tok">{lastName}</span>,</p>
 <p>v prejšnjem sporočilu smo vam poslali pregled vseh <span class="tok">{review_count}</span> ocen vašega hotela. Danes odprite samo eno poglavje: akcijski načrt.</p>
 <p>Za začetek ena ugotovitev: <span class="tok">{index_stevilka}</span>. To ni vtis, ampak štetje, tema po temi.</p>
-<p>Načrt iz teh številk je razdeljen na korake, skupaj vredne +<span class="tok">{dvig_ocene}</span> na Booking oceni. Prvi korak ne stane nič ali skoraj nič, ker gre za komunikacijo in proces: <span class="tok">{ukrep_1}</span>. To lahko uvedete že ta teden.</p>
+<p>Načrt iz teh številk zloži tri faze, skupaj vredne +<span class="tok">{dvig_ocene}</span> na Booking oceni. Prva faza ne stane nič, ker gre za komunikacijo in proces: <span class="tok">{ukrep_1}</span>. To lahko uvedete že ta teden.</p>
 <p>Celoten načrt, s številkami in citati vaših gostov: <span class="tok">{index_url}</span></p>
 <p>Če je katera ugotovitev napačna, nam sporočite in takoj popravimo.</p>
-<p><strong>Sloti (prenova 8. 9. zvečer, po vzoru Scrape E2):</strong> <span class="tok">{index_stevilka}</span> kot pri LinkedIn S1 (fragment z ENO številko iz poročila, mala začetnica, brez pike; piko doda master). <span class="tok">{ukrep_1}</span> = NOV: prvi ukrep faze 1 akcijskega načrta; če kateri ukrep faze 1 cilja na <span class="tok">{index_slabo}</span>, se vzame ta; velelnik, mala začetnica, brez pike, brez "jer gosti pišu" utemeljitve, max 110 znakov. <span class="tok">{dvig_ocene}</span> = NOV: skupni dvig Booking ocene iz glave načrta, samo številka ("0,4"). Fallbacki: brez <span class="tok">{index_stevilka}</span> se odstavek "Za začetek ..." izpusti; brez <span class="tok">{ukrep_1}</span> ostane "... komunikacijo in proces; koraki so izpeljani iz tega, kar so gostje napisali."; brez <span class="tok">{dvig_ocene}</span> "koraki z merljivim premikom na Booking oceni" + zadeva B; brez <span class="tok">{index_slabo}</span> zadeva B.</p></div>
+<p><strong>Sloti (prenova 8. 9. zvečer, po vzoru Scrape E2):</strong> <span class="tok">{index_stevilka}</span> kot pri LinkedIn S1 (fragment z ENO številko iz poročila, mala začetnica, brez pike; piko doda master). <span class="tok">{ukrep_1}</span> = NOV: prvi ukrep faze 1 akcijskega načrta; če kateri ukrep faze 1 cilja na <span class="tok">{index_slabo}</span>, se vzame ta; velelnik, mala začetnica, brez pike, brez "jer gosti pišu" utemeljitve, max 110 znakov. <span class="tok">{dvig_ocene}</span> = NOV: skupni dvig Booking ocene iz glave načrta, samo številka ("0,4"). Fallbacki: brez <span class="tok">{index_stevilka}</span> se odstavek "Za začetek ..." izpusti; brez <span class="tok">{ukrep_1}</span> ostane "... komunikacijo in proces; koraki so izpeljani iz tega, kar so gostje napisali."; brez <span class="tok">{dvig_ocene}</span> "tri faze z merljivim premikom na Booking oceni" + zadeva B; brez <span class="tok">{index_slabo}</span> zadeva B.</p></div>
   <textarea class="fb-kom" data-id="si--k2-index-email-posilja-matjaz--e2-dan-4-akcijski-nacrt-brez-stroska" placeholder="Komentar (npr. skrajšaj drugi odstavek, drugačna zadeva ...)" oninput="fbKom('si--k2-index-email-posilja-matjaz--e2-dan-4-akcijski-nacrt-brez-stroska',this.value)"></textarea>
 </div>
 
@@ -2212,7 +2212,7 @@ footer{color:var(--mut);font-size:12.5px;text-align:center;padding:20px}
 <p><strong>Telo:</strong></p>
 <p><span class="tok">{postovani_vrstica}</span></p>
 <p><span class="tok">{posebnost_index}</span></p>
-<p>To nije naš dojam; tako kažu vaši gosti u <span class="tok">{review_count}</span> <span class="tok">{recenzij_oblika}</span> na Bookingu. Pročitali smo sve i saželi nalaze u jedan pregled: <span class="tok">{index_url}</span></p>
+<p>To nije naš dojam; tako kažu vaši gosti u <span class="tok">{review_count}</span> recenzija na Bookingu. Pročitali smo sve i saželi nalaze u jedan pregled: <span class="tok">{index_url}</span></p>
 <p>U njemu je prije svega ono što se previdi kad se recenzije čitaju jedna po jedna: uzorci koji se vide tek kada je svih <span class="tok">{review_count}</span> na jednom mjestu. Taj je uzorak podloga za akcijski plan za poboljšanje ocjene vašeg smještaja.</p>
 <p>Predlažem da zajedno prođemo kroz pregled: 15 minuta, stranicu po stranicu, od pohvala do projekcije. Slažete li se?</p>
 <p><strong>Sloti:</strong> <span class="tok">{postovani_vrstica}</span> = "Poštovani g. <span class="tok">{lastName}</span>," / "Poštovana gđo <span class="tok">{lastName}</span>,". <span class="tok">{posebnost_index}</span> = poved iz Indexa tega hotela, dobro + slabo (primer: "Gosti su jednoglasni: saune su izvrsne, spremanje soba zaostaje."); <span class="tok">{index_dobro}</span>/<span class="tok">{index_slabo}</span> = kratki obliki za zadevo. OBVEZNO iz Indexa. Fallback brez: zadeva "vaši gosti, doslovno", telo od "pročitali smo Booking recenzije ...".</p></div>
@@ -2226,12 +2226,12 @@ footer{color:var(--mut);font-size:12.5px;text-align:center;padding:20px}
       <button class="fb-no" onclick="fbSet('hr--k1-index-email-posilja-rok--e2-dan-4-akcijski-nacrt-brez-stroska','popravi')">Popravi</button>
     </div>
   </div>
-  <div class="vsebina"><p><strong>Zadeva A:</strong> <span class="tok">{index_slabo}</span>: popravak koji ne košta ništa<br><strong>Zadeva B:</strong> prvi korak plana možete uvesti već ovaj tjedan</p>
+  <div class="vsebina"><p><strong>Zadeva A:</strong> <span class="tok">{index_slabo}</span>: popravak koji ne košta ništa<br><strong>Zadeva B:</strong> prva faza plana ne košta ništa</p>
 <p><strong>Telo:</strong></p>
 <p><span class="tok">{postovani_vrstica}</span></p>
 <p>u prošloj poruci poslali smo vam pregled svih <span class="tok">{review_count}</span> recenzija vašeg hotela. Danas otvorite samo jedno poglavlje: akcijski plan.</p>
 <p>Za početak jedan nalaz: <span class="tok">{index_stevilka}</span>. To nije dojam, nego brojanje, tema po temu.</p>
-<p>Plan iz tih brojki slaže <span class="tok">{st_koraka}</span>, ukupno +<span class="tok">{dvig_ocene}</span> na Bookingovoj ocjeni. Prvi korak je bez troška ili s malim, jer je komunikacija i proces: <span class="tok">{ukrep_1}</span>. To možete uvesti već ovaj tjedan.</p>
+<p>Plan iz tih brojki slaže tri faze, ukupno vrijedne +<span class="tok">{dvig_ocene}</span> na Bookingovoj ocjeni. Prva faza ne košta ništa, jer je komunikacija i proces: <span class="tok">{ukrep_1}</span>. To možete uvesti već ovaj tjedan.</p>
 <p>Cijeli plan, s brojkama i citatima vaših gostiju: <span class="tok">{index_url}</span></p>
 <p>Ako je koji nalaz pogrešan, recite nam i odmah ispravljamo.</p>
 <p><strong>Sloti:</strong> enaka pravila kot SI K2 E2 (prenova 8. 9.): <span class="tok">{index_stevilka}</span> fragment brez pike; <span class="tok">{ukrep_1}</span> NOV (prvi ukrep faze 1, po možnosti cilja na <span class="tok">{index_slabo}</span>, velelnik, max 110, brez "jer gosti pišu"); <span class="tok">{dvig_ocene}</span> NOV (samo številka, "0,4"). Fallbacki kot SI; brez <span class="tok">{index_slabo}</span> zadeva B. Zadeva A je z dvopičjem, ker je <span class="tok">{index_slabo}</span> v imenovalniku (past "za hrana").</p></div>
@@ -3306,12 +3306,12 @@ footer{color:var(--mut);font-size:12.5px;text-align:center;padding:20px}
       <button class="fb-no" onclick="fbSet('uae--k2-index-email-posilja-rok--e2-dan-4-akcijski-nacrt-brez-stroska','popravi')">Popravi</button>
     </div>
   </div>
-  <div class="vsebina"><p><strong>Zadeva A:</strong> the fix for <span class="tok">{index_slabo}</span> costs nothing<br><strong>Zadeva B:</strong> you could start the first step this week</p>
+  <div class="vsebina"><p><strong>Zadeva A:</strong> the fix for <span class="tok">{index_slabo}</span> costs nothing<br><strong>Zadeva B:</strong> phase one of the plan costs nothing</p>
 <p><strong>Telo:</strong></p>
 <p><span class="tok">{Hi|Hello}</span> <span class="tok">{firstName}</span>,</p>
 <p>In the previous note we sent you the analysis of all <span class="tok">{review_count}</span> guest reviews of <span class="tok">{hotel_name}</span>. Today, open just one chapter: the action plan.</p>
 <p>One finding to start with: <span class="tok">{index_stevilka}</span>. Not an impression, a count, theme by theme.</p>
-<p>From those numbers the plan is built in stages, together worth +<span class="tok">{dvig_ocene}</span> on your Booking score. The first step costs little or nothing, because it is communication and process: <span class="tok">{ukrep_1}</span>. You could start this week.</p>
+<p>From those numbers the plan builds three phases, together worth +<span class="tok">{dvig_ocene}</span> on your Booking score. Phase one costs nothing, because it is communication and process: <span class="tok">{ukrep_1}</span>. You could start this week.</p>
 <p>The full plan, with numbers and guest quotes: <span class="tok">{index_url}</span></p>
 <p>If any finding is wrong, tell us and we will fix it right away.</p>
 <p><strong>Sloti:</strong> enaka pravila kot SI K2 E2 (prenova 8. 9.); <span class="tok">{index_stevilka}</span> v angleščini ("the rooftop pool draws 215 mentions, 48 complaints are about opening hours"); <span class="tok">{ukrep_1}</span> velelnik ("open the pool, sauna and gym in the morning"), max 110; <span class="tok">{dvig_ocene}</span> z decimalno PIKO ("0.4"). Fallbacki kot SI.</p></div>
@@ -5232,12 +5232,12 @@ footer{color:var(--mut);font-size:12.5px;text-align:center;padding:20px}
       <button class="fb-no" onclick="fbSet('ny--k2-index-email-posiljata-matjaz-in-gregor--e2-dan-4-akcijski-nacrt-brez-stroska','popravi')">Popravi</button>
     </div>
   </div>
-  <div class="vsebina"><p><strong>Zadeva A:</strong> the fix for <span class="tok">{index_slabo}</span> costs nothing<br><strong>Zadeva B:</strong> you could start the first step this week</p>
+  <div class="vsebina"><p><strong>Zadeva A:</strong> the fix for <span class="tok">{index_slabo}</span> costs nothing<br><strong>Zadeva B:</strong> phase one of the plan costs nothing</p>
 <p><strong>Telo:</strong></p>
 <p><span class="tok">{Hi|Hello}</span> <span class="tok">{firstName}</span>,</p>
 <p>In the previous note we sent you the analysis of all <span class="tok">{review_count}</span> guest reviews of <span class="tok">{hotel_name}</span>. Today, open just one chapter: the action plan.</p>
 <p>One finding to start with: <span class="tok">{index_stevilka}</span>. Not an impression, a count, theme by theme.</p>
-<p>From those numbers the plan is built in stages, together worth +<span class="tok">{dvig_ocene}</span> on your Booking score. The first step costs little or nothing, because it is communication and process: <span class="tok">{ukrep_1}</span>. You could start this week.</p>
+<p>From those numbers the plan builds three phases, together worth +<span class="tok">{dvig_ocene}</span> on your Booking score. Phase one costs nothing, because it is communication and process: <span class="tok">{ukrep_1}</span>. You could start this week.</p>
 <p>The full plan, with numbers and guest quotes: <span class="tok">{index_url}</span></p>
 <p>If any finding is wrong, tell us and we will fix it right away.</p>
 <p><strong>Sloti:</strong> enaka pravila kot SI K2 E2 (prenova 8. 9.); <span class="tok">{index_stevilka}</span> v angleščini ("the rooftop pool draws 215 mentions, 48 complaints are about opening hours"); <span class="tok">{ukrep_1}</span> velelnik ("open the pool, sauna and gym in the morning"), max 110; <span class="tok">{dvig_ocene}</span> z decimalno PIKO ("0.4"). Fallbacki kot SI.</p></div>
@@ -5753,12 +5753,12 @@ footer{color:var(--mut);font-size:12.5px;text-align:center;padding:20px}
       <button class="fb-no" onclick="fbSet('gr--k2-index-email-posiljata-amadej-in-matjaz--e2-dan-4-akcijski-nacrt-brez-stroska','popravi')">Popravi</button>
     </div>
   </div>
-  <div class="vsebina"><p><strong>Zadeva A:</strong> the fix for <span class="tok">{index_slabo}</span> costs nothing<br><strong>Zadeva B:</strong> you could start the first step this week</p>
+  <div class="vsebina"><p><strong>Zadeva A:</strong> the fix for <span class="tok">{index_slabo}</span> costs nothing<br><strong>Zadeva B:</strong> phase one of the plan costs nothing</p>
 <p><strong>Telo:</strong></p>
 <p><span class="tok">{Hi|Hello}</span> <span class="tok">{firstName}</span>,</p>
 <p>In the previous note we sent you the analysis of all <span class="tok">{review_count}</span> guest reviews of <span class="tok">{hotel_name}</span>. Today, open just one chapter: the action plan.</p>
 <p>One finding to start with: <span class="tok">{index_stevilka}</span>. Not an impression, a count, theme by theme.</p>
-<p>From those numbers the plan is built in stages, together worth +<span class="tok">{dvig_ocene}</span> on your Booking score. The first step costs little or nothing, because it is communication and process: <span class="tok">{ukrep_1}</span>. You could start this week.</p>
+<p>From those numbers the plan builds three phases, together worth +<span class="tok">{dvig_ocene}</span> on your Booking score. Phase one costs nothing, because it is communication and process: <span class="tok">{ukrep_1}</span>. You could start this week.</p>
 <p>The full plan, with numbers and guest quotes: <span class="tok">{index_url}</span></p>
 <p>If any finding is wrong, tell us and we will fix it right away.</p>
 <p><strong>Sloti:</strong> enaka pravila kot SI K2 E2 (prenova 8. 9.); <span class="tok">{index_stevilka}</span> v angleščini ("the rooftop pool draws 215 mentions, 48 complaints are about opening hours"); <span class="tok">{ukrep_1}</span> velelnik ("open the pool, sauna and gym in the morning"), max 110; <span class="tok">{dvig_ocene}</span> z decimalno PIKO ("0.4"). Fallbacki kot SI.</p></div>
@@ -6705,7 +6705,7 @@ footer{color:var(--mut);font-size:12.5px;text-align:center;padding:20px}
 <p>Poštovani g. Buljubašić,</p>
 <p>u prošloj poruci poslali smo vam pregled svih 1.149 recenzija vašeg hotela. Danas otvorite samo jedno poglavlje: akcijski plan.</p>
 <p>Za početak jedan nalaz: krovni bazen ima 215 pohvala, 48 zamjerki ide na radno vrijeme. To nije dojam, nego brojanje, tema po temu.</p>
-<p>Plan iz tih brojki slaže tri koraka, ukupno +0,4 na Bookingovoj ocjeni. Prvi korak je bez troška ili s malim, jer je komunikacija i proces: bazen, saunu i teretanu otvorite ujutro. To možete uvesti već ovaj tjedan.</p>
+<p>Plan iz tih brojki slaže tri faze, ukupno vrijedne +0,4 na Bookingovoj ocjeni. Prva faza ne košta ništa, jer je komunikacija i proces: bazen, saunu i teretanu otvorite ujutro. To možete uvesti već ovaj tjedan.</p>
 <p>Cijeli plan, s brojkama i citatima vaših gostiju: https://scrape.nevron.co/hostfulness-index/dioklecijan-hotel-residence</p>
 <p>Ako je koji nalaz pogrešan, recite nam i odmah ispravljamo.</p></div>
   <textarea class="fb-kom" data-id="primeri--hr-dioklecijan-hotel-residence-split-k1-index-e2-polna-perso--blok" placeholder="Komentar (npr. skrajšaj drugi odstavek, drugačna zadeva ...)" oninput="fbKom('primeri--hr-dioklecijan-hotel-residence-split-k1-index-e2-polna-perso--blok',this.value)"></textarea>
