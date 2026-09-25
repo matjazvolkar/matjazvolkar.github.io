@@ -120,6 +120,7 @@ function tagi(r){
  if(r.p==='DA') t.push('<span class="tag t2">pilot</span>');
  if(r.ver) t.push('<span class="tag t3">'+r.ver+'</span>');
  if(r.pol) t.push('<span class="tag t3">polnilo</span>');
+ if(r.tri) t.push('<span class="tag t3" title="razširitev kampanje L1x na tri zvezdice (25. 9. 2026); non-ICP samo po zvezdicah, šteto ločeno">3★ L1x</span>');
  if(r.vir) t.push('<span class="tag t3">vir: '+r.vir+'</span>');
  if(r.dq) t.push('<span class="tag rival" title="'+(r.dqr||'diskvalificiran')+'">DQ</span>');
  if(r.str) t.push('<span class="tag t1">stranka</span>');
@@ -325,13 +326,15 @@ function risi(){
   if(F.has("vsi3oo") && !((r.e||r.eo)&&r.l&&(r.m||r.tel))) return false;
   if(F.has("brezdm") && r.d) return false;
   if(F.has("td") && !vTednu(r)) return false;
+  if(F.has("tri") && !r.tri) return false;
+  if(F.has("brez3") && r.tri) return false;
   return true;});
  v.sort(function(a,b){var x=a[polje],y=b[polje];
   return (typeof x==="number"?x-y:String(x).localeCompare(String(y),"sl"))*smer;});
  var html=v.map(function(r,i){
   var vr='<tr class="vrstica" data-i="'+i+'">'+
    '<td class="rank">'+(r.rank||'')+'</td>'+
-   '<td><b>'+r.h+'</b>'+(r.dq?' <span class="tag rival" title="'+(r.dqr||'diskvalificiran')+'">DQ</span>':'')+'</td>'+
+   '<td><b>'+r.h+'</b>'+(r.tri?' <span class="tag t3" title="razširitev L1x na tri zvezdice, šteto ločeno">3★ L1x</span>':'')+(r.dq?' <span class="tag rival" title="'+(r.dqr||'diskvalificiran')+'">DQ</span>':'')+'</td>'+
    '<td>'+r.k+'</td><td class="num">'+(r.s||'')+'</td><td class="num">'+(r.z||'')+'</td>'+
    '<td class="num">'+(r.b||'')+'</td>'+
    // dm_siv: SAMO barva, font in velikost ostaneta enaka ostalim imenom (Matjazev popravek 14. 9.)
