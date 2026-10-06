@@ -1,0 +1,799 @@
+<!doctype html>
+<html lang="sl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Nevron GTM aktivnosti v2</title>
+<meta name="description" content="Nevron: koliko hotelov in kontaktov je na sedmih trgih in kako jih obdelati z danimi mailboxi, LinkedIn profili in prodajalci do 30. 4. 2027.">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2000 2000'><rect width='2000' height='2000' rx='340' fill='%23000126'/><path fill='%231B92FF' d='M1681.3,693.4h197.8V98.8h-594.7v197.8h396.9V693.4z M296.7,1284.3H98.9V1879h594.7v-197.8H296.7V1284.3z'/><path fill='%231B92FF' d='M1879.1,1284.3h-197.8v310.2L296.7,98.8H98.9v594.7h197.8V381.6L1681.3,1879h197.8L1879.1,1284.3z'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<style>
+  /* ============================================================
+     Nevron brand styling. Barve, tipografija in razmiki iz
+     nevron-tokens.css. Imena spremenljivk, ki jih bere JS,
+     ostajajo nespremenjena.
+     ============================================================ */
+  *, *::before, *::after { box-sizing: border-box; }
+  :root {
+    /* Nevron paleta */
+    --n-m1: #000126; --n-m2: #002391; --n-m3: #1B92FF; --n-m4: #73C7FF; --n-m5: #C3E9FF; --n-m6: #E1F4FF;
+    --n-s1: #080C13; --n-s2: #353941; --n-s3: #707379; --n-s4: #B4B6B9; --n-s5: #E0E1E2; --n-s6: #EFF0F0;
+    --n-red: #DA2025; --n-orange: #E56600; --n-yellow: #F6A900; --n-green: #36A058; --n-white: #FFFFFF;
+
+    /* Povrsine in crnilo: temna tema (Nevron M1 navy), edina tema strani */
+    --bg: #000126;
+    --surface: #071034;
+    --surface-2: #0C1745;
+    --line: #223066;
+    --line-2: #17224F;
+    --ink: #FFFFFF;
+    --ink-2: #C2CCE6;
+    --ink-3: #8C97BC;
+    --accent: #73C7FF;
+    --accent-ink: #73C7FF;
+    --accent-soft: #0E1C4E;
+    --logo-ink: #FFFFFF;
+
+    /* Kanali: modra = Email, oranzna = LinkedIn, zelena = Telefon */
+    --email: #1B92FF; --li: #E56600; --tel: #36A058;
+    --email-deep: #0A6FD6; --li-deep: #B34F00; --tel-deep: #237A42;
+    --tail-email: #24528F; --tail-li: #7A4A1C; --tail-tel: #266044;
+
+    /* Pomen */
+    --warn-bg: #3B2B0C; --warn-fg: #F6C877;
+    --bad-bg: #3C1417; --bad-fg: #FF9E99;
+    --good-bg: #0F2E1F; --good-fg: #7FD9A3;
+
+    --mono: ui-monospace, "Cascadia Mono", "SF Mono", Menlo, Consolas, monospace;
+    --sans: "Neue Haas Unica", "Inter", "Helvetica Neue", Arial, sans-serif;
+    --serif: var(--sans);
+
+    --r-sm: 4px; --r-md: 8px; --r-lg: 12px; --r-pill: 999px;
+    --sh-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+    --sh-md: 0 4px 12px -6px rgba(0, 0, 0, 0.6);
+    --sh-lg: 0 12px 28px -10px rgba(0, 0, 0, 0.7);
+  }
+
+  /* ---------- osnova ---------- */
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--sans); font-size: 16px; line-height: 1.5;
+    -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+  }
+  main { max-width: 1240px; margin: 0 auto; padding: 2rem 1.25rem 5rem; }
+  h1 { font-family: var(--sans); font-weight: 700; font-size: 2.25rem; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 0.25rem; }
+  h2 {
+    position: relative; font-family: var(--sans); font-weight: 700; font-size: 1.75rem; line-height: 1.2;
+    letter-spacing: -0.015em; margin: 3rem 0 0.75rem; padding-top: 1.25rem; border-top: 1px solid var(--line);
+  }
+  h2::before { content: ""; position: absolute; top: -2px; left: 0; width: 56px; height: 3px; background: var(--accent); border-radius: 0 0 2px 2px; }
+  h3 { font-family: var(--sans); font-weight: 600; font-size: 1.125rem; line-height: 1.3; margin: 1.5rem 0 0.5rem; }
+  p { max-width: 72ch; }
+  .sub { color: var(--ink-2); font-size: 1.125rem; line-height: 1.6; margin: 0 0 1.5rem; }
+  .muted { color: var(--ink-3); }
+  .small { font-size: 0.85rem; }
+  .mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+  a { color: var(--accent-ink); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  a:hover { color: var(--accent); }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+
+  /* ---------- glava z znakom ---------- */
+  .brandbar {
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    padding-bottom: 1.25rem; margin-bottom: 1.75rem; border-bottom: 1px solid var(--line);
+  }
+  .brandbar__logo { display: inline-flex; color: var(--logo-ink); }
+  .brandbar__logo svg { display: block; width: 148px; height: auto; }
+  .brandbar__meta { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); }
+  .kicker {
+    display: inline-flex; align-items: center; gap: 0.5rem; margin: 0 0 0.5rem;
+    font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-ink);
+  }
+  .kicker::before { content: ""; width: 20px; height: 2px; background: var(--accent); border-radius: 2px; }
+
+  /* ---------- kartice in mreze ---------- */
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 1.125rem 1.25rem; box-shadow: var(--sh-sm); }
+  .card--scroll { overflow-x: auto; }
+  .grid { display: grid; gap: 1rem; }
+  .g5 { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+  .g3 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+
+  /* ---------- vnosna polja ---------- */
+  label.f { display: block; font-size: 0.8rem; font-weight: 600; color: var(--ink-2); margin-bottom: 0.375rem; }
+  input[type=number], input[type=date], select {
+    width: 100%; min-height: 44px; font: inherit; font-family: var(--sans); font-variant-numeric: tabular-nums;
+    padding: 0.5rem 0.75rem; border: 1px solid var(--line); border-radius: var(--r-md);
+    background: var(--surface); color: var(--ink); transition: border-color 150ms ease, box-shadow 150ms ease;
+  }
+  input[type=number]:hover, input[type=date]:hover, select:hover { border-color: var(--n-s4); }
+  input[type=number]:focus, input[type=date]:focus, select:focus {
+    outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(27, 146, 255, 0.22);
+  }
+  input[type=checkbox] { accent-color: var(--accent); transform: scale(1.15); margin-right: 6px; }
+  .hint { font-size: 0.78rem; line-height: 1.45; color: var(--ink-3); margin-top: 0.375rem; }
+  details { border: 1px solid var(--line); border-radius: var(--r-lg); padding: 0.75rem 1.25rem; background: var(--surface); margin-top: 1rem; box-shadow: var(--sh-sm); }
+  details[open] { padding-bottom: 1rem; }
+  summary { cursor: pointer; font-weight: 600; color: var(--ink); padding: 0.25rem 0; }
+  summary:hover { color: var(--accent-ink); }
+
+  /* ---------- ploscice ---------- */
+  .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.75rem; margin: 1rem 0; }
+  .tile { background: var(--surface); border: 1px solid var(--line); border-top: 4px solid var(--line); border-radius: var(--r-lg); padding: 0.875rem 1rem; box-shadow: var(--sh-sm); }
+  .tile .v { font-family: var(--sans); font-weight: 700; font-size: 1.75rem; line-height: 1.1; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; color: var(--ink); }
+  .tile .l { font-size: 0.8rem; line-height: 1.4; color: var(--ink-2); margin-top: 0.375rem; }
+  .tile.email { border-top-color: var(--email); } .tile.li { border-top-color: var(--li); } .tile.tel { border-top-color: var(--tel); }
+
+  /* ---------- tabele ---------- */
+  .tw { overflow-x: auto; margin: 0.625rem 0 1.25rem; border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--surface); box-shadow: var(--sh-sm); }
+  table { border-collapse: collapse; width: 100%; font-size: 0.86rem; }
+  th, td { padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--line-2); text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  th { color: var(--ink-2); font-weight: 600; background: var(--surface-2); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 1; }
+  th:first-child, td:first-child { text-align: left; }
+  td.l, th.l { text-align: left; }
+  tbody tr:not(.sec):not(.sum):hover > td { background: var(--accent-soft); }
+  tr.sum td { font-weight: 600; background: var(--surface-2); border-top: 2px solid var(--line); }
+  tr.sec td { background: var(--accent-soft); color: var(--ink-2); font-weight: 600; text-align: left; letter-spacing: 0.01em; }
+
+  /* ---------- oznake ---------- */
+  .tag { display: inline-block; font-size: 0.72rem; font-weight: 600; padding: 2px 8px; border-radius: var(--r-pill); border: 1px solid var(--line); color: var(--ink-2); background: var(--surface); margin-left: 6px; vertical-align: middle; }
+  .tag.act { background: var(--good-bg); color: var(--good-fg); border-color: transparent; }
+  .tag.est { background: var(--warn-bg); color: var(--warn-fg); border-color: transparent; }
+  .tag.off { background: var(--bad-bg); color: var(--bad-fg); border-color: transparent; }
+
+  /* ---------- legenda ---------- */
+  .legend { display: flex; flex-wrap: wrap; align-items: center; gap: 0.875rem; font-size: 0.82rem; color: var(--ink-2); margin: 0.5rem 0 0.75rem; }
+  .legend span::before {
+    content: ""; display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px;
+    background: var(--c); box-shadow: inset 0 0 0 1px rgba(0, 1, 38, 0.18);
+  }
+  .legend span.tag::before { display: none; }
+  .sw-email { --c: var(--email); } .sw-li { --c: var(--li); } .sw-tel { --c: var(--tel); }
+  .sw-temail { --c: var(--tail-email); } .sw-tli { --c: var(--tail-li); } .sw-ttel { --c: var(--tail-tel); }
+
+  /* ---------- grafi ---------- */
+  svg text { font-family: var(--sans); fill: var(--ink-2); }
+  /* Inter je nekoliko sirsi od sistemske pisave: oznake vrstic v ganttu ostanejo v svojem stolpcu */
+  svg text[font-size="11"] { font-size: 10.4px; letter-spacing: -0.01em; }
+  svg text[font-size="10"] { font-size: 9.6px; letter-spacing: -0.01em; }
+  .bar { cursor: help; }
+  .gantt { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 0.625rem; box-shadow: var(--sh-sm); }
+  .scen { margin-top: 1.25rem; }
+  .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 0.75rem; margin: 0.75rem 0 1rem; }
+  .kpi { border: 1px solid var(--line); border-radius: var(--r-md); padding: 0.625rem 0.875rem; background: var(--surface-2); color: var(--ink-2); font-size: 0.86rem; line-height: 1.4; }
+  .kpi b { font-family: var(--sans); font-weight: 700; font-size: 1.2rem; letter-spacing: -0.01em; font-variant-numeric: tabular-nums; color: var(--ink); display: block; margin-top: 0.25rem; }
+  .ok { color: var(--good-fg); } .bad { color: var(--bad-fg); } .warn { color: var(--warn-fg); }
+
+  /* ---------- opozorila in priporocilo ---------- */
+  .note { background: var(--warn-bg); color: var(--warn-fg); border-left: 3px solid var(--n-orange); border-radius: var(--r-md); padding: 0.625rem 0.875rem; font-size: 0.88rem; margin: 0.625rem 0; }
+  .rec { background: var(--accent-soft); color: var(--ink); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: var(--r-lg); padding: 1rem 1.25rem; margin: 1rem 0; }
+  .rec p { color: inherit; }
+  .rec h3 { color: var(--ink); }
+  ul { padding-left: 1.25rem; } li { margin: 0.1875rem 0; }
+
+  /* ---------- dnevna mreza ---------- */
+  .day { display: grid; grid-template-columns: 210px repeat(15, 1fr); gap: 2px; min-width: 660px; font-size: 0.74rem; align-items: center; }
+  .day .h { color: var(--ink-3); font-weight: 600; text-align: center; }
+  .day .n { color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 6px; }
+  .day .c { height: 24px; border-radius: var(--r-sm); background: var(--line-2); display: flex; align-items: center; justify-content: center; color: #FFFFFF; font-family: var(--mono); font-weight: 600; font-size: 0.7rem; }
+  .day .c.e { background: var(--email-deep); } .day .c.p { background: var(--li-deep); } .day .c.t { background: var(--tel-deep); }
+  .day .tot { background: var(--surface-2); color: var(--ink); font-family: var(--mono); font-size: 0.72rem; text-align: center; padding: 3px 0; border-radius: var(--r-sm); border: 1px solid var(--line); }
+
+  /* ---------- namig ---------- */
+  .tip {
+    position: fixed; pointer-events: none; background: var(--n-m1); color: var(--n-white);
+    font-size: 0.78rem; line-height: 1.4; padding: 0.5rem 0.625rem; border-radius: var(--r-md);
+    border: 1px solid rgba(255, 255, 255, 0.14); box-shadow: var(--sh-lg); display: none; z-index: 9; max-width: 320px;
+  }
+
+  footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--line); color: var(--ink-3); font-size: 0.8rem; }
+
+  /* ---------- odzivnost ---------- */
+  @media (max-width: 767px) {
+    main { padding: 1.5rem 1rem 4rem; }
+    h1 { font-size: 1.75rem; }
+    h2 { font-size: 1.375rem; margin-top: 2.5rem; }
+    .sub { font-size: 1rem; }
+    .brandbar__logo svg { width: 116px; }
+    .brandbar__meta { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+
+  /* ---------- v2: sklopi, ogledalo, sticky ---------- */
+  .tw.sticky { max-height: 82vh; overflow: auto; }
+  .tw.sticky thead th { position: sticky; top: 0; z-index: 2; }
+  .tw.sticky th:first-child, .tw.sticky td:first-child { position: sticky; left: 0; z-index: 1; background: var(--surface); }
+  .tw.sticky thead th:first-child { z-index: 3; background: var(--surface-2); }
+  tr.blk td { background: var(--accent-soft); color: var(--ink); font-weight: 700; text-align: left; letter-spacing: 0.02em; text-transform: uppercase; font-size: 0.74rem; padding-top: 10px; }
+  tr.blk td:first-child { background: var(--accent-soft); }
+  tr.key td { font-weight: 700; color: var(--ink); font-size: 0.95rem; }
+  tr.sub td:first-child { padding-left: 26px; color: var(--ink-2); }
+  .mirror { display: grid; gap: 14px; margin: 14px 0; }
+  .mrow { display: grid; grid-template-columns: 1fr 150px 1fr; gap: 10px; align-items: stretch; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 14px 16px; }
+  .mrow .mid { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; border-left: 1px solid var(--line); border-right: 1px solid var(--line); padding: 0 8px; }
+  .mrow .mid .t { font-weight: 700; font-size: 1.05rem; }
+  .mrow .mid .s { font-size: 0.78rem; color: var(--ink-3); margin-top: 4px; }
+  .side { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .side.left { direction: rtl; } .side.left > * { direction: ltr; }
+  .stat { padding: 6px 8px; border-radius: var(--r-md); background: var(--surface-2); }
+  .stat .v { font-weight: 700; font-size: 1.55rem; line-height: 1.1; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+  .stat .l { font-size: 0.72rem; color: var(--ink-3); margin-top: 2px; }
+  .stat .b { height: 5px; border-radius: 3px; background: var(--line-2); margin-top: 6px; overflow: hidden; }
+  .stat .b i { display: block; height: 100%; background: var(--c, var(--accent)); }
+  .stat.hot { --c: var(--accent); } .stat.email { --c: var(--email); } .stat.li { --c: var(--li); } .stat.tel { --c: var(--tel); }
+  .mhead { display: grid; grid-template-columns: 1fr 150px 1fr; gap: 10px; padding: 0 16px; font-weight: 700; font-size: 0.85rem; color: var(--ink-2); text-transform: uppercase; letter-spacing: 0.04em; }
+  .mhead .r { text-align: right; }
+  .ban { position: relative; }
+  .ban .stat { opacity: 0.3; filter: grayscale(1); }
+  .ban::before, .ban::after { content: ""; position: absolute; left: 10%; right: 10%; top: 50%; height: 5px; margin-top: -2px; background: #DA2025; border-radius: 3px; transform: rotate(28deg); pointer-events: none; box-shadow: 0 0 0 1px rgba(0,0,0,.35); }
+  .ban::after { transform: rotate(-28deg); }
+  .ban .why { position: absolute; left: 0; right: 0; bottom: 6px; text-align: center; font-size: 0.68rem; font-weight: 700; color: #DA2025; letter-spacing: 0.02em; }
+  .mrow.total { border-color: var(--accent); background: var(--accent-soft); }
+  .mrow.total .stat { background: var(--surface); }
+  .tile .have { font-size: 0.78rem; color: var(--ink-3); margin-top: 2px; }
+  .tile .v.bad { color: var(--bad-fg); } .tile .v.ok { color: var(--good-fg); }
+  @media (max-width: 900px) { .mrow, .mhead { grid-template-columns: 1fr; } .mrow .mid { border: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 8px 0; } .side { grid-template-columns: repeat(2, 1fr); } .side.left { direction: ltr; } }
+
+  /* ---------- v3: sekvenca in loceni hoteli ---------- */
+  .seq { display: grid; grid-template-columns: 150px repeat(18, minmax(52px, 1fr)); gap: 3px; font-size: 0.78rem; align-items: stretch; min-width: 1060px; }
+  .seq .hd { text-align: center; color: var(--ink-3); font-size: 0.72rem; padding: 2px 0; }
+  .seq .hd b { display: block; color: var(--ink); font-size: 0.9rem; }
+  .seq .lab { display: flex; align-items: center; color: var(--ink); font-weight: 600; white-space: nowrap; }
+  .seq .lab small { display: block; color: var(--ink-3); font-weight: 400; }
+  .seq .cell { min-height: 40px; border-radius: 6px; background: var(--surface-2); display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; line-height: 1.1; }
+  .seq .cell b { font-size: 0.9rem; } .seq .cell span { font-size: 0.62rem; opacity: 0.9; }
+  .seq .cell.e { background: var(--email-deep); } .seq .cell.p { background: var(--li-deep); } .seq .cell.t { background: var(--tel-deep); }
+  .seq .cell.next { opacity: 0.45; }
+  .seq .sum { text-align: center; font-weight: 700; padding: 6px 0; border-radius: 6px; border: 1px solid var(--line); color: var(--ink); }
+  .seq .sum.e { border-color: var(--email); } .seq .sum.p { border-color: var(--li); } .seq .sum.t { border-color: var(--tel); }
+  .seq .gap { grid-column: 1 / -1; height: 6px; }
+  .one { display: grid; grid-template-columns: repeat(14, minmax(64px, 1fr)); gap: 4px; min-width: 980px; }
+  .one .d { border-radius: 8px; padding: 8px 4px; text-align: center; color: #fff; }
+  .one .d .n { font-size: 0.68rem; opacity: 0.85; } .one .d b { display: block; font-size: 1rem; margin: 2px 0; } .one .d span { font-size: 0.68rem; }
+  .one .d.e { background: var(--email-deep); } .one .d.p { background: var(--li-deep); } .one .d.t { background: var(--tel-deep); }
+  .side { grid-template-columns: 1.25fr 1fr 1fr 1fr; }
+  .stat.hot { background: transparent; border: 1px solid var(--accent); }
+  .stat.hot .v { font-size: 2.1rem; }
+  .stat.hot .l { color: var(--accent); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; font-size: 0.68rem; }
+  .stat.hot .b { display: none; }
+  .side.right .stat.hot { margin-right: 10px; } .side.left .stat.hot { margin-left: 10px; }
+  .mrow.total .stat.hot { background: transparent; }
+
+  /* ---------- v3: kartice po trgih ---------- */
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 14px; margin: 14px 0; }
+  .mc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 14px 16px; }
+  .mc.total { border-color: var(--accent); background: var(--accent-soft); }
+  .mc h4 { margin: 0 0 10px; font-size: 1.05rem; display: flex; align-items: center; justify-content: space-between; }
+  .blk2 { border-top: 1px solid var(--line); padding: 10px 0 6px; }
+  .blk2 .bt { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 6px; }
+  .fr { display: grid; grid-template-columns: 1fr 64px 90px; gap: 8px; align-items: center; font-size: 0.85rem; padding: 3px 0; color: var(--ink-2); }
+  .fr .n { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; color: var(--ink); }
+  .fr .bar { height: 8px; border-radius: 4px; background: var(--line-2); overflow: hidden; } .fr .bar i { display: block; height: 100%; background: var(--accent); }
+  .fr.key { color: var(--ink); font-weight: 700; } .fr.key .n { font-size: 1.05rem; }
+  .big { display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: center; }
+  .big .v { font-size: 2.2rem; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; }
+  .big .sub { font-size: 0.82rem; color: var(--ink-2); line-height: 1.35; }
+  .big .sub b { color: var(--ink); }
+  .blk2.d100 .big .v { color: var(--accent); }
+  .tw table { font-size: 0.82rem; } th, td { padding: 6px 8px; }
+  .d3 { font-size: 0.78em; font-weight: 700; color: var(--good-fg); margin-left: 4px; }
+  tr.s2 td:first-child { padding-left: 26px; color: var(--ink-2); }
+  .zakaj { counter-reset: z; list-style: none; margin: 10px 0 6px; padding: 0; display: grid; gap: 10px; }
+  .zakaj li { counter-increment: z; position: relative; padding: 12px 16px 12px 52px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); font-size: 0.95rem; line-height: 1.5; }
+  .zakaj li::before { content: counter(z); position: absolute; left: 14px; top: 12px; width: 24px; height: 24px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); font-weight: 700; font-size: 0.82rem; display: flex; align-items: center; justify-content: center; }
+  .zakaj b { color: var(--ink); }
+  .sklep { margin: 12px 0 6px; padding: 12px 16px; border-radius: var(--r-lg); border: 1px solid var(--accent); background: var(--accent-soft); font-size: 0.95rem; line-height: 1.5; }
+  .d3.zero { color: var(--ink-3); }
+
+  /* ---------- v3: outreach kanali v podrobni tabeli ---------- */
+  th.ch { color: var(--ink); border-bottom: 3px solid var(--c); background: color-mix(in srgb, var(--c) 22%, var(--surface-2)); }
+  th.ch .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--c); margin-right: 5px; vertical-align: 1px; }
+  td.ch { background: color-mix(in srgb, var(--c) 8%, transparent); font-weight: 600; color: var(--ink); }
+  .ch.email { --c: var(--email); } .ch.li { --c: var(--li); } .ch.tel { --c: var(--tel); }
+
+  /* ---------- v4 ---------- */
+  .mkt { margin: 26px 0 8px; font-size: 1.5rem; font-weight: 700; color: var(--accent); letter-spacing: -0.01em; }
+  .mkt .tag { font-size: 0.72rem; letter-spacing: 0; }
+  .mkt small { font-size: 0.85rem; color: var(--ink-3); font-weight: 400; margin-left: 8px; }
+  .tw { max-height: none; overflow: visible; }
+  .bp { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 16px 18px; margin: 16px 0; }
+  .bp h3 { margin: 0 0 6px; color: var(--accent); font-size: 1.35rem; }
+  .bp .who { font-size: 0.86rem; color: var(--ink-2); margin-bottom: 12px; }
+  .bg { display: grid; gap: 2px; font-size: 0.7rem; align-items: stretch; }
+  .bg .wk { text-align: center; color: var(--ink); font-weight: 700; font-size: 0.72rem; padding: 4px 0; background: var(--surface-2); border-radius: 6px 6px 0 0; }
+  .bg .hd { text-align: center; color: var(--ink-3); font-size: 0.66rem; line-height: 1.15; padding: 2px 0 4px; }
+  .bg .hd b { display: block; color: var(--ink); font-size: 0.8rem; }
+  .bg .lab { display: flex; flex-direction: column; justify-content: center; color: var(--ink); font-weight: 600; white-space: nowrap; padding-right: 6px; font-size: 0.74rem; line-height: 1.15; }
+  .bg .lab small { color: var(--ink-3); font-weight: 400; font-size: 0.66rem; }
+  .bg .lab.rok { border-left: 3px solid var(--email); padding-left: 6px; } .bg .lab.matjaz { border-left: 3px solid var(--li); padding-left: 6px; } .bg .lab.amadej { border-left: 3px solid var(--tel); padding-left: 6px; }
+  .bg .c { min-height: 30px; border-radius: 4px; background: var(--surface-2); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 0.7rem; }
+  .bg .c.e { background: var(--email-deep); } .bg .c.p { background: var(--li-deep); } .bg .c.t { background: var(--tel-deep); }
+  .bg .c.off { background: transparent; }
+  .bg .gapc { background: transparent; }
+  .bg .sum { text-align: center; font-weight: 700; padding: 5px 0; border-radius: 4px; border: 1px solid var(--line); color: var(--ink); font-size: 0.72rem; }
+  .bg .sum.e { border-color: var(--email); } .bg .sum.p { border-color: var(--li); } .bg .sum.t { border-color: var(--tel); }
+  .bg .sum.over { background: var(--bad-bg); color: var(--bad-fg); border-color: var(--bad-fg); }
+  .bg .sum.zero { color: var(--ink-3); }
+  .bg .sp { grid-column: 1 / -1; height: 6px; }
+  .bp .kp { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; margin: 12px 0 4px; }
+  .bp .kp .stat .v { font-size: 1.5rem; }
+  .prog { height: 10px; border-radius: 5px; background: var(--line-2); overflow: hidden; margin-top: 6px; } .prog i { display: block; height: 100%; background: var(--accent); }
+
+  /* ---------- v4b ---------- */
+  th { position: static !important; }
+  .bg .lab { white-space: normal; }
+  .bg .lab small { white-space: nowrap; }
+
+  /* ---------- v5: kanalne vrste ---------- */
+  .qcard { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 16px 18px; margin: 16px 0; }
+  .qcard h3 { margin: 0 0 4px; color: var(--accent); font-size: 1.35rem; }
+  .qcard .who { font-size: 0.86rem; color: var(--ink-2); margin-bottom: 10px; }
+  .qg { display: grid; gap: 2px; font-size: 0.7rem; }
+  .qg .wk { text-align: center; color: var(--ink); font-weight: 700; font-size: 0.72rem; padding: 4px 0; background: var(--surface-2); border-radius: 6px 6px 0 0; }
+  .qg .hd { text-align: center; color: var(--ink-3); font-size: 0.64rem; line-height: 1.15; padding: 2px 0 4px; } .qg .hd b { display: block; color: var(--ink); font-size: 0.78rem; }
+  .qg .lab { display: flex; flex-direction: column; justify-content: center; color: var(--ink); font-weight: 700; font-size: 0.76rem; padding-right: 6px; line-height: 1.15; }
+  .qg .lab small { color: var(--ink-3); font-weight: 400; font-size: 0.66rem; }
+  .qg .lab.e { border-left: 3px solid var(--email); padding-left: 6px; } .qg .lab.p { border-left: 3px solid var(--li); padding-left: 6px; } .qg .lab.t { border-left: 3px solid var(--tel); padding-left: 6px; }
+  .qg .c { min-height: 34px; border-radius: 4px; background: var(--surface-2); display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 0.74rem; line-height: 1.05; }
+  .qg .c span { font-size: 0.58rem; font-weight: 500; opacity: 0.9; }
+  .qg .c.e { background: var(--email-deep); } .qg .c.p { background: var(--li-deep); } .qg .c.t { background: var(--tel-deep); }
+  .qg .c.rest { opacity: 0.55; } .qg .c.idle { background: var(--surface-2); color: var(--ink-3); font-weight: 400; } .qg .c.nocap { background: var(--bad-bg); color: var(--bad-fg); font-weight: 400; }
+  .qg .gapc { background: transparent; }
+  .qg .sum { text-align: center; font-weight: 600; padding: 4px 0; border-radius: 4px; border: 1px solid var(--line); color: var(--ink-2); font-size: 0.68rem; }
+  .qg .sum.e { border-color: var(--email); } .qg .sum.p { border-color: var(--li); } .qg .sum.t { border-color: var(--tel); }
+  .qg .sp { grid-column: 1 / -1; height: 6px; }
+  .qkp { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin: 10px 0 12px; }
+  .qkp .stat .v { font-size: 1.45rem; }
+  .qtab { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; margin: 10px 0; }
+  .qleg { display: flex; flex-wrap: wrap; gap: 12px; font-size: 0.78rem; color: var(--ink-2); margin: 6px 0 10px; }
+  .qleg i { display: inline-block; width: 11px; height: 11px; border-radius: 3px; margin-right: 5px; vertical-align: -1px; }
+  .stat.tel .sub, .stat.email .sub, .stat .sub { font-size: 0.72rem; color: var(--ink-2); margin-top: 2px; line-height: 1.35; } .stat .sub span { white-space: nowrap; }
+
+  /* ---------- v6: batchi ---------- */
+  .bt2 { width: 100%; font-size: 0.82rem; }
+  .bt2 th, .bt2 td { padding: 5px 8px; }
+  .bt2 td.l { text-align: left; }
+  .bt2 .pill { display: inline-block; padding: 1px 7px; border-radius: 999px; font-size: 0.7rem; font-weight: 700; color: #fff; }
+  .bt2 .pill.d100 { background: var(--accent-ink); color: var(--bg); } .bt2 .pill.rest { background: var(--line); color: var(--ink); }
+  .qg .c.o { background: #4a6fb0; } .qg .c small { font-size: 0.56rem; font-weight: 400; opacity: 0.92; display: block; }
+  .tl { display: grid; gap: 2px; font-size: 0.7rem; }
+  .tl .wk { text-align: center; color: var(--ink); font-weight: 700; font-size: 0.7rem; padding: 3px 0; background: var(--surface-2); border-radius: 6px 6px 0 0; }
+  .tl .lab { color: var(--ink); font-weight: 600; font-size: 0.72rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 6px; }
+  .tl .lab small { color: var(--ink-3); font-weight: 400; }
+  .tl .bar { height: 18px; border-radius: 4px; background: var(--surface-2); position: relative; }
+  .tl .bar i { position: absolute; top: 2px; bottom: 2px; border-radius: 3px; background: var(--accent); }
+  .tl .bar i.rest { background: var(--ink-3); }
+  .tl .bar i.e { background: var(--email-deep); } .tl .bar i.p { background: var(--li-deep); } .tl .bar i.t { background: var(--tel-deep); }
+  .scen { background: var(--surface-2); border-radius: var(--r-md); padding: 10px 12px; font-size: 0.82rem; margin-top: 10px; }
+  .scen b { color: var(--ink); }
+
+  .subtitle { font-size: 1rem; font-weight: 500; color: #B9BEC8; letter-spacing: 0.01em; margin: 0 0 10px; }
+  .inputs5 { grid-template-columns: repeat(5, 1fr); } @media (max-width: 1000px) { .inputs5 { grid-template-columns: repeat(2, 1fr); } }
+  .hero { grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); margin: 18px 0 6px; }
+  .hero .tile .v { font-size: 2.4rem; }
+  .hero .tile .l { font-size: 1.02rem; font-weight: 700; color: var(--accent); }
+  .hero .tile .v { white-space: nowrap; }
+  .hero .tile .have { font-size: 0.76rem; }
+  .tile.hot { border-top: 4px solid var(--accent); }
+  .mrow .mid .flag { display: block; width: 42px; height: 28px; margin-bottom: 6px; border-radius: 3px; overflow: hidden; border: 1px solid var(--line); cursor: pointer; }
+  .mrow .mid a.flag:hover { border-color: var(--accent); box-shadow: 0 0 8px rgba(115, 199, 255, 0.45); } .mrow .mid .flag svg { width: 100%; height: 100%; display: block; }
+
+  /* ---------- v7 ---------- */
+  .tile.cap { background: transparent; border: 2px solid var(--line); } .tile.cap .v { color: var(--ink-2); }
+  .tile.act { background: var(--accent-soft); border: 2px solid var(--accent); }
+  .wt { width: 100%; font-size: 0.8rem; } .wt th, .wt td { padding: 5px 8px; text-align: left; white-space: normal; vertical-align: top; }
+  .wt td.w { font-weight: 700; color: var(--ink); white-space: nowrap; }
+  .wt .m { display: inline-block; padding: 1px 7px; border-radius: 999px; font-size: 0.72rem; font-weight: 700; margin: 1px 2px 1px 0; color: #fff; }
+  .m.si { background: #1B92FF; } .m.hr { background: #d95926; } .m.it { background: #36A058; } .m.gr { background: #0d5eaf; } .m.uae { background: #00732f; } .m.at { background: #c0392b; } .m.tn { background: #6c5ce7; }
+  .gapg { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+  .gapc2 { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 12px 14px; }
+  .gapc2 h4 { margin: 0 0 8px; font-size: 1rem; color: var(--accent); }
+  .gapc2 .row { display: flex; justify-content: space-between; font-size: 0.8rem; padding: 3px 0; border-bottom: 1px solid var(--line-2); }
+  .gapc2 .row b { font-variant-numeric: tabular-nums; }
+  .gapc2 .bar { height: 6px; border-radius: 3px; background: var(--line-2); overflow: hidden; margin: 2px 0 6px; } .gapc2 .bar i { display: block; height: 100%; }
+  .caprow { grid-template-columns: repeat(5, minmax(140px, 1fr)); }
+  .caphead { display: grid; grid-template-columns: repeat(5, minmax(140px, 1fr)); gap: 0.75rem; margin: 14px 0 6px; } .caphead h3 { margin: 0; }
+  @media (max-width: 800px) { .caphead { grid-template-columns: 1fr; } .caphead div, .caphead h3:not(:first-child) { display: none; } } .tile.sum .v { color: var(--accent); font-size: 2.1rem; }
+  @media (max-width: 800px) { .caprow { grid-template-columns: repeat(2, 1fr); } }
+
+  /* ---------- v9 ---------- */
+  .wg { display: grid; gap: 2px; font-size: 0.68rem; }
+  .wg .hd { text-align: center; color: var(--ink-3); padding: 2px 0; } .wg .hd b { color: var(--ink); display: block; }
+  .wg .grp { text-align: center; color: var(--ink); font-weight: 700; background: var(--surface-2); border-radius: 6px 6px 0 0; padding: 3px 0; }
+  .wg .lab { color: var(--ink); font-weight: 600; font-size: 0.74rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 6px; display: flex; flex-direction: column; justify-content: center; }
+  .wg .lab small { color: var(--ink-3); font-weight: 400; font-size: 0.64rem; }
+  .wg .sec { grid-column: 1 / -1; font-size: 0.72rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: .05em; padding: 8px 0 2px; }
+  .wg .c { min-height: 30px; border-radius: 4px; background: var(--surface-2); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 0.66rem; line-height: 1; }
+  .wg .c.multi { background: var(--email-deep); } .wg .c.two { background: var(--li-deep); } .wg .c.mail { background: var(--tel-deep); }
+  .wg .gapc { background: transparent; }
+  .stat .two { display: flex; justify-content: space-between; gap: 8px; font-size: 0.8rem; margin-top: 2px; } .stat .two b { font-size: 1.15rem; }
+  .stat .two span { color: var(--ink-3); font-size: 0.7rem; display: block; }
+
+  /* ---------- v10: barve scenarijev ---------- */
+  :root { --sc-multi: #F6A900; --sc-two: #C2823F; --sc-single: #DA2025; }
+  .wg .c.r2 { box-shadow: inset 0 0 0 2px rgba(255,255,255,.75); }
+  .wg .c.multi { background: var(--sc-multi); color: #1a1200; } .wg .c.two { background: var(--sc-two); } .wg .c.single { background: var(--sc-single); }
+
+  /* v32: sloj batcha v celici. Oranzna crta = Dream 100, bela crta = ostali; deljen teden ima obe.
+     Crta lezi na temni podlagi, da se oranzna loci od rumene multichannel celice. */
+  .wg .c { position: relative; min-height: 38px; padding-bottom: 11px; }
+  .wg .c > .mk { position: absolute; left: 3px; right: 3px; bottom: 3px; height: 7px; padding: 1px; display: flex; gap: 2px; border-radius: 3px; background: rgba(0, 0, 0, .72); overflow: hidden; }
+  .wg .c > .mk > i { flex: 1; border-radius: 2px; min-width: 5px; }
+  .wg .c > .mk > .d1 { background: var(--n-orange); }
+  .wg .c > .mk > .rs { background: var(--n-white); }
+  .qleg i.lin { width: 18px; height: 5px; border-radius: 3px; }
+  .qleg i.lin.split { background: linear-gradient(90deg, var(--n-orange) 0 46%, rgba(0,0,0,.55) 46% 54%, var(--n-white) 54% 100%); }
+  .qleg .qsep { display: inline-block; width: 1px; height: 15px; background: var(--line); margin: 0 2px; }
+  .sc3 { display: grid; grid-template-columns: 1fr; gap: 14px; }
+  .scard { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 16px 18px; border-top: 6px solid var(--sc); }
+  .scard.multi { --sc: var(--sc-multi); } .scard.two { --sc: var(--sc-two); } .scard.single { --sc: var(--sc-single); }
+  .scard h3 { margin: 0; font-size: 1.5rem; color: var(--sc); }
+  .scard .use { margin: 8px 0 12px; } .scard .use .k { font-size: 0.78rem; color: var(--ink-3); text-transform: uppercase; letter-spacing: .05em; }
+  .scard .use .big { font-size: 1.35rem; font-weight: 700; color: var(--ink); line-height: 1.2; } .scard .use .w { font-size: 0.9rem; color: var(--ink-2); margin-top: 2px; }
+  .scard .qg .c.e { background: var(--email-deep); } .scard .qg .c.p { background: var(--li-deep); } .scard .qg .c.t { background: var(--tel-deep); }
+  .scard .qg .c.pause { background: var(--surface-2); color: var(--ink-3); font-weight: 400; }
+  .stat .scn { display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: 0.7rem; font-weight: 700; color: #fff; margin-left: 4px; }
+  .scn.multi { background: var(--sc-multi); color: #1a1200; } .scn.two { background: var(--sc-two); } .scn.single { background: var(--sc-single); }
+
+  /* ---------- razdelek 5: koledar kampanj ---------- */
+  .s81 { border: 1px solid var(--line-2); border-radius: var(--r-md); background: var(--surface); margin: 8px 0; }
+  .s81 summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: 1fr 150px 150px 22px; gap: 14px; align-items: center; padding: 10px 14px; }
+  .s81 summary::-webkit-details-marker { display: none; }
+  .s81 summary:hover { background: var(--surface-2); border-radius: var(--r-md); }
+  .s81 .nm { font-weight: 600; font-size: 0.93rem; line-height: 1.3; }
+  .s81 .kn, .s81 .cs { text-align: right; }
+  .s81 .kn b, .s81 .cs b, .s81t .kn b, .s81t .cs b { display: block; font-size: 1.35rem; font-weight: 700; line-height: 1.1; font-variant-numeric: tabular-nums; }
+  .s81 .kn b, .s81t .kn b { color: #FF9E57; }
+  .s81 .cs b, .s81t .cs b { color: var(--good-fg); }
+  .s81 .kn span, .s81 .cs span, .s81t .kn span, .s81t .cs span { font-size: 0.7rem; color: var(--ink-3); }
+  .s81 .ch { color: var(--ink-3); justify-self: end; transition: transform 0.15s; font-size: 1.1rem; }
+  .s81[open] .ch { transform: rotate(90deg); }
+  .s81 .bd { border-top: 1px solid var(--line-2); padding: 10px 14px 12px; font-size: 0.85rem; color: var(--ink-2); display: grid; gap: 6px; line-height: 1.5; }
+  .s81 .bd b { color: var(--ink); font-weight: 600; }
+  .s81t { border: 1px solid var(--line); border-radius: var(--r-md); background: var(--surface-2); margin: 12px 0 8px; display: grid; grid-template-columns: 1fr 150px 150px 22px; gap: 14px; align-items: center; padding: 10px 14px; }
+  .s81t .kn, .s81t .cs { text-align: right; }
+  @media (max-width: 640px) {
+    .s81 summary, .s81t { grid-template-columns: 1fr 104px 104px 16px; gap: 8px; }
+    .s81 .kn b, .s81 .cs b, .s81t .kn b, .s81t .cs b { font-size: 1.1rem; }
+  }
+  .cal { border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--surface); padding: 12px 14px; box-shadow: var(--sh-sm); }
+  .cal .ctb { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 8px; }
+  .cal .ctb .ttl { font-weight: 800; font-size: 1.15rem; margin: 0 6px; min-width: 190px; }
+  .cal .cbtn { border: 1px solid var(--line-2); background: var(--surface-2); color: var(--ink); border-radius: 8px; padding: 5px 11px; font-size: .8rem; font-weight: 600; cursor: pointer; }
+  .cal .cbtn.on { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .cal .cf { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: 4px 0 10px; font-size: .78rem; }
+  .cal .cf .lb { color: var(--ink-3); text-transform: uppercase; letter-spacing: .05em; font-size: .66rem; font-weight: 700; margin-left: 8px; }
+  .cal .cch { border: 1px solid var(--line-2); border-radius: 999px; padding: 3px 10px; cursor: pointer; background: transparent; color: var(--ink); font-size: .76rem; }
+  .cal .cch.on { background: #73C7FF; color: #04102e; border-color: #73C7FF; font-weight: 700; }
+  .cal .cch.k1.on { background: #FFB05E; } .cal .cch.k2.on { background: #73C7FF; } .cal .cch.k3.on { background: #7DE8A0; } .cal .cch.k4.on { background: #F6A900; } .cal .cch.k5.on { background: #C3A6FF; } .cal .cch.k6.on { background: #FF9A9D; } .cal .cch.k0.on { background: #9fb3d1; }
+  .cal input.chot { border: 1px solid var(--line-2); border-radius: 8px; background: var(--surface-2); color: var(--ink); padding: 4px 9px; font-size: .78rem; min-width: 220px; }
+  .cal .csum { font-size: .78rem; color: var(--ink-2); margin: 0 0 10px; }
+  .cal .cm, .cal .cw { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; }
+  .cal .ch7 { font-size: .68rem; color: var(--ink-3); text-transform: uppercase; letter-spacing: .05em; padding: 2px 6px; }
+  .cal .cd { background: var(--surface-2); border-radius: 8px; padding: 5px 6px; min-height: 112px; min-width: 0; }
+  .cal .cw .cd { min-height: 320px; }
+  .cal .cd.we { opacity: .38; } .cal .cd.out { opacity: .3; } .cal .cd.today { outline: 2px solid var(--accent); }
+  .cal .cd .dn { font-weight: 700; font-size: .8rem; display: flex; justify-content: space-between; cursor: pointer; }
+  .cal .cd .dn small { font-weight: 400; color: var(--ink-3); }
+  .cal .ce { font-size: .68rem; border-radius: 5px; padding: 2px 6px; margin-top: 3px; color: #04102e; line-height: 1.25; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cal .cw .ce, .cal .cday .ce { white-space: normal; }
+  .cal .ce b { font-weight: 800; } .cal .ce span { float: right; font-weight: 700; } .cal .ce small { display: block; opacity: .8; font-size: .64rem; }
+  .cal .bn { font: 700 8.5px/1 var(--mono, monospace); opacity: 0.8; margin-left: 8px; font-style: normal; letter-spacing: 0.02em; }
+  .cal .ce.e3 { outline: 2.5px solid #fff; outline-offset: -1px; box-shadow: 0 0 9px rgba(255, 255, 255, 0.55); }
+  .cal .cday tr.e3r > td:first-child { box-shadow: inset 3px 0 0 #fff; }
+  .cal .k1 { background: #FFB05E; } .cal .k2 { background: #73C7FF; } .cal .k3 { background: #7DE8A0; } .cal .k4 { background: #F6A900; } .cal .k5 { background: #C3A6FF; } .cal .k6 { background: #FF9A9D; } .cal .k0 { background: #9fb3d1; }
+  .cal .ce { position: relative; padding-right: 12px; }
+  .cal .ce::after { content: ""; position: absolute; right: 3px; top: 3px; bottom: 3px; width: 4px; border-radius: 2px; box-shadow: 0 0 0 1px rgba(0, 0, 0, .35); }
+  .cal .ce.sd::after { background: var(--n-orange, #F6A900); }
+  .cal .ce.sr::after { background: var(--n-white, #fff); }
+  .cal .ce.sm::after { background: linear-gradient(to bottom, var(--n-orange, #F6A900) 0 50%, var(--n-white, #fff) 50% 100%); }
+  .si { display: inline-block; width: 13px; height: 13px; vertical-align: -2px; margin-right: 2px; } .si svg { width: 100%; height: 100%; display: block; } .sn { font-weight: 800; }
+  .cal .fl { display: inline-block; width: 16px; height: 11px; vertical-align: -1px; border-radius: 2px; overflow: hidden; margin: 0 1px; box-shadow: 0 0 0 1px rgba(0,0,0,.25); } .cal .fl svg { width: 100%; height: 100%; display: block; }
+  .cal .more { font-size: .66rem; color: var(--accent); cursor: pointer; margin-top: 3px; font-weight: 700; }
+  .cal .cday table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: .82rem; }
+  .cal .cday td, .cal .cday th { display: table-cell; padding: 6px 8px; text-align: left; white-space: normal; border-bottom: 1px solid var(--line-2); vertical-align: top; }
+  .cal .cday td.n, .cal .cday th.n { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .cal .cday .kk { display: inline-block; border-radius: 5px; padding: 1px 7px; color: #04102e; font-weight: 800; font-size: .72rem; }
+  .cal .cday details { border: 0; padding: 0; margin: 0; background: transparent; box-shadow: none; } .cal .cday summary { cursor: pointer; color: var(--accent); font-size: .74rem; list-style: none; }
+  .cal .cday tr.tot td { font-weight: 800; background: rgba(115, 199, 255, .12); }
+  .cal .cleg { display: flex; flex-direction: column; gap: 5px; font-size: .72rem; color: var(--ink-2); margin-top: 12px; line-height: 1.45; } .cal .cleg b { color: var(--ink); }
+  .cal .cleg i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; vertical-align: -2px; margin-right: 4px; }
+</style>
+</head>
+<body>
+<main>
+<header class="brandbar">
+  <span class="brandbar__logo">
+    <svg viewBox="0 0 960 276.9" role="img" aria-label="Nevron" fill="currentColor">
+      <path d="M244.3,93.9h30.5V2.1h-91.8v30.5h61.3v61.3ZM30.5,185.1H0v91.8h91.8v-30.5H30.5v-61.3ZM274.8,185.1h-30.5v47.9L30.5,2.1H0v91.8h30.5v-48.2l213.7,231.1h30.5l.1-91.7Z"/>
+      <path d="M467.4,0c-15.3,0-25.3,7.5-29.8,16.7V2.1h-25.4v91.8h25.4v-53c0-13.5,8.2-20.2,19.1-20.2s16.1,6,16.1,18.4v54.7h25.4v-58.4c.1-24.5-12.7-35.4-30.8-35.4ZM557.3,0c-26.7,0-47.2,18.8-47.2,47.7v1.4c0,29.3,20.2,46.7,47.9,46.7,25.1,0,40.9-11.1,43.9-30.9h-24c-1.6,7.7-7.4,12.8-19.1,12.8-13.9,0-22.1-8.8-22.8-24h66.2v-7c-.1-32.8-21.2-46.7-44.9-46.7ZM536.3,38.1c1.9-13,9.7-20.5,21.1-20.5,12.1,0,19.1,6.7,20,20.5h-41.1ZM813.3,0c-27.5,0-48.4,18.8-48.4,47.6v1.4c0,28.6,20.9,46.8,48.3,46.8s48.4-18.4,48.4-47.4v-1.4c-.1-28.6-20.8-47-48.3-47ZM835.7,48.6c0,17.4-8.2,27.9-22.5,27.9s-22.5-10.5-22.5-28.1v-1.4c0-17.5,8.4-27.7,22.5-27.7s22.5,10.5,22.5,28.1v1.2ZM929.1,0c-15.3,0-25.3,7.5-29.8,16.7V2.1h-25.4v91.8h25.4v-53c0-13.5,8.2-20.2,19.1-20.2s16.1,6,16.1,18.4v54.7h25.5v-58.4c0-24.5-12.8-35.4-30.9-35.4ZM730.6,19.7V2.1h-25.4v91.8h25.4v-46c0-17.5,10.9-23.7,29.7-23.5V.7c-14.9.2-23.9,6.7-29.7,19ZM650.9,67.7l-21.9-65.6h-27.2l33.5,91.8h28.6L697.2,2.1h-24.6l-21.7,65.6Z"/>
+    </svg>
+  </span>
+  <span class="brandbar__meta">Interno gradivo</span>
+</header>
+<style>#bench_tbl td.name details summary{white-space:normal !important;display:block !important;} #bench_tbl td.name{max-width:34em;} #bench_tbl{width:100%;} .bench-tw{overflow-x:auto !important;} table.v2{width:100%;table-layout:auto;} table.v2 td, table.v2 th{white-space:normal !important;text-align:left !important;vertical-align:top;line-height:1.45;} table.v2 td.num, table.v2 th.num{text-align:right !important;white-space:nowrap !important;}</style><p class="kicker">Interna analiza · različica 2 za primerjavo z izvirno stranjo</p>
+<h1 style="margin-bottom:2px">Nevron GTM aktivnosti v2</h1>
+<p class="subtitle">Prenovljena točka 2 po preverbi dejanskega stanja in spletni raziskavi, 7. 10. 2026</p>
+<p class="sub small">Izvirna stran ostaja nespremenjena: <a href="https://matjazvolkar.github.io/GTM-kapacitete-2026-2027/" target="_blank" rel="noopener">GTM kapacitete 2026-2027, točka 2</a>. Ta stran ima isto obliko tabele, da se vrstici dasta primerjati ena ob drugi. Številke "danes" so preštete 6. 10. 2026 zvečer iz Instantlyja, HeyReacha, Attia, koledarja in zapiskov (devet revizijskih in raziskovalnih agentov ter sedem vzporednih sej); ocene so označene z OCENA in zaupanjem. Matjaževa dejstva 6. 10. prevladajo nad vsem: Tomaž pride najhitreje 1. 11., Aleš in Marina ne bosta prodajalca, Mateja za SI je mogoča, Rok ni odsoten.</p>
+
+<h2>Preverba: ali strategija drži vodo</h2>
+<p>Pet tednov sezone (14,4 % od 1. 9. do 30. 4.) je mimo. Spodaj je plan izvirne tabele do danes proti preštetemu stanju.</p>
+<div class="tiles">
+  <div class="tile hot"><div class="v">62 <span style="font-size:1rem;color:var(--ink-3)">plan</span></div><div class="l">sestankov do danes</div><div class="have">dejansko 2 dogovorjena s hoteli v ICP (Art Hotel Tartini za november, Terme Olimia 22. 9.), izvedenih iz mrzlega outreacha 0</div></div>
+  <div class="tile hot"><div class="v">9,7 <span style="font-size:1rem;color:var(--ink-3)">plan</span></div><div class="l">projektov do danes</div><div class="have">dejansko 0 novih v sezoni; od 12. 8. se ni premaknil noben od 55 hotelskih poslov v Attiu</div></div>
+  <div class="tile email"><div class="v">231 / 750</div><div class="l">Dream 100 hotelov začetih</div><div class="have">SI 72, HR 97, UAE 62; IT, GR, NY, AT 0; v SI in HR 278 hotelov čaka na povezavo, 39 SI tenantov je zgrajenih in ni v nobenem batchu; K2 ni zgrajen</div></div>
+  <div class="tile email"><div class="v">1,1 %</div><div class="l">odziv na mail, hotelski sloj</div><div class="have">803 mailov, 9 odgovorov; Dream 100 620 mailov, 7 odgovorov (4,9 % na lead, kar je povprečje Hunter 2026); ves Instantly z IPTV in Florido 1.533 in 12</div></div>
+  <div class="tile li"><div class="v">10,9 %</div><div class="l">sprejem LinkedIn, Dream 100</div><div class="have">92 povabil, 10 sprejemov; vsi računi 104 povabil, v zadnjih 7 dneh 3; HeyReach mediana 20,75 %, pod 13 % je šibko</div></div>
+  <div class="tile tel"><div class="v">0</div><div class="l">zabeleženih klicev</div><div class="have">klicatelja ni do 1. 11.; beleženja klicev v Attiu ni</div></div>
+  <div class="tile cap"><div class="v">12 / 22</div><div class="l">aktivnosti brez premika</div><div class="have">premik = vsaj en poslan dotik, sestanek ali objavljen izdelek v sezoni; premaknilo se je 10 (1, 2, 3, 6, 8, 9, 10, 12, 19, 21), vse malo</div></div>
+  <div class="tile cap"><div class="v">3.200 h</div><div class="l">ure prodajalca, ki jih rabi izvirna tabela</div><div class="have">brez Roka in Simona; realno: Tomaž od 1. 11. z rampom okoli 980 h, Matjaž kot SDR, Rok po H64 2 do 4 h na teden</div></div>
+</div>
+
+<div class="note"><b>Odgovor v eni povedi (zaupanje zmerno):</b> stopnje izvirne tabele so večinoma znotraj javnih pasov 2025 do 2026, voda pa ne drži zaradi obsega, kapacitete in časa. V petih tednih je šlo ven 31 % Dream 100 hotelov na treh od sedmih trgov in noben drugi val, 12 aktivnosti se ni premaknilo, tabela pa računa s trikrat več urami prodajalca, kot jih ima Tomaž. Pri osveženih stopnjah in dejanski ekipi je realen pas sezone okoli 135 sestankov (90 do 200) in okoli 19 projektov (12 do 30), proti 431 in 67. Različica 2 spodaj se osredotoči na Slovenijo in Hrvaško in pride na 95 sestankov in 15 projektov. To je pod pasom W3, ker sta SI in HR za mrzli outreach majhna: prešteto je okoli 700 odločevalcev v obeh slojih in 142 mobilnih številk. Zato morajo projekte nositi zastali piloti in znani kontakti, mrzli stroj pa jih dopolnjuje; več da samo dodatna kapaciteta ali obogatitev (scenariji pod tabelo). ROI je nižji od izvirnika (okoli 2,3x proti 5,2x), ker so sestanki realni, stroški pa ostanejo, največji med njimi SEO. Pozor pri primerjavi s ciljem: projekt je podpis do 30. 4., cilj pa so hoteli, ki so živi do 1. 3. in plačujejo po 60 dneh, zato je pošten pas proti cilju nižji.</div>
+
+<h3 style="margin-top:1.4rem">Kaj je pokazala preverba</h3>
+<ol class="small" style="line-height:1.55">
+  <li><b>Odziv je povprečen. Problem sta obseg in lastniki.</b> Na tem, kar je šlo ven, je odziv šibak, a ne ničeln: 620 Dream 100 mailov in 92 povabil sta dala 1 sestanek, pri planiranih stopnjah bi pričakovali okoli 2. Obseg pa je 4 do 60 krat pod planom, ker po prvem valu ni bilo drugega (A1, P-stop-start).</li>
+  <li><b>Kapaciteta je vezna omejitev.</b> Tabela rabi 3.200 ur prodajalca; Tomaž pride najhitreje 1. 11. in z rampom da okoli 980 ur. Matjaž ne zapira, Aleša in Marine ne bo. Tudi z najboljšimi stopnjami ekipa obdela največ tretjino obsega iz tabele (W3, P-chief-of-staff).</li>
+  <li><b>Optimistične stopnje so štiri.</b> Dream 100 6,0 sestanka na 100 oseb (realno 1,2 do 3,8, ker zloženi dvig štirih krogov in 5x strop nista podprta), LinkedIn 1,3 na 100 povabil (realno 0,5 do 0,9), info@ 0,55 (realno 0,1 do 0,4), webinar 48 % udeležbe (majhen organizator 21 do 34 %). SEO da prve leade marca do junija 2027, ne januarja. Vir "DigitalApplied, 12.400 webinarjev" iz knjižnice 27. 8. ne obstaja kot študija (W3).</li>
+  <li><b>Konkurenti zmagujejo drugače.</b> Vse dokumentirane majhne evropske ekipe so do prvih strank prišle z enim trgom (GuestJoy 100+ strank na Islandiji v manj kot letu), s klici (Gastfreund: 50 % sestankov iz outbound klicev), z ocenami na HTR (Duve 649, Guestnet 186) in s PMS partnerjem, ki aktivno priporoča. Noben preverjen konkurent ne pošilja vnaprej zgrajene aplikacije, zato je tenant edinstven, a nepreverjen (W2).</li>
+  <li><b>Plačano digitalno ni lead kanal.</b> Kategorijskih iskanj po aplikaciji za goste je na sedmih trgih skupaj pod 250 na mesec, v SI in HR praktično nič; Hoteza na Googlu ne oglašuje. Plačano je smiselno samo kot frekvenca nad Dream 100 s kontrolno skupino in kot pismo v Avstriji, kjer je edini zakonit prvi dotik (W1); po pregledu V1 je oboje predlog park (plačano do študije primera, Avstrija do nemško govorečega prodajalca).</li>
+  <li><b>Cilji.</b> 10 pilotov do 31. 12.: realno 3 do 7, če štejemo Lonco in Antiq (v Attiu Won, ali plačujeta, ni potrjeno) in odobreno Vilo Radolca. 50 plačujočih do 30. 4.: s to ekipo ni dosegljivo, za to bi rabili okoli 2,5x več prodajne kapacitete (W3, A2).</li>
+</ol>
+
+<h3 style="margin-top:1.4rem">Kaj različica 2 spremeni</h3>
+<ul class="small" style="line-height:1.55">
+  <li><b>Koncentracija, ne prepakiranje.</b> Fokus 90 dni (do začetka januarja) so samo Slovenija in Hrvaška: zastali topli piloti in znani kontakti, en outbound na Dream 100 (mail, LinkedIn, od 1. 11. klic) in študija primera. To vrne strategijo k lastnim odločitvam B9 (beachhead Slovenija) in G53 (topli outbound je primaren), ki ju je izvedba septembra obrnila.</li>
+  <li><b>Predlog park</b> za trge brez prodajalca: IT, GR in NY do februarja, Avstrija do nemško govorečega prodajalca; UAE samo vzdrževanje že zgrajenih kampanj. To je odstop od odločitve 27. 8. o mrzlem testu na sedmih trgih, zato je označen kot predlog.</li>
+  <li>22 aktivnosti v 12 in temelj; vsaka z lastnikom (kjer ga še ni, je to odprta odločitev), pogojem in pragom za nadaljevanje z datumom.</li>
+  <li><b>SI in HR sta majhna trga za mrzli outreach.</b> Prešteto: Dream 100 401 odločevalcev in 97 mobilnih, ostali 299 odločevalcev (206 od 272 hotelov zunaj ICP), 91 poslovnih mailov in 45 mobilnih. Mrzli stroj v SI in HR da okoli 25 sestankov v sezoni; cilj morajo nositi topli posli. Tomaž ima po tej tabeli okoli 380 prostih ur, ki gredo najbolje v obogatitev mobilnih in klice.</li>
+  <li>Odstranjeno: mesečni webinar, samostojni zajtrk in samostojni odrski nastop (v paket kongresov). Raziskano in ne dodano: Google kategorija, hladni LinkedIn in Meta oglasi. Plačana frekvenca: predlog park do prve študije primera.</li>
+  <li>Dodano: študija primera in ECP intervjuji (vrstica 0), pismo s QR pred klicem kot test s kontrolno skupino. Spremenjeno: partnerski kanal (PMS, ki priporoča, namesto listingov), HTR ocene pri vsaki stranki namesto 25 ocen v 30 dneh.</li>
+  <li>Sestanki se zgostijo v okno od oktobra do sredine februarja, ker mediana cikla 10 tednov pomeni, da poznejši sestanki do 30. 4. praviloma niso podpisani. Do 31. 12. lahko podpišejo skoraj samo topli posli, ki v Attiu stojijo od 12. 8.</li>
+  <li><b>Najšibkejša točka ostaja zapiranje.</b> Matjaž ne zapira, Tomaž pride najhitreje 1. 11., Rok ima po odločitvi H64 2 do 4 ure na teden. Do 1. 11. nihče nima časa za pilotne pogovore, ki edini lahko prinesejo pilote do 31. 12.</li>
+</ul>
+
+<h2>Kam je šla vsaka od 22 izvirnih aktivnosti</h2>
+<div class="tw"><table class="v2">
+<thead><tr><th>Izvirna vrstica</th><th>Plan sestankov / projektov</th><th>Danes (6. 10.)</th><th>V različici 2</th></tr></thead>
+<tbody>
+<tr><td>1 Dream 100 večkanalno</td><td class="num">83 / 8,5</td><td>231 hotelov, 1 sestanek dogovorjen</td><td>združeno v 1; IT, GR, NY predlog park</td></tr>
+<tr><td>2 Mrzli mail ostalim</td><td class="num">28 / 2,8</td><td>43 leadov, 0 sestankov; UAE val zgrajen in nezagnan</td><td>združeno v 1</td></tr>
+<tr><td>3 LinkedIn</td><td class="num">59 / 6,0</td><td>zunaj Dream 100 12 povabil; za AT pravno napačna premisa</td><td>združeno v 1 (kanal, ne aktivnost); AT predlog park</td></tr>
+<tr><td>4 Telefon mobilna</td><td class="num">45 / 4,6</td><td>0 zabeleženih klicev</td><td>združeno v 2</td></tr>
+<tr><td>5 Telefon centrala</td><td class="num">12 / 1,2</td><td>0</td><td>združeno v 2 (polnilo)</td></tr>
+<tr><td>6 Scrape-demo</td><td class="num">34 / 8,4</td><td>splošni demo: 729 povezav, 15 odprtih, 0 aktivacij; lasten tenant SI: 21 od 52 odprlo, 3 pozitivni</td><td>združeno v 4; tenant kot dokaz ostane v 1</td></tr>
+<tr><td>7 Piloti ECP</td><td class="num">15 / 5,1</td><td>0 novih; Kompas zavrnil, Ribno januar</td><td>združeno v 4</td></tr>
+<tr><td>8 Skupine</td><td class="num">7 / 7,9</td><td>1 sestanek (Terme Olimia)</td><td>ohranjeno kot 5, samo osebno</td></tr>
+<tr><td>9 Topla baza</td><td class="num">7 / 1,4</td><td>27 nurture stoji od 2. 7.</td><td>združeno v 6</td></tr>
+<tr><td>10 Obstoječe stranke, Telemach, Telekom</td><td class="num">10 / 2,7</td><td>9 poslov na New od 12. 8.</td><td>združeno v 6</td></tr>
+<tr><td>11 Priporočila</td><td class="num">3 / 0,6</td><td>0 prošenj; seznam strank ne obstaja</td><td>združeno v 6</td></tr>
+<tr><td>12 Gostje podkasta</td><td class="num">8 / 1,5</td><td>13 epizod, 5 gostov v ICP</td><td>združeno v 8</td></tr>
+<tr><td>13 Webinarji</td><td class="num">15 / 2,8</td><td>ni izveden niti pripravljen</td><td><b>odstranjeno</b></td></tr>
+<tr><td>14 Sejmi in dogodki</td><td class="num">45 / 4,2</td><td>0 EUR; interni roki pretekli, HoReCa in UPUHH še odprta</td><td>združeno v 11 (DST in HoReCa; UPUHH pogojno)</td></tr>
+<tr><td>15 Zajtrk za odločevalce</td><td class="num">11 / 1,3</td><td>ni prostora ne vabil</td><td>združeno v 11 (ob kongresu)</td></tr>
+<tr><td>16 Odrski nastop</td><td class="num">6 / 0,6</td><td>prijave za slot ni</td><td>združeno v 11</td></tr>
+<tr><td>17 PMS tržnice</td><td class="num">2 / 0,3</td><td>0 listingov</td><td>spremenjeno v 7 (partner, ki priporoča)</td></tr>
+<tr><td>18 Partnerji, integratorji</td><td class="num">3 / 0,4</td><td>Toni čaka naš odgovor od 23. 8.</td><td>združeno v 7</td></tr>
+<tr><td>19 SEO in AEO</td><td class="num">20 / 3,6</td><td>stran živa od 10. 9.; 0 ICP leadov</td><td>spremenjeno v 10</td></tr>
+<tr><td>20 HotelTechReport</td><td class="num">12 / 1,7</td><td>1 ocena, 0 leadov</td><td>spremenjeno v 9; prošnja za oceno v 6</td></tr>
+<tr><td>21 Content machine</td><td class="num">5 / 0,9</td><td>~8 osebnih objav proti ~134</td><td>združeno v 8</td></tr>
+<tr><td>22 Remarketing</td><td class="num">4 / 0,7</td><td>brez odločitve; piksli živi</td><td>spremenjeno v 12, predlog park do študije primera</td></tr>
+<tr><td><i>novo</i></td><td></td><td>6.166 naslovov, 0 pisem</td><td><b>novo 3: pismo s QR pred klicem</b> (SI in HR test)</td></tr>
+<tr><td><i>novo</i></td><td></td><td>ni študije primera, ni ECP intervjujev</td><td><b>novo 0: študija primera in ECP intervjuji</b></td></tr>
+</tbody></table></div>
+
+<h2 id="v2">2. GTM aktivnosti po strategiji 2026-2027, različica 2: <span style="color:#FFB05E">sestanki</span>, <span style="color:#7DE8A0">projekti</span>, angažmaji in vložek</h2>
+<p>Dvanajst aktivnosti in en temelj (vrstica 0) namesto dvaindvajsetih. <b>Pet vrstic z oznako fokus 90 dni (0, 1, 2, 4, 6) nosi 65 od 95 sestankov, 10 od 15 projektov in 82 % ur prodajalca</b>; vse ostalo je podpora, pogojno ali predlog za park (po Voje: 80 % virov na motione, ki delujejo, 10 do 20 % na eksperimente). Vsaka vrstica ima prag za nadaljevanje z datumom. Vsaka vrstica pove, iz katerih izvirnih vrstic je nastala, kakšno je stanje danes (prešteto 6. 10.) in koliko sestankov in projektov realno da do 30. 4. 2027 pri osveženih stopnjah in dejanski kapaciteti ekipe. Formule so iste kot na izvirni strani: projektov = sestankov x konverzija (mrzli 10,3 % x 0,75 zaradi cikla, topli 19 %, priporočilo 22 %, pilot 22,5 do 25 %, skupina in partnerji kot sredina W3 bloka; uporabljena konverzija je izpisana v vrstici), vložek so samo variabilni stroški, ROI = projekti x 4.000 EUR / vložek, delež angažmaja se sešteje v 100 %. Razlika je v obsegih in stopnjah, ki so zdaj preštete ali osvežene z viri 2025 do 2026. Oznake: <b style="color:#73C7FF">združeno</b>, <b style="color:#BFE0FF">ohranjeno</b>, <b style="color:#FFB05E">spremenjeno</b>, <b style="color:#7DE8A0">novo</b>, <b style="color:#FFD27A">pogojno</b> (šteje samo, če pade odločitev), <b style="color:#8FA3BF">predlog: park</b> (ne šteje v seštevek), <b style="color:#FFB05E">fokus 90 dni</b>.</p>
+<style>
+  #bench_tbl td, #bench_tbl th { display: table-cell; }
+  #bench_tbl details { border: 0; border-radius: 0; padding: 0; background: transparent; margin: 0; box-shadow: none; }
+  #bench_tbl details[open] { padding: 0; }
+  #bench_tbl td.name { width: 30%; padding-left: 4px; }
+  #bench_tbl tr.grp td { background: #16295c; padding: 11px 14px; border-bottom: 0; border-top: 30px solid transparent; background-clip: padding-box; }
+  #bench_tbl tr.total td:nth-child(2) { text-align: left; }
+  #bench_tbl th:first-child, #bench_tbl th:nth-child(2), #bench_tbl td.name { text-align: left; }
+  #bench_tbl td.name details summary { font-size: .98rem; font-weight: 600; cursor: pointer; list-style: none; }
+  #bench_tbl td.name details .sub { display: block; margin-top: 4px; }
+  #bench_tbl td.name details .sub.opis { opacity: .85; font-size: .82rem; line-height: 1.45; }
+  #bench_tbl td.name details summary::-webkit-details-marker { display: none; }
+  #bench_tbl td.name details summary::after { content: " ▸"; opacity: .5; font-size: .8em; }
+  #bench_tbl td.name details[open] summary::after { content: " ▾"; }
+  .bench-tw { overflow: visible !important; max-height: none !important; }
+  #bench_tbl thead th { position: sticky !important; top: 0 !important; z-index: 5; background: #0a1440; box-shadow: 0 1px 0 rgba(115, 199, 255, .35); }
+  .bench-fixhead { position: fixed; top: 0; z-index: 60; border-collapse: separate; border-spacing: 0; table-layout: fixed; display: none; font-size: 0.82rem; background: #0a1440; box-shadow: 0 1px 0 rgba(115, 199, 255, .35); }
+  .bench-fixhead th { position: static !important; background: #0a1440; font-weight: 600; padding: 6px 8px; text-align: right; white-space: nowrap; }
+  .bench-fixhead th:first-child { text-align: left; padding-left: 26px; }
+  .bench-fixhead th:nth-child(2) { text-align: left; }
+  .bench-fixhead th.num { padding-left: 12px; }
+  .bench-fixhead th:nth-child(4) { padding-left: 34px; }
+  .bench-fixhead th:last-child { padding-right: 22px; }
+  #bench_tbl { border-collapse: separate; border-spacing: 0; }
+  #bench_tbl td:first-child, #bench_tbl th:first-child { padding-left: 26px; }
+  #bench_tbl td:last-child, #bench_tbl th:last-child { padding-right: 22px; }
+  #bench_tbl tr.grp td, #bench_tbl tr.subtotal td:nth-child(2) { padding-left: 26px; }
+  #bench_tbl .big { font-size: 1.7rem; font-weight: 700; color: #fff; }
+  #bench_tbl td { vertical-align: middle; border-left: 0 !important; border-right: 0 !important; }
+  #bench_tbl td.num, #bench_tbl th.num { padding-left: 12px; }
+  #bench_tbl td:nth-child(4), #bench_tbl th:nth-child(4) { padding-left: 34px; }
+  #bench_tbl td.name { width: 34%; }
+  #bench_tbl td.big { line-height: 1.15; height: 1px; }
+  #bench_tbl td.big .vc { display: flex; height: 100%; min-height: 68px; align-items: center; justify-content: flex-end; position: relative; }
+  #bench_tbl td.big .vc .sub { position: absolute; left: 0; right: 0; top: calc(50% + 16px); margin: 0; line-height: 1.2; text-align: right; }
+  #bench_tbl tbody tr:not(.subtotal):not(.total) td.big:nth-child(3) { color: #FFB05E; }
+  #bench_tbl tbody tr:not(.subtotal):not(.total) td.big:nth-child(4) { color: #7DE8A0; }
+  #bench_tbl tr.subtotal td { font-weight: 700; background: #73C7FF; color: #04102e; border-top: 16px solid transparent; border-bottom: 16px solid transparent; background-clip: padding-box; }
+  #bench_tbl tr.subtotal td.big { color: #04102e !important; font-size: 1.7rem; }
+  #bench_tbl tr.subtotal td:nth-child(2) { text-align: left; color: #04102e; font-size: .98rem; }
+  #bench_tbl tr.subtotal td .sub { color: #2a4a7a; opacity: 1; }
+  #bench_tbl tr.grp td { border-bottom: 14px solid transparent; background-clip: padding-box; }
+  #bench_tbl tr.total td:nth-child(2) { font-size: 1.35rem; font-weight: 800; }
+  #bench_tbl tr.total td:nth-child(2) .sub { display: none; }
+  #bench_tbl td.num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  #bench_tbl .sub { display: block; font-size: .74rem; opacity: .65; font-weight: 400; white-space: normal; }
+  #bench_tbl td.name { min-width: 17em; }
+  #bench_tbl tr.grp td { font-size: .72rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #73C7FF; }
+  #bench_tbl tr.total td { font-weight: 700; background: #BFE0FF; color: #04102e; border-top: 30px solid transparent; background-clip: padding-box; }
+  #bench_tbl tr.total td .sub { color: #2a4a7a; opacity: 1; }
+  #bench_tbl tr.total td.big { color: #04102e; font-size: 1.9rem; }
+</style><style>#bench_tbl td.name details summary{white-space:normal !important;display:block !important;} #bench_tbl td.name{max-width:34em;} #bench_tbl{width:100%;} .bench-tw{overflow-x:auto !important;} table.v2{width:100%;table-layout:auto;} table.v2 td, table.v2 th{white-space:normal !important;text-align:left !important;vertical-align:top;line-height:1.45;} table.v2 td.num, table.v2 th.num{text-align:right !important;white-space:nowrap !important;}</style>
+<div class="tw bench-tw"><table id="bench_tbl"><thead><tr><th style="position:sticky;top:0;z-index:5;background:#0a1440;box-shadow:0 1px 0 rgba(115,199,255,.35)">#</th><th style="position:sticky;top:0;z-index:5;background:#0a1440;box-shadow:0 1px 0 rgba(115,199,255,.35)">GTM aktivnost</th><th class="num" style="position:sticky;top:0;z-index:5;background:#0a1440;box-shadow:0 1px 0 rgba(115,199,255,.35)">Sestankov</th><th class="num" style="position:sticky;top:0;z-index:5;background:#0a1440;box-shadow:0 1px 0 rgba(115,199,255,.35)">Projektov</th><th class="num" style="position:sticky;top:0;z-index:5;background:#0a1440;box-shadow:0 1px 0 rgba(115,199,255,.35)">Angažma prodajalca</th><th class="num" style="position:sticky;top:0;z-index:5;background:#0a1440;box-shadow:0 1px 0 rgba(115,199,255,.35)">Angažma marketinga</th><th class="num" style="position:sticky;top:0;z-index:5;background:#0a1440;box-shadow:0 1px 0 rgba(115,199,255,.35)">Vložek EUR</th></tr></thead><tbody><tr class="grp"><td colspan="7">Temelj: dokaz in merjenje</td></tr><tr><td>0</td><td class="name"><details><summary><span>Študija primera in ECP intervjuji: Lonca, Antiq, Olimia<span style="display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:1px 7px;border-radius:3px;background:#7DE8A0;color:#04102e;margin-left:8px;vertical-align:middle">novo</span><span style="display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:1px 7px;border-radius:3px;background:#FFB05E;color:#04102e;margin-left:8px;vertical-align:middle">fokus 90 dni</span></span></summary><span class="sub" style="opacity:.8"><b style="color:#73C7FF">Iz izvirnih vrstic:</b> novo (na izvirni strani ga ni); po metodi Voje podlaga za vse ostale vrstice</span><span class="sub opis">Ena objavljena študija primera s številko iz že dobljenega hotela (Lonca ali Antiq) in 10 do 20 kratkih intervjujev z zgodnjimi strankami in pilotnimi kandidati (ECP po Voje): zakaj so kupili, kaj so primerjali, kaj bi plačali. Študija primera dvigne stopnjo zmag vrstic 1, 4 in 6 in je pogoj za plačano (vrstica 12) in za HTR. Sestankov sama ne šteje.<br><br><b style="color:#fff">Prodajalec:</b> intervjuji s strankami (Matjaž, Rok), referenčni klic.<br><b style="color:#fff">Marketing:</b> študija primera, citat, številka, objava na nevron.co in v copyju.</span><span class="sub" style="opacity:.95;margin-top:6px"><b style="color:#FFB05E">Stanje danes (6. 10.):</b> ni študije primera; Lonca in Antiq sta v Attiu Won (migracija 12. 8.), ali plačujeta, iz virov ni potrjeno. Vir: A2, V1.</span><span class="sub" style="opacity:.95;margin-top:6px"><b style="color:#7DE8A0">Prag za nadaljevanje:</b> 31. 10.: 5 intervjujev; 30. 11.: objavljena študija primera s številko; 31. 12.: 10 do 20 intervjujev in zapisan ECP.</span><span class="sub">ne šteje sestankov; vpliv je na stopnjo zmag drugih vrstic · Ure: Matjaž 15, Rok 10 · Kdo: Matjaž</span></details></td><td class="num big"><div class="vc">0</div></td><td class="num big"><div class="vc">0,0</div></td><td class="num big"><div class="vc">3,0 %<span class="sub">25 h</span></div></td><td class="num big"><div class="vc">4,8 %<span class="sub">60 h</span></div></td><td class="num big"><div class="vc">200<span class="sub"></span></div></td></tr><tr class="subtotal"><td></td><td>Skupaj: Temelj: dokaz in merjenje</td><td class="num big"><div class="vc">0</div></td><td class="num big"><div class="vc">0,0</div></td><td class="num big"><div class="vc">3,0 %<span class="sub">25 h</span></div></td><td class="num big"><div class="vc">4,8 %<span class="sub">60 h</span></div></td><td class="num big"><div class="vc">200<span class="sub"></span></div></td></tr><tr class="grp"><td colspan="7">Mrzli outreach</td></tr><tr><td>1</td><td class="name"><details><summary><span>Večkanalni mrzli outreach z dokazom: Dream 100 in ostali v SI in HR, mail in LinkedIn<span style="display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:1px 7px;border-radius:3px;background:#73C7FF;color:#04102e;margin-left:8px;vertical-align:middle">združeno</span><span style="display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:1px 7px;border-radius:3px;background:#FFB05E;color:#04102e;margin-left:8px;vertical-align:middle">fokus 90 dni</span></span></summary><span class="sub" style="opacity:.8"><b style="color:#73C7FF">Iz izvirnih vrstic:</b> 1 (Dream 100), 2 (mail ostalim), 3 (LinkedIn); scrape tenant in Index iz 6 ostaneta kot dokaz v sporočilu</span><span class="sub opis">Ena aktivnost namesto treh, ker so vse tri isti stroj z istim dokazom (povezava na hotelov tenant ali Index) in isto metriko (dogovorjen sestanek). Polna moč samo na Sloveniji in Hrvaški, vsi krogi, Dream 100 z ročno personalizacijo, ostali brez ročnega dela. UAE ostane v vzdrževanju: že zgrajena General Scrape kampanja (387 kontaktov: 102 mail, 285 LinkedIn) gre ven samo, če po preverbi vzorčnega tenanta odločimo, da splošni demo nadaljujemo (0 aktivacij od 729 splošnih povezav). <b>Predlog: IT, GR in NY v park do februarja</b>: nimajo prodajalca, začetega hotela in povezav; park odvzame okoli 6 do 10 sestankov in 0,5 do 0,8 projekta (OCENA), sprosti pa Amadejev čas za SI in HR. To je odstop od odločitve 27. 8. o testu na sedmih trgih, zato je predlog. <b>Pozor: SI in HR sta za mrzli outreach majhna trga</b>; vseh odločevalcev v obeh slojih je okoli 700, zato ta vrstica ne more nositi cilja. Pogoj, da teče: povezave za čakajoče SI in HR hotele (278 po A1; najprej 39 SI hotelov z že zgrajenim tenantom, ki niso v nobenem batchu) in zgrajen K2. Tri sporočila na krog (Hunter 2026).<br><br><b style="color:#fff">Prodajalec:</b> odgovori na maile in LinkedIn sporočila, kvalifikacija, izvedba sestankov (oktobra Rok, od 1. 11. Tomaž).<br><b style="color:#fff">Marketing:</b> dosjeji, copy K2 do K4, povezave za 729 čakajočih hotelov (Amadej), nastavitev sekvenc, dostavljivost, tedenski novi val.</span><span class="sub" style="opacity:.95;margin-top:6px"><b style="color:#FFB05E">Stanje danes (6. 10.):</b> Dream 100: 231 od 750 hotelov začetih (SI 72, HR 97, UAE 62; IT, GR, NY, AT 0), 620 mailov, 7 odgovorov (142 leadov, 4,9 % na lead, kar je povprečje Hunter 2026); LinkedIn Dream 100 92 povabil, 10 sprejemov (10,9 %, HeyReach mediana 20,75 %); 1 dogovorjen sestanek (Art Hotel Tartini, izvedba novembra); ostali: pozitiven odziv Hotel Arija. Hotelov lasten tenant deluje bolje od splošnega dema: K1 Scrape SI 7 odgovorov na 225 mailov (3,1 %) proti 2,2 %. Danes teče ena hotelska mail kampanja (36 leadov), K2 ne obstaja. Vir: A1, P-stop-start, P-scrape.</span><span class="sub" style="opacity:.95;margin-top:6px"><b style="color:#7DE8A0">Prag za nadaljevanje:</b> 15. 11.: K2 živ, vsaj 220 od 250 SI in HR Dream 100 hotelov v vsaj enem krogu (danes 169), odgovor na lead vsaj 2 %, vsaj 3 novi dogovorjeni sestanki od 1. 10.; 15. 12.: vsaj 8 izvedenih sestankov iz te vrstice. Angle ali sloj pod 1 % odgovora se ugasne (Voje: pod 1 % je nekaj narobe). UAE: vsaj 2 % odgovora in 1 sestanek na 200 leadov do 30. 11., sicer brez novih valov.</span><span class="sub">Obseg (prešteto, DATA 31. 8.): Dream 100 SI in HR 401 odločevalcev x 2,4 sestanka na 100 oseb čez vse kroge = 10; ostali SI in HR 338 mail naslovov (91 poslovnih + 247 office) x 0,25 + 98 LinkedIn x 0,7 = 1,5; UAE že zgrajeno 102 x 0,25 + 285 x 0,7 = 2,3; skupaj 14 (vključno s Tartinijem). Sestanek v projekt 10,3 % x 0,75 zaradi cikla · Ure: Matjaž 40 (oktober), Tomaž 80 · Kdo: oktobra Matjaž (SDR), od 1. 11. Tomaž; povezave Amadej</span></details></td><td class="num big"><div class="vc">14</div></td><td class="num big"><div class="vc">1,1</div></td><td class="num big"><div class="vc">14,2 %<span class="sub">120 h</span></div></td><td class="num big"><div class="vc">23,9 %<span class="sub">300 h</span></div></td><td class="num big" title="SI, HR in UAE delež orodij in podatkov (OCENA, izvirnik 8.048 EUR za 7 trgov)"><div class="vc">3.500<span class="sub">ROI 1,3x</span></div></td></tr><tr><td>2</td><td class="name"><details><summary><span>Klici: osebna mobilna in centrala, samo SI in HR<span style="display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:1px 7px;border-radius:3px;background:#73C7FF;color:#04102e;margin-left:8px;vertical-align:middle">združeno</span><span style="display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:1px 7px;border-radius:3px;background:#FFB05E;color:#04102e;margin-left:8px;vertical-align:middle">fokus 90 dni</span></span></summary><span class="sub" style="opacity:.8"><b style="color:#73C7FF">Iz izvirnih vrstic:</b> 4 (mobilna), 5 (centrala)</span><span class="sub opis">Klici ostanejo ločena vrstica, ker bi se v skupni vrstici ničla skrila za mailom, in ker je pri konkurentih to najmočneje dokazan kanal (Gastfreund, okoli 4.500 strank: 50 % vseh sestankov iz outbound klicev). Index ostane opener. Klici samo v SI in HR. Do 1. 11. ni klicatelja; pred prvim klicem mora obstajati beleženje izida v Attiu (Tomaž ni član Attia). Pozor: bazen je majhen, samo 142 mobilnih v SI in HR; največji vzvod vrstice je obogatitev mobilnih (Lusha 600 kreditov na mesec), ker ima Tomaž po tej tabeli okoli 380 prostih ur.<br><br><b style="color:#fff">Prodajalec:</b> 4 poskusi na mobilno, izid v Attio, dogovor sestanka; Index kot opener.<br><b style="color:#fff">Marketing:</b> klicne liste po batchih, razkritja številk, skript, dnevni razpored, beleženje klicev v Attio.</span><span class="sub" style="opacity:.95;margin-top:6px"><b style="color:#FFB05E">Stanje danes (6. 10.):</b> 0 zabeleženih klicev od 1. 9. (ali je Matjaž septembra klical, iz virov ni mogoče ugotoviti); klicni pipeline Ringover v 3CX ni zgrajen; Tomaž najhitreje 1. 11.; model računa 30 klicev na dan, osnutek pogodbe 70 na teden (nasprotje odprto). Vir: A1, P-stop-start, P-chief-of-staff.</span><span class="sub" style="opacity:.95;margin-top:6px"><b style="color:#7DE8A0">Prag za nadaljevanje:</b> 30. 11.: vsaj 300 klicev zabeleženih v Attiu, vsaj 15 % doseže odločevalca, vsaj 3 sestanki; 31. 12.: vsaj 8 sestankov. Pod pragom presoja skripta in list, dokončna odločitev 31. 1. (outbound rabi 2 meseca).</span><span class="sub">Prešteto (DATA 31. 8.): mobilnih SI in HR 142 (Dream 100 97, ostali 45) x 3 sestanki na 100 = 4,3; centrale ~500 hotelov x 1,3 na 100 = 6,5; skupaj 11. Vsakih +100 obogatenih mobilnih da okoli +3 sestanke (OCENA) · Ure: Tomaž 170 (~2.000 klicev po 4 minute + sestanki) · Kdo: Tomaž od 1. 11. (pogodba po zapisih ni podpisana); do takrat nihče</span></details></td><td class="num big"><div class="vc">11</div></td><td class="num big"><div class="vc">0,8</div></td><td class="num big"><div class="vc">20,1 %<span class="sub">170 h</span></div></td><td class="num big"><div class="vc">4,8 %<span class="sub">60 h</span></div></td><td class="num big" title="razkritja številk (Apollo, Lusha) in telefonija"><div class="vc">600<span class="sub">ROI 5,3x</span></div></td></tr><tr><td>3</td><td class="name"><details><summary><span>Pismo s QR pred klicem, test v SI in HR (Avstrija v park)<span style="display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:1px 7px;border-radius:3px;background:#7DE8A0;color:#04102e;margin-left:8px;vertical-align:middle">novo</span></span></summary><span class="sub" style="opacity:.8"><b style="color:#73C7FF">Iz izvirnih vrstic:</b> novo (na izvirni strani ga ni); 6.166 potrjenih naslovov, ?src=letter je že rezerviran</span><span class="sub opis">Personalizirano pismo, ki ga podpiše Rok, s QR kodo na hotelov že zgrajeni tenant ali Index, poslano 3 do 5 dni pred Tomaževim klicem. Polovica Dream 100 SI in HR dobi pismo, polovica je kontrolna skupina. Javnega primera ponudnika hotelske tehnologije, ki bi hotelirjem pisal po pošti, nismo našli, zato je prvi val merjen test. <b>Avstrija: predlog park.</b> Pismo je tam edini zakonit prvi dotik (§ 174 TKG), a odgovori bodo v nemščini in nihče jih ne more voditi (Marine ne bo, Avstrija ni v začetnem trgu, beachhead); pripravljeno ostane za dan, ko bo nemško govoreči prodajalec.<br><br><b style="color:#fff">Prodajalec:</b> klic 3 do 5 dni po prejemu pisma (SI, HR), Rok podpiše na roko, odgovori na skene.<br><b style="color:#fff">Marketing:</b> copy (nemščina prek /transcreate), tisk in kuverte, QR s ?src=letter, pisna presoja zakonitega interesa pred AT valom, pošiljanje v valovih.</span><span class="sub" style="opacity:.95;margin-top:6px"><b style="color:#FFB05E">Stanje danes (6. 10.):</b> 0 poslanih; naslovi potrjeni (876 Dream 100); copy obstaja samo kot nemški osnutek za AT brez transcreate. Vir: A1, W5.</span><span class="sub" style="opacity:.95;margin-top:6px"><b style="color:#7DE8A0">Prag za nadaljevanje:</b> 30. 11. (30 dni po pošti 27. 10.): polovica s pismom da vsaj 2 sestanka več od kontrolne polovice ali vsaj 5 % hotelov skenira QR (?src=letter). Sicer drugi val ne gre.</span><span class="sub">SI in HR Dream 100: val 1 ~195 pisem (naključna polovica odločevalcev, pošta okoli 27. 10., klici od 3. 11.), val 2 ~195 samo ob uspehu (W5); OCENA 2 sestanka na 100 pisem s klicem (1 do 4), zaupanje nizko · Ure: Tomaž 15, Rok 4 (podpis) · Kdo: Rok podpiše, Matjaž pripravi, Amadej tisk, klic Tomaž</span></details></td><td class="num big"><div class="vc">6</div></td><td class="num big"><div class="vc">0,5</div></td><td class="num big"><div class="vc">2,4 %<span class="sub">20 h</span></div></td><td class="num big"><div class="vc">2,8 %<span class="sub">35 h</span></div></td><td class="num big" title="~390 pisem, SI ~1,75 EUR, HR ~2,65 EUR brez DDV (W5)"><div class="vc">900<span class="sub">ROI 2,2x</span></div></td></tr><tr class="subtotal"><td></td><td>Skupaj: Mrzli outreach</td><td class="num big"><div class="vc">31</div></td><td class="num big"><div class="vc">2,4</div></td><td class="num big"><div class="vc">36,7 %<span class="sub">310 h</span></div></td><td class="num big"><div class="vc">31,5 %<span class="sub">395 h</span></div></td><td class="num big"><div class="vc">5.000<span class="sub">ROI 1,9x</span></div></td></tr><tr class="grp"><td colspan="7">Produkt in pilot</td></tr><tr><td>4</td><td class="name"><details><summary><span>Pilot s produktom: tenant kot vstop, piloti ECP v SI in HR<span style="display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:1px 7px;border-radius:3px;background:#73C7FF;color:#04102e;margin-left:8px;vertical-align:middle">združeno</span><span style="display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:1px 7px;border-radius:3px;background:#FFB05E;color:#04102e;margin-left:8px;vertical-align:middle">fokus 90 dni</span></span></summary><span class="sub" style="opacity:.8"><b style="color:#73C7FF">Iz izvirnih vrstic:</b> 6 (scrape-demo), 7 (piloti ECP topli in ABM)</span><span class="sub opis">Hotel, ki je odprl svoj tenant ali je topel pilotni kandidat, dobi en pogovor "dokončajmo skupaj" in ponudbo pilota z dokazno pogodbo (telemetrija, en izmerjen izid v 60 dneh, referenca). Pot "da, dokončajte" brez sestanka ostane test s pragom, ne steber: noben preverjen konkurent ne pošilja vnaprej zgrajene aplikacije, zato ni zunanjega dokaza, da konvertira. Trije pogoji, preden se vrstica šteje kot samostojen motion: tenant na produkciji (ne preprod), stopnja Trial v Attiu, telemetrija uporabe. ABM na ~105 hotelov pilotnega pasu dobi lastnika in rok ali gre v vrstico 1.<br><br><b style="color:#fff">Prodajalec:</b> pogovor ob odprtem tenantu, ponudba pilota, pogajanja o dokazni pogodbi, vodenje pilota do izmerjenega izida.<br><b style="color:#fff">Marketing:</b> tenanti na produkciji, telemetrija odprtij in uporabe, personalizirani predlogi pilota, onboarding.</span><span class="sub" style="opacity:.95;margin-top:6px"><b style="color:#FFB05E">Stanje danes (6. 10.):</b> Splošni demo (deljen vzorčni tenant, General Scrape): 729 povezav, 15 odprtih, 8 vstopov, 0 aktivacij; UAE General Scrape stoji od 22. 9. Hotelov lasten tenant (K1 Scrape SI): 52 poslanih, 21 odprlo, 3 pozitivni odgovori; 39 SI hotelov ima zgrajen tenant in ni v nobenem batchu. Topli piloti: Kompas/Lovec zavrnil, Ribno prosi za januar 2027, Rimske Terme in Rogaška v pogajanjih od 12. 8. brez premika, NEU Demo Booked od 2. 7.; odprte ponudbe tudi Plesnik, Terme Paradiso, PiranArt, Habakuk, Belmur, Vila Radolca (odobrena); Lonca in Antiq Won. Telemetrija uporabe (rok konec septembra) ni dokazana. Vir: A2, P-scrape.</span><span class="sub" style="opacity:.95;margin-top:6px"><b style="color:#7DE8A0">Prag za nadaljevanje:</b> 31. 10.: vsak zastali ali odprt pilotni posel (Rimske Terme, Rogaška, NEU, JGZ Brdo, Olimia, Ribno, Plesnik, Terme Paradiso, PiranArt, Habakuk, Belmur, Vila Radolca) ima zapisano odločitev ali datum; 15. 12.: vsaj 5 podpisanih plačanih pilotov z dokazno pogodbo (pravilo K85; sicer ustavi širjenje in diagnoza ponudbe, cene ali segmenta). Tenant: vsaj 3 od 100 hotelov, ki odprejo svoj tenant, rečejo "dokončajte" do 30. 11., sicer pot "da" ugasne. Telemetrija na produkciji do 15. 10., sicer se "izmerjen izid do 31. 12." uradno premakne na 28. 2.</span><span class="sub">~12 odprtih pilotnih poslov + ~25 odprtih tenantov + pilotni pas SI 53 in HR 69; sestanek v projekt 22,5 % (sredina W3 bloka: pilot 25 %, tenant nižje) · Ure: Tomaž 180, Rok 20 · Kdo: pogovore vodi Tomaž od 1. 11.; do takrat odprto (Rok po H64 2 do 4 ure na teden, Matjaž ne zapira); Amadej tenanti; Aljaž telemetrija</span></details></td><td class="num big"><div class="vc">20</div></td><td class="num big"><div class="vc">4,5</div></td><td class="num big"><div class="vc">23,7 %<span class="sub">200 h</span></div></td><td class="num big"><div class="vc">19,9 %<span class="sub">250 h</span></div></td><td class="num big" title="stroj tenantov, tisk predlogov; brez razvoja"><div class="vc">4.500<span class="sub">ROI 4,0x</span></div></td></tr><tr><td>5</td><td class="name"><details><summary><span>Skupine: ena pogodba za več hotelov<span style="display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:1px 7px;border-radius:3px;background:#BFE0FF;color:#04102e;margin-left:8px;vertical-align:middle">ohranjeno</span></span></summary><span class="sub" style="opacity:.8"><b style="color:#73C7FF">Iz izvirnih vrstic:</b> 8</span><span class="sub opis">Ena pogodba za vse hotele skupine; skupinski Hostfulness Index kot artefakt. Edini skupinski sestanek sezone je bil Terme Olimia, kjer je prodajna nit s Simonom tekla od 2. 7., snemanje podkasta pa jo je okrepilo. Skupine se izločijo iz mrzlih valov (Sava in Terme Krka sta dobili mrzle Dream 100 maile) in gredo samo osebno.<br><br><b style="color:#fff">Prodajalec:</b> Rok vodi pogovore z upravami in sklepa.<br><b style="color:#fff">Marketing:</b> skupinski Index in gradiva za prvi sestanek.</span><span class="sub" style="opacity:.95;margin-top:6px"><b style="color:#FFB05E">Stanje danes (6. 10.):</b> 1 skupinski sestanek (Terme Olimia, 22. 9., izid ni zapisan); Unitur razvija lastno aplikacijo. Vir: A2.</span><span class="sub" style="opacity:.95;margin-top:6px"><b style="color:#7DE8A0">Prag za nadaljevanje:</b> 30. 11.: vsaj 4 od 12 skupin ima osebni sestanek z upravo; 31. 12.: vsaj 1 podpis ali pisni naslednji korak z datumom. Sicer park do proračunskega okna v Q1.</span><span class="sub">12 SI skupin; grudasto: 0 ali 5 hotelov na podpis; projekti so sredina W3 bloka (0 do 5), ne formula; cikel do 26 tednov · Ure: Rok 30 · Kdo: Rok, tudi Sava</span></details></td><td class="num big"><div class="vc">4</div></td><td class="num big"><div class="vc">1,5</div></td><td class="num big"><div class="vc">3,6 %<span class="sub">30 h</span></div></td><td class="num big"><div class="vc">4,8 %<span class="sub">60 h</span></div></td><td class="num big"><div class="vc">1.000<span class="sub">ROI 6,0x</span></div></td></tr><tr class="subtotal"><td></td><td>Skupaj: Produkt in pilot</td><td class="num big"><div class="vc">24</div></td><td class="num big"><div class="vc">6,0</div></td><td class="num big"><div class="vc">27,2 %<span class="sub">230 h</span></div></td><td class="num big"><div class="vc">24,7 %<span class="sub">310 h</span></div></td><td class="num big"><div class="vc">5.500<span class="sub">ROI 4,4x</span></div></td></tr><tr class="grp"><td colspan="7">Znani kontakti in partnerji</td></tr><tr><td>6</td><td class="name"><details><summary><span>Znani kontakti: topla baza, obstoječe stranke, Telemach in Telekom hoteli, priporočila<span style="display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:1px 7px;border-radius:3px;background:#73C7FF;color:#04102e;margin-left:8px;vertical-align:middle">združeno</span><span style="display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:1px 7px;border-radius:3px;background:#FFB05E;color:#04102e;margin-left:8px;vertical-align:middle">fokus 90 dni</span></span></summary><span class="sub" style="opacity:.8"><b style="color:#73C7FF">Iz izvirnih vrstic:</b> 9 (topla baza), 10 (obstoječe stranke, Telemach, Telekom), 11 (priporočila); prošnja za HTR oceno iz 20</span><span class="sub opis">En seznam, en lastnik. Pri majhnih ekipah je to prvi kanal, ki deluje (Guestnet: partnerski hoteli agencije; Nonius prodaja aplikacijo kot dodatek k TV in Wi-Fi, kar je natanko Nevronova IPTV baza). Vsak obisk ali klic obstoječe stranke ima tri prošnje: Nevron Mobile, priporočilo (3-mesečna poskusna doba za priporočeni hotel), HTR ocena. Prvi korak je seznam živih strank, ki danes ne obstaja.<br><br><b style="color:#fff">Prodajalec:</b> ponovni stiki z nurture kontakti, obiski strank, introji.<br><b style="color:#fff">Marketing:</b> seznam strank in nurture terminov v Attiu, gradivo Powered by Nevron, program nagrad.</span><span class="sub" style="opacity:.95;margin-top:6px"><b style="color:#FFB05E">Stanje danes (6. 10.):</b> 27 nurture kontaktov stoji od 2. 7. (roki 1. 9., 15. 9., 1. 10. pretekli); 8 Telekom in 1 Telemach posel na New od 12. 8.; edini upsell dotik Terme Dobrna; 0 prošenj za priporočila; Hotel Slatina (stranka) je po napaki dobila mrzel mail. Vir: A2.</span><span class="sub" style="opacity:.95;margin-top:6px"><b style="color:#7DE8A0">Prag za nadaljevanje:</b> 20. 10.: seznam živih strank obstaja; 15. 11.: vseh 27 nurture in 24 hotelov z našo tehnologijo kontaktiranih, vsaj 6 sestankov; 31. 12.: vsaj 10 sestankov, vsaj 5 novih HTR ocen, vsaj 3 introji. Pod 6 sestanki 15. 11. je problem ponudbe, ne kanala (topli kontakti, ki ne sprejmejo sestanka, so signal).</span><span class="sub">~60 toplih + 24 hotelov z našo tehnologijo; okoli 25 % kontaktov v sestanek; topli sestanek v projekt 19 %; po Voje (First Round): okoli 20 introjev na en posel, torej ~84 znanih kontaktov da okoli 4 posle · Ure: Matjaž 60 (dotiki, seznam), Tomaž 120 (sestanki od 1. 11.) · Kdo: Matjaž kot SDR, sestanke Tomaž</span></details></td><td class="num big"><div class="vc">20</div></td><td class="num big"><div class="vc">3,8</div></td><td class="num big"><div class="vc">21,3 %<span class="sub">180 h</span></div></td><td class="num big"><div class="vc">3,2 %<span class="sub">40 h</span></div></td><td class="num big"><div class="vc">650<span class="sub">ROI 23x</span></div></td></tr><tr><td>7</td><td class="name"><details><summary><span>Partnerski kanal: PMS partner, ki priporoča, integratorji in agencije<span style="display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:1px 7px;border-radius:3px;background:#FFB05E;color:#04102e;margin-left:8px;vertical-align:middle">spremenjeno</span></span></summary><span class="sub" style="opacity:.8"><b style="color:#73C7FF">Iz izvirnih vrstic:</b> 17 (PMS tržnice), 18 (Telemach, AV integratorji)</span><span class="sub opis">Listing na tržnici je higiena, ne vir leadov (Mews ima 746 živih listingov). Kanal postane šele, ko PMS partner aktivno priporoča (Upsell Guru prek Guestline 100+ hotelov, Oaky prek Mews, Cloudbeds in apaleo). Zato en ali dva partnerja, ki ju uporablja največ SI in HR 4 in 5 zvezdičnih hotelov, z dogovorom o priporočilu in skupnim gradivom; zraven en program (po zgledu Hoteza Club) za integratorje, svetovalce in spletne agencije hotelov. Toni Carbone (IT) je edini živi partner in čaka odgovor 44 dni. Tehnično je Nevron pripravljen: 7 PMS konektorjev že obstaja (Opera, protel, FIAS/Fidelio, Clock PMS+, Bentral, Mews, 4U), a jih na nevron.co ne vidi nihče. Hoteza je medtem vpisana kot partner pri Hotelinco, MAIS in Rentlio. Prvi kandidat: MC sistemi (protel za Jadran, 200 do 250 hotelov v regiji, edini, ki hotelom že aktivno priporoča gostovske aplikacije).<br><br><b style="color:#fff">Prodajalec:</b> Rok vodi partnerske pogovore in pogodbe.<br><b style="color:#fff">Marketing:</b> partnerski program, gradiva, integracija z razvojem.</span><span class="sub" style="opacity:.95;margin-top:6px"><b style="color:#FFB05E">Stanje danes (6. 10.):</b> 0 listingov, 0 partnerske korespondence, razvijalec za integracijo ni imenovan; Toni Carbone čaka naš odgovor od 23. 8. (osnutek s provizijo neposlan). Vir: A3, W4.</span><span class="sub" style="opacity:.95;margin-top:6px"><b style="color:#7DE8A0">Prag za nadaljevanje:</b> 31. 10.: sestanek z MC sistemi; 31. 12.: pisni dogovor o aktivnem priporočanju. Sicer park do Q2. Toni Carbone: odgovor ta teden, sicer partnerstvo zapreti.</span><span class="sub">časovnica partnerjev 3 do 8 mesecev do prvega posla; izvirna ocena 5 leadov nima podlage, dokler en partner ne pristane na aktivno priporočanje (W4); projekti so sredina W3 bloka · Ure: Rok 20 · Kdo: Rok; prvi korak sestanek z MC sistemi, Phobs prek Rentlio Rediscover 12. 11. ali integrations@ (Hotel Summit Dubrovnik ni priporočen)</span></details></td><td class="num big"><div class="vc">3</div></td><td class="num big"><div class="vc">0,4</div></td><td class="num big"><div class="vc">2,4 %<span class="sub">20 h</span></div></td><td class="num big"><div class="vc">4,8 %<span class="sub">60 h</span></div></td><td class="num big"><div class="vc">400<span class="sub">ROI 4,0x</span></div></td></tr><tr class="subtotal"><td></td><td>Skupaj: Znani kontakti in partnerji</td><td class="num big"><div class="vc">23</div></td><td class="num big"><div class="vc">4,2</div></td><td class="num big"><div class="vc">23,7 %<span class="sub">200 h</span></div></td><td class="num big"><div class="vc">8,0 %<span class="sub">100 h</span></div></td><td class="num big"><div class="vc">1.050<span class="sub">ROI 16x</span></div></td></tr><tr class="grp"><td colspan="7">Dokaz in glas</td></tr><tr><td>8</td><td class="name"><details><summary><span>Rokov glas: gostje podkasta Hostfulness in LinkedIn objave<span style="display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:1px 7px;border-radius:3px;background:#73C7FF;color:#04102e;margin-left:8px;vertical-align:middle">združeno</span></span></summary><span class="sub" style="opacity:.8"><b style="color:#73C7FF">Iz izvirnih vrstic:</b> 12 (gostje podkasta), 21 (content machine)</span><span class="sub opis">Podkast je bil uporabljen kot vstop pri že odprtih leadih (Terme Olimia, Lonca), dokaza, da je sam sprožil prodajni pogovor, pa v Attiu ni; od 1. 9. iz gostov ni novega leada. Objave ostanejo glas, ne kanal z lastno kvoto. Vrstica se piše po dejanskem stroju: glasovi za Roka in Simona obstajajo, za Matjaža in Amadeja ne; Tajda in Nina sta nadomeščeni s Kajinim content machine; Lidija na LinkedInu ne komentira. Opcija brez štetja sestankov: Instagram partnership oglasi z gosti (90-dnevni test 600 EUR), ker je gost pogosto hkrati Dream 100 tarča.<br><br><b style="color:#fff">Prodajalec:</b> pogovor z gostom po snemanju (Rok), odgovori na DM.<br><b style="color:#fff">Marketing:</b> produkcija, distribucija, objave.</span><span class="sub" style="opacity:.95;margin-top:6px"><b style="color:#FFB05E">Stanje danes (6. 10.):</b> 13 epizod (3 od 1. 9.), od 13 gostov 5 v ICP; termina 2. 11. in 16. 11. brez gosta; LinkedIn objav ~8 (Rok ~5, Simon 3, Matjaž 0, Amadej 0) proti planu ~134; ekipa za podkast 13 do 19 h na teden (OCENA). Vir: P-hostfulness, A3.</span><span class="sub" style="opacity:.95;margin-top:6px"><b style="color:#7DE8A0">Prag za nadaljevanje:</b> 31. 12.: vsak ICP gost dobi prodajni pogovor v 14 dneh po snemanju, vsaj 2 sestanka iz gostov ali objav. Sicer 1 epizoda na mesec in sproščene ure gredo v vrstico 6.</span><span class="sub">12 snemanj do aprila, 0 leadov iz gostov v sezoni, zato OCENA brez trdne podlage; topli sestanek v projekt 19 %; ure podkasta kot znamke (13 do 19 h ekipe na teden) niso štete, šteje samo prodajni del · Ure: Rok 10 · Kdo: Rok (glas), Kaja (stroj)</span></details></td><td class="num big"><div class="vc">4</div></td><td class="num big"><div class="vc">0,8</div></td><td class="num big"><div class="vc">1,2 %<span class="sub">10 h</span></div></td><td class="num big"><div class="vc">15,9 %<span class="sub">200 h</span></div></td><td class="num big"><div class="vc">580<span class="sub">ROI 5,5x</span></div></td></tr><tr><td>9</td><td class="name"><details><summary><span>HotelTechReport: ocene vseh strank in integracije, PPC šele po pragu<span style="display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:1px 7px;border-radius:3px;background:#FFB05E;color:#04102e;margin-left:8px;vertical-align:middle">spremenjeno</span></span></summary><span class="sub" style="opacity:.8"><b style="color:#73C7FF">Iz izvirnih vrstic:</b> 20</span><span class="sub opis">HTR je vrata ožjega izbora: Duve 649 ocen, Guestnet 186 (2. mesto 2026), Hoteza aplikacija 54 (90+ ima Hoteza TV, ne aplikacija; popravek izvirne vrstice). Cilj je ocena od vsake žive stranke namesto 25 ocen v 30 dneh (prošnja je del vrstice 6) in vpis integracij, ker jih HTR prikaže na profilih partnerjev. PPC in Tech Spotlight šele po 20 ocenah. Vpliv je predvsem na stopnjo zmag vseh drugih vrstic, ne na lastne sestanke.<br><br><b style="color:#fff">Prodajalec:</b> odgovori na HTR leade.<br><b style="color:#fff">Marketing:</b> profil, prošnje strankam, integracije, PPC po pragu.</span><span class="sub" style="opacity:.95;margin-top:6px"><b style="color:#FFB05E">Stanje danes (6. 10.):</b> 1 javna ocena (Nevron Mobile, 2 leti stara), 0 novih v sezoni; HTR od 1. 9. ni prinesel nobenega leada (vsa HTR pošta je HTR, ki prodaja nam). Vir: A3, P-inbound.</span><span class="sub" style="opacity:.95;margin-top:6px"><b style="color:#7DE8A0">Prag za nadaljevanje:</b> 15. 12.: vsaj 10 ocen. PPC ostane zaprt do 20 ocen.</span><span class="sub">~10 do 15 ocen do decembra; PPC del vložka se porabi samo ob 20 ocenah, kar do 15. 12. ni verjetno; projekti 17 % (inbound z ožjega izbora) · Ure: Matjaž 10 · Kdo: en imenovani človek za prošnje (predlog Neža ali študent)</span></details></td><td class="num big"><div class="vc">3</div></td><td class="num big"><div class="vc">0,5</div></td><td class="num big"><div class="vc">1,2 %<span class="sub">10 h</span></div></td><td class="num big"><div class="vc">4,0 %<span class="sub">50 h</span></div></td><td class="num big" title="članarina in PPC; PPC samo ob 20 ocenah"><div class="vc">3.300<span class="sub">ROI 0,6x</span></div></td></tr><tr><td>10</td><td class="name"><details><summary><span>SEO in AEO: nova nevron.co in slovenske strani, Kreatik samo ob dokazu izvedbe<span style="display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:1px 7px;border-radius:3px;background:#FFB05E;color:#04102e;margin-left:8px;vertical-align:middle">spremenjeno</span></span></summary><span class="sub" style="opacity:.8"><b style="color:#73C7FF">Iz izvirnih vrstic:</b> 19</span><span class="sub opis">Nova nevron.co je živa od 10. 9. in AI boti so spuščeni. Prvi inbound leadi z nove strani z nizkim DR realno marca do junija 2027, ne januarja. Pred podaljšanjem Kreatika (1.000 EUR na mesec) pisni dokaz izvedbe; slovenske prodajne strani in nevroncore.com SaaS stran ostaneta. Oba spletna leada sezone sta prišla na IPTV in partnersko stran, nobeden na Nevron Mobile. Merilni pridržek: pred 17. 9. so se oddaje form z brezplačnih naslovov tiho izgubljale, zato je inbound prvih dveh tednov lahko podcenjen.<br><br><b style="color:#fff">Prodajalec:</b> odgovori na inbound.<br><b style="color:#fff">Marketing:</b> slovenske strani, nevroncore.com, merjenje, Kreatik.</span><span class="sub" style="opacity:.95;margin-top:6px"><b style="color:#FFB05E">Stanje danes (6. 10.):</b> 0 ICP leadov s SI ali HR od 1. 9.; nevroncore.com samo preusmerja; slovenskih strani ni; Kreatik: edina sled je dostop do Search Console 23. 8. Vir: A3, P-inbound.</span><span class="sub" style="opacity:.95;margin-top:6px"><b style="color:#7DE8A0">Prag za nadaljevanje:</b> 20. 10.: Kreatik pisno dokaže izvedbo (seznam opravljenega, poročilo), sicer odpoved. Brez kvote sestankov do 30. 4.</span><span class="sub">prvi MQL mesec 7 do 9 po zagonu; projekti 15 % (inbound) · Ure: Matjaž 10 · Kdo: Kaja, Matjaž</span></details></td><td class="num big"><div class="vc">2</div></td><td class="num big"><div class="vc">0,3</div></td><td class="num big"><div class="vc">1,2 %<span class="sub">10 h</span></div></td><td class="num big"><div class="vc">6,4 %<span class="sub">80 h</span></div></td><td class="num big" title="Kreatik 1.000 EUR na mesec, POGOJNO: samo ob pisnem dokazu izvedbe do 20. 10."><div class="vc">9.900<span class="sub">ROI 0,1x</span></div></td></tr><tr class="subtotal"><td></td><td>Skupaj: Dokaz in glas</td><td class="num big"><div class="vc">9</div></td><td class="num big"><div class="vc">1,6</div></td><td class="num big"><div class="vc">3,6 %<span class="sub">30 h</span></div></td><td class="num big"><div class="vc">26,3 %<span class="sub">330 h</span></div></td><td class="num big"><div class="vc">13.780<span class="sub">ROI 0,5x</span></div></td></tr><tr class="grp"><td colspan="7">Dogodki</td></tr><tr><td>11</td><td class="name"><details><summary><span>Kongresi združenj: DST z zajtrkom, obisk HoReCa Adria, UPUHH samo ob prednaročenih sestankih<span style="display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:1px 7px;border-radius:3px;background:#FFB05E;color:#04102e;margin-left:8px;vertical-align:middle">spremenjeno</span></span></summary><span class="sub" style="opacity:.8"><b style="color:#73C7FF">Iz izvirnih vrstic:</b> 14 (sejmi), 15 (zajtrk), 16 (odrski nastop); 13 (webinar) je odstranjen</span><span class="sub opis">Ena odločitev namesto treh: delegati in prednaročeni sestanki, Rokov govorni slot ali okrogla miza in zajtrk ob kongresu, ne kot samostojen dogodek. Zanesljivo v seštevku sta samo DST Portorož (30. 11. do 2. 12., edini dogodek brez konkurence, zajtrk 60/40 stranke in tarče) in obisk HoReCa Adria (22. do 24. 10., brezplačen). UPUHH (zajtrk 11. 11., ~2.000 EUR) in Best Stay sta dodatna in nista v seštevku: sklep 28. 8. "ni prodajalca, ni proračuna" do 15. 10. še velja, Tomaž pride 1. 11. Pri konkurentih so nacionalni kongresi združenj glavnina dogodkov (HiJiffy 23 dogodkov v 2024).<br><br><b style="color:#fff">Prodajalec:</b> Rok in Tomaž na dogodku, prednaročeni sestanki.<br><b style="color:#fff">Marketing:</b> prijava na slot, prednaročanje, gradiva, nadaljnji stik.</span><span class="sub" style="opacity:.95;margin-top:6px"><b style="color:#FFB05E">Stanje danes (6. 10.):</b> 0 EUR, 0 rezervacij, prijave za DST slot ni; webinar 9. 9. ni bil izveden niti pripravljen (A3). Popravek A3: rok 8. 9. je bil naš rok za Business Corner; obisk HoReCa Adria (22. do 24. 10.) je še odprt in brezplačen. Canary je vstopil na Hrvaško (sponzor UPUHH, partner Hotel Summit Dubrovnik); DST in Dani hrvatskog turizma sta še brez konkurence (W6).</span><span class="sub" style="opacity:.95;margin-top:6px"><b style="color:#7DE8A0">Prag za nadaljevanje:</b> prednaročeni sestanki s ciljnimi hoteli: vsaj 8 za obisk HoReCa Adria (preverba 20. 10.), vsaj 10 za DST in UPUHH (Voje zahteva 15 do 20; preverba UPUHH 1. 11., DST 23. 11.). Pod pragom dogodek odpade, zajtrk samo z obstoječimi strankami.</span><span class="sub">DST 12 do 20 in HoReCa 5 do 10 kvalificiranih pogovorov (W6), okoli 35 % v sestanek, sestanek v projekt 9,3 % kot na izvirni strani; UPUHH in Best Stay bi dodala okoli 6 sestankov in 0,5 projekta za ~3.000 EUR · Ure: Rok 20, Tomaž 30 · Kdo: Rok; prednaročanje sestankov mora imeti imenovanega lastnika do 12. 10.</span></details></td><td class="num big"><div class="vc">8</div></td><td class="num big"><div class="vc">0,7</div></td><td class="num big"><div class="vc">5,9 %<span class="sub">50 h</span></div></td><td class="num big"><div class="vc">4,8 %<span class="sub">60 h</span></div></td><td class="num big" title="DST delegati in zajtrk 550 do 650 EUR + HoReCa 150 do 400 EUR (W6)"><div class="vc">900<span class="sub">ROI 3,1x</span></div></td></tr><tr class="subtotal"><td></td><td>Skupaj: Dogodki</td><td class="num big"><div class="vc">8</div></td><td class="num big"><div class="vc">0,7</div></td><td class="num big"><div class="vc">5,9 %<span class="sub">50 h</span></div></td><td class="num big"><div class="vc">4,8 %<span class="sub">60 h</span></div></td><td class="num big"><div class="vc">900<span class="sub">ROI 3,1x</span></div></td></tr><tr class="grp"><td colspan="7">Plačano digitalno</td></tr><tr><td>12</td><td class="name"><details><summary><span>Plačana frekvenca nad Dream 100: Thought Leader Ads s kontrolno skupino in remarketing<span style="display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:1px 7px;border-radius:3px;background:#8FA3BF;color:#04102e;margin-left:8px;vertical-align:middle">predlog: park</span></span></summary><span class="sub" style="opacity:.8"><b style="color:#73C7FF">Iz izvirnih vrstic:</b> 22 (remarketing) + novo (LinkedIn Thought Leader Ads)</span><span class="sub opis">To ni kanal za leade. Je plast frekvence nad vrstico 1: Rokove objave kot Thought Leader Ads na seznam podjetij Dream 100 (polovica izključena kot kontrola) in remarketing obiskovalcev nevron.co, tenantov in Index strani (piksli na nevron.co že živi). <b>Predlog: park do prve študije primera</b>: pri okoli 400 hotelih SI in HR je test podmočen, po Voje pride plačano šele po potrjeni študiji primera. Če vseeno teče, velja prag strategije z 31. 8. Instagram partnership oglasi za Hostfulness (200 EUR na mesec) niso del te vrstice.<br><br><b style="color:#fff">Prodajalec:</b> nič, leadi gredo v redno obdelavo.<br><b style="color:#fff">Marketing:</b> občinstva, kreativa, kontrolna skupina, merjenje.</span><span class="sub" style="opacity:.95;margin-top:6px"><b style="color:#FFB05E">Stanje danes (6. 10.):</b> brez odločitve, brez kampanje; okoli 175 EUR na LinkedInu je šlo za Hostfulness, ne za to vrstico. Vir: A3, W1.</span><span class="sub" style="opacity:.95;margin-top:6px"><b style="color:#7DE8A0">Prag za nadaljevanje:</b> samo če teče: CPL nad 250 EUR po 60 dneh ali brez dviga odziva proti kontroli pomeni izklop (prag strategije 31. 8.).</span><span class="sub">v parku: 0 sestankov in 0 EUR v seštevku; če teče: TLA 400 EUR na mesec okt. do dec. + remarketing 300 EUR na mesec, okoli 4 sestanki in 0,4 projekta za ~3.000 EUR (okoli 750 EUR na sestanek) · Kdo: Matjaž, Kaja</span></details></td><td class="num big"><div class="vc">0</div></td><td class="num big"><div class="vc">0,0</div></td><td class="num big"><div class="vc">0,0 %<span class="sub">0 h</span></div></td><td class="num big"><div class="vc">0,0 %<span class="sub">0 h</span></div></td><td class="num big" title="v parku"><div class="vc">0<span class="sub"></span></div></td></tr><tr class="subtotal"><td></td><td>Skupaj: Plačano digitalno</td><td class="num big"><div class="vc">0</div></td><td class="num big"><div class="vc">0,0</div></td><td class="num big"><div class="vc">0,0 %<span class="sub">0 h</span></div></td><td class="num big"><div class="vc">0,0 %<span class="sub">0 h</span></div></td><td class="num big"><div class="vc">0<span class="sub"></span></div></td></tr><tr class="total"><td></td><td>Skupaj v sezoni<br><span class="sub">projektov nizko do visoko: 9 do 22 (OCENA); ure prodajalca po osebah: Tomaž 595 od okoli 980 razpoložljivih z rampom, Matjaž kot SDR 135, Rok 114 (po H64 ima v sezoni 58 do 116)</span></td><td class="num big"><div class="vc">95</div></td><td class="num big"><div class="vc">14,9</div></td><td class="num big"><div class="vc">100 %<span class="sub">845 h</span></div></td><td class="num big"><div class="vc">100 %<span class="sub">1.255 h</span></div></td><td class="num big"><div class="vc">26.430<span class="sub">1.774 na projekt · ROI 2,3x</span></div></td></tr></tbody></table></div>
+<h2>Scenariji: kaj premakne razpon</h2>
+<p>Tabela zgoraj je osnovni scenarij različice 2. Spodaj so odstopanja od njega, vse OCENA z zaupanjem nizko do zmerno. Sestanki in projekti so za celo sezono do 30. 4. 2027; projekt je podpis, ne živ hotel.</p>
+<div class="tw"><table class="v2">
+<thead><tr><th>Scenarij</th><th class="num">Sestankov</th><th class="num">Projektov</th><th>Kaj ga določa</th></tr></thead>
+<tbody>
+<tr><td><b>Kot zdaj</b>: valovi ostanejo pri prvem, topli posli stojijo</td><td class="num">15 do 25</td><td class="num">2 do 4</td><td>tempo zadnjih petih tednov (2 sestanka s hoteli v ICP) podaljšan do aprila; Tomaž sam brez novih valov in povezav</td></tr>
+<tr><td><b>Različica 2, osnovni</b> (tabela zgoraj)</td><td class="num">95</td><td class="num">14,9</td><td>K2 zgrajen do 15. 10., povezave za čakajoče SI in HR hotele, Tomaž od 1. 11. (pogodba po zapisih ni podpisana), zastali piloti in znani kontakti takoj, IT, GR, NY in AT v parku</td></tr>
+<tr><td><b>Različica 2 + Tomaževe proste ure</b> v obogatitev in klice</td><td class="num">100 do 105</td><td class="num">15,5</td><td>okoli 380 prostih Tomaževih ur; +300 obogatenih mobilnih SI in HR (Lusha 600 kreditov na mesec) da okoli +9 sestankov</td></tr>
+<tr><td><b>Različica 2 + Mateja za SI</b> od decembra (polni s.p., ponudba predelana 6. 10., ni poslana)</td><td class="num">105 do 115</td><td class="num">16 do 18</td><td>ur ni dogovorjenih; pri polovičnem obsegu okoli 10 do 20 dodatnih sestankov v SI, kar je največ, kar majhen SI bazen še da (OCENA brez vira za ure)</td></tr>
+<tr><td><b>Različica 2 brez Tomaža</b> (če ne pride)</td><td class="num">25 do 40</td><td class="num">4 do 7</td><td>izpade okoli 600 ur; sestanke iz vrstic 1, 4 in 6 bi vodil samo Rok s 4 urami na teden (okoli 1 sestanek na teden); ostanejo topli piloti in znani kontakti; z Matejo bi se scenarij približal osnovnemu</td></tr>
+<tr><td><b>Cilj strategije</b>: 50 plačujočih do 30. 4.</td><td class="num">okoli 350</td><td class="num">50</td><td>pri teh stopnjah bi rabili okoli 3,5x več sestankov, kot jih SI in HR z mrzlim in toplim realno dasta; s to ekipo in tem trgom ni dosegljivo (zaupanje zmerno)</td></tr>
+</tbody></table></div>
+
+<h2>Cilji po metodi Voje</h2>
+<p>Iz pregleda V1. Aspiracijski cilj je po knjigi uspešen pri oceni 0,4 do 0,7; sredina različice 2 (15 projektov) proti 50 je 0,30, torej pod pasom.</p>
+<div class="tw"><table class="v2">
+<thead><tr><th>Vrsta</th><th>Cilj</th><th>Zakaj</th></tr></thead>
+<tbody>
+<tr><td>Zavezujoče</td><td>vsaj 5 podpisanih plačanih pilotov z dokazno pogodbo do 15. 12. (pravilo K85, ki ga strategija že ima)</td><td>edino, kar topli piloti v pogajanjih realno zmorejo do konca leta</td></tr>
+<tr><td>Zavezujoče</td><td>okoli 12 plačujočih hotelov, živih do 1. 3. in plačanih po 60 dneh, do 30. 4.</td><td>15 podpisov v sredini različice 2, od tega jih do 1. 3. realno živi okoli 12 (OCENA)</td></tr>
+<tr><td>Aspiracija</td><td>10 pilotov do 31. 12. in 50 plačujočih do 30. 4.</td><td>uspeh pri 20 do 35 hotelih (ocena 0,4 do 0,7); izrecno označeno kot aspiracija</td></tr>
+<tr><td>Učni</td><td>10 do 20 ECP intervjujev in ena objavljena študija primera s številko do 31. 12.</td><td>po Voje je podjetje v tej fazi "tovarna replikacije študije primera"; brez nje plačano in HTR ne delujeta</td></tr>
+<tr><td>Pogoj za merjenje</td><td>do 20. 10. en lastnik merilnega sloja: Attio kot edini vir resnice, beleženje klicev, tedenski izpis petih številk vsak ponedeljek</td><td>danes se ne da izmeriti nobenega praga (stopnje v Attiu zamrznjene od 12. 8., klici se ne beležijo, telemetrije ni)</td></tr>
+</tbody></table></div>
+
+<h2>Kaj je odstranjeno in zakaj</h2>
+<div class="tw"><table class="v2">
+<thead><tr><th>Aktivnost</th><th>Razlog (dokaz)</th><th>Kaj se sprosti</th></tr></thead>
+<tbody>
+<tr><td>13 Mesečni webinar z delavnicami</td><td>prvi (9. 9.) ni bil izveden niti pripravljen; udeležba pri majhnem organizatorju 21 do 34 %, ne 48 %; mesečnega nacionalnega webinarja z brezplačnim pregledom pri konkurentih ni (Duve okoli kvartalno, Oaky skupaj z Mews)</td><td>okoli 160 ur in 700 EUR; če kdaj, kvartalno skupaj s PMS partnerjem (vrstica 7)</td></tr>
+<tr><td>15 Zajtrk in 16 odrski nastop kot samostojni aktivnosti</td><td>brez prostora, vabil in prijave za slot; pri konkurentih del kongresa, ne samostojno</td><td>gresta v paket kongresov (vrstica 11), samo ob odločitvi</td></tr>
+<tr><td>Klicni sloj na UAE, IT, GR, NY in AT</td><td>Aleša in Marine ne bo; Tomaž pride 1. 11. in klice rabi za SI in HR; AT klic prepovedan</td><td>vsa klicna kapaciteta gre na SI in HR</td></tr>
+<tr><td>Google oglasi na kategorijo in konkurente</td><td>pod 250 iskanj na mesec na vseh sedmih trgih skupaj, v SI in HR nič; CPC v ZDA 9 do 61 USD</td><td>ni bilo v planu; ostane zunaj</td></tr>
+<tr><td>Hladni LinkedIn Lead Gen in Meta hladno</td><td>CPL 193 do 347 USD (LinkedIn) oziroma 200 do 800 USD (Meta), okoli 10x dražje od Dream 100</td><td>ni bilo v planu; ostane zunaj</td></tr>
+<tr><td>Capterra, GetApp, G2, mednarodni novičniki, YouTube oglasi</td><td>minimumi pojedo proračun, naš kupec išče na HTR; Hostfulness YouTube ima 80 naročnikov (W1, 6. 10.)</td><td>ni bilo v planu; ostane zunaj</td></tr>
+</tbody></table></div>
+
+<h2>Dogodki: minimalni paket, najbližji rok najprej</h2>
+<p>Preverjeno na uradnih straneh organizatorjev 6. 10. 2026 (W6). Paket stane okoli 2.650 do 3.300 EUR za 31 do 55 kvalificiranih pogovorov; izvirne vrstice 14 do 16 so računale 17.669 EUR za 128 pogovorov. Paket torej stane 15 do 20 % plana in da 25 do 45 % pogovorov (zaupanje zmerno). Največje tveganje: nihče nima naloge prednaročanja sestankov. Popravek k W6: agent je predpostavil, da je Tomaž začel 5. 10.; po Matjaževih dejstvih pride najhitreje 1. 11., zato UPUHH (11. 11.) ostane pogojen in prednaročanje do takrat nosi Rok ali Matjaž. V seštevku tabele sta samo DST in obisk HoReCa Adria (okoli 900 EUR); prag je vsaj 8 prednaročenih sestankov za HoReCa in vsaj 10 za DST in UPUHH.</p>
+<div class="tw"><table class="v2">
+<thead><tr><th>Odloči do</th><th>Kaj</th><th class="num">Strošek EUR</th><th class="num">Kvalificiranih pogovorov</th><th>Priporočilo</th></tr></thead>
+<tbody>
+<tr><td>9. 10. (najpozneje 12. 10.)</td><td>HoReCa Adria Zagreb, 22. do 24. 10.: obisk dveh oseb, registracija brezplačna; odpade, če ni vsaj 8 prednaročenih sestankov. 191 do 236 razstavljavcev, večinoma oprema F&amp;B; Hoteza letos ni na seznamu</td><td class="num">150 do 400</td><td class="num">5 do 10</td><td>POGOJNO</td></tr>
+<tr><td>15. 10.</td><td>UPUHH Poreč: dva delegata (zgodnja prijava 370 EUR + DDV na nečlana) in zajtrk 11. 11.; Canary je sponzor</td><td class="num">1.950 do 2.250</td><td class="num">12 do 19</td><td>POGOJNO, ni v seštevku tabele (odvisno od lastnika prednaročanja in praga 10 sestankov)</td></tr>
+<tr><td>20. 10.</td><td>DST Portorož: prošnja STO in TGZS za mesto na okrogli mizi 1. 12.; cena mize GTZ</td><td class="num">0</td><td class="num"></td><td>DA</td></tr>
+<tr><td>31. 10.</td><td>UPUHH Hotel Academy: brezplačen spletni termin za Rokov nastop</td><td class="num">0</td><td class="num">2 do 6</td><td>DA (nadomesti webinar)</td></tr>
+<tr><td>16. 11.</td><td>DST Portorož, 30. 11. do 2. 12.: delegati in zajtrk z obstoječimi strankami 2. 12.; edini trg brez konkurence</td><td class="num">550 do 650</td><td class="num">12 do 20</td><td>DA</td></tr>
+<tr><td>19. 11.</td><td>Best Stay Zagreb 2027 (959 EUR na osebo z DDV): samo, če je UPUHH dal vsaj 8 kvalificiranih pogovorov</td><td class="num">0 ali 1.050</td><td class="num">0 ali 6 do 10</td><td>POGOJNO</td></tr>
+<tr><td></td><td>Dani hrvatskog turizma, 19. do 20. 11., Poreč (195 EUR, okoli 1.200 udeležencev, brez konkurence)</td><td class="num">195</td><td class="num">ni ocene</td><td>opcija, isti hotel kot UPUHH osem dni pozneje</td></tr>
+</tbody></table></div>
+<p class="sub small">Priporočeno NE: Hotel Summit Dubrovnik, Hospitality Day Rimini (samo, če gre Toni sam), Bolzano, Housekeeping Academy Days, Alles für den Gast, Riva, GAST Ljubljana in Zagreb, ITB, OeHV, WTM, Intergastra (februar 2028), HOTREC.</p>
+
+
+<h2>Partnerski kanal: kandidati v SI in HR</h2>
+<p>Iz W4 (preverjeno 6. 10. 2026). Tehnično je Nevron pripravljen, ozko grlo je komercialno: Nevron ima 7 PMS konektorjev, 0 listingov in 0 partnerskih pogovorov; javnega seznama podprtih PMS na nevron.co ni. Deležev PMS po trgu se ne da prešteti (PMS je na spletu viden pri 6 od 107 slovenskih in 1 od 99 hrvaških hotelov); oglasi za delo omenjajo Opera, protel, Diventa in Hotelinco, Mewsa nobeden.</p>
+<div class="tw"><table class="v2">
+<thead><tr><th>#</th><th>Kandidat</th><th>Doseg</th><th>Zakaj</th><th>Pozor</th><th>Prvi korak</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>MC sistemi (protel za Jadran)</td><td>SI in HR, 200 do 250 hotelov po lastni navedbi</td><td>edini PMS partner v regiji, ki hotelom že aktivno priporoča aplikacije (portal SmartHotelAI z napotitvami na Canary, na strani integracij priporoča tudi Duve in Straiv, brezplačni seminarji v Ljubljani in Splitu); Nevronov protel konektor že knjiži na račun gosta</td><td>preprodaja Hotel Info App (od 449 EUR na leto), ki ni njegov produkt; v Rokovem seznamu je izključen "Cvikl" brez imena in razloga, preveri, ali gre za Mateja</td><td>sestanek z Matejem Cviklom: Nevron kot višji razred (4 in 5 zvezdic, TV, mobilna aplikacija, AI)</td></tr>
+<tr><td>2</td><td>Travelnode (Phobs in Rentlio)</td><td>HR; Phobs na 33 od 99 hrvaških Dream 100 domen</td><td>največji doseg v HR Dream 100</td><td>Phobs prodaja lasten AI chatbot (6 teh hotelov ga ima), Rentlio napoveduje svoj AI; konektorja še ni</td><td>Rentlio Rediscover 12. 11. ali integrations@rentl.io; Hotel Summit Dubrovnik (14. do 16. 10., okoli 1.400 EUR, rok 10. 10.) ni priporočen</td></tr>
+<tr><td>3</td><td>Hotelinco</td><td>SI, objekti do 50 sob</td><td>povezavo zgradijo sami na zahtevo</td><td>samo spodnji rob ICP; Hoteza je že partner</td><td>zahteva za povezavo</td></tr>
+<tr><td>4</td><td>MAIS (Fidelity Hotel)</td><td>SI, 3 Dream 100 hoteli, med njimi stranka Slatina</td><td>prek obstoječe stranke</td><td>konektorja ni; Hoteza je že partner</td><td>preveriti, kako je Nevron povezan pri Slatini</td></tr>
+<tr><td>5</td><td>Bentral</td><td>SI, 8 Dream 100 butikov</td><td>konektor že obstaja</td><td>brez partnerskega programa</td><td>referenca, ne kanal</td></tr>
+</tbody></table></div>
+<p class="sub small">Ne priporočeno: Mews (listing samo kot higiena, v SI in HR ni referenc), Lighthouse, Oracle, Megabooker in Diventa (zadnja dva imata lasten gostovski modul).</p>
+
+
+<h2>Pismo: valovi, cena in merjenje</h2>
+<p>Iz W5 (6. 10. 2026). V Sloveniji in na Hrvaškem je pismo dodaten dotik tik pred Tomaževim klicem in ne deluje samo zase. V Avstriji je edini zakonit prvi dotik, a po pregledu V1 je predlog park, dokler ni nemško govorečega prodajalca, ki bi vodil odgovore; spodnja AT vrstica je pripravljena za takrat in ni v seštevku tabele. Vse številke sestankov so OCENA z nizkim zaupanjem; za primerjavo naš Dream 100 mail od 1. 9. da okoli 0,7 sestanka na 100 leadov.</p>
+<div class="tw"><table class="v2">
+<thead><tr><th>Val</th><th>Kdaj</th><th class="num">Pisem</th><th>Cena na pismo</th><th>Sestankov na 100 (nizko, sredina, visoko)</th></tr></thead>
+<tbody>
+<tr><td>AT val 1, en na hotel (park)</td><td>okoli 20. 10., po /transcreate nemškega copyja</td><td class="num">99</td><td>~2,65 EUR</td><td>0,3 / 0,8 / 2</td></tr>
+<tr><td>SI in HR val 1, naključna polovica Dream 100 (druga polovica je kontrola)</td><td>pošta okoli 27. 10., klici od 3. 11.</td><td class="num">~195</td><td>SI ~1,75, HR ~2,65 EUR</td><td>1 / 2 / 4</td></tr>
+<tr><td>AT val 2 (park)</td><td>okoli 1. 12.</td><td class="num">~90</td><td>~2,65 EUR</td><td>0,3 / 0,8 / 2</td></tr>
+<tr><td>Samo, če val 1 deluje: druga polovica SI in HR ter ~115 AT hotelov zunaj Dream 100</td><td>januar</td><td class="num">~310</td><td></td><td></td></tr>
+<tr><td><b>Sezona skupaj po W5</b> (z Avstrijo)</td><td></td><td class="num">~695</td><td>~1.710 EUR, ~83 ur ekipe</td><td>~10 sestankov (5 do 22)</td></tr>
+<tr><td><b>Različica 2</b> (samo SI in HR, dva vala)</td><td></td><td class="num">~390</td><td>~900 EUR</td><td>~6 sestankov</td></tr>
+</tbody></table></div>
+<p class="sub small">Merjenje: test na ravni sestankov ne more biti statistično pomemben (rabil bi okoli 760 pisem na skupino, vseh Dream 100 naslovov v SI, HR in AT je 491). Šteti edinstvene skene ?src=letter na hotel (mediana QR odziva 1,63 %, Stannp, 21. 11. 2025, 1.400 kampanj), odgovore, delež klicev, ki dosežejo odločevalca, in sestanke v 30 dneh. Povezava: v AT splošen nemški demo z oznako hotela (per-hotel tenantov v AT še ni), v SI in HR hotelov lasten tenant ali Index. Pravno: SI in HR na podlagi zakonitega interesa s pisno presojo in možnostjo ugovora ob prvem stiku; Robinsonova lista WKO po besedilu WKO zavezuje le avstrijske naslovne založnike in podjetja za direktni marketing (W5, zaupanje zmerno; W1 je trdil drugače).</p>
+
+
+<h2>Odločitve, brez katerih različica 2 ne teče</h2>
+<div class="tw"><table class="v2">
+<thead><tr><th>#</th><th>Odločitev</th><th>Kdo</th><th>Do kdaj</th><th>Vpliv</th></tr></thead>
+<tbody>
+<tr><td>0</td><td>En lastnik merilnega sloja (Attio kot vir resnice, beleženje klicev, ponedeljkov izpis petih številk)</td><td>Matjaž</td><td>do 20. 10.</td><td>brez tega se noben prag na strani ne da preveriti</td></tr>
+<tr><td>1</td><td>Kdo vodi sestanke in zapira od zdaj do 1. 11. (Matjaž ne zapira, Tomaža še ni, Rok ima 2 do 4 ure na teden)</td><td>Rok (ali Rok potrdi več kot 4 ure na teden do 31. 12.; V1 predlaga 6 do 8)</td><td>takoj</td><td>Tartini, Arija, zastali piloti in vsi oktobrski odzivi</td></tr>
+<tr><td>2</td><td>Povezave za čakajoče SI in HR hotele (278) in zgrajen K2; najprej v batch 39 SI hotelov z že zgrajenim tenantom; od Amadeja realen rok (hotelov lasten tenant nastaja okoli 1 na dan, Index poročil čaka 39)</td><td>Amadej, Matjaž</td><td>K2 do 15. 10., rok povezav od Amadeja do 10. 10.</td><td>vrstica 1 brez tega ne teče</td></tr>
+<tr><td>3</td><td>Beleženje klicev v Attiu in Tomaž kot član Attia in HeyReacha; razrešiti 30 klicev na dan proti 70 na teden v osnutku pogodbe</td><td>Rok, Matjaž</td><td>do 31. 10.</td><td>vrstica 2</td></tr>
+<tr><td>4</td><td>Mateja za SI: pošlji ponudbo ali ne</td><td>Matjaž, Rok</td><td>do 20. 10.</td><td>scenarij +20 sestankov</td></tr>
+<tr><td>5</td><td>Telemetrija uporabe: datum, ko obstaja</td><td>Aljaž</td><td>do 15. 10.</td><td>brez nje pilot z izmerjenim izidom do 31. 12. ni mogoč</td></tr>
+<tr><td>6</td><td>En lastnik seznama znanih kontaktov (27 nurture, 24 hotelov z našo tehnologijo, priporočila, HTR prošnje)</td><td>Matjaž</td><td>ta teden</td><td>vrstica 6, najkrajši čas do rezultata</td></tr>
+<tr><td>7</td><td>Paket dogodkov: da ali ne, s proračunom</td><td>Rok</td><td>glej razdelek o dogodkih</td><td>vrstica 11</td></tr>
+<tr><td>8</td><td>Plačana frekvenca: potrdi park do študije primera ali zaženi s kontrolno skupino (okoli 3.000 EUR)</td><td>Rok, Simon</td><td>do 20. 10.</td><td>vrstica 12</td></tr>
+<tr><td>9</td><td>Kreatik: ali dela in je plačan</td><td>Matjaž</td><td>do 20. 10.</td><td>vrstica 10, 9.900 EUR</td></tr>
+<tr><td>10</td><td>Odgovor Toniju Carboneju (edini živi partner, IT brez prodajalca)</td><td>Matjaž</td><td>takoj</td><td>vrstica 7; IT dobi kanal brez prodajalca</td></tr>
+<tr><td>11</td><td>UAE General Scrape (387 kontaktov: 102 mail, 285 LinkedIn): nadaljevati ali ne, po preverbi vzorčnega tenanta in angleškega copyja (splošni demo ima 0 aktivacij od 729)</td><td>Matjaž</td><td>do 15. 10.</td><td>vrstica 1, UAE vzdrževanje</td></tr>
+<tr><td>12</td><td>Skupine izločiti iz mrzlih valov (Sava, Terme Krka)</td><td>Rok, Matjaž</td><td>pred K2</td><td>vrstica 5</td></tr>
+<tr><td>13</td><td>Park za IT, GR in NY do februarja in za Avstrijo do nemško govorečega prodajalca (odstop od odločitve 27. 8.)</td><td>Matjaž, Rok</td><td>do 15. 10.</td><td>Amadejev čas gre v povezave za SI in HR</td></tr>
+<tr><td>14</td><td>Pismo SI in HR val 1: proračun okoli 400 EUR, Rokov podpis, QR s ?src=letter, pisna presoja zakonitega interesa, klic po prejemu (Tomaž od 3. 11.)</td><td>Matjaž, Rok</td><td>do 20. 10.</td><td>vrstica 3</td></tr>
+<tr><td>15</td><td>Študija primera: kateri hotel (Lonca ali Antiq), ali plačujeta, 5 ECP intervjujev do 31. 10.</td><td>Matjaž</td><td>ta teden</td><td>vrstica 0 in stopnja zmag vseh vrstic</td></tr>
+<tr><td>16</td><td>Tomaževa pogodba podpisana in datum začetka (zapisa o podpisu ni; model računa 30 klicev na dan, osnutek 70 na teden)</td><td>Rok</td><td>do 25. 10.</td><td>vrstice 1, 2, 4, 6</td></tr>
+</tbody></table></div>
+
+<h2>Viri te strani</h2>
+<p class="sub small">Vse datoteke so v mapi <code>Projects/nevron-gtm-strategy/strategy/aktivnosti-v2/research/</code>. A = revizija dejanskega stanja (samo branje), W = spletna raziskava, P = odgovor vzporedne seje.</p>
+<ul class="small" style="line-height:1.6">
+<li><b>A1</b> mrzli outreach dejansko (vrstice 1 do 5 in pismo), <b>A1b</b> Attio, koledar in razvrstitev odgovorov</li>
+<li><b>A2</b> scrape-demo, piloti, skupine, topla baza, stranke, priporočila, podkast (vrstice 6 do 12)</li>
+<li><b>A3</b> webinar, dogodki, partnerji, SEO, HTR, content, remarketing (vrstice 13 do 22)</li>
+<li><b>W1</b> plačano digitalno (OpenSEO volumni na 7 trgih, Google Ads Transparency, LinkedIn, Meta, HTR, pismo)</li>
+<li><b>W2</b> kako konkurenti pridobivajo hotele (Duve, Canary, HiJiffy, Hoteza, Quicktext, Bookboost, Akia, Guestnet, Gastfreund, GuestJoy, Oaky, Upsell Guru, Nonius ...)</li>
+<li><b>W3</b> osvežitev benchmarkov 2025 do 2026 (Hunter 2026, HeyReach 2026, Cognism, Optifai, Goldcast, Navattic ...) in sinteza "ali drži vodo"</li>
+<li><b>W4</b> PMS partnerji SI in HR, <b>W5</b> pismo in direktna pošta, <b>W6</b> dosegljivi dogodki do aprila</li>
+<li><b>P</b> seje: Stop in Start kampanj (živo stanje kampanj), GTM benchmarki (model in formule), inbound, scrape demo, Hostfulness, Chief of Staff, Instagram oglasi</li>
+<li>Matjaževa dejstva 6. 10. 2026 (Tomaž od 1. 11., brez Aleša in Marine, Mateja mogoča, Rok ni odsoten)</li>
+</ul>
+
+</main>
+<script>
+(function(){
+  var tbl = document.getElementById('bench_tbl');
+  if (!tbl) return;
+  var thead = tbl.querySelector('thead');
+  var clone = null;
+  function ensure(){
+    if (clone) return;
+    clone = document.createElement('table');
+    clone.className = 'bench-fixhead';
+    clone.appendChild(thead.cloneNode(true));
+    document.body.appendChild(clone);
+  }
+  function sync(){
+    var r = tbl.getBoundingClientRect();
+    var inView = r.top < -10 && r.bottom > 60;
+    var stickyWorks = thead.querySelector('th').getBoundingClientRect().top >= -2;
+    if (inView && !stickyWorks) {
+      ensure();
+      clone.style.display = 'table';
+      clone.style.left = r.left + 'px';
+      clone.style.width = r.width + 'px';
+      var src = thead.querySelectorAll('th'), dst = clone.querySelectorAll('th');
+      for (var i = 0; i < src.length; i++) dst[i].style.width = src[i].getBoundingClientRect().width + 'px';
+    } else if (clone) { clone.style.display = 'none'; }
+  }
+  window.addEventListener('scroll', sync, {passive: true});
+  window.addEventListener('resize', sync);
+  sync();
+})();
+</script>
+</body>
+</html>
