@@ -140,7 +140,6 @@
     scroll-margin-top: 16px;
   }
   .scen:target { border-top-color: var(--accent); }
-  .scen:target .sh .n { color: var(--white); }
   .scen .sh { grid-column: 1 / -1; display: flex; align-items: baseline; gap: 14px; }
   .scen .sh .n { font-size: 2rem; font-weight: 700; color: var(--accent); line-height: 1; font-variant-numeric: tabular-nums; }
   .scen h3 { margin: 0; font-size: 1.25rem; font-weight: 600; letter-spacing: -0.015em; text-wrap: balance; }
@@ -224,6 +223,25 @@
   .panel[data-lang="hr"] .card p::before { content: "Pitanje: "; }
   .panel[data-lang="en"] .quote q { quotes: "“" "”"; }
   .panel[data-lang="en"] .card p::before { content: "Question: "; }
+
+/* PITCH:BEGIN */
+  .scen .sh { flex-wrap: wrap; }
+  .pitchbar { margin-left: auto; display: inline-flex; align-items: center; gap: 4px; flex-wrap: wrap; font-size: 0.75rem; color: var(--text-3); }
+  .pitchbar .pb-lbl { margin-right: 4px; letter-spacing: 0.06em; text-transform: uppercase; font-size: 0.6875rem; font-weight: 500; }
+  .pitchbar button { font: inherit; font-size: 0.8125rem; color: var(--text-2); background: transparent; border: 1px solid var(--line); border-radius: 9999px; padding: 3px 11px; cursor: pointer; line-height: 1.3; }
+  .pitchbar button:hover { border-color: var(--line-strong); color: var(--white); }
+  .pitchbar button[aria-pressed="true"] { color: var(--white); border-color: var(--accent); background: var(--surface); }
+  .pitchbar button:focus-visible { outline: 2px solid var(--m4); outline-offset: 2px; }
+  .scen .col[hidden], .scen .pitch[hidden] { display: none !important; }
+  .pitch { grid-column: 1 / -1; display: grid; gap: 14px; max-width: 72ch; }
+  .pitch .pf { margin: 0; font-size: 0.6875rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent-soft); font-weight: 600; }
+  .pitch .q { font-size: 1.125rem; }
+  .pitch .sil { margin: 0; font-size: 0.8125rem; color: var(--text-3); font-style: italic; }
+  .pitch .say { margin: 0; font-size: 1rem; line-height: 1.55; color: var(--white); }
+  .pitch .say + .say { margin-top: 2px; }
+  .pitch .bridge { padding-top: 4px; border-top: 1px solid var(--line); }
+  @media (max-width: 760px) { .pitchbar { margin-left: 0; width: 100%; } .pitchbar .pb-lbl { width: 100%; } }
+/* PITCH:END */
 </style>
 
 </head>
@@ -284,7 +302,26 @@
 
     <!-- 1 -->
     <article class="scen" id="sl-p1">
-      <div class="sh"><span class="n">1</span><h3>Kader: ljudi ni, tisti, ki so, odhajajo</h3></div>
+      <div class="sh"><span class="n">1</span><h3>Kader: ljudi ni, tisti, ki so, odhajajo</h3><div class="pitchbar" role="group" aria-label="Elevator pitch"><span class="pb-lbl">Elevator pitch</span><button type="button" data-pitch="0" aria-pressed="true">Scenarij</button><button type="button" data-pitch="1" aria-pressed="false">Vprašanje</button><button type="button" data-pitch="2" aria-pressed="false">Problem</button><button type="button" data-pitch="3" aria-pressed="false">Odločitev</button></div></div>
+      <div class="pitch" data-pitch="1" hidden>
+      <p class="pf">Elevator pitch · Vprašanje, produkt, rezultat</p>
+      <p class="q">Se vam je že kdaj zgodilo, da ste do julija končno uigrali recepcijo, oktobra pa je polovica ekipe odšla in ste januarja začeli znova?</p>
+      <p class="sil">Tišina. Počakajte, da hotelir odgovori.</p>
+      <div class="kv"><p class="say">Tega vam ne moremo rešiti, ljudi vam ne pripeljemo. Lahko pa poskrbimo, da znanje hotela ostane v hiši, ne v glavah tistih, ki odidejo.</p><p class="say">Iz vsebine vaše spletne strani zgradimo sistem, ki gostu sam odgovori na vse, kar se nov receptor sicer uči šest tednov. Kdaj je zajtrk, kje se parkira, kako do term.</p><p class="say">Nov človek prvi dan ne odgovarja na ista vprašanja, ampak sprejema goste.</p></div>
+      <div class="bridge"><p class="lbl">Korak</p><p>Pošljem vam predogled za vaš hotel, pogledate ga v dveh minutah?</p></div>
+      </div>
+      <div class="pitch" data-pitch="2" hidden>
+      <p class="pf">Elevator pitch · Problem, produkt, rezultat</p>
+      <p class="q">Vsako jesen gre iz hotelov znanje, ki ga je recepcija gradila celo sezono. Januarja nov človek znova sprašuje, kdaj je zajtrk in kje se parkira.</p>
+      <div class="kv"><p class="say">Zato iz vsebine vaše spletne strani zgradimo sistem, ki gostu na to odgovori sam, takoj in v njegovem jeziku. Znanje hotela ostane v sistemu, ne v glavi sezonca.</p><p class="say">Nov receptor prvi dan odgovarja enako kot tisti, ki je bil pri vas pet let. Ekipa se uvaja v goste, ne v vprašanja.</p></div>
+      <div class="bridge"><p class="lbl">Korak</p><p>Petnajst minut, da vam pokažem na vašem hotelu?</p></div>
+      </div>
+      <div class="pitch" data-pitch="3" hidden>
+      <p class="pf">Elevator pitch · Sprožilec odločitve</p>
+      <p class="q">Če vsako sezono znova uvajate recepcijo in vam znanje odhaja z ljudmi, je predogled za vaš hotel prava odločitev.</p>
+      <div class="kv"><p class="say">Nič ne kupite in nič ne namestite. Pogledate, kako sistem iz vaše spletne strani odgovarja gostu, in poveste, ali bi to vašo ekipo razbremenilo.</p><p class="say">Če ne, mi to poveste in nehava.</p></div>
+      <div class="bridge"><p class="lbl">Korak</p><p>Vam pošljem povezavo jutri, pa se slišiva v torek?</p></div>
+      </div>
       <div class="col">
         <p class="pain">Delovna sila je za lastnike hotelov tveganje številka ena. Sezonsko osebje se do julija nauči odgovorov in oktobra odide. Vsak nov človek pomeni novo uvajanje, ki ga plača recepcija v konici.</p>
         <div><p class="lbl">Vprašanje</p><p class="q">"Se vam je že kdaj zgodilo, da ste do julija končno uigrali recepcijo, oktobra pa je polovica ekipe odšla in ste januarja začeli znova?"</p></div>
@@ -305,7 +342,26 @@
 
     <!-- 2 -->
     <article class="scen" id="sl-p2">
-      <div class="sh"><span class="n">2</span><h3>Stroški rastejo hitreje kot cena sobe</h3></div>
+      <div class="sh"><span class="n">2</span><h3>Stroški rastejo hitreje kot cena sobe</h3><div class="pitchbar" role="group" aria-label="Elevator pitch"><span class="pb-lbl">Elevator pitch</span><button type="button" data-pitch="0" aria-pressed="true">Scenarij</button><button type="button" data-pitch="1" aria-pressed="false">Vprašanje</button><button type="button" data-pitch="2" aria-pressed="false">Problem</button><button type="button" data-pitch="3" aria-pressed="false">Odločitev</button></div></div>
+      <div class="pitch" data-pitch="1" hidden>
+      <p class="pf">Elevator pitch · Vprašanje, produkt, rezultat</p>
+      <p class="q">Se vam je že zgodilo, da ste imeli rekordno sezono po prihodkih, na koncu leta pa je bil dobiček manjši kot leto prej?</p>
+      <p class="sil">Tišina. Počakajte, da hotelir odgovori.</p>
+      <div class="kv"><p class="say">Cene sobe ne morete več dvigovati, to razumem. Zato ne sprašujem o ceni na noč, ampak o prihodku na gosta.</p><p class="say">Masaža ob šestih, pozni odhod, večerja. Koliko gostov za to sploh izve, preden odidejo? Sistem, ki ga zgradimo iz vaše strani, gostu to ponudi v trenutku, ko vpraša, ne na letaku v predalu.</p><p class="say">Zadnji evro na gosta pride iz tega, kar že imate, brez nove investicije.</p></div>
+      <div class="bridge"><p class="lbl">Korak</p><p>Vam pokažem na vašem hotelu, kako to izgleda? Petnajst minut.</p></div>
+      </div>
+      <div class="pitch" data-pitch="2" hidden>
+      <p class="pf">Elevator pitch · Problem, produkt, rezultat</p>
+      <p class="q">Stroški rastejo hitreje kot cena sobe, cene pa ne morete več dvigniti, ne da bi destinacija veljala za predrago. Zadnji evro je v tem, kar gost kupi med bivanjem.</p>
+      <div class="kv"><p class="say">Zato zgradimo sistem, ki gostu ponudi masažo, pozni odhod ali večerjo v trenutku, ko vpraša, v njegovem jeziku, ob kateri koli uri.</p><p class="say">Prihodek na gosta raste iz storitev, ki jih že imate. Plačate samo po tem, koliko gostje sistem uporabljajo. Nič uporabe, nič stroška.</p></div>
+      <div class="bridge"><p class="lbl">Korak</p><p>Pošljem vam predogled, kako bi to izgledalo pri vas?</p></div>
+      </div>
+      <div class="pitch" data-pitch="3" hidden>
+      <p class="pf">Elevator pitch · Sprožilec odločitve</p>
+      <p class="q">Če gostje odidejo, ne da bi izvedeli za masažo, večerjo ali pozni odhod, je petnajst minut z mano prava odločitev.</p>
+      <div class="kv"><p class="say">Ne govorim o novi investiciji in ne o mesečnih položnicah. Plačate samo po uporabi.</p><p class="say">Pogledate predogled, ki ga zgradimo iz vaše strani, in poveste, ali gost tam vidi tisto, kar bi mu radi prodali.</p></div>
+      <div class="bridge"><p class="lbl">Korak</p><p>Vam ga pošljem jutri?</p></div>
+      </div>
       <div class="col">
         <p class="pain">Energija, hrana, zavarovanja in plače rastejo. Prihodki so nad letom 2019, dobiček ni. Cene sobe ni več mogoče dvigovati, ne da bi destinacija veljala za predrago.</p>
         <div><p class="lbl">Vprašanje</p><p class="q">"Se vam je že zgodilo, da ste imeli rekordno sezono po prihodkih, na koncu leta pa je bil dobiček manjši kot leto prej?"</p></div>
@@ -327,7 +383,26 @@
 
     <!-- 3 -->
     <article class="scen" id="sl-p3">
-      <div class="sh"><span class="n">3</span><h3>Booking: vsaka rezervacija stane več</h3></div>
+      <div class="sh"><span class="n">3</span><h3>Booking: vsaka rezervacija stane več</h3><div class="pitchbar" role="group" aria-label="Elevator pitch"><span class="pb-lbl">Elevator pitch</span><button type="button" data-pitch="0" aria-pressed="true">Scenarij</button><button type="button" data-pitch="1" aria-pressed="false">Vprašanje</button><button type="button" data-pitch="2" aria-pressed="false">Problem</button><button type="button" data-pitch="3" aria-pressed="false">Odločitev</button></div></div>
+      <div class="pitch" data-pitch="1" hidden>
+      <p class="pf">Elevator pitch · Vprašanje, produkt, rezultat</p>
+      <p class="q">Se vam je že zgodilo, da ste odprli obračun provizij za pretekli mesec in ugotovili, da ste Bookingu plačali več kot celotni recepciji?</p>
+      <p class="sil">Tišina. Počakajte, da hotelir odgovori.</p>
+      <div class="kv"><p class="say">Bookinga nihče ne bo ukinil, polni vam hotel. Vprašanje je samo, ali se gost, ki je enkrat že bil pri vas, drugič vrne k vam ali k njim.</p><p class="say">Gost, ki je med bivanjem dobil odgovor v minuti, v svojem jeziku, in je masažo rezerviral pri vas s telefona, ima drugič razlog, da ne gre prek Bookinga.</p><p class="say">Mi mu ta razlog zgradimo iz vsebine vaše spletne strani.</p></div>
+      <div class="bridge"><p class="lbl">Korak</p><p>Pošljem vam predogled. Če ni nič, mi to poveste in nehava.</p></div>
+      </div>
+      <div class="pitch" data-pitch="2" hidden>
+      <p class="pf">Elevator pitch · Problem, produkt, rezultat</p>
+      <p class="q">Vsaka rezervacija prek Bookinga stane več kot lani, gost, ki je bil pri vas enkrat, pa drugič spet rezervira pri njih, ker nima razloga, da bi prišel direktno.</p>
+      <div class="kv"><p class="say">Ta razlog nastane med bivanjem. Zato zgradimo sistem, ki gostu odgovori takoj, v njegovem jeziku, in mu ponudbo hotela prinese na telefon, še preden odide.</p><p class="say">Drugič si vas zapomni po tem, kako hitro je dobil odgovor, ne po proviziji, ki ste jo plačali vi.</p></div>
+      <div class="bridge"><p class="lbl">Korak</p><p>Petnajst minut, da vam pokažem, kako to izgleda za vaš hotel?</p></div>
+      </div>
+      <div class="pitch" data-pitch="3" hidden>
+      <p class="pf">Elevator pitch · Sprožilec odločitve</p>
+      <p class="q">Če vam Booking vsak mesec vzame več, kot bi stala dodatna oseba na recepciji, je predogled za vaš hotel prava odločitev.</p>
+      <div class="kv"><p class="say">Bookinga ne ukinjamo. Dajemo gostu razlog, da drugič pride k vam.</p><p class="say">Pogledate ga v dveh minutah. Če ne vidite razloga, ki bi ga gost videl, mi to poveste.</p></div>
+      <div class="bridge"><p class="lbl">Korak</p><p>Vam pošljem povezavo?</p></div>
+      </div>
       <div class="col">
         <p class="pain">Delež OTA raste, strošek pridobitve gosta raste hitreje od prihodka, Booking pa isto sobo pogosto prodaja ceneje od hotela. Noben naš sogovornik tega ni izgovoril sam. Problem je vsesplošen, a ga ne odprejo prvi.</p>
         <div><p class="lbl">Vprašanje</p><p class="q">"Se vam je že zgodilo, da ste odprli obračun provizij za pretekli mesec in ugotovili, da ste Bookingu plačali več kot celotni recepciji?"</p></div>
@@ -348,7 +423,26 @@
 
     <!-- 4 -->
     <article class="scen" id="sl-p4">
-      <div class="sh"><span class="n">4</span><h3>Spletna stran izgublja goste, ki so že hoteli rezervirati</h3></div>
+      <div class="sh"><span class="n">4</span><h3>Spletna stran izgublja goste, ki so že hoteli rezervirati</h3><div class="pitchbar" role="group" aria-label="Elevator pitch"><span class="pb-lbl">Elevator pitch</span><button type="button" data-pitch="0" aria-pressed="true">Scenarij</button><button type="button" data-pitch="1" aria-pressed="false">Vprašanje</button><button type="button" data-pitch="2" aria-pressed="false">Problem</button><button type="button" data-pitch="3" aria-pressed="false">Odločitev</button></div></div>
+      <div class="pitch" data-pitch="1" hidden>
+      <p class="pf">Elevator pitch · Vprašanje, produkt, rezultat</p>
+      <p class="q">Ste kdaj sami poskusili rezervirati sobo na svoji spletni strani, s telefona, v tujem jeziku, ob enajstih zvečer? Koliko klikov je bilo do potrditve?</p>
+      <p class="sil">Tišina. Počakajte, da hotelir odgovori.</p>
+      <div class="kv"><p class="say">Prenova reši videz. Kaj se zgodi, ko gost vpraša nekaj, česar stran ne pove?</p><p class="say">Pri Hostfulnessu naredimo pregled strani z očmi gosta: kaj najde, česa ne, kje obupa. Brez prodaje, samo ocena.</p><p class="say">Dobite seznam vprašanj, na katera vaša stran ne odgovori, gost pa jih zagotovo postavi.</p></div>
+      <div class="bridge"><p class="lbl">Korak</p><p>Vam pošljem pregled za vašo stran? Nič ne stane.</p></div>
+      </div>
+      <div class="pitch" data-pitch="2" hidden>
+      <p class="pf">Elevator pitch · Problem, produkt, rezultat</p>
+      <p class="q">Gost je že na vaši strani in hoče rezervirati. Ne najde odgovora na eno vprašanje, parkirišče ali hišni ljubljenček, in rezervira prek Bookinga ali pri sosedu.</p>
+      <div class="kv"><p class="say">Zato najprej pogledamo vašo stran z očmi gosta: kaj najde, česa ne, kje obupa. To je pregled, ne prodaja.</p><p class="say">Potem iz vsebine te strani zgradimo sistem, ki gostu odgovori na vprašanja, ki jih stran ne pove, takoj in v njegovem jeziku.</p></div>
+      <div class="bridge"><p class="lbl">Korak</p><p>Začneva s pregledom strani. Vam ga pošljem ta teden?</p></div>
+      </div>
+      <div class="pitch" data-pitch="3" hidden>
+      <p class="pf">Elevator pitch · Sprožilec odločitve</p>
+      <p class="q">Če ne veste, koliko gostov začne rezervacijo na vaši strani in je ne dokonča, je pregled strani prava odločitev.</p>
+      <div class="kv"><p class="say">Nič ne stane in nič vam ne prodajam. Pogledamo stran, kot jo vidi gost ob enajstih zvečer s telefona.</p><p class="say">Dobite seznam vprašanj, na katera stran ne odgovori. Kaj s tem naredite, je vaša odločitev.</p></div>
+      <div class="bridge"><p class="lbl">Korak</p><p>Vam pošljem pregled?</p></div>
+      </div>
       <div class="col">
         <p class="pain">Gost je že na strani hotela, ne najde odgovora na eno vprašanje, in rezervira prek Bookinga ali pri sosedu. Prenova strani reši videz, ne reši vprašanj tik pred rezervacijo.</p>
         <div><p class="lbl">Vprašanje</p><p class="q">"Ste kdaj sami poskusili rezervirati sobo na svoji spletni strani, s telefona, v tujem jeziku, ob 23h? Koliko klikov je bilo do potrditve?"</p></div>
@@ -368,7 +462,26 @@
 
     <!-- 5 -->
     <article class="scen" id="sl-p5">
-      <div class="sh"><span class="n">5</span><h3>Povpraševanje ob 22h, odgovor ob 9h, gost pa je medtem drugje</h3></div>
+      <div class="sh"><span class="n">5</span><h3>Povpraševanje ob 22h, odgovor ob 9h, gost pa je medtem drugje</h3><div class="pitchbar" role="group" aria-label="Elevator pitch"><span class="pb-lbl">Elevator pitch</span><button type="button" data-pitch="0" aria-pressed="true">Scenarij</button><button type="button" data-pitch="1" aria-pressed="false">Vprašanje</button><button type="button" data-pitch="2" aria-pressed="false">Problem</button><button type="button" data-pitch="3" aria-pressed="false">Odločitev</button></div></div>
+      <div class="pitch" data-pitch="1" hidden>
+      <p class="pf">Elevator pitch · Vprašanje, produkt, rezultat</p>
+      <p class="q">Se vam je že zgodilo, da ste zjutraj odprli nabiralnik, našli povpraševanje za tri noči, poslano sinoči ob desetih, gost pa je medtem že rezerviral drugje?</p>
+      <p class="sil">Tišina. Počakajte, da hotelir odgovori.</p>
+      <div class="kv"><p class="say">Gost ne čaka do jutra. Odgovor rabi takrat, ko vpraša.</p><p class="say">Iz vsebine vaše spletne strani zgradimo sistem, ki mu odgovori v minuti, ob kateri koli uri, v njegovem jeziku. Človek prevzame samo tisto, kar je zares zanj.</p><p class="say">Zjutraj v nabiralniku najdete rezervacijo, ne vprašanja.</p></div>
+      <div class="bridge"><p class="lbl">Korak</p><p>Predogled za vaš hotel vam pošljem jutri, pa se slišiva v torek?</p></div>
+      </div>
+      <div class="pitch" data-pitch="2" hidden>
+      <p class="pf">Elevator pitch · Problem, produkt, rezultat</p>
+      <p class="q">Povpraševanje pride ob desetih zvečer, odgovor gre ven ob devetih zjutraj, gost pa je medtem rezerviral drugje. Ko sta ob šestih pred recepcijo dva avtobusa, telefon zvoni v prazno.</p>
+      <div class="kv"><p class="say">Zato zgradimo sistem, ki gostu odgovori v minuti, ob kateri koli uri, v njegovem jeziku, iz vsebine vaše spletne strani.</p><p class="say">Recepcija dvigne telefon samo takrat, ko je na drugi strani človek, ki jo zares potrebuje. Zjutraj najdete rezervacijo, ne vprašanja.</p></div>
+      <div class="bridge"><p class="lbl">Korak</p><p>Pošljem vam predogled, kako odgovori gostu za vaš hotel?</p></div>
+      </div>
+      <div class="pitch" data-pitch="3" hidden>
+      <p class="pf">Elevator pitch · Sprožilec odločitve</p>
+      <p class="q">Če vam povpraševanja po desetih zvečer čakajo do jutra, je predogled za vaš hotel prava odločitev.</p>
+      <div class="kv"><p class="say">Nič ne namestite. Pogledate, kako sistem iz vaše strani odgovori na vprašanje, ki ga gost postavi ob polnoči.</p><p class="say">Če odgovor ni tak, kot bi ga dala vaša recepcija, mi to poveste in nehava.</p></div>
+      <div class="bridge"><p class="lbl">Korak</p><p>Vam ga pošljem jutri?</p></div>
+      </div>
       <div class="col">
         <p class="pain">Tretjina povpraševanj pride izven delovnega časa. Ko sta ob 18h pred recepcijo dva avtobusa, telefon zvoni v prazno. To ni vprašanje urnika, ampak sočasnosti.</p>
         <div><p class="lbl">Vprašanje</p><p class="q">"Se vam je že zgodilo, da ste zjutraj odprli nabiralnik, našli povpraševanje za tri noči, poslano sinoči ob 22h, gost pa je medtem že rezerviral drugje?"</p></div>
@@ -388,7 +501,26 @@
 
     <!-- 6 -->
     <article class="scen" id="sl-p6">
-      <div class="sh"><span class="n">6</span><h3>Gostje govorijo jezike, ki jih recepcija ne</h3></div>
+      <div class="sh"><span class="n">6</span><h3>Gostje govorijo jezike, ki jih recepcija ne</h3><div class="pitchbar" role="group" aria-label="Elevator pitch"><span class="pb-lbl">Elevator pitch</span><button type="button" data-pitch="0" aria-pressed="true">Scenarij</button><button type="button" data-pitch="1" aria-pressed="false">Vprašanje</button><button type="button" data-pitch="2" aria-pressed="false">Problem</button><button type="button" data-pitch="3" aria-pressed="false">Odločitev</button></div></div>
+      <div class="pitch" data-pitch="1" hidden>
+      <p class="pf">Elevator pitch · Vprašanje, produkt, rezultat</p>
+      <p class="q">Se vam je že zgodilo, da je gost nekaj vprašal, receptor ga ni čisto razumel, in ste šele v oceni na Bookingu prebrali, kaj je v resnici hotel?</p>
+      <p class="sil">Tišina. Počakajte, da hotelir odgovori.</p>
+      <div class="kv"><p class="say">Nihče ne napiše "recepcija ni govorila mojega jezika". Samo nižje oceni.</p><p class="say">Sistem, ki ga zgradimo iz vaše strani, gostu odgovori v njegovem jeziku, brez dodatnega človeka. Tudi sezonskemu sodelavcu pomaga, ko domači gost vpraša kaj zapletenega.</p><p class="say">Gost dobi odgovor, ki ga razume, ocena pa ne trpi zaradi nesporazuma, ki ga nihče ni opazil.</p></div>
+      <div class="bridge"><p class="lbl">Korak</p><p>Vam pokažem, kako odgovori v jeziku, ki ga vaša nočna izmena ne govori? Dve minuti.</p></div>
+      </div>
+      <div class="pitch" data-pitch="2" hidden>
+      <p class="pf">Elevator pitch · Problem, produkt, rezultat</p>
+      <p class="q">Vse več gostov iz Azije in Zaliva, vse več osebja iz tretjih držav. Nesporazum se ne pokaže na recepciji, pokaže se kot nižja ocena.</p>
+      <div class="kv"><p class="say">Zato zgradimo sistem, ki gostu odgovori v njegovem jeziku, ob kateri koli uri, iz vsebine vaše spletne strani. Isti odgovor, ne glede na to, kdo je v izmeni.</p><p class="say">Gost razume, kaj ste mu hoteli povedati. Ocena ostane tam, kjer si jo hotel zasluži.</p></div>
+      <div class="bridge"><p class="lbl">Korak</p><p>Pošljem vam predogled, da ga preizkusite v jeziku, ki vas najbolj muči?</p></div>
+      </div>
+      <div class="pitch" data-pitch="3" hidden>
+      <p class="pf">Elevator pitch · Sprožilec odločitve</p>
+      <p class="q">Če nočna izmena ne pokrije jezikov, ki jih govorijo vaši gostje, je predogled za vaš hotel prava odločitev.</p>
+      <div class="kv"><p class="say">Nič ne namestite. Vprašate ga kar koli v jeziku, ki ga vaša ekipa ne govori, in vidite, kaj gost dobi.</p><p class="say">Če odgovor ni dober, mi to poveste in nehava.</p></div>
+      <div class="bridge"><p class="lbl">Korak</p><p>Vam ga pošljem jutri?</p></div>
+      </div>
       <div class="col">
         <p class="pain">Vse več gostov iz Azije in Zaliva, vse več osebja iz tretjih držav. Nesporazum se ne pokaže na recepciji. Pokaže se kot nižja ocena brez razlage.</p>
         <div><p class="lbl">Vprašanje</p><p class="q">"Se vam je že zgodilo, da je gost nekaj vprašal, receptor ga ni čisto razumel, in ste šele v oceni na Bookingu prebrali, kaj je v resnici hotel?"</p></div>
@@ -408,7 +540,26 @@
 
     <!-- 7 -->
     <article class="scen" id="sl-p7">
-      <div class="sh"><span class="n">7</span><h3>Preveč sistemov, premalo povezav, ročno prepisovanje</h3></div>
+      <div class="sh"><span class="n">7</span><h3>Preveč sistemov, premalo povezav, ročno prepisovanje</h3><div class="pitchbar" role="group" aria-label="Elevator pitch"><span class="pb-lbl">Elevator pitch</span><button type="button" data-pitch="0" aria-pressed="true">Scenarij</button><button type="button" data-pitch="1" aria-pressed="false">Vprašanje</button><button type="button" data-pitch="2" aria-pressed="false">Problem</button><button type="button" data-pitch="3" aria-pressed="false">Odločitev</button></div></div>
+      <div class="pitch" data-pitch="1" hidden>
+      <p class="pf">Elevator pitch · Vprašanje, produkt, rezultat</p>
+      <p class="q">Se vam je že zgodilo, da ste novo ceno zajtrka vpisali v PMS, na spletno stran, v TV in v mapo v sobi, gost pa je vseeno prebral staro?</p>
+      <p class="sil">Tišina. Počakajte, da hotelir odgovori.</p>
+      <div class="kv"><p class="say">To slišim najpogosteje in je upravičeno: še enega sistema ne. Vprašanje je, ali novi sistem nekaj doda ali odvzame.</p><p class="say">Pri nas vpišete vsebino enkrat in jo gost vidi povsod, kjer vpraša. Ne dodamo še enega telefona, ki ga recepcija kliče, ko nekaj ne dela.</p><p class="say">Ena vsebina, en vpis, vsi zasloni.</p></div>
+      <div class="bridge"><p class="lbl">Korak</p><p>Katerih treh stvari bi se najraje znebili? Potem vam pokažem, ali to pokrijemo.</p></div>
+      </div>
+      <div class="pitch" data-pitch="2" hidden>
+      <p class="pf">Elevator pitch · Problem, produkt, rezultat</p>
+      <p class="q">Isto informacijo vpišete petkrat, v PMS, na spletno stran, v TV, v mapo in na Booking, gost pa vseeno prebere staro. Vsak nov ponudnik je še en telefon, ko nekaj ne dela.</p>
+      <div class="kv"><p class="say">Zato zgradimo sistem iz vsebine, ki jo že imate na spletni strani. Vpišete enkrat, gost vidi povsod, kjer vpraša.</p><p class="say">Ne dodamo sistema, ki bi ga vaša ekipa vzdrževala. Odvzamemo prepisovanje.</p></div>
+      <div class="bridge"><p class="lbl">Korak</p><p>Pokažem vam na vaši vsebini, kaj od tega odpade. Petnajst minut?</p></div>
+      </div>
+      <div class="pitch" data-pitch="3" hidden>
+      <p class="pf">Elevator pitch · Sprožilec odločitve</p>
+      <p class="q">Če recepcija ob vsaki spremembi cene zajtrka popravlja pet sistemov, je petnajst minut z mano prava odločitev.</p>
+      <div class="kv"><p class="say">Ne prodajam vam šestega sistema. Pokažem vam, katera tri prepisovanja odpadejo, če je vsebina na enem mestu.</p><p class="say">Če ne odpade nič, mi to poveste in nehava.</p></div>
+      <div class="bridge"><p class="lbl">Korak</p><p>Kdaj vam ustreza, torek ali četrtek?</p></div>
+      </div>
       <div class="col">
         <p class="pain">PMS, channel manager, spletna stran, TV, mapa v sobi, Booking: isto informacijo vpišeš petkrat, gost pa vseeno prebere staro. Vsak nov ponudnik je še en telefon, ko nekaj ne dela.</p>
         <div><p class="lbl">Vprašanje</p><p class="q">"Se vam je že zgodilo, da ste novo ceno zajtrka vpisali v PMS, na spletno stran, v TV in v mapo v sobi, gost pa je vseeno prebral staro?"</p></div>
@@ -429,7 +580,26 @@
 
     <!-- 8 -->
     <article class="scen" id="sl-p8">
-      <div class="sh"><span class="n">8</span><h3>Ocene določajo ceno, vzorca v njih pa nihče ne prebere</h3></div>
+      <div class="sh"><span class="n">8</span><h3>Ocene določajo ceno, vzorca v njih pa nihče ne prebere</h3><div class="pitchbar" role="group" aria-label="Elevator pitch"><span class="pb-lbl">Elevator pitch</span><button type="button" data-pitch="0" aria-pressed="true">Scenarij</button><button type="button" data-pitch="1" aria-pressed="false">Vprašanje</button><button type="button" data-pitch="2" aria-pressed="false">Problem</button><button type="button" data-pitch="3" aria-pressed="false">Odločitev</button></div></div>
+      <div class="pitch" data-pitch="1" hidden>
+      <p class="pf">Elevator pitch · Vprašanje, produkt, rezultat</p>
+      <p class="q">Se vam je že zgodilo, da ste imeli odlično oceno, potem pa je en slab teden, okvara klime ali nova ekipa, potegnil povprečje za dve desetinki, in ste to čutili pri ceni še naslednjo sezono?</p>
+      <p class="sil">Tišina. Počakajte, da hotelir odgovori.</p>
+      <div class="kv"><p class="say">Kdo pri vas prebere vseh štiristo ocen na leto in zna povedati, katere tri stvari se ponavljajo?</p><p class="say">Ko gost napiše "nismo vedeli, da ...", to ni problem sobe, ampak informacije. In informacijo je ceneje popraviti kot sobo.</p><p class="say">Pregled Booking ocen pokaže vzorec, ne posamezne ocene: katere negativne bi preprečila informacija, ne investicija.</p></div>
+      <div class="bridge"><p class="lbl">Korak</p><p>Vam naredim pregled vaših Booking ocen? Nič ne stane.</p></div>
+      </div>
+      <div class="pitch" data-pitch="2" hidden>
+      <p class="pf">Elevator pitch · Problem, produkt, rezultat</p>
+      <p class="q">Ena slaba izmena potegne povprečje za dve desetinki in to se pozna pri ceni celo naslednjo sezono. Vzorec, ki se ponavlja v štiristo ocenah, vidi samo tisti, ki jih prebere vse.</p>
+      <div class="kv"><p class="say">Zato najprej naredimo pregled vaših Booking ocen: katere tri stvari se ponavljajo in katere od njih so informacija, ne investicija.</p><p class="say">Potem iz vsebine vaše strani zgradimo sistem, ki gostu to informacijo da, preden jo pogreši v oceni.</p></div>
+      <div class="bridge"><p class="lbl">Korak</p><p>Začneva s pregledom ocen. Vam ga pošljem ta teden?</p></div>
+      </div>
+      <div class="pitch" data-pitch="3" hidden>
+      <p class="pf">Elevator pitch · Sprožilec odločitve</p>
+      <p class="q">Če nihče pri vas ne ve, katere tri stvari se v vaših ocenah ponavljajo, je pregled ocen prava odločitev.</p>
+      <div class="kv"><p class="say">Nič ne stane in nič vam ne prodajam. Preberemo ocene in vam povemo vzorec.</p><p class="say">Kaj s tem naredite, je vaša odločitev. Večinoma je to informacija, ne investicija.</p></div>
+      <div class="bridge"><p class="lbl">Korak</p><p>Vam pošljem pregled?</p></div>
+      </div>
       <div class="col">
         <p class="pain">En slab teden potegne povprečje za dve desetinki in to se pozna pri ceni celo naslednjo sezono. Vzorec, ki se ponavlja v 400 ocenah, vidi samo tisti, ki jih prebere vse. Naši sogovorniki so na vprašanje o ocenah odgovorili "imamo 8,7", zato ne sprašujte, ali so ocene slabe.</p>
         <div><p class="lbl">Vprašanje</p><p class="q">"Se vam je že zgodilo, da ste imeli odlično oceno, potem pa je en slab teden, okvara klime ali nova ekipa, potegnil povprečje za dve desetinki, in ste to čutili pri ceni še naslednjo sezono?"</p></div>
@@ -449,7 +619,26 @@
 
     <!-- 9 -->
     <article class="scen" id="sl-p9">
-      <div class="sh"><span class="n">9</span><h3>Hotel je prenovljen, digitalna izkušnja v sobi pa ne</h3></div>
+      <div class="sh"><span class="n">9</span><h3>Hotel je prenovljen, digitalna izkušnja v sobi pa ne</h3><div class="pitchbar" role="group" aria-label="Elevator pitch"><span class="pb-lbl">Elevator pitch</span><button type="button" data-pitch="0" aria-pressed="true">Scenarij</button><button type="button" data-pitch="1" aria-pressed="false">Vprašanje</button><button type="button" data-pitch="2" aria-pressed="false">Problem</button><button type="button" data-pitch="3" aria-pressed="false">Odločitev</button></div></div>
+      <div class="pitch" data-pitch="1" hidden>
+      <p class="pf">Elevator pitch · Vprašanje, produkt, rezultat</p>
+      <p class="q">Se vam je že zgodilo, da ste vložili v nove sobe, gost pa je v oceni napisal, da televizija ne zna predvajati Netflixa in da je bila v mapi stara cena zajtrka?</p>
+      <p class="sil">Tišina. Počakajte, da hotelir odgovori.</p>
+      <div class="kv"><p class="say">Gost ne primerja z vašim sosedom. Primerja z zadnjim hotelom, kjer je spal.</p><p class="say">Mapa v sobi s staro ceno zajtrka je problem informacije, ne sobe. Zato zgradimo sistem iz vsebine vaše spletne strani: ista vsebina, vedno sveža, kjer koli gost vpraša.</p><p class="say">Ekran v sobi postane vstop v hotel, ne seznam programov.</p></div>
+      <div class="bridge"><p class="lbl">Korak</p><p>Kdaj ste nazadnje sami prespali v svoji sobi in uporabili TV, WiFi in mapo kot gost? Pridem, pa to narediva skupaj, pol ure.</p></div>
+      </div>
+      <div class="pitch" data-pitch="2" hidden>
+      <p class="pf">Elevator pitch · Problem, produkt, rezultat</p>
+      <p class="q">Nove sobe, stara mapa s staro ceno zajtrka in televizija, ki je ne zna nihče posodobiti. Gost v oceni ne omeni nove kopalnice, omeni tisto, kar ni delalo.</p>
+      <div class="kv"><p class="say">Zato zgradimo sistem iz vsebine vaše spletne strani, ki gostu da svežo informacijo tam, kjer jo išče: na telefonu in na ekranu v sobi.</p><p class="say">Nova soba in informacija v njej govorita isto zgodbo. Ocena omeni, kar ste vložili, ne, kar ste pozabili.</p></div>
+      <div class="bridge"><p class="lbl">Korak</p><p>Pošljem vam predogled, kako bi vsebina vašega hotela izgledala gostu v sobi?</p></div>
+      </div>
+      <div class="pitch" data-pitch="3" hidden>
+      <p class="pf">Elevator pitch · Sprožilec odločitve</p>
+      <p class="q">Če ste prenovili sobe, mapa in ekran v njih pa še vedno kažeta staro ceno zajtrka, je predogled za vaš hotel prava odločitev.</p>
+      <div class="kv"><p class="say">Nič ne namestite. Pogledate, kako bi gost v novi sobi dobil svežo vsebino hotela, brez prepisovanja.</p><p class="say">Če se vam zdi, da to ni razlika, mi to poveste in nehava.</p></div>
+      <div class="bridge"><p class="lbl">Korak</p><p>Vam ga pošljem jutri?</p></div>
+      </div>
       <div class="col">
         <p class="pain">Nove sobe, star TV sistem brez castinga, počasen WiFi in mapa s staro ceno zajtrka. Gost ne primerja s sosedom, primerja z zadnjim hotelom, kjer je spal.</p>
         <div><p class="lbl">Vprašanje</p><p class="q">"Se vam je že zgodilo, da ste vložili v nove sobe, gost pa je v oceni napisal, da televizija ne zna predvajati Netflixa in da je bila v mapi stara cena zajtrka?"</p></div>
@@ -470,7 +659,26 @@
 
     <!-- 10 -->
     <article class="scen" id="sl-p10">
-      <div class="sh"><span class="n">10</span><h3>AI: vsi govorijo, nihče ne pove, kaj narediti prvo</h3></div>
+      <div class="sh"><span class="n">10</span><h3>AI: vsi govorijo, nihče ne pove, kaj narediti prvo</h3><div class="pitchbar" role="group" aria-label="Elevator pitch"><span class="pb-lbl">Elevator pitch</span><button type="button" data-pitch="0" aria-pressed="true">Scenarij</button><button type="button" data-pitch="1" aria-pressed="false">Vprašanje</button><button type="button" data-pitch="2" aria-pressed="false">Problem</button><button type="button" data-pitch="3" aria-pressed="false">Odločitev</button></div></div>
+      <div class="pitch" data-pitch="1" hidden>
+      <p class="pf">Elevator pitch · Vprašanje, produkt, rezultat</p>
+      <p class="q">Se vam je že zgodilo, da ste na konferenci ali od lastnika slišali "morali bi nekaj z AI", potem pa se je končalo pri enem sestanku, ker ni bilo jasno, kaj točno in kdo bi to vzdrževal?</p>
+      <p class="sil">Tišina. Počakajte, da hotelir odgovori.</p>
+      <div class="kv"><p class="say">Kaj vas bolj skrbi: da gostje tega ne bi uporabljali, ali da bi izgubili osebni stik?</p><p class="say">Če osebni stik: nismo zato, da bi se delalo brez recepcije. Ravno nasprotno. Če stroj odgovori na "kdaj je zajtrk", ima receptor čas za nasmeh, ki ga stroj ne zna.</p><p class="say">Če uporaba: plačate samo po uporabi. Če gostje ne uporabljajo, ne plačate nič. Prvi korak je eden in majhen: predogled iz vaše spletne strani. Nič IT projekta, nič vzdrževanja pri vas.</p></div>
+      <div class="bridge"><p class="lbl">Korak</p><p>Vam ga pošljem, da ga pokažete lastniku? Ena stran, brez razlaganja.</p></div>
+      </div>
+      <div class="pitch" data-pitch="2" hidden>
+      <p class="pf">Elevator pitch · Problem, produkt, rezultat</p>
+      <p class="q">Vsi govorijo o AI, nihče ne pove, kaj narediti prvo. Ovira ni volja, ampak strah pred stroškom, pred IT projektom in za osebni stik.</p>
+      <div class="kv"><p class="say">Zato je pri nas prvi korak eden in majhen: iz vsebine vaše spletne strani zgradimo predogled, ki ga pogledate v dveh minutah. Nič IT projekta, nič vzdrževanja pri vas.</p><p class="say">Človeka ne nadomeščamo, skušamo ga razbremeniti drobnarij. Plačate samo po tem, koliko gostje sistem uporabljajo.</p></div>
+      <div class="bridge"><p class="lbl">Korak</p><p>Pošljem vam predogled, da imate kaj pokazati lastniku?</p></div>
+      </div>
+      <div class="pitch" data-pitch="3" hidden>
+      <p class="pf">Elevator pitch · Sprožilec odločitve</p>
+      <p class="q">Če vam lastnik že dvakrat reče, da bi morali nekaj z AI, pa nihče ne ve, kaj točno, je predogled za vaš hotel prava odločitev.</p>
+      <div class="kv"><p class="say">Nič ne kupite, nič ne namestite, nič ne vzdržujete. Pogledate, kako bi sistem iz vaše strani odgovoril gostu, in to pokažete lastniku.</p><p class="say">Če ni to, mi to poveste in nehava.</p></div>
+      <div class="bridge"><p class="lbl">Korak</p><p>Vam pošljem povezavo jutri?</p></div>
+      </div>
       <div class="col">
         <p class="pain">Verige ga že uporabljajo, neodvisni čakajo. Ovira ni volja. Ovira je nepoznavanje rešitev, strah pred stroškom, pred IT projektom in za osebni stik z gostom.</p>
         <div><p class="lbl">Vprašanje</p><p class="q">"Se vam je že zgodilo, da ste na konferenci ali od lastnika slišali 'morali bi nekaj z AI', potem pa se je končalo pri enem sestanku, ker ni bilo jasno, kaj točno in kdo bi to vzdrževal?"</p></div>
@@ -1291,6 +1499,25 @@
   var init=fromHash(), stored=null; try{ stored=localStorage.getItem("dbh-lang"); }catch(e){}
   if(init) setLang(init.code, init.anchor); else setLang(stored||"sl");
 })();
+</script>
+
+<script>
+/* PITCH:BEGIN */
+(function(){
+  document.querySelectorAll(".scen").forEach(function(art){
+    var btns = art.querySelectorAll(".pitchbar button"); if(!btns.length) return;
+    var cols = art.querySelectorAll(":scope > .col"), pitches = art.querySelectorAll(":scope > .pitch");
+    btns.forEach(function(b){
+      b.addEventListener("click", function(){
+        var k = b.getAttribute("data-pitch");
+        btns.forEach(function(x){ x.setAttribute("aria-pressed", x===b ? "true" : "false"); });
+        cols.forEach(function(c){ c.hidden = k !== "0"; });
+        pitches.forEach(function(p){ p.hidden = p.getAttribute("data-pitch") !== k; });
+      });
+    });
+  });
+})();
+/* PITCH:END */
 </script>
 </body>
 </html>
