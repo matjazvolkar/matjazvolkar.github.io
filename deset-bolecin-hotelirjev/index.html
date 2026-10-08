@@ -122,7 +122,7 @@
   }
   .card h2 { margin: 0; font-size: 0.9375rem; font-weight: 600; line-height: 1.25; letter-spacing: -0.01em; }
   .card p { margin: 0; font-size: 0.8125rem; line-height: 1.4; color: var(--accent-soft); }
-  .card p::before { content: "Vprašanje: "; color: var(--text-3); font-weight: 500; }
+  .card p::before { color: var(--text-3); font-weight: 500; }
 
   /* Sections */
   section { margin-top: 56px; }
@@ -170,7 +170,7 @@
   .ev .src { color: var(--text-3); }
   .quote { font-size: 0.9375rem; color: var(--text-2); }
   .quote p { margin: 0 0 6px; }
-  .quote q { color: var(--white); quotes: "„" "“"; }
+  .quote q { color: var(--white); }
   .quote .who { color: var(--text-3); font-size: 0.8125rem; }
   .bridge { font-size: 0.9375rem; color: var(--m5); }
   .bridge p { margin: 0; }
@@ -210,17 +210,26 @@
     .intro { grid-template-columns: 1fr; }
   }
   @media (prefers-reduced-motion: reduce) { .card { transition: none; } }
-  .langs { display:flex; gap:14px; justify-content:flex-end; align-items:center; font-size:0.8125rem; color:var(--text-3); padding-block:10px 0; }
-  .langs a { color:var(--text-2); text-decoration:none; padding:2px 8px; border-radius:9999px; border:1px solid transparent; }
-  .langs a:hover { border-color:var(--line-strong); }
-  .langs a[aria-current] { color:var(--white); border-color:var(--accent); }
+  /* language switcher */
+  .langbar { display:flex; justify-content:flex-end; align-items:center; gap:6px; padding-block:10px 0; font-size:0.8125rem; color:var(--text-3); }
+  .langbar span { margin-right:6px; }
+  .langbar button { font:inherit; font-size:0.8125rem; color:var(--text-2); background:transparent; border:1px solid transparent; border-radius:9999px; padding:3px 10px; cursor:pointer; }
+  .langbar button:hover { border-color:var(--line-strong); }
+  .langbar button[aria-pressed="true"] { color:var(--white); border-color:var(--accent); }
+  .langbar button:focus-visible { outline:2px solid var(--m4); outline-offset:2px; }
+  .panel[hidden] { display:none !important; }
+  .panel[data-lang="sl"] .quote q { quotes: "„" "“"; }
+  .panel[data-lang="sl"] .card p::before { content: "Vprašanje: "; }
+  .panel[data-lang="hr"] .quote q { quotes: "„" "”"; }
+  .panel[data-lang="hr"] .card p::before { content: "Pitanje: "; }
+  .panel[data-lang="en"] .quote q { quotes: "“" "”"; }
+  .panel[data-lang="en"] .card p::before { content: "Question: "; }
 </style>
 
 </head>
 <body>
-<div class="wrap" style="padding-block:0">
-<nav class="langs" aria-label="Jezik"><span>Jezik</span><a href="https://matjazvolkar.github.io/deset-bolecin-hotelirjev/" aria-current="page">Slovensko</a><a href="https://matjazvolkar.github.io/deset-bolecin-hotelirjev/hr/">Hrvatski</a><a href="https://matjazvolkar.github.io/deset-bolecin-hotelirjev/en/">English</a></nav>
-</div>
+<div class="wrap" style="padding-block:0"><nav class="langbar" aria-label="Jezik"><span id="langlbl">Jezik</span><button type="button" data-set-lang="sl" aria-pressed="true">Slovensko</button><button type="button" data-set-lang="hr" aria-pressed="false">Hrvatski</button><button type="button" data-set-lang="en" aria-pressed="false">English</button></nav></div>
+<div class="panel" data-lang="sl" lang="sl">
 <div class="wrap">
   <header class="top">
     <div class="brand">
@@ -244,19 +253,19 @@
   </div>
 
   <nav class="grid" aria-label="Deset problemov">
-    <a class="card" href="#p1"><span class="n">1</span><h2>Kader: ljudi ni, tisti, ki so, odhajajo</h2><p>Se vam je že zgodilo, da ste do julija uigrali recepcijo, oktobra pa je pol ekipe odšlo?</p></a>
-    <a class="card" href="#p2"><span class="n">2</span><h2>Stroški rastejo hitreje kot cena sobe</h2><p>Se vam je že zgodilo, da ste imeli rekordno sezono po prihodkih, dobiček pa manjši kot lani?</p></a>
-    <a class="card" href="#p3"><span class="n">3</span><h2>Booking: vsaka rezervacija stane več</h2><p>Se vam je že zgodilo, da ste Bookingu v enem mesecu plačali več kot celotni recepciji?</p></a>
-    <a class="card" href="#p4"><span class="n">4</span><h2>Spletna stran izgublja goste, ki so že hoteli rezervirati</h2><p>Ste kdaj sami rezervirali sobo na svoji strani, s telefona, v tujem jeziku, ob 23h?</p></a>
-    <a class="card" href="#p5"><span class="n">5</span><h2>Povpraševanje ob 22h, odgovor ob 9h, gost drugje</h2><p>Se vam je že zgodilo, da ste zjutraj našli povpraševanje, gost pa je medtem rezerviral drugje?</p></a>
-    <a class="card" href="#p6"><span class="n">6</span><h2>Gostje govorijo jezike, ki jih recepcija ne</h2><p>Se vam je že zgodilo, da ste šele v oceni prebrali, kaj je gost v resnici hotel?</p></a>
-    <a class="card" href="#p7"><span class="n">7</span><h2>Preveč sistemov, premalo povezav, ročno prepisovanje</h2><p>Se vam je že zgodilo, da ste novo ceno vpisali v pet sistemov, gost pa je prebral staro?</p></a>
-    <a class="card" href="#p8"><span class="n">8</span><h2>Ocene določajo ceno, vzorca pa nihče ne prebere</h2><p>Se vam je že zgodilo, da je en slab teden potegnil oceno za dve desetinki in to čutili pri ceni?</p></a>
-    <a class="card" href="#p9"><span class="n">9</span><h2>Hotel je prenovljen, digitalna izkušnja v sobi ne</h2><p>Se vam je že zgodilo, da ste vložili v sobe, gost pa je v oceni omenil TV in staro mapo?</p></a>
-    <a class="card" href="#p10"><span class="n">10</span><h2>AI: vsi govorijo, nihče ne pove, kaj narediti prvo</h2><p>Se vam je že zgodilo, da ste slišali "morali bi nekaj z AI", pa se je končalo pri enem sestanku?</p></a>
+    <a class="card" href="#sl-p1"><span class="n">1</span><h2>Kader: ljudi ni, tisti, ki so, odhajajo</h2><p>Se vam je že zgodilo, da ste do julija uigrali recepcijo, oktobra pa je pol ekipe odšlo?</p></a>
+    <a class="card" href="#sl-p2"><span class="n">2</span><h2>Stroški rastejo hitreje kot cena sobe</h2><p>Se vam je že zgodilo, da ste imeli rekordno sezono po prihodkih, dobiček pa manjši kot lani?</p></a>
+    <a class="card" href="#sl-p3"><span class="n">3</span><h2>Booking: vsaka rezervacija stane več</h2><p>Se vam je že zgodilo, da ste Bookingu v enem mesecu plačali več kot celotni recepciji?</p></a>
+    <a class="card" href="#sl-p4"><span class="n">4</span><h2>Spletna stran izgublja goste, ki so že hoteli rezervirati</h2><p>Ste kdaj sami rezervirali sobo na svoji strani, s telefona, v tujem jeziku, ob 23h?</p></a>
+    <a class="card" href="#sl-p5"><span class="n">5</span><h2>Povpraševanje ob 22h, odgovor ob 9h, gost drugje</h2><p>Se vam je že zgodilo, da ste zjutraj našli povpraševanje, gost pa je medtem rezerviral drugje?</p></a>
+    <a class="card" href="#sl-p6"><span class="n">6</span><h2>Gostje govorijo jezike, ki jih recepcija ne</h2><p>Se vam je že zgodilo, da ste šele v oceni prebrali, kaj je gost v resnici hotel?</p></a>
+    <a class="card" href="#sl-p7"><span class="n">7</span><h2>Preveč sistemov, premalo povezav, ročno prepisovanje</h2><p>Se vam je že zgodilo, da ste novo ceno vpisali v pet sistemov, gost pa je prebral staro?</p></a>
+    <a class="card" href="#sl-p8"><span class="n">8</span><h2>Ocene določajo ceno, vzorca pa nihče ne prebere</h2><p>Se vam je že zgodilo, da je en slab teden potegnil oceno za dve desetinki in to čutili pri ceni?</p></a>
+    <a class="card" href="#sl-p9"><span class="n">9</span><h2>Hotel je prenovljen, digitalna izkušnja v sobi ne</h2><p>Se vam je že zgodilo, da ste vložili v sobe, gost pa je v oceni omenil TV in staro mapo?</p></a>
+    <a class="card" href="#sl-p10"><span class="n">10</span><h2>AI: vsi govorijo, nihče ne pove, kaj narediti prvo</h2><p>Se vam je že zgodilo, da ste slišali "morali bi nekaj z AI", pa se je končalo pri enem sestanku?</p></a>
   </nav>
 
-  <section id="metoda">
+  <section id="sl-metoda">
     <p class="eyebrow">Kako voditi klic</p>
     <h2 class="sec">Vprašanje, tišina, poglobitev, šele nato predlog</h2>
     <p class="sec-lead">Metoda Donalda Millerja (StoryBrand): junak zgodbe je hotelir, mi smo vodnik, ki razume njegov problem. Vodnik ne pripoveduje o sebi. Vprašanje "Se vam je že kdaj zgodilo, da ..." odpre zunanji problem. Poglobitev odpre notranji problem (kako se to občuti) in filozofski (zakaj to ni prav). Šele ko hotelir problem opiše s svojimi besedami, ga ponovite in predlagajte naslednji korak.</p>
@@ -268,13 +277,13 @@
     </div>
   </section>
 
-  <section id="scenariji">
+  <section id="sl-scenariji">
     <p class="eyebrow">Scenariji</p>
     <h2 class="sec">Deset problemov s celotnim scenarijem</h2>
     <p class="sec-lead">Problemi 1 do 3 so največji po obsegu in jih hotelir čuti vsak mesec. Problemi 4 do 10 so tisti, kjer se pogovor lahko nadaljuje z Nevronom. Pri vsakem: dokazi z oceno zanesljivosti, kaj so hotelirji dejansko rekli, vprašanje, poglobitev, ugovor in most. Vse citate hotelirjev smo dobili od prospektov in s konferenc, ne od obstoječih strank.</p>
 
     <!-- 1 -->
-    <article class="scen" id="p1">
+    <article class="scen" id="sl-p1">
       <div class="sh"><span class="n">1</span><h3>Kader: ljudi ni, tisti, ki so, odhajajo</h3></div>
       <div class="col">
         <p class="pain">Delovna sila je za lastnike hotelov tveganje številka ena. Sezonsko osebje se do julija nauči odgovorov in oktobra odide. Vsak nov človek pomeni novo uvajanje, ki ga plača recepcija v konici.</p>
@@ -295,7 +304,7 @@
     </article>
 
     <!-- 2 -->
-    <article class="scen" id="p2">
+    <article class="scen" id="sl-p2">
       <div class="sh"><span class="n">2</span><h3>Stroški rastejo hitreje kot cena sobe</h3></div>
       <div class="col">
         <p class="pain">Energija, hrana, zavarovanja in plače rastejo. Prihodki so nad letom 2019, dobiček ni. Cene sobe ni več mogoče dvigovati, ne da bi destinacija veljala za predrago.</p>
@@ -317,7 +326,7 @@
     </article>
 
     <!-- 3 -->
-    <article class="scen" id="p3">
+    <article class="scen" id="sl-p3">
       <div class="sh"><span class="n">3</span><h3>Booking: vsaka rezervacija stane več</h3></div>
       <div class="col">
         <p class="pain">Delež OTA raste, strošek pridobitve gosta raste hitreje od prihodka, Booking pa isto sobo pogosto prodaja ceneje od hotela. Noben naš sogovornik tega ni izgovoril sam. Problem je vsesplošen, a ga ne odprejo prvi.</p>
@@ -338,7 +347,7 @@
     </article>
 
     <!-- 4 -->
-    <article class="scen" id="p4">
+    <article class="scen" id="sl-p4">
       <div class="sh"><span class="n">4</span><h3>Spletna stran izgublja goste, ki so že hoteli rezervirati</h3></div>
       <div class="col">
         <p class="pain">Gost je že na strani hotela, ne najde odgovora na eno vprašanje, in rezervira prek Bookinga ali pri sosedu. Prenova strani reši videz, ne reši vprašanj tik pred rezervacijo.</p>
@@ -358,7 +367,7 @@
     </article>
 
     <!-- 5 -->
-    <article class="scen" id="p5">
+    <article class="scen" id="sl-p5">
       <div class="sh"><span class="n">5</span><h3>Povpraševanje ob 22h, odgovor ob 9h, gost pa je medtem drugje</h3></div>
       <div class="col">
         <p class="pain">Tretjina povpraševanj pride izven delovnega časa. Ko sta ob 18h pred recepcijo dva avtobusa, telefon zvoni v prazno. To ni vprašanje urnika, ampak sočasnosti.</p>
@@ -378,7 +387,7 @@
     </article>
 
     <!-- 6 -->
-    <article class="scen" id="p6">
+    <article class="scen" id="sl-p6">
       <div class="sh"><span class="n">6</span><h3>Gostje govorijo jezike, ki jih recepcija ne</h3></div>
       <div class="col">
         <p class="pain">Vse več gostov iz Azije in Zaliva, vse več osebja iz tretjih držav. Nesporazum se ne pokaže na recepciji. Pokaže se kot nižja ocena brez razlage.</p>
@@ -398,7 +407,7 @@
     </article>
 
     <!-- 7 -->
-    <article class="scen" id="p7">
+    <article class="scen" id="sl-p7">
       <div class="sh"><span class="n">7</span><h3>Preveč sistemov, premalo povezav, ročno prepisovanje</h3></div>
       <div class="col">
         <p class="pain">PMS, channel manager, spletna stran, TV, mapa v sobi, Booking: isto informacijo vpišeš petkrat, gost pa vseeno prebere staro. Vsak nov ponudnik je še en telefon, ko nekaj ne dela.</p>
@@ -419,10 +428,10 @@
     </article>
 
     <!-- 8 -->
-    <article class="scen" id="p8">
+    <article class="scen" id="sl-p8">
       <div class="sh"><span class="n">8</span><h3>Ocene določajo ceno, vzorca v njih pa nihče ne prebere</h3></div>
       <div class="col">
-        <p class="pain">Ena slaba izmena potegne povprečje za dve desetinki in to se pozna pri ceni celo naslednjo sezono. Vzorec, ki se ponavlja v 400 ocenah, vidi samo tisti, ki jih prebere vse. Naši sogovorniki so na vprašanje o ocenah odgovorili "imamo 8,7", zato ne sprašujte, ali so ocene slabe.</p>
+        <p class="pain">En slab teden potegne povprečje za dve desetinki in to se pozna pri ceni celo naslednjo sezono. Vzorec, ki se ponavlja v 400 ocenah, vidi samo tisti, ki jih prebere vse. Naši sogovorniki so na vprašanje o ocenah odgovorili "imamo 8,7", zato ne sprašujte, ali so ocene slabe.</p>
         <div><p class="lbl">Vprašanje</p><p class="q">"Se vam je že zgodilo, da ste imeli odlično oceno, potem pa je en slab teden, okvara klime ali nova ekipa, potegnil povprečje za dve desetinki, in ste to čutili pri ceni še naslednjo sezono?"</p></div>
         <div class="kv"><p class="lbl">Poglobitev</p><p class="say">"Kdo pri vas prebere vseh 400 ocen na leto in zna povedati, katere tri stvari se ponavljajo?"</p><p class="say">"Ko gost napiše 'nismo vedeli, da ...', je to problem sobe ali informacije?"</p><p class="lbl" style="margin-top:8px">Notranji problem</p><p class="say">"Koliko truda stane, da ocena ostane tam, kjer je? Je to ponos ali stalna napetost?"</p></div>
         <div class="obj"><p class="o">"Ocena je 9,1, ni problema."</p><p class="a">"Čestitam, to je težko doseči. Vprašanje je, koliko dela stane, da ostane 9,1, in katere negativne bi preprečila informacija, ne investicija."</p></div>
@@ -439,7 +448,7 @@
     </article>
 
     <!-- 9 -->
-    <article class="scen" id="p9">
+    <article class="scen" id="sl-p9">
       <div class="sh"><span class="n">9</span><h3>Hotel je prenovljen, digitalna izkušnja v sobi pa ne</h3></div>
       <div class="col">
         <p class="pain">Nove sobe, star TV sistem brez castinga, počasen WiFi in mapa s staro ceno zajtrka. Gost ne primerja s sosedom, primerja z zadnjim hotelom, kjer je spal.</p>
@@ -460,7 +469,7 @@
     </article>
 
     <!-- 10 -->
-    <article class="scen" id="p10">
+    <article class="scen" id="sl-p10">
       <div class="sh"><span class="n">10</span><h3>AI: vsi govorijo, nihče ne pove, kaj narediti prvo</h3></div>
       <div class="col">
         <p class="pain">Verige ga že uporabljajo, neodvisni čakajo. Ovira ni volja. Ovira je nepoznavanje rešitev, strah pred stroškom, pred IT projektom in za osebni stik z gostom.</p>
@@ -481,7 +490,7 @@
     </article>
   </section>
 
-  <section id="odgovori">
+  <section id="sl-odgovori">
     <p class="eyebrow">Kaj hotelirji dejansko odgovorijo</p>
     <h2 class="sec">Najprej čas in pristojnost, šele nato bolečina</h2>
     <p class="sec-lead">Pregled odgovorov odločevalcev na naše kampanje v letu 2026 (Instantly digest, LinkedIn, e-pošta gostov podcasta). Operativnih bolečin ne izgovorijo sami. Izgovorijo pomanjkanje časa, pristojnosti in potrebe. Scenariji zgoraj delujejo šele, ko ste te odzive prestregli.</p>
@@ -500,7 +509,7 @@
     </table></div>
   </section>
 
-  <section id="necitiraj">
+  <section id="sl-necitiraj">
     <div class="warn">
       <h2>Ne citirajte kot dejstvo</h2>
       <ul>
@@ -516,7 +525,7 @@
     </div>
   </section>
 
-  <section id="vrzeli">
+  <section id="sl-vrzeli">
     <p class="eyebrow">Vrzeli v raziskavi</p>
     <h2 class="sec">Kaj nismo našli</h2>
     <div class="gaps"><ul>
@@ -529,7 +538,7 @@
     </ul></div>
   </section>
 
-  <section id="viri">
+  <section id="sl-viri">
     <p class="eyebrow">Viri</p>
     <h2 class="sec">Primarni viri po problemih</h2>
     <div class="sources"><ol>
@@ -565,5 +574,723 @@
     <span>Hrvaška in angleška različica gresta skozi transkreacijo, ne skozi prevod.</span>
   </footer>
 </div>
+</div>
+<div class="panel" data-lang="hr" lang="hr" hidden>
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <svg viewBox="0 0 960 276.9" aria-label="Nevron" role="img"><path fill="currentColor" d="M244.3,93.9h30.5V2.1H183v30.5h61.3V93.9z M30.5,185.1H0v91.8h91.8v-30.5H30.5V185.1z M274.8,185.1h-30.5V233L30.5,2.1H0v91.8h30.5V45.7l213.7,231.1h30.5L274.8,185.1z"/><path fill="currentColor" d="M467.4,0c-15.3,0-25.3,7.5-29.8,16.7V2.1h-25.4v91.8h25.4v-53c0-13.5,8.2-20.2,19.1-20.2c11.2,0,16.1,6,16.1,18.4v54.7h25.4V35.4C498.3,10.9,485.5,0,467.4,0z M557.3,0c-26.7,0-47.2,18.8-47.2,47.7v1.4c0,29.3,20.2,46.7,47.9,46.7c25.1,0,40.9-11.1,43.9-30.9h-24c-1.6,7.7-7.4,12.8-19.1,12.8c-13.9,0-22.1-8.8-22.8-24h66.2v-7C602.1,13.9,581,0,557.3,0z M536.3,38.1c1.9-13,9.7-20.5,21.1-20.5c12.1,0,19.1,6.7,20,20.5H536.3z M813.3,0c-27.5,0-48.4,18.8-48.4,47.6V49c0,28.6,20.9,46.8,48.3,46.8c27.5,0,48.4-18.4,48.4-47.4V47C861.5,18.4,840.8,0,813.3,0z M835.7,48.6c0,17.4-8.2,27.9-22.5,27.9c-14.4,0-22.5-10.5-22.5-28.1V47c0-17.5,8.4-27.7,22.5-27.7c14.2,0,22.5,10.5,22.5,28.1V48.6z M929.1,0c-15.3,0-25.3,7.5-29.8,16.7V2.1h-25.4v91.8h25.4v-53c0-13.5,8.2-20.2,19.1-20.2c11.2,0,16.1,6,16.1,18.4v54.7H960V35.4C960,10.9,947.2,0,929.1,0z M730.6,19.7V2.1h-25.4v91.8h25.4v-46c0-17.5,10.9-23.7,29.7-23.5V0.7C745.4,0.9,736.4,7.4,730.6,19.7z M650.9,67.7L629,2.1h-27.2l33.5,91.8h28.6l33.3-91.8h-24.6L650.9,67.7z"/></svg>
+      <span class="tag">Discovery pozivi</span>
+    </div>
+    <div class="meta">Istraživanje 7. 10. 2026. · hoteli od 40 do 300 soba · SI, HR, UAE</div>
+  </header>
+
+  <div class="intro">
+    <div>
+      <h1>Deset najvećih problema hotelijera</h1>
+      <p class="lead">Deset problema koje potvrđuje više neovisnih izvora, a uz svaki jedno pitanje po metodi Donalda Millera: <strong>hotelijer je junak, vi ste vodič.</strong> Prvo pitajte, a onda šutite. Detaljni scenariji, prigovori i izvori nalaze se u nastavku.</p>
+    </div>
+    <div class="legend">
+      <span>Pouzdanost dokaza</span>
+      <span class="chip hi">visoka</span>
+      <span class="chip mid">umjerena</span>
+      <span class="chip lo">niska</span>
+    </div>
+  </div>
+
+  <nav class="grid" aria-label="Deset problema">
+    <a class="card" href="#hr-p1"><span class="n">1</span><h2>Osoblje: ljudi nema, a i oni koji su tu odlaze</h2><p>Je li vam se već dogodilo da ste do srpnja uigrali recepciju, a u listopadu vam je otišlo pola ekipe?</p></a>
+    <a class="card" href="#hr-p2"><span class="n">2</span><h2>Troškovi rastu brže od cijene sobe</h2><p>Je li vam se već dogodilo da ste imali rekordnu sezonu po prihodima, a dobit je bila manja nego lani?</p></a>
+    <a class="card" href="#hr-p3"><span class="n">3</span><h2>Booking: svaka rezervacija košta sve više</h2><p>Je li vam se već dogodilo da ste Bookingu u jednom mjesecu platili više nego što vas košta cijela recepcija?</p></a>
+    <a class="card" href="#hr-p4"><span class="n">4</span><h2>Web stranica gubi goste koji su već htjeli rezervirati</h2><p>Jeste li ikad sami rezervirali sobu na svojoj stranici, s mobitela, na stranom jeziku, u 23 sata?</p></a>
+    <a class="card" href="#hr-p5"><span class="n">5</span><h2>Upit u 22 sata, odgovor u 9, gost već drugdje</h2><p>Je li vam se već dogodilo da ste ujutro našli upit, a gost je u međuvremenu već rezervirao drugdje?</p></a>
+    <a class="card" href="#hr-p6"><span class="n">6</span><h2>Gosti govore jezike koje recepcija ne govori</h2><p>Je li vam se već dogodilo da ste tek iz recenzije shvatili što je gost zapravo htio?</p></a>
+    <a class="card" href="#hr-p7"><span class="n">7</span><h2>Previše nepovezanih sustava, pa se sve ručno prepisuje</h2><p>Je li vam se već dogodilo da ste novu cijenu upisali u pet sustava, a gost je ipak vidio staru?</p></a>
+    <a class="card" href="#hr-p8"><span class="n">8</span><h2>Ocjene određuju cijenu, a nitko ne iščitava što se u njima ponavlja</h2><p>Je li vam se već dogodilo da vam je jedan loš tjedan srušio ocjenu za dvije desetinke, a to ste odmah osjetili na cijeni?</p></a>
+    <a class="card" href="#hr-p9"><span class="n">9</span><h2>Hotel je obnovljen, digitalno iskustvo u sobi nije</h2><p>Je li vam se već dogodilo da ste uložili u sobe, a gost je u recenziji spomenuo televizor i stari tiskani informator?</p></a>
+    <a class="card" href="#hr-p10"><span class="n">10</span><h2>AI: svi o njemu govore, a nitko ne kaže od čega početi</h2><p>Je li vam se već dogodilo da ste čuli "trebali bismo nešto napraviti s AI-jem", a sve je ostalo na jednom sastanku?</p></a>
+  </nav>
+
+  <section id="hr-metoda">
+    <p class="eyebrow">Kako voditi razgovor</p>
+    <h2 class="sec">Pitanje, tišina, produbljivanje, tek onda prijedlog</h2>
+    <p class="sec-lead">Metoda Donalda Millera (StoryBrand): junak priče je hotelijer, a mi smo vodič koji razumije njegov problem. Vodič ne priča o sebi. Pitanje "Je li vam se već dogodilo da ..." otvara vanjski problem. Produbljivanje otvara unutarnji problem (kako se hotelijer zbog toga osjeća) i filozofski (zašto to nije u redu). Tek kad hotelijer opiše problem svojim riječima, ponovite ga i predložite sljedeći korak.</p>
+    <div class="steps">
+      <div class="step"><p class="k">1 · Zapažanje</p><p>Jedna konkretna stvar o <strong>njihovom</strong> hotelu: obnova, nova direktorica, sezona, ocjena, web stranica. Bez toga zvučite kao običan telemarketing.</p></div>
+      <div class="step"><p class="k">2 · Pitanje</p><p><strong>"Je li vam se već dogodilo da ..."</strong> Postavite jedno pitanje i zatim šutite. Tko prvi progovori, gubi.</p></div>
+      <div class="step"><p class="k">3 · Produbljivanje</p><p>Vanjski problem: što se događa. Unutarnji: kako se zbog toga osjeća i tko to u ekipi najviše osjeti. Filozofski: <strong>"Ovako ne bi smjelo biti."</strong></p></div>
+      <div class="step"><p class="k">4 · Sažetak</p><p>Ponovite problem njihovim riječima. <strong>"Ako sam vas dobro razumio ..."</strong> Tek onda slijedi jedna rečenica o tome što Nevron radi i prijedlog razgovora od 20 minuta.</p></div>
+    </div>
+  </section>
+
+  <section id="hr-scenariji">
+    <p class="eyebrow">Scenariji</p>
+    <h2 class="sec">Deset problema, svaki s razrađenim scenarijem</h2>
+    <p class="sec-lead">Problemi 1 do 3 najveći su po opsegu i hotelijer ih osjeća svaki mjesec. Problemi 4 do 10 su oni kod kojih razgovor može prirodno prijeći na Nevron. Uz svaki problem: dokazi s ocjenom pouzdanosti, što su hotelijeri doista rekli, pitanje, produbljivanje, prigovor i most. Sve citate hotelijera dobili smo od potencijalnih klijenata i s konferencija, a ne od postojećih klijenata.</p>
+
+    <!-- 1 -->
+    <article class="scen" id="hr-p1">
+      <div class="sh"><span class="n">1</span><h3>Osoblje: ljudi nema, a i oni koji su tu odlaze</h3></div>
+      <div class="col">
+        <p class="pain">Za vlasnike hotela radna snaga je rizik broj jedan. Sezonsko osoblje do srpnja nauči sve odgovore, a u listopadu ode. Svaki novi zaposlenik znači novo uvođenje u posao, a cijenu toga plaća recepcija u špici sezone.</p>
+        <div><p class="lbl">Pitanje</p><p class="q">"Je li vam se već dogodilo da ste do srpnja konačno uigrali recepciju, a onda vam je u listopadu otišlo pola ekipe i u siječnju ste krenuli ispočetka?"</p></div>
+        <div class="kv"><p class="lbl">Produbljivanje</p><p class="say">"Koliko tjedana treba novom recepcioneru da sam odgovori na sve što gosti pitaju?"</p><p class="say">"Tko uskoči kad se netko iz noćne smjene razboli?"</p><p class="lbl" style="margin-top:8px">Unutarnji problem</p><p class="say">"Je li to za voditelja recepcije stalni pritisak ili povremena kriza?"</p></div>
+        <div class="obj"><p class="o">"Imamo stabilnu ekipu."</p><p class="a">"To je rijetkost, čestitam. A što se događa u špici, kad ta ista ekipa radi na 110 posto?"</p></div>
+        <div class="bridge"><p class="lbl">Most</p><p>Znanje o hotelu ostaje u sustavu, a ne u glavama ljudi koji odlaze.</p></div>
+      </div>
+      <div class="col">
+        <div class="ev"><p class="lbl">Dokazi</p><ul>
+          <li><span class="chip hi">visoka</span> Radna snaga je rizik br. 1 za 83 % vlasnika i investitora europskih hotela. <span class="src">Deloitte European Hotel Industry Survey 2025</span></li>
+          <li><span class="chip hi">visoka</span> Europskim hotelima nedostaje oko 10 % radne snage. <span class="src">HOTREC, siječanj 2026.</span></li>
+          <li><span class="chip hi">visoka</span> Slovenija: plaće u turizmu +50 % od 2019., sve više zaposlenih iz trećih zemalja. <span class="src">Fedja Pobegajlo, TGZS, srpanj 2026.</span></li>
+          <li><span class="chip mid">umjerena</span> Zamjena jednog zaposlenika košta do 30 % njegove godišnje plaće. <span class="src">AHLA / Actabl, 4.000+ hotela, SAD</span></li>
+        </ul></div>
+        <div class="quote"><p class="lbl">Što su rekli hotelijeri</p><p><q>Ne želimo dodatno opteretiti zaposlenike i sustav koji ionako već radi punom parom.</q> <span class="who">Vasja Čretnik, Terme Olimia, kolovoz 2026. (prijevod)</span></p><p><q>Unatoč digitalizaciji i robotizaciji, zaposlenici ostaju ključni dio usluge.</q> <span class="who">Gregor Jamnik, Združenje hotelirjev Slovenije, lipanj 2026. (prijevod)</span></p></div>
+      </div>
+    </article>
+
+    <!-- 2 -->
+    <article class="scen" id="hr-p2">
+      <div class="sh"><span class="n">2</span><h3>Troškovi rastu brže od cijene sobe</h3></div>
+      <div class="col">
+        <p class="pain">Rastu cijene energije, hrane i osiguranja, rastu plaće. Prihodi su iznad razine iz 2019., dobit nije. Cijenu sobe više nije moguće dizati, a da destinacija ne stekne glas preskupe.</p>
+        <div><p class="lbl">Pitanje</p><p class="q">"Je li vam se već dogodilo da ste imali rekordnu sezonu po prihodima, a na kraju godine je dobit bila manja nego lani?"</p></div>
+        <div class="kv"><p class="lbl">Produbljivanje</p><p class="say">"Gdje je taj zadnji euro koji još možete zaraditi, a da ne dižete cijenu sobe? Masaža, kasna odjava, večera?"</p><p class="say">"Koliko gostiju uopće sazna za te usluge prije nego što odu?"</p><p class="lbl" style="margin-top:8px">Unutarnji problem</p><p class="say">"Je li to razgovor koji s vlasnikom vodite svaki mjesec ili jednom godišnje, kad se radi budžet?"</p></div>
+        <div class="obj"><p class="o">"Cijene više ne možemo dizati."</p><p class="a">"Upravo zato pitam za prihod po gostu, a ne za cijenu sobe."</p></div>
+        <div class="bridge"><p class="lbl">Most</p><p>Važan je prihod po gostu, a ne cijena noćenja, i dodatne usluge za koje gost sazna na vrijeme.</p></div>
+      </div>
+      <div class="col">
+        <div class="ev"><p class="lbl">Dokazi</p><ul>
+          <li><span class="chip hi">visoka</span> Profitabilnost je prioritet br. 1 za 84 % vlasnika, prvi put na vrhu ljestvice. <span class="src">Deloitte European Hotel Industry Survey 2025</span></li>
+          <li><span class="chip hi">visoka</span> Hrvatska ne smije postati "preskupa destinacija"; dio pružatelja usluga morat će korigirati cijene. <span class="src">Irena Weber, HUP, svibanj 2026.</span></li>
+          <li><span class="chip mid">umjerena</span> Troškovi rada čine 47 do 60 % operativnih troškova; RevPAR neovisnih hotela u 2025. -5,4 %. <span class="src">Cloudbeds Independent Hotels Report 2026</span></li>
+          <li><span class="chip hi">visoka</span> Marže hotela 4 % ispod razine iz 2019. unatoč višim prihodima. <span class="src">Skift Research 2025, SAD</span></li>
+          <li><span class="chip mid">umjerena</span> 56 % hotelijera propušta prilike za dodatnu prodaju. <span class="src">Access Hospitality preko HSMAI Europe, studeni 2025.</span></li>
+        </ul></div>
+        <div class="quote"><p class="lbl">Što su rekli hotelijeri</p><p><q>Zasad me ne zanima ništa što se plaća mjesečno.</q> <span class="who">Rajko Vodišek, rujan 2026. (prijevod)</span></p><p><q>Mi smo dizali cijene, ali dizali smo i kvalitetu.</q> <span class="who">Tonči Glavina, hrvatski ministar turizma, srpanj 2025.</span></p></div>
+      </div>
+    </article>
+
+    <!-- 3 -->
+    <article class="scen" id="hr-p3">
+      <div class="sh"><span class="n">3</span><h3>Booking: svaka rezervacija košta sve više</h3></div>
+      <div class="col">
+        <p class="pain">Udio OTA raste, trošak privlačenja gosta raste brže od prihoda, a Booking istu sobu često prodaje jeftinije od samog hotela. Nitko od naših sugovornika to nije spomenuo sam od sebe. Problem je sveprisutan, ali hotelijeri tu temu ne otvaraju prvi.</p>
+        <div><p class="lbl">Pitanje</p><p class="q">"Je li vam se već dogodilo da ste otvorili obračun provizija za prošli mjesec i shvatili da ste Bookingu platili više nego što vas košta cijela recepcija?"</p></div>
+        <div class="kv"><p class="lbl">Produbljivanje</p><p class="say">"Koliki udio rezervacija dolazi izravno? Pomiče li se to zadnje tri godine u vašu ili u njihovu korist?"</p><p class="say">"Što se događa kad gost koji je već jednom bio kod vas sljedeći put opet rezervira preko Bookinga?"</p><p class="lbl" style="margin-top:8px">Unutarnji problem</p><p class="say">"Je li to brojka koju pogledate i prihvatite, ili vas svaki mjesec iznova zasmeta?"</p></div>
+        <div class="obj"><p class="o">"Booking nam puni hotel."</p><p class="a">"Tako je, i nitko ga se neće odreći. Pitanje je samo hoće li se gost koji je već jednom bio kod vas drugi put vratiti vama ili njima."</p></div>
+        <div class="bridge"><p class="lbl">Most</p><p>Gost koji prvi put dođe preko Bookinga mora drugi put imati razlog da rezervira izravno. Taj razlog nastaje tijekom boravka.</p></div>
+      </div>
+      <div class="col">
+        <div class="ev"><p class="lbl">Dokazi</p><ul>
+          <li><span class="chip hi">visoka</span> Booking i Expedia zajedno drže više od 85 % OTA rezervacija; udio OTA je 29,9 % (2013.: 19 %); 51 % hotela navodi da im OTA prodaju sobe jeftinije nego oni sami. <span class="src">HOTREC European Hotel Distribution Study 2026, 2.713 hotela</span></li>
+          <li><span class="chip hi">visoka</span> Kod neovisnih hotela udio OTA je 63,4 %; trošak privlačenja gosta +25 % od 2019. uz RevPAR +19 %; otkazivanja preko OTA 21,8 % naspram 10,6 % kod izravnih rezervacija. <span class="src">Cloudbeds, 90 mil. rezervacija, 2025./26.</span></li>
+          <li><span class="chip mid">umjerena</span> Izravni gost vraća se u 5,1 % slučajeva, OTA gost u 1,3 %. <span class="src">Bookboost, 2,2 mil. gostiju, EU</span></li>
+          <li><span class="chip mid">umjerena</span> Više od 10.000 europskih hotela, među njima i slovenski i hrvatski, tuži Booking zbog pariteta cijena nakon presude Suda EU-a (rujan 2024.). <span class="src">HOTREC, Delo, TravelMole</span></li>
+        </ul></div>
+        <div class="quote"><p class="lbl">Što su rekli hotelijeri</p><p><span class="who">Nitko od naših slovenskih i hrvatskih sugovornika u 2026. nije sam od sebe spomenuo provizije. U našim kampanjama OTA se pojavljuje samo kao signal u ICP-u, a ne u tekstovima. Pitanje postavite izravno.</span></p></div>
+      </div>
+    </article>
+
+    <!-- 4 -->
+    <article class="scen" id="hr-p4">
+      <div class="sh"><span class="n">4</span><h3>Web stranica gubi goste koji su već htjeli rezervirati</h3></div>
+      <div class="col">
+        <p class="pain">Gost je već na stranici hotela, ne nađe odgovor na jedno pitanje i rezervira preko Bookinga ili kod susjeda. Redizajn stranice riješi izgled, ali ne i pitanja koja se jave neposredno prije rezervacije.</p>
+        <div><p class="lbl">Pitanje</p><p class="q">"Jeste li ikad sami pokušali rezervirati sobu na svojoj web stranici, s mobitela, na stranom jeziku, u 23 sata? Koliko je klikova trebalo do potvrde?"</p></div>
+        <div class="kv"><p class="lbl">Alternativa</p><p class="say">"Je li vam se već dogodilo da vas gost nazove i kaže: na vašoj stranici nisam našao imate li parkiralište, pa sam radije rezervirao preko Bookinga?"</p><p class="lbl" style="margin-top:8px">Produbljivanje</p><p class="say">"Tko kod vas zna koliko ljudi započne rezervaciju na stranici, a ne dovrši je?"</p><p class="lbl" style="margin-top:8px">Unutarnji problem</p><p class="say">"Je li vam web stranica završen projekt ili nešto što vas potiho brine?"</p></div>
+        <div class="obj"><p class="o">"Stranicu smo lani obnovili."</p><p class="a">"Odlično. A što se događa kad gost pita nešto na što stranica nema odgovor?"</p></div>
+        <div class="bridge"><p class="lbl">Most</p><p>Hostfulness Index: neutralna procjena web stranice, bez prodajnog pritiska. Pošaljemo je, a hotelijer sam vidi gdje gubi goste.</p></div>
+      </div>
+      <div class="col">
+        <div class="ev"><p class="lbl">Dokazi</p><ul>
+          <li><span class="chip mid">umjerena</span> 52 % putnika odustalo je od online rezervacije zbog lošeg digitalnog iskustva (+3 boda u godinu dana). <span class="src">SiteMinder Changing Traveller Report 2025, 12.000 putnika, 14 zemalja</span></li>
+          <li><span class="chip mid">umjerena</span> Izravni gost donosi 35 % više prihoda pri prvom boravku (379 € naspram 280 €). <span class="src">Bookboost, EU srednja klasa</span></li>
+          <li><span class="chip lo">niska</span> Mobilne stranice u turizmu učitavaju se oko 10 sekundi, a prag odustajanja je 3 sekunde. <span class="src">ColorWhistle 2025, agencijska kompilacija</span></li>
+        </ul></div>
+        <div class="quote"><p class="lbl">Što su rekli hotelijeri</p><p><span class="who">Teja Šmid (Landhaus, rujan 2026.): novac ide u web stranicu, a nije uvjerena da bi gosti koristili aplikaciju.</span></p><p><q>Koja je web stranica vašeg proizvoda?</q> <span class="who">Tadej Ružič, Unitur (prijevod)</span></p></div>
+      </div>
+    </article>
+
+    <!-- 5 -->
+    <article class="scen" id="hr-p5">
+      <div class="sh"><span class="n">5</span><h3>Upit u 22 sata, odgovor u 9, a gost je u međuvremenu već drugdje</h3></div>
+      <div class="col">
+        <p class="pain">Trećina upita stiže izvan radnog vremena. Kad su u 18 sati pred recepcijom dva autobusa, telefon zvoni u prazno. Problem nije u radnom vremenu, nego u tome što se sve događa istodobno.</p>
+        <div><p class="lbl">Pitanje</p><p class="q">"Je li vam se već dogodilo da ste ujutro otvorili poštu, našli upit za tri noćenja poslan sinoć u 22 sata, a gost je u međuvremenu već rezervirao negdje drugdje?"</p></div>
+        <div class="kv"><p class="lbl">Produbljivanje</p><p class="say">"Tko vikendom odgovara na WhatsApp i e-mail? I koliko brzo?"</p><p class="say">"Koliko poziva ostane bez odgovora kad je gužva na prijavi?"</p><p class="lbl" style="margin-top:8px">Unutarnji problem</p><p class="say">"Broji li to uopće itko, ili se to događa tiho i nitko ne zna koliko je takvih poziva bilo?"</p></div>
+        <div class="obj"><p class="o">"Recepcija radi 0-24."</p><p class="a">"Odlično. A kad u 18 sati stigne pet gostiju odjednom i zazvoni telefon, tko se javlja?"</p></div>
+        <div class="bridge"><p class="lbl">Most</p><p>Gost dobije odgovor u roku od minute, 24 sata dnevno, na svom jeziku. Zaposlenik preuzima samo ono za što je doista potreban čovjek.</p></div>
+      </div>
+      <div class="col">
+        <div class="ev"><p class="lbl">Dokazi</p><ul>
+          <li><span class="chip hi">visoka</span> Uprava odgovara na 67 % recenzija, u prosjeku nakon 3,7 dana; trećina recenzija ostaje bez odgovora. <span class="src">Shiji ReviewPro Guest Experience Benchmark, Q2 2026</span></li>
+          <li><span class="chip lo">niska</span> 17 % upita gostiju ostaje bez odgovora, na 27 % odgovor stiže nakon više od sat vremena, a 35 % upita stiže izvan radnog vremena. <span class="src">Analiza 1.712 razgovora, dobavljač AI asistenta</span></li>
+          <li><span class="chip lo">niska</span> Gosti stariji od 55 godina u 66 % slučajeva radije nazovu, a mlađi od 35 godina u 15 % slučajeva aktivno žele pisati. Riječ je o dvjema odvojenim anketama koje nisu usporedive; zaključak je razlika među generacijama, a ne opća želja za pisanjem. <span class="src">Hotel Business, HelloShift</span></li>
+        </ul></div>
+        <div class="quote"><p class="lbl">Što su rekli hotelijeri</p><p><q>Nel caso avesse un IA che si connette al centralino e riesce a rispondere quando noi non possiamo, sarebbe utile.</q> <span class="who">Antonio Liberatore, GM, Fashion Hotel</span></p><p><q>Naša recepcija po kategorizaciji radi 0-24h, tako da nam nije potreban AI chat.</q> <span class="who">Marko Gulin, Hotel Antunović (protuprimjer)</span></p></div>
+      </div>
+    </article>
+
+    <!-- 6 -->
+    <article class="scen" id="hr-p6">
+      <div class="sh"><span class="n">6</span><h3>Gosti govore jezike koje recepcija ne govori</h3></div>
+      <div class="col">
+        <p class="pain">Sve je više gostiju iz Azije i zaljevskih zemalja, a sve više osoblja dolazi iz trećih zemalja. Nesporazum se ne vidi na recepciji. Vidi se tek kao niža ocjena bez objašnjenja.</p>
+        <div><p class="lbl">Pitanje</p><p class="q">"Je li vam se već dogodilo da gost nešto pita, recepcioner ga ne razumije baš do kraja, a vi tek u recenziji na Bookingu pročitate što je zapravo htio?"</p></div>
+        <div class="kv"><p class="lbl">Produbljivanje</p><p class="say">"Koje jezike pokriva noćna smjena?"</p><p class="say">"Tko pomaže sezonskom radniku iz treće zemlje kad domaći gost pita nešto složenije na hrvatskom?"</p><p class="lbl" style="margin-top:8px">Unutarnji problem</p><p class="say">"Što vas više brine: gost koji nije razumio ili kolega koji se pritom osjećao bespomoćno?"</p></div>
+        <div class="obj"><p class="o">"Svi govore engleski."</p><p class="a">"Većina gostiju da. Pitanje je što bude s onima koji ga ne govore i s osobljem koje ne zna hrvatski."</p></div>
+        <div class="bridge"><p class="lbl">Most</p><p>Isti odgovor na trideset jezika, bez dodatne osobe u smjeni.</p></div>
+      </div>
+      <div class="col">
+        <div class="ev"><p class="lbl">Dokazi</p><ul>
+          <li><span class="chip hi">visoka</span> Sve više zaposlenih s Bliskog istoka, iz južne Azije i Latinske Amerike; "više jezičnih i kulturnih razlika". <span class="src">Fedja Pobegajlo, TGZS, IntelliNews, srpanj 2026.</span></li>
+          <li><span class="chip mid">umjerena</span> U UAE-u je trenutačna komunikacija na više jezika ključni lokalni problem; u Hrvatskoj i Grčkoj sezonsko osoblje odgovara na pet ili šest jezika. <span class="src">Nevron tržišne bilješke UAE, HR, GR</span></li>
+          <li><span class="chip lo">niska</span> U izvorima iz 2025. i 2026. nismo pronašli kvantificirani udio negativnih recenzija zbog jezika. Tvrdnja "nitko ne napiše da recepcija nije znala mandarinski, samo stavi nižu ocjenu" naša je hipoteza.</li>
+        </ul></div>
+        <div class="quote"><p class="lbl">Što su rekli hotelijeri</p><p><span class="who">U odgovorima koje smo dobili nema izravnog citata hotelijera o jeziku. Od svih deset problema ovaj je najslabije dokazan. Koristite ga kao pitanje, ne kao tvrdnju.</span></p></div>
+      </div>
+    </article>
+
+    <!-- 7 -->
+    <article class="scen" id="hr-p7">
+      <div class="sh"><span class="n">7</span><h3>Previše nepovezanih sustava i ručno prepisivanje</h3></div>
+      <div class="col">
+        <p class="pain">PMS, channel manager, web stranica, TV, mapa u sobi, Booking: istu informaciju upisujete pet puta, a gost svejedno pročita staru. Svaki novi dobavljač znači još jedan telefonski poziv kad nešto ne radi.</p>
+        <div><p class="lbl">Pitanje</p><p class="q">"Je li vam se već dogodilo da ste novu cijenu doručka upisali u PMS, na web stranicu, na TV i u mapu u sobi, a gost je ipak pročitao staru?"</p></div>
+        <div class="kv"><p class="lbl">Produbljivanje</p><p class="say">"Koliko različitih dobavljača recepcija mora zvati kad nešto ne radi?"</p><p class="say">"Koliko sati tjedno ode na prepisivanje iz jednog sustava u drugi?"</p><p class="lbl" style="margin-top:8px">Unutarnji problem</p><p class="say">"Kad čujete 'novi sustav', što prvo osjetite: znatiželju ili umor?"</p></div>
+        <div class="obj"><p class="o">"Nikakav novi sustav ne uvodimo."</p><p class="a">"To nam ljudi najčešće kažu, i s pravom. Pitanje je hoće li vam novi sustav nešto skinuti s leđa ili samo dodati posla. Koje biste se tri stvari najradije riješili?"</p></div>
+        <div class="bridge"><p class="lbl">Most</p><p>Sadržaj unesete jednom i on se pojavi na svim ekranima: na TV-u, mobitelu gosta, web stranici i u asistentu.</p></div>
+      </div>
+      <div class="col">
+        <div class="ev"><p class="lbl">Dokazi</p><ul>
+          <li><span class="chip mid">umjerena</span> Za 67 % neovisnih hotela raspršeni sustavi glavna su briga; na usklađivanje podataka tjedno odlazi 1 do 2 radna dana. <span class="src">Cloudbeds Independent Hotels Report 2026</span></li>
+          <li><span class="chip mid">umjerena</span> Samo 24 % ugostiteljskih tvrtki radi na jednom sustavu, 25 % na pet ili više; 322 do 470 sati godišnje ode na prebacivanje između sustava; kod 60 % podaci su nepotpuni. <span class="src">Access Hospitality putem HSMAI Europe, studeni 2025.</span></li>
+          <li><span class="chip hi">visoka</span> Više od 80 % komercijalnih timova 1 do 2 dana tjedno ručno izrađuje izvješća; za 38 % hotela integracija sustava glavni je problem. <span class="src">NYU / RateGain / HEDNA 2026; NYU / Stayntouch / IDeaS 2026</span></li>
+          <li><span class="chip hi">visoka</span> 69 % hotela ručno unosi preferencije gostiju. <span class="src">H2c AI &amp; Automation in Hospitality 2025</span></li>
+        </ul></div>
+        <div class="quote"><p class="lbl">Što su rekli hotelijeri</p><p><q>U ključnoj fazi prelaska na novi channel manager, što zahtijeva našu punu pažnju.</q> <span class="who">Stay Swanky, Hrvatska, 2026.</span></p><p><q>I'm not willing to add in new tech partners.</q> <span class="who">hotelijer, Mews Unfold 2026</span></p></div>
+      </div>
+    </article>
+
+    <!-- 8 -->
+    <article class="scen" id="hr-p8">
+      <div class="sh"><span class="n">8</span><h3>Ocjene određuju cijenu, a ono što se u recenzijama ponavlja nitko ne čita</h3></div>
+      <div class="col">
+        <p class="pain">Jedan loš tjedan spusti prosjek za dvije desetinke i to se na cijeni osjeti čak i sljedeće sezone. Ono što se ponavlja u 400 recenzija vidi samo onaj tko ih sve pročita. Na pitanje o ocjenama sugovornici su nam odgovarali "imamo 8,7", zato ne pitajte jesu li ocjene loše.</p>
+        <div><p class="lbl">Pitanje</p><p class="q">"Je li vam se već dogodilo da imate odličnu ocjenu, a onda vam jedan loš tjedan, recimo pokvari se klima ili dođe novi tim, spusti prosjek za dvije desetinke i to vam se na cijeni osjeti još cijelu sljedeću sezonu?"</p></div>
+        <div class="kv"><p class="lbl">Produbljivanje</p><p class="say">"Tko kod vas pročita svih 400 recenzija godišnje i zna reći koje se tri stvari u njima ponavljaju?"</p><p class="say">"Kad gost napiše 'nismo znali da ...', je li to problem sobe ili informacije?"</p><p class="lbl" style="margin-top:8px">Unutarnji problem</p><p class="say">"Koliko truda treba da ocjena ostane tamo gdje jest? Je li to ponos ili stalna napetost?"</p></div>
+        <div class="obj"><p class="o">"Imamo 9,1, nemamo problema."</p><p class="a">"Čestitam, to je teško postići. Pitanje je koliko posla stoji iza toga da ostane 9,1 i koje bi se loše recenzije mogle spriječiti boljom informacijom, a ne investicijom."</p></div>
+        <div class="bridge"><p class="lbl">Most</p><p>Pokazujemo što se ponavlja u recenzijama, a ne samo pojedinačnu ocjenu. Gosti rijetko pišu o krevetima, a često o onome što nisu znali.</p></div>
+      </div>
+      <div class="col">
+        <div class="ev"><p class="lbl">Dokazi</p><ul>
+          <li><span class="chip hi">visoka</span> Na Booking i Google otpada više od 62 % svih recenzija; uprava odgovara na 67,2 % njih, nakon 3,7 dana. <span class="src">Shiji ReviewPro, Q2 2026</span></li>
+          <li><span class="chip mid">umjerena</span> WiFi, cijena i održavanje tri su glavna uzroka negativnih recenzija u 12 europskih gradova. <span class="src">TrustYou Summer 2025 Guest Experience Snapshot</span></li>
+          <li><span class="chip lo">niska</span> +1 bod ocjene donosi otprilike +11 % ADR-a. Studija iz 2012., često citirana bez datuma. <span class="src">Cornell, Anderson &amp; Han</span></li>
+        </ul></div>
+        <div class="quote"><p class="lbl">Što su rekli hotelijeri</p><p><q>Grand Hotel Primus na Bookingu ima ocjenu 8,7.</q> <span class="who">Milena Mojzeš, Sava Hotels, odgovor na našu kampanju o ocjenama (prijevod)</span></p><p class="lbl" style="margin-top:8px">Naš tekst</p><p><span class="who">Rokovo pitanje GM-u luksuznog hotela u razgovoru na LinkedInu: kad direktor ostane pri svome, odlučuje li na kraju ocjena umjesto njega?</span></p></div>
+      </div>
+    </article>
+
+    <!-- 9 -->
+    <article class="scen" id="hr-p9">
+      <div class="sh"><span class="n">9</span><h3>Hotel je obnovljen, a digitalno iskustvo u sobi nije</h3></div>
+      <div class="col">
+        <p class="pain">Nove sobe, stari TV sustav bez castinga, spori WiFi i mapa sa starom cijenom doručka. Gost vas ne uspoređuje sa susjednim hotelom, nego s posljednjim u kojem je spavao.</p>
+        <div><p class="lbl">Pitanje</p><p class="q">"Je li vam se već dogodilo da ste uložili u nove sobe, a gost je u recenziji napisao da televizor ne može pustiti Netflix i da je u mapi bila stara cijena doručka?"</p></div>
+        <div class="kv"><p class="lbl">Produbljivanje</p><p class="say">"Kad ste zadnji put sami prespavali u nekoj od svojih soba i koristili TV, WiFi i mapu kao gost?"</p><p class="say">"Koliko je star TV sustav i tko ga zna nadograditi?"</p><p class="lbl" style="margin-top:8px">Unutarnji problem</p><p class="say">"Smeta li vam što je ekran u sobi jedino što obnova nije obuhvatila?"</p></div>
+        <div class="obj"><p class="o">"Gosti gledaju u mobitel, ne u televizor."</p><p class="a">"Točno. Pitanje je jesu li taj mobitel i taj ekran povezani s vašim hotelom ili samo s Netflixom."</p></div>
+        <div class="bridge"><p class="lbl">Most</p><p>Ekran u sobi postaje ulaz u hotel, a ne samo popis programa, s istim sadržajem kao na mobitelu gosta.</p></div>
+      </div>
+      <div class="col">
+        <div class="ev"><p class="lbl">Dokazi</p><ul>
+          <li><span class="chip mid">umjerena</span> Za 65 % gostiju WiFi je ključan za dobar boravak, odmah iza čistoće (76 %); 67 % poslovnih gostiju ne vraća se nakon lošeg WiFi-ja. <span class="src">Qualtrics putem Hospitality Net, 1.000 gostiju, bez datuma</span></li>
+          <li><span class="chip mid">umjerena</span> WiFi je među tri glavna uzroka negativnih recenzija u ljeto 2025. <span class="src">TrustYou, 12 europskih gradova</span></li>
+          <li><span class="chip lo">niska</span> 73 % gostiju želi upravljati boravkom putem mobitela. Podaci su iz 2022. unatoč naslovu "2025". <span class="src">Oracle Hospitality / Skift</span></li>
+          <li><span class="chip lo">niska</span> Tvrdnje o castingu ("50 % utjecaja na rezervaciju") postoje samo kod dobavljača opreme. Ne citirajte.</li>
+        </ul></div>
+        <div class="quote"><p class="lbl">Što su rekli hotelijeri</p><p><q>Trenutno koristimo analognu tehnologiju i u svakom razgovoru s gostom želimo pružiti ljudsko iskustvo koje nadmašuje očekivanja.</q> <span class="who">Rajko Vodišek, rujan 2026. (protuprimjer: zadovoljan) (prijevod)</span></p><p class="lbl" style="margin-top:8px">Naš tekst</p><p><span class="who">Nevronova bilješka o proizvodu IPTV: hotelski TV sustavi stari 5 do 10 godina, vlasnički prijamnici, bez castinga.</span></p></div>
+      </div>
+    </article>
+
+    <!-- 10 -->
+    <article class="scen" id="hr-p10">
+      <div class="sh"><span class="n">10</span><h3>AI: svi pričaju o njemu, a nitko ne kaže s čim početi</h3></div>
+      <div class="col">
+        <p class="pain">Lanci ga već koriste, a neovisni hoteli čekaju. Volje ne nedostaje, koče ih nepoznavanje rješenja, strah od troška i IT projekta te bojazan da će izgubiti osobni kontakt s gostom.</p>
+        <div><p class="lbl">Pitanje</p><p class="q">"Je li vam se već dogodilo da ste na konferenciji ili od vlasnika čuli 'trebali bismo nešto s AI-jem', a onda je sve završilo na jednom sastanku jer nije bilo jasno što bi se točno radilo i tko bi to održavao?"</p></div>
+        <div class="kv"><p class="lbl">Produbljivanje</p><p class="say">"Što bi se trebalo dogoditi da za godinu dana kažete: ovo se isplatilo?"</p><p class="say">"Što vas više brine: da gosti to ne bi koristili ili da biste izgubili osobni kontakt?"</p><p class="lbl" style="margin-top:8px">Unutarnji problem</p><p class="say">"Imate li osjećaj da zaostajete ili vam se čini da je to prolazna moda?"</p></div>
+        <div class="obj"><p class="o">"AI će nam oduzeti osobnu notu."</p><p class="a">"Ako stroj odgovori na 'kad je doručak', recepcioneru ostaje vremena za osmijeh, a to stroj ne može. Pitanje je samo što treba raditi čovjek, a što ne."</p></div>
+        <div class="bridge"><p class="lbl">Most</p><p>Plaćate samo ono što koristite: nema korištenja, nema troška. Hotel ne mora pokretati IT projekt ni brinuti o održavanju.</p></div>
+      </div>
+      <div class="col">
+        <div class="ev"><p class="lbl">Dokazi</p><ul>
+          <li><span class="chip hi">visoka</span> 78 % hotelskih lanaca već koristi AI, a među neovisnim hotelima 41 %. <span class="src">H2c AI &amp; Automation in Hospitality 2025, 171 lanac, 11.000+ objekata</span></li>
+          <li><span class="chip hi">visoka</span> Samo otprilike 26 % europskih hotela koristi AI, uglavnom veći i gradski. <span class="src">HOTREC Distribution Study 2026</span></li>
+          <li><span class="chip hi">visoka</span> Prepreke: nepoznavanje rješenja 39 %, trošak 35 %, složenost 34 %, nedostatak znanja 32 %. <span class="src">HES-SO Valais-Wallis, 1.500+ hotela, 6 zemalja</span></li>
+          <li><span class="chip mid">umjerena</span> 37 % putnika planira putovanja uz pomoć AI-ja; na OTA-e otpada više od polovice izvora koje AI navodi kad preporučuje hotele. <span class="src">NYU / BCG, ožujak 2026.; Cloudbeds 2026</span></li>
+        </ul></div>
+        <div class="quote"><p class="lbl">Što su rekli hotelijeri</p><p><q>O kakvom je AI-ju riječ? Nešto kao concierge ili više operativno?</q> <span class="who">Luka Stepančič, Sava Hotels Bled (prijevod)</span></p><p><q>Oslanjamo se na osobni kontakt, koji nam je iznimno važan.</q> <span class="who">Robert Biderman, Sotelia (prijevod)</span></p><p class="lbl" style="margin-top:8px">Naš tekst</p><p><span class="who">Unutarnji problem iz našeg korpusa poruka: "Nemam vremena ni živaca za IT projekt." Hipoteza, ne citat.</span></p></div>
+      </div>
+    </article>
+  </section>
+
+  <section id="hr-odgovori">
+    <p class="eyebrow">Što hotelijeri zapravo odgovaraju</p>
+    <h2 class="sec">Najprije vrijeme i nadležnost, tek onda problem</h2>
+    <p class="sec-lead">Pregled odgovora donositelja odluka na naše kampanje u 2026. (Instantly digest, LinkedIn, e-pošta gostiju podcasta). Operativne probleme sami od sebe ne spominju, nego kažu da nemaju vremena, da nisu nadležni ili da im ne treba. Gornji scenariji djeluju tek kad prebrodite te reakcije.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Reakcija</th><th>Koliko puta</th><th>Primjer</th><th>Odgovor u pozivu</th></tr></thead>
+      <tbody>
+        <tr><td>Nema vremena: otvaranje hotela, obnova, promjena sustava, špica sezone</td><td class="n">otprilike 10 + 4 gosta podcasta</td><td><span class="say">"Pred samim smo otvaranjem novog hotela i svi smo 100 % zauzeti."</span> Čretnik, Terme Olimia (prijevod)</td><td>"Upravo zato vas ne molim za vrijeme sada, nego za 20 minuta nakon sezone. Studeni ili prosinac?"</td></tr>
+        <tr><td>Odlučuje centrala, vlasnik ili brend</td><td class="n">otprilike 12</td><td><span class="say">"O nadogradnjama sustava u Sava Turizmu odlučuje se centralno, za sve destinacije."</span> Ploj, Sava Radenci (prijevod)</td><td>"Tko je tamo za to zadužen? Da vam pripremim jednu stranicu koju im možete proslijediti?"</td></tr>
+        <tr><td>Ne ove godine, ne sada</td><td class="n">otprilike 9</td><td><span class="say">"Ove godine ne planiramo uvoditi takva rješenja."</span> Mihajl, Eurotas (prijevod)</td><td>"Kada radite plan za sljedeću godinu? Nazvat ću vas tjedan dana prije."</td></tr>
+        <tr><td>Osoba je otišla ili se hotel promijenio</td><td class="n">otprilike 10</td><td><span class="say">"I have left there a couple of months ago."</span> Hauck</td><td>Znak velike fluktuacije u menadžmentu. Ažurirajte dosje i pronađite nasljednika.</td></tr>
+        <tr><td>Već imamo dobavljača, vlastitu aplikaciju ili recepciju 0-24</td><td class="n">otprilike 6</td><td><span class="say">"Već imamo vanjskog partnera za digitalizaciju."</span> Rešek, Astoria Bled (prijevod)</td><td>"Kojeg? Pokriva li noćnu smjenu i jezike?"</td></tr>
+        <tr><td>Nema potrebe</td><td class="n">otprilike 7</td><td><span class="say">"Nema potrebe, hvala."</span> Cirman, Zlata ladjica (prijevod)</td><td>Pitanje 5 ili 8, zatim tišina.</td></tr>
+        <tr><td>Ništa s mjesečnim računima</td><td class="n">3</td><td><span class="say">"Zasad me ne zanima ništa za što stižu mjesečni računi."</span> Vodišek (prijevod)</td><td>Plaćanje po korištenju. Nema korištenja, nema troška.</td></tr>
+        <tr><td>Osobni kontakt je svetinja</td><td class="n">3</td><td><span class="say">"Oslanjamo se na osobni kontakt, koji nam je iznimno važan."</span> Biderman, Sotelia (prijevod)</td><td>Kao u prigovoru kod problema 10: što treba raditi čovjek, a što ne.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section id="hr-necitiraj">
+    <div class="warn">
+      <h2>Ne citirajte kao činjenicu</h2>
+      <ul>
+        <li>"78 % poziva na recepciju svodi se na istih pet pitanja." Objava na Skoolu bez metodologije i bez popisa hotela.</li>
+        <li>"Više od 60 % kontakata su ista pitanja" i "pozivi na recepciju -40 % u 60 dana." Iz našeg teksta, bez vanjskog izvora.</li>
+        <li>"Platforma radi u više od 20 hotela u Europi." Na tržištima na kojima nemamo klijenata ta je tvrdnja zabranjena.</li>
+        <li>"Casting utječe na rezervaciju kod 50 % gostiju." Navode je samo dobavljači TV opreme; izvorne studije nema.</li>
+        <li>Oracle / Skift "Hospitality in 2025": anketa iz proljeća 2022.</li>
+        <li>Vrijeme čekanja pri prijavi po nacionalnostima (Kanada 7 min, UK 17 min). Izvoru se ne može ući u trag.</li>
+        <li>CSRD kao teret za male hotele: od ožujka 2026. vrijedi samo za tvrtke s više od 1.000 zaposlenih i 450 mil. € prometa.</li>
+        <li>"Desetinka ocjene pomiče cijenu sobe." U našim tekstovima pripisano "Cornell, STR" bez konkretne studije; jedina provjerljiva studija je iz 2012.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="hr-vrzeli">
+    <p class="eyebrow">Praznine u istraživanju</p>
+    <h2 class="sec">Što nismo pronašli</h2>
+    <div class="gaps"><ul>
+      <li>Hotel Tech Report nema nijedan datirani podatak za 2025. ili 2026., nego samo stare popise i zaključane ankete.</li>
+      <li>Lokalno nemamo transkripte epizoda podcasta Hostfulness. Dokazi iz podcasta potječu iz e-pošte gostiju i naših briefova.</li>
+      <li>Nemamo izjava postojećih klijenata. Svi citati hotelijera dolaze od potencijalnih klijenata ili s konferencije Mews Unfold 2026.</li>
+      <li>Anketa među GM-ovima Hotelier Middle East 2025/2026 nije dostupna; dio o UAE-u oslanja se na Skift, The National i JLL.</li>
+      <li>Hrvatski postoci o kadru (68 % birokracija, 10.000 radnika) potječu iz ankete HUT-a iz 2024.; novije nema.</li>
+      <li>Kandidati izostavljeni s popisa: kibernetički napadi (82 % hotela, SAD, dobavljač), prekomjerni turizam i regulacija (Dubrovnik), pad potražnje u UAE-u nakon veljače 2026. (popunjenost -28 postotnih bodova), slovenska rasprava o turističkoj pristojbi.</li>
+    </ul></div>
+  </section>
+
+  <section id="hr-viri">
+    <p class="eyebrow">Izvori</p>
+    <h2 class="sec">Primarni izvori po problemima</h2>
+    <div class="sources"><ol>
+      <li><a href="https://www.deloitte.com/uk/en/about/press-room/london-and-edinburgh-remain-top-destinations-for-hotel-investmen.html">Deloitte, European Hotel Industry and Investment Survey 2025</a> (1, 2)</li>
+      <li><a href="https://www.hospitalitynet.org/news/4132218">HOTREC, radna snaga u Europi, siječanj 2026., putem Hospitality Net</a> (1)</li>
+      <li><a href="https://www.intellinews.com/slovenia-heads-into-peak-tourist-season-on-a-high-but-staffing-pressures-persist-452954/">IntelliNews, Pobegajlo (TGZS), 7. 7. 2026.</a> (1, 6)</li>
+      <li><a href="https://www.slovenia.info/sl/novinarsko-sredisce/novice/38462-14-konferenca-zdruzenja-hotelirjev-slovenije-v-ospredju-slovenskega-turizma-ostajajo-zaposleni">STO, 14. konferencija Udruženja hotelijera Slovenije, lipanj 2026.</a> (1)</li>
+      <li><a href="https://www.hospitalitynet.org/news/4133898">AHLA / Actabl, trošak fluktuacije, kolovoz 2026.</a> (1)</li>
+      <li><a href="https://www.tportal.hr/vijesti/clanak/plenkovic-poslao-jasnu-poruku-uoci-sezone-sefica-hup-a-neki-ce-morati-korigirati-cijene-20260506">tportal, Weber (HUP), 6. 5. 2026.</a> (2)</li>
+      <li><a href="https://research.skift.com/reports/profit-performance-in-u-s-hotels-2025-insights/">Skift Research, Profit &amp; Performance 2025</a> (2)</li>
+      <li><a href="https://www.hospitalitynet.org/news/4132167">Cloudbeds, Independent Hotels Report 2026, putem Hospitality Net</a> (2, 3, 7, 10)</li>
+      <li><a href="https://www.phocuswire.com/news/distribution/hotel-direct-ota-distribution-europe-hotrec">Phocuswire, HOTREC European Hotel Distribution Study 2026</a> (3, 10)</li>
+      <li><a href="https://www.phocuswire.com/news/distribution/hotel-distribution-ai-trends-cloudbeds-canary">Phocuswire, Cloudbeds, udio OTA-a i trošak akvizicije</a> (3)</li>
+      <li><a href="https://www.bookboost.io/post/direct-booking-vs-ota-guest-return-rate">Bookboost, izravni gosti naspram gostiju s OTA-a, 2,2 mil. gostiju</a> (3, 4)</li>
+      <li><a href="https://www.travelmole.com/news/european-hotels-booking-com">TravelMole, tužba 10.000+ hotela protiv Bookinga</a> (3)</li>
+      <li><a href="https://www.siteminder.com/de/news/changing-traveller-report-2025/">SiteMinder, Changing Traveller Report 2025</a> (4)</li>
+      <li><a href="https://www.shijigroup.com/press-news/shiji-releases-q2-2026-guest-experience-benchmark-global-satisfaction-continues-to-rise-as-hotels-respond-faster-and-engage-guests-more-effectively">Shiji ReviewPro, Guest Experience Benchmark Q2 2026</a> (5, 8)</li>
+      <li><a href="https://hyperleap.ai/blog/hotels-lose-revenue-after-hours-inquiries">Hyperleap, analiza 1.712 razgovora (dobavljač)</a> (5)</li>
+      <li><a href="https://hsmai.eu/2025/11/19/losing-time-money-and-guests-the-high-price-of-disconnected-hotel-systems/">HSMAI Europe, anketa Access Hospitality, studeni 2025.</a> (2, 7)</li>
+      <li><a href="https://www.phocuswire.com/news/technology/hotels-still-stuck-on-manual-work-despite-increased-ai-adoption">Phocuswire, NYU / RateGain / HEDNA State of Distribution 2026</a> (7)</li>
+      <li><a href="https://www.hotelmanagement.net/tech/2026-hotel-technology-outlook-report-released">Hotel Management, NYU / Stayntouch / IDeaS Technology Outlook 2026</a> (7)</li>
+      <li><a href="https://www.hospitalitynet.org/report/4129081/from-rome-to-stockholm-summer-2025-hotel-guest-experience-snapshot">TrustYou, Summer 2025 Guest Experience Snapshot</a> (8, 9)</li>
+      <li><a href="https://www.hospitalitynet.org/news/4096035.html">Hospitality Net, Qualtrics anketa o WiFi-ju</a> (9)</li>
+      <li><a href="https://www.phocuswire.com/ai-adoption-hotels-independents-large-groups">Phocuswire, H2c AI &amp; Automation 2025</a> (7, 10)</li>
+      <li><a href="https://www.phocuswire.com/european-hotels-show-ai-interest-gaps-remain">Phocuswire, HES-SO Valais-Wallis i Booking.com barometar</a> (10)</li>
+      <li><a href="https://www.hospitalitynet.org/editorial/4131145">Hospitality Net, NYU / BCG, AI u planiranju putovanja, ožujak 2026.</a> (10)</li>
+      <li><a href="https://www.consilium.europa.eu/en/press/press-releases/2026/02/24/council-signs-off-simplification-of-sustainability-reporting-and-due-diligence-requirements-to-boost-eu-competitiveness/">Vijeće EU-a, Omnibus I, pragovi CSRD-a, veljača 2026.</a> (ne citirati)</li>
+    </ol></div>
+  </section>
+
+  <footer>
+    <span>Nevron · interni materijal za discovery pozive · hrvatska verzija</span>
+    <span>Nastala je transkreacijom slovenskog izvornika, koji ostaje referentni tekst.</span>
+  </footer>
+</div>
+</div>
+<div class="panel" data-lang="en" lang="en" hidden>
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <svg viewBox="0 0 960 276.9" aria-label="Nevron" role="img"><path fill="currentColor" d="M244.3,93.9h30.5V2.1H183v30.5h61.3V93.9z M30.5,185.1H0v91.8h91.8v-30.5H30.5V185.1z M274.8,185.1h-30.5V233L30.5,2.1H0v91.8h30.5V45.7l213.7,231.1h30.5L274.8,185.1z"/><path fill="currentColor" d="M467.4,0c-15.3,0-25.3,7.5-29.8,16.7V2.1h-25.4v91.8h25.4v-53c0-13.5,8.2-20.2,19.1-20.2c11.2,0,16.1,6,16.1,18.4v54.7h25.4V35.4C498.3,10.9,485.5,0,467.4,0z M557.3,0c-26.7,0-47.2,18.8-47.2,47.7v1.4c0,29.3,20.2,46.7,47.9,46.7c25.1,0,40.9-11.1,43.9-30.9h-24c-1.6,7.7-7.4,12.8-19.1,12.8c-13.9,0-22.1-8.8-22.8-24h66.2v-7C602.1,13.9,581,0,557.3,0z M536.3,38.1c1.9-13,9.7-20.5,21.1-20.5c12.1,0,19.1,6.7,20,20.5H536.3z M813.3,0c-27.5,0-48.4,18.8-48.4,47.6V49c0,28.6,20.9,46.8,48.3,46.8c27.5,0,48.4-18.4,48.4-47.4V47C861.5,18.4,840.8,0,813.3,0z M835.7,48.6c0,17.4-8.2,27.9-22.5,27.9c-14.4,0-22.5-10.5-22.5-28.1V47c0-17.5,8.4-27.7,22.5-27.7c14.2,0,22.5,10.5,22.5,28.1V48.6z M929.1,0c-15.3,0-25.3,7.5-29.8,16.7V2.1h-25.4v91.8h25.4v-53c0-13.5,8.2-20.2,19.1-20.2c11.2,0,16.1,6,16.1,18.4v54.7H960V35.4C960,10.9,947.2,0,929.1,0z M730.6,19.7V2.1h-25.4v91.8h25.4v-46c0-17.5,10.9-23.7,29.7-23.5V0.7C745.4,0.9,736.4,7.4,730.6,19.7z M650.9,67.7L629,2.1h-27.2l33.5,91.8h28.6l33.3-91.8h-24.6L650.9,67.7z"/></svg>
+      <span class="tag">Discovery calls</span>
+    </div>
+    <div class="meta">Research 7 October 2026 · hotels with 40 to 300 rooms · Slovenia, Croatia, UAE</div>
+  </header>
+
+  <div class="intro">
+    <div>
+      <h1>Ten hotelier pain points</h1>
+      <p class="lead">Ten problems confirmed by several independent market sources, each with one question built on Donald Miller's method: <strong>the hotelier is the hero, you are the guide.</strong> Ask the question, then stop talking. The detailed scenarios, objections and sources are below.</p>
+    </div>
+    <div class="legend">
+      <span>Evidence reliability</span>
+      <span class="chip hi">high</span>
+      <span class="chip mid">moderate</span>
+      <span class="chip lo">low</span>
+    </div>
+  </div>
+
+  <nav class="grid" aria-label="Ten problems">
+    <a class="card" href="#en-p1"><span class="n">1</span><h2>Staffing: there aren't enough people, and the ones you have keep leaving</h2><p>Has it ever happened that you finally had the front desk running smoothly by July, and then half the team left in October?</p></a>
+    <a class="card" href="#en-p2"><span class="n">2</span><h2>Costs are rising faster than room rates</h2><p>Have you ever had a record season for revenue and still made less profit than the year before?</p></a>
+    <a class="card" href="#en-p3"><span class="n">3</span><h2>Booking: every reservation costs more</h2><p>Has there ever been a month when you paid Booking more in commission than you paid your entire front desk?</p></a>
+    <a class="card" href="#en-p4"><span class="n">4</span><h2>Your website loses guests who were ready to book</h2><p>Have you ever tried to book a room on your own website, on your phone, in a foreign language, at 11 pm?</p></a>
+    <a class="card" href="#en-p5"><span class="n">5</span><h2>Enquiry at 10 pm, reply at 9 am, guest booked elsewhere</h2><p>Have you ever found an enquiry in the morning, only to learn the guest had already booked somewhere else?</p></a>
+    <a class="card" href="#en-p6"><span class="n">6</span><h2>Guests speak languages your front desk doesn't</h2><p>Have you ever only found out from a review what a guest actually wanted?</p></a>
+    <a class="card" href="#en-p7"><span class="n">7</span><h2>Too many systems, too few connections, endless retyping</h2><p>Have you ever entered a new rate into five different systems, and the guest still saw the old one?</p></a>
+    <a class="card" href="#en-p8"><span class="n">8</span><h2>Reviews set your price, but nobody reads the pattern</h2><p>Has one bad week ever knocked two tenths of a point off your score, and then you felt it in your rates?</p></a>
+    <a class="card" href="#en-p9"><span class="n">9</span><h2>The hotel has been renovated, the in-room digital experience hasn't</h2><p>Have you ever invested in your rooms, only for a guest to mention the TV and the old in-room folder in their review?</p></a>
+    <a class="card" href="#en-p10"><span class="n">10</span><h2>AI: everyone talks about it, nobody says what to do first</h2><p>Have you ever heard "we should be doing something with AI", and it never went beyond a single meeting?</p></a>
+  </nav>
+
+  <section id="en-metoda">
+    <p class="eyebrow">How to run the call</p>
+    <h2 class="sec">Question, silence, go deeper, and only then a proposal</h2>
+    <p class="sec-lead">Donald Miller's method (StoryBrand): the hotelier is the hero of the story, and we are the guide who understands their problem. A guide doesn't talk about themselves. The question "Has it ever happened that you ..." brings out the external problem. Going deeper brings out the internal problem (how it feels) and the philosophical one (why it shouldn't be this way). Only once the hotelier has described the problem in their own words do you play it back to them and propose the next step.</p>
+    <div class="steps">
+      <div class="step"><p class="k">1 · Observation</p><p>One specific thing about <strong>their</strong> hotel: a renovation, a new GM, the season, a review score, the website. Without it, you're just another telemarketer.</p></div>
+      <div class="step"><p class="k">2 · Question</p><p><strong>"Has it ever happened that you ..."</strong> One question. Then silence. Whoever speaks first loses.</p></div>
+      <div class="step"><p class="k">3 · Go deeper</p><p>External problem: what happens. Internal: how it feels, and for whom on the team. Philosophical: <strong>"It shouldn't have to be like this."</strong></p></div>
+      <div class="step"><p class="k">4 · Summary</p><p>Repeat the problem back in their words. <strong>"If I've understood you correctly ..."</strong> Only then give one sentence on what Nevron does, and suggest a 20-minute call.</p></div>
+    </div>
+  </section>
+
+  <section id="en-scenariji">
+    <p class="eyebrow">Scenarios</p>
+    <h2 class="sec">Ten problems, each with a full call script</h2>
+    <p class="sec-lead">Problems 1 to 3 are the biggest in scale, and hoteliers feel them every month. Problems 4 to 10 are where Nevron can take the conversation further. Each one comes with evidence and a reliability rating, what hoteliers actually said, the question, how to go deeper, the objection and the bridge. All hotelier quotes come from prospects and conferences, none from existing clients.</p>
+
+    <!-- 1 -->
+    <article class="scen" id="en-p1">
+      <div class="sh"><span class="n">1</span><h3>Staffing: there aren't enough people, and the ones you have keep leaving</h3></div>
+      <div class="col">
+        <p class="pain">For hotel owners, labour is the number one risk. Seasonal staff learn all the answers by July and leave in October. Every new hire means onboarding all over again, and the front desk pays for it at the busiest times.</p>
+        <div><p class="lbl">Question</p><p class="q">"Has it ever happened that by July you finally had the front desk working like clockwork, then in October half the team left and by January you were starting from scratch?"</p></div>
+        <div class="kv"><p class="lbl">Go deeper</p><p class="say">"How many weeks does it take before a new front-desk agent can answer everything guests ask without help?"</p><p class="say">"Who covers the gap when someone on the night shift calls in sick?"</p><p class="lbl" style="margin-top:8px">Internal problem</p><p class="say">"Is this constant pressure for your front desk manager, or an occasional crisis?"</p></div>
+        <div class="obj"><p class="o">"We have a stable team."</p><p class="a">"That's rare, congratulations. What happens at peak times, when that same team is running at 110 per cent?"</p></div>
+        <div class="bridge"><p class="lbl">Bridge</p><p>Your hotel's knowledge stays in the system instead of walking out the door with the people who leave.</p></div>
+      </div>
+      <div class="col">
+        <div class="ev"><p class="lbl">Evidence</p><ul>
+          <li><span class="chip hi">high</span> 83% of owners and investors in European hotels name labour as their number one risk. <span class="src">Deloitte European Hotel Industry Survey 2025</span></li>
+          <li><span class="chip hi">high</span> European hotels are short of roughly 10% of the workforce they need. <span class="src">HOTREC, January 2026</span></li>
+          <li><span class="chip hi">high</span> Slovenia: tourism wages are up 50% since 2019, with more and more staff coming from non-EU countries. <span class="src">Fedja Pobegajlo, TGZS, July 2026</span></li>
+          <li><span class="chip mid">moderate</span> Replacing one employee costs up to 30% of their annual salary. <span class="src">AHLA / Actabl, 4,000+ hotels, USA</span></li>
+        </ul></div>
+        <div class="quote"><p class="lbl">What hoteliers said</p><p><q>We don't want to overload our staff, or a system that is already running flat out.</q> <span class="who">Vasja Čretnik, Terme Olimia, August 2026 (translated)</span></p><p><q>Despite digitalisation and robotisation, people remain a key part of the service.</q> <span class="who">Gregor Jamnik, Združenje hotelirjev Slovenije (Slovenian Hoteliers' Association), June 2026 (translated)</span></p></div>
+      </div>
+    </article>
+
+    <!-- 2 -->
+    <article class="scen" id="en-p2">
+      <div class="sh"><span class="n">2</span><h3>Costs are rising faster than room rates</h3></div>
+      <div class="col">
+        <p class="pain">Energy, food, insurance and wages keep going up. Revenue is above 2019 levels, but profit isn't. Room rates can't go much higher without the destination getting a reputation for being too expensive.</p>
+        <div><p class="lbl">Question</p><p class="q">"Have you ever had a record season for revenue, and then at year end found your profit was lower than the year before?"</p></div>
+        <div class="kv"><p class="lbl">Go deeper</p><p class="say">"Where can you still earn an extra euro without raising the room rate? A massage, a late check-out, dinner in the restaurant?"</p><p class="say">"How many guests even hear about those services before they leave?"</p><p class="lbl" style="margin-top:8px">Internal problem</p><p class="say">"Is this a conversation you have with the owner every month, or once a year at budget time?"</p></div>
+        <div class="obj"><p class="o">"We can't raise our prices any further."</p><p class="a">"That's exactly why I'm asking about revenue per guest rather than the room rate."</p></div>
+        <div class="bridge"><p class="lbl">Bridge</p><p>The focus moves from the nightly rate to revenue per guest, with extra services that guests hear about while there is still time to book them.</p></div>
+      </div>
+      <div class="col">
+        <div class="ev"><p class="lbl">Evidence</p><ul>
+          <li><span class="chip hi">high</span> Profitability is the top priority for 84% of owners; it is the first time it has topped the list. <span class="src">Deloitte European Hotel Industry Survey 2025</span></li>
+          <li><span class="chip hi">high</span> Croatia must not become a "too expensive destination"; some providers will have to adjust their prices. <span class="src">Irena Weber, HUP, May 2026</span></li>
+          <li><span class="chip mid">moderate</span> Labour accounts for 47 to 60% of operating costs; independent hotels saw RevPAR fall 5.4% in 2025. <span class="src">Cloudbeds Independent Hotels Report 2026</span></li>
+          <li><span class="chip hi">high</span> Hotel margins are 4% below 2019 despite higher revenue. <span class="src">Skift Research 2025, USA</span></li>
+          <li><span class="chip mid">moderate</span> 56% of hoteliers are missing upsell opportunities. <span class="src">Access Hospitality via HSMAI Europe, November 2025</span></li>
+        </ul></div>
+        <div class="quote"><p class="lbl">What hoteliers said</p><p><q>For now I'm not interested in anything that comes with a monthly bill.</q> <span class="who">Rajko Vodišek, September 2026 (translated)</span></p><p><q>We raised prices, but we also raised quality.</q> <span class="who">Tonči Glavina, Croatian Minister of Tourism, July 2025 (translated)</span></p></div>
+      </div>
+    </article>
+
+    <!-- 3 -->
+    <article class="scen" id="en-p3">
+      <div class="sh"><span class="n">3</span><h3>Booking: every reservation costs more</h3></div>
+      <div class="col">
+        <p class="pain">The OTA share keeps growing, guest acquisition costs are rising faster than revenue, and Booking often sells the same room for less than the hotel does. None of the people we spoke to raised this on their own. The problem is everywhere, but hoteliers won't be the first to bring it up.</p>
+        <div><p class="lbl">Question</p><p class="q">"Have you ever opened last month's commission statement and realised you'd paid Booking more than you paid your entire front desk?"</p></div>
+        <div class="kv"><p class="lbl">Go deeper</p><p class="say">"What share of your bookings comes in direct? Over the last three years, has that been moving in your favour or theirs?"</p><p class="say">"What happens when a guest who has already stayed with you books through Booking again next time?"</p><p class="lbl" style="margin-top:8px">Internal problem</p><p class="say">"Is this a number you look at and accept, or does it annoy you all over again every month?"</p></div>
+        <div class="obj"><p class="o">"Booking fills our hotel."</p><p class="a">"True, and nobody is going to switch it off. The only question is whether a guest who has already stayed with you comes back to you next time, or to them."</p></div>
+        <div class="bridge"><p class="lbl">Bridge</p><p>A guest who finds you through Booking the first time needs a reason to book direct the second time. You give them that reason during their stay.</p></div>
+      </div>
+      <div class="col">
+        <div class="ev"><p class="lbl">Evidence</p><ul>
+          <li><span class="chip hi">high</span> Booking and Expedia together account for more than 85% of OTA bookings; the OTA share is 29.9% (19% in 2013); 51% of hotels report that OTAs undercut their rates. <span class="src">HOTREC European Hotel Distribution Study 2026, 2,713 hotels</span></li>
+          <li><span class="chip hi">high</span> For independent hotels the OTA share is 63.4%; acquisition costs are up 25% since 2019 while RevPAR is up 19%; OTA cancellations run at 21.8% against 10.6% for direct bookings. <span class="src">Cloudbeds, 90 million bookings, 2025/26</span></li>
+          <li><span class="chip mid">moderate</span> 5.1% of direct guests come back, against 1.3% of OTA guests. <span class="src">Bookboost, 2.2 million guests, EU</span></li>
+          <li><span class="chip mid">moderate</span> More than 10,000 European hotels, including Slovenian and Croatian ones, are suing Booking over rate parity following the ruling of the Court of Justice of the EU (September 2024). <span class="src">HOTREC, Delo, TravelMole</span></li>
+        </ul></div>
+        <div class="quote"><p class="lbl">What hoteliers said</p><p><span class="who">None of the Slovenian and Croatian hoteliers we spoke to in 2026 brought up commissions unprompted. In our campaigns, OTA dependence appears only as an ICP signal and never in the copy itself. Ask the question directly.</span></p></div>
+      </div>
+    </article>
+
+    <!-- 4 -->
+    <article class="scen" id="en-p4">
+      <div class="sh"><span class="n">4</span><h3>Your website loses guests who were ready to book</h3></div>
+      <div class="col">
+        <p class="pain">The guest is already on the hotel's website, can't find the answer to one question, and books through Booking or with the hotel next door. A website redesign fixes the look, but it doesn't answer the questions guests have just before they book.</p>
+        <div><p class="lbl">Question</p><p class="q">"Have you ever tried to book a room on your own website, on your phone, in a foreign language, at 11 pm? How many clicks did it take to reach the confirmation?"</p></div>
+        <div class="kv"><p class="lbl">Alternative</p><p class="say">"Has a guest ever rung you and said, 'I couldn't find out from your website whether you have parking, so I booked through Booking instead'?"</p><p class="lbl" style="margin-top:8px">Go deeper</p><p class="say">"Does anyone on your team know how many people start a booking on your website and never finish it?"</p><p class="lbl" style="margin-top:8px">Internal problem</p><p class="say">"Is your website a finished project, or something that quietly worries you?"</p></div>
+        <div class="obj"><p class="o">"We redesigned the website last year."</p><p class="a">"Great. What happens when a guest asks something the website doesn't answer?"</p></div>
+        <div class="bridge"><p class="lbl">Bridge</p><p>Hostfulness Index: a neutral assessment of the website, with no sales pitch attached. We send it over, and the hotelier can see for themselves where they are losing guests.</p></div>
+      </div>
+      <div class="col">
+        <div class="ev"><p class="lbl">Evidence</p><ul>
+          <li><span class="chip mid">moderate</span> 52% of travellers have abandoned an online booking because of a poor digital experience (up 3 points in a year). <span class="src">SiteMinder Changing Traveller Report 2025, 12,000 travellers, 14 countries</span></li>
+          <li><span class="chip mid">moderate</span> A direct guest brings in 35% more revenue on their first stay (€379 against €280). <span class="src">Bookboost, EU midscale</span></li>
+          <li><span class="chip lo">low</span> Mobile travel websites take around 10 seconds to load, while the abandonment threshold is 3 seconds. <span class="src">ColorWhistle 2025, agency compilation</span></li>
+        </ul></div>
+        <div class="quote"><p class="lbl">What hoteliers said</p><p><span class="who">Teja Šmid (Landhaus, September 2026): the money is going into the website, and she isn't convinced guests would actually use an app.</span></p><p><q>What's the website for your product?</q> <span class="who">Tadej Ružič, Unitur (translated)</span></p></div>
+      </div>
+    </article>
+
+    <!-- 5 -->
+    <article class="scen" id="en-p5">
+      <div class="sh"><span class="n">5</span><h3>Enquiry at 10 pm, reply at 9 am, and by then the guest has booked elsewhere</h3></div>
+      <div class="col">
+        <p class="pain">A third of enquiries come in outside working hours. When two coachloads of guests are standing at the front desk at 6 pm, the phone just rings out. The real problem is not the rota. It is that everything happens at once.</p>
+        <div><p class="lbl">Question</p><p class="q">"Has it ever happened that you opened your inbox in the morning, found an enquiry for three nights that came in at 10 pm the night before, and by then the guest had already booked somewhere else?"</p></div>
+        <div class="kv"><p class="lbl">Go deeper</p><p class="say">"Who answers WhatsApp and email at the weekend? And how quickly?"</p><p class="say">"How many calls go unanswered when check-in gets busy?"</p><p class="lbl" style="margin-top:8px">Internal problem</p><p class="say">"Does anyone actually keep count, or do those calls slip away quietly and nobody knows how many?"</p></div>
+        <div class="obj"><p class="o">"Our front desk is staffed 24/7."</p><p class="a">"Great. When five guests arrive at once at 6 pm and the phone rings, who picks up?"</p></div>
+        <div class="bridge"><p class="lbl">Bridge</p><p>A reply within a minute, 24 hours a day, in the guest's own language. Your team takes over whatever genuinely needs a person.</p></div>
+      </div>
+      <div class="col">
+        <div class="ev"><p class="lbl">Evidence</p><ul>
+          <li><span class="chip hi">high</span> Management responds to 67% of reviews, after 3.7 days on average; a third of reviews go unanswered. <span class="src">Shiji ReviewPro Guest Experience Benchmark, Q2 2026</span></li>
+          <li><span class="chip lo">low</span> 17% of guest enquiries go unanswered, 27% get a reply only after more than an hour, and 35% arrive outside working hours. <span class="src">Analysis of 1,712 conversations by an AI assistant vendor</span></li>
+          <li><span class="chip lo">low</span> 66% of guests over 55 prefer to phone, while 15% of under-35s actively want to message. These figures come from two separate surveys and are not directly comparable; the takeaway is the gap between generations rather than a universal preference for messaging. <span class="src">Hotel Business, HelloShift</span></li>
+        </ul></div>
+        <div class="quote"><p class="lbl">What hoteliers said</p><p><q>If you had an AI that connected to the switchboard and could answer when we can't, that would be useful.</q> <span class="who">Antonio Liberatore, GM, Fashion Hotel (translated)</span></p><p><q>Our star rating requires a 24/7 front desk, so we don't need an AI chat.</q> <span class="who">Marko Gulin, Hotel Antunović (counterexample; translated)</span></p></div>
+      </div>
+    </article>
+
+    <!-- 6 -->
+    <article class="scen" id="en-p6">
+      <div class="sh"><span class="n">6</span><h3>Guests speak languages the front desk doesn't</h3></div>
+      <div class="col">
+        <p class="pain">More and more guests come from Asia and the Gulf, and more and more staff come from outside the EU. The misunderstanding never shows up at the front desk. It shows up later as a lower score with no explanation.</p>
+        <div><p class="lbl">Question</p><p class="q">"Has it ever happened that a guest asked for something, the person at the front desk didn't quite understand, and you only found out what they really wanted when you read their review on Booking?"</p></div>
+        <div class="kv"><p class="lbl">Go deeper</p><p class="say">"Which languages does your night shift cover?"</p><p class="say">"When a domestic guest asks something complicated in the local language, who helps the seasonal worker from outside the EU?"</p><p class="lbl" style="margin-top:8px">Internal problem</p><p class="say">"What worries you more: the guest who wasn't understood, or the colleague who felt helpless in that moment?"</p></div>
+        <div class="obj"><p class="o">"Everyone speaks English."</p><p class="a">"Most guests do, yes. The question is what happens with the ones who don't, and with the staff who don't speak the local language."</p></div>
+        <div class="bridge"><p class="lbl">Bridge</p><p>Guests get the same answer in thirty languages, without you adding another person to the shift.</p></div>
+      </div>
+      <div class="col">
+        <div class="ev"><p class="lbl">Evidence</p><ul>
+          <li><span class="chip hi">high</span> A growing number of employees from the Middle East, South Asia and Latin America; "more linguistic and cultural differences". <span class="src">Fedja Pobegajlo, TGZS, IntelliNews, July 2026</span></li>
+          <li><span class="chip mid">moderate</span> In the UAE, instant multilingual communication is a local pain point; in Croatia and Greece, seasonal staff answer in five or six languages. <span class="src">Nevron market notes UAE, HR, GR</span></li>
+          <li><span class="chip lo">low</span> We found no quantified share of negative reviews caused by language in 2025/26 sources. The claim "nobody writes that the front desk didn't speak Mandarin, they just give a lower score" is our own hypothesis.</li>
+        </ul></div>
+        <div class="quote"><p class="lbl">What hoteliers said</p><p><span class="who">None of the replies we received contains a direct hotelier quote about language. Of the ten problems, this one has the weakest evidence. Ask it as a question; do not present it as a claim.</span></p></div>
+      </div>
+    </article>
+
+    <!-- 7 -->
+    <article class="scen" id="en-p7">
+      <div class="sh"><span class="n">7</span><h3>Too many systems that don't talk to each other, so everything is re-keyed by hand</h3></div>
+      <div class="col">
+        <p class="pain">PMS, channel manager, website, TV, in-room folder, Booking: you enter the same information five times and the guest still reads the old version. Every new vendor is one more number to ring when something stops working.</p>
+        <div><p class="lbl">Question</p><p class="q">"Have you ever put a new breakfast price into the PMS, the website, the TV and the in-room folder, and a guest still ended up reading the old one?"</p></div>
+        <div class="kv"><p class="lbl">Go deeper</p><p class="say">"How many different vendors does the front desk have to call when something stops working?"</p><p class="say">"How many hours a week go on copying data from one system into another?"</p><p class="lbl" style="margin-top:8px">Internal problem</p><p class="say">"When you hear 'new system', is your first reaction curiosity or fatigue?"</p></div>
+        <div class="obj"><p class="o">"We're not adding another system."</p><p class="a">"That's the one we hear most often, and it's a fair point. The question is whether the new system takes something off your plate or adds to it. Which three things would you most like to get rid of?"</p></div>
+        <div class="bridge"><p class="lbl">Bridge</p><p>You enter the content once and it shows up on every screen: the TV, the guest's phone, the website and the assistant.</p></div>
+      </div>
+      <div class="col">
+        <div class="ev"><p class="lbl">Evidence</p><ul>
+          <li><span class="chip mid">moderate</span> 67% of independent hotels name fragmented systems as their main concern; 1 to 2 working days a week go on reconciling data. <span class="src">Cloudbeds Independent Hotels Report 2026</span></li>
+          <li><span class="chip mid">moderate</span> Only 24% of hospitality businesses run on a single system, and 25% on five or more; 322 to 470 hours a year are lost switching between them; 60% say their data is incomplete. <span class="src">Access Hospitality via HSMAI Europe, November 2025</span></li>
+          <li><span class="chip hi">high</span> More than 80% of commercial teams spend 1 to 2 days a week building reports by hand; for 38% of hotels, systems integration is the main pain point. <span class="src">NYU / RateGain / HEDNA 2026; NYU / Stayntouch / IDeaS 2026</span></li>
+          <li><span class="chip hi">high</span> 69% of hotels enter guest preferences manually. <span class="src">H2c AI &amp; Automation in Hospitality 2025</span></li>
+        </ul></div>
+        <div class="quote"><p class="lbl">What hoteliers said</p><p><q>We're at a critical point in switching to a new channel manager, and it needs our full attention.</q> <span class="who">Stay Swanky, Croatia, 2026 (translated)</span></p><p><q>I'm not willing to add in new tech partners.</q> <span class="who">hotelier, Mews Unfold 2026</span></p></div>
+      </div>
+    </article>
+
+    <!-- 8 -->
+    <article class="scen" id="en-p8">
+      <div class="sh"><span class="n">8</span><h3>Reviews set the rate, but nobody spots the pattern in them</h3></div>
+      <div class="col">
+        <p class="pain">One bad week pulls the average down by 0.2, and you still feel it in your rates the following season. A pattern that repeats across 400 reviews is only visible to someone who reads every one of them. When we asked about reviews, the people we spoke to replied "we have 8.7", so don't ask whether their reviews are bad.</p>
+        <div><p class="lbl">Question</p><p class="q">"Have you ever had an excellent score, and then one bad week (the air-con broke down, or a new team came in) knocked two tenths of a point off the average, and you felt it in your rates right through the next season?"</p></div>
+        <div class="kv"><p class="lbl">Go deeper</p><p class="say">"Who at your hotel reads all 400 reviews a year and can tell you which three things keep coming up?"</p><p class="say">"When a guest writes 'we didn't know that ...', is that a problem with the room or with the information?"</p><p class="lbl" style="margin-top:8px">Internal problem</p><p class="say">"How much effort does it take to keep the score where it is? Is it a source of pride, or a constant strain?"</p></div>
+        <div class="obj"><p class="o">"Our score is 9.1, there's no problem."</p><p class="a">"Congratulations, that's hard to achieve. The question is how much work it takes to stay at 9.1, and how many of the negative reviews you could have avoided simply with better information, without spending anything."</p></div>
+        <div class="bridge"><p class="lbl">Bridge</p><p>We look for the pattern across all your reviews rather than in any single one. Guests rarely write about the beds; they write about what they didn't know.</p></div>
+      </div>
+      <div class="col">
+        <div class="ev"><p class="lbl">Evidence</p><ul>
+          <li><span class="chip hi">high</span> Booking and Google generate more than 62% of all reviews; management responds to 67.2% of them, taking 3.7 days to do so. <span class="src">Shiji ReviewPro, Q2 2026</span></li>
+          <li><span class="chip mid">moderate</span> WiFi, price and maintenance are the three main causes of negative reviews across 12 European cities. <span class="src">TrustYou Summer 2025 Guest Experience Snapshot</span></li>
+          <li><span class="chip lo">low</span> A one-point rise in the score brings roughly 11% more ADR. The study is from 2012 and is often cited without its date. <span class="src">Cornell, Anderson &amp; Han</span></li>
+        </ul></div>
+        <div class="quote"><p class="lbl">What hoteliers said</p><p><q>Grand Hotel Primus is rated 8.7 on Booking.</q> <span class="who">Milena Mojzeš, Sava Hotels, reply to our campaign about reviews (translated)</span></p><p class="lbl" style="margin-top:8px">Our own wording</p><p><span class="who">Rok's question to a luxury GM in a LinkedIn conversation: when the GM insists on doing it their way, does the score end up making the decision for them?</span></p></div>
+      </div>
+    </article>
+
+    <!-- 9 -->
+    <article class="scen" id="en-p9">
+      <div class="sh"><span class="n">9</span><h3>The hotel has been renovated, but the digital experience in the room hasn't</h3></div>
+      <div class="col">
+        <p class="pain">New rooms, an old TV system with no casting, slow WiFi and an in-room folder with the old breakfast price. Guests don't compare you with the hotel next door; they compare you with the last hotel they stayed in.</p>
+        <div><p class="lbl">Question</p><p class="q">"Have you ever invested in new rooms, only for a guest to write in a review that the TV couldn't play Netflix and the in-room folder still showed the old breakfast price?"</p></div>
+        <div class="kv"><p class="lbl">Go deeper</p><p class="say">"When did you last spend a night in one of your own rooms and use the TV, the WiFi and the in-room folder the way a guest would?"</p><p class="say">"How old is your TV system, and who actually knows how to update it?"</p><p class="lbl" style="margin-top:8px">Internal problem</p><p class="say">"Does it bother you that the screen in the room is the one thing the renovation didn't reach?"</p></div>
+        <div class="obj"><p class="o">"Guests look at their phones, not the TV."</p><p class="a">"True. The question is whether that phone and that screen talk to your hotel, or only to Netflix."</p></div>
+        <div class="bridge"><p class="lbl">Bridge</p><p>The screen in the room becomes the way into the hotel rather than a list of channels, with the same content the guest sees on their phone.</p></div>
+      </div>
+      <div class="col">
+        <div class="ev"><p class="lbl">Evidence</p><ul>
+          <li><span class="chip mid">moderate</span> For 65% of guests, WiFi is key to a good stay, second only to cleanliness (76%); 67% of business travellers won't come back after poor WiFi. <span class="src">Qualtrics via Hospitality Net, 1,000 guests, undated</span></li>
+          <li><span class="chip mid">moderate</span> WiFi was among the three main causes of negative reviews in summer 2025. <span class="src">TrustYou, 12 European cities</span></li>
+          <li><span class="chip lo">low</span> 73% of guests want to manage their stay from their phone. The data is from 2022, despite the "2025" in the title. <span class="src">Oracle Hospitality / Skift</span></li>
+          <li><span class="chip lo">low</span> Claims about casting ("50% influence on the booking decision") come only from equipment vendors. Do not quote.</li>
+        </ul></div>
+        <div class="quote"><p class="lbl">What hoteliers said</p><p><q>At the moment we use analogue technology, and in every conversation with a guest we want to create a human experience that exceeds their expectations.</q> <span class="who">Rajko Vodišek, September 2026 (counterexample: satisfied; translated)</span></p><p class="lbl" style="margin-top:8px">Our own wording</p><p><span class="who">Nevron IPTV product note: hotel TV systems that are 5 to 10 years old, with proprietary set-top boxes and no casting.</span></p></div>
+      </div>
+    </article>
+
+    <!-- 10 -->
+    <article class="scen" id="en-p10">
+      <div class="sh"><span class="n">10</span><h3>AI: everyone talks about it, nobody says what to do first</h3></div>
+      <div class="col">
+        <p class="pain">The chains already use it, while the independents are waiting. They are willing enough; what holds them back is not knowing what solutions exist, fear of the cost and of an IT project, and worry about losing the personal touch with guests.</p>
+        <div><p class="lbl">Question</p><p class="q">"Has someone at a conference, or the owner, ever told you 'we should be doing something with AI', and then it all fizzled out after one meeting because nobody was clear what exactly to do, or who would look after it?"</p></div>
+        <div class="kv"><p class="lbl">Go deeper</p><p class="say">"What would have to happen for you to say, a year from now, 'that was worth it'?"</p><p class="say">"What worries you more: that guests wouldn't use it, or that you'd lose the personal touch?"</p><p class="lbl" style="margin-top:8px">Internal problem</p><p class="say">"Do you feel you're falling behind, or that it's just noise that will pass?"</p></div>
+        <div class="obj"><p class="o">"AI takes away our personal touch."</p><p class="a">"If a machine answers 'what time is breakfast?', the person at the front desk has time for the smile no machine can give. The question is which jobs belong to people and which don't."</p></div>
+        <div class="bridge"><p class="lbl">Bridge</p><p>You pay per use, so no usage means no cost. There is no IT project and no maintenance on the hotel's side.</p></div>
+      </div>
+      <div class="col">
+        <div class="ev"><p class="lbl">Evidence</p><ul>
+          <li><span class="chip hi">high</span> 78% of hotel chains already use AI, compared with 41% of independent hotels. <span class="src">H2c AI &amp; Automation in Hospitality 2025, 171 chains, 11,000+ properties</span></li>
+          <li><span class="chip hi">high</span> Only about 26% of European hotels use AI, mostly larger hotels and city hotels. <span class="src">HOTREC Distribution Study 2026</span></li>
+          <li><span class="chip hi">high</span> Barriers: not knowing the solutions 39%, cost 35%, complexity 34%, lack of skills 32%. <span class="src">HES-SO Valais-Wallis, 1,500+ hotels, 6 countries</span></li>
+          <li><span class="chip mid">moderate</span> 37% of travellers plan their trips with AI; OTAs account for more than half of the citations in AI hotel recommendations. <span class="src">NYU / BCG, March 2026; Cloudbeds 2026</span></li>
+        </ul></div>
+        <div class="quote"><p class="lbl">What hoteliers said</p><p><q>What kind of AI are we talking about? Something like a concierge, or more operational?</q> <span class="who">Luka Stepančič, Sava Hotels Bled (translated)</span></p><p><q>We rely on personal contact; it matters enormously to us.</q> <span class="who">Robert Biderman, Sotelia (translated)</span></p><p class="lbl" style="margin-top:8px">Our own wording</p><p><span class="who">Internal problem from the messaging corpus: "I haven't got the time or the energy for an IT project." This is a hypothesis, not a quote.</span></p></div>
+      </div>
+    </article>
+  </section>
+
+  <section id="en-odgovori">
+    <p class="eyebrow">What hoteliers actually reply</p>
+    <h2 class="sec">Time and authority come first, pain comes later</h2>
+    <p class="sec-lead">We reviewed how decision-makers replied to our 2026 campaigns (Instantly digest, LinkedIn, emails from podcast guests). They never raise operational pain on their own. What they do raise is lack of time, lack of authority or no need. The scenarios above only work once you have got past these responses.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Response</th><th>How often</th><th>Example</th><th>Your answer on the call</th></tr></thead>
+      <tbody>
+        <tr><td>No time: hotel opening, renovation, system change, peak season</td><td class="n">about 10 + 4 podcast guests</td><td><span class="say">"We're just about to open a new hotel and we're all 100% tied up."</span> Čretnik, Terme Olimia (translated)</td><td>"That's exactly why I'm asking for 20 minutes in the diary after the season, not now. Would November or December suit you?"</td></tr>
+        <tr><td>Head office, the owner or the brand decides</td><td class="n">about 12</td><td><span class="say">"At Sava Turizem, system upgrades are decided centrally for all destinations."</span> Ploj, Sava Radenci (translated)</td><td>"Who handles that at head office? Shall I put together a one-pager you can forward?"</td></tr>
+        <tr><td>Not this year, not now</td><td class="n">about 9</td><td><span class="say">"We have no plans to implement this kind of solution this year."</span> Mihajl, Eurotas (translated)</td><td>"When do you do your planning for next year? I'll call you the week before."</td></tr>
+        <tr><td>The person has left or the hotel has changed</td><td class="n">about 10</td><td><span class="say">"I have left there a couple of months ago."</span> Hauck</td><td>This signals high turnover in management. Update the dossier and find the successor.</td></tr>
+        <tr><td>We already have a vendor, our own app or a 24-hour front desk</td><td class="n">about 6</td><td><span class="say">"We already have an external partner for digitalisation."</span> Rešek, Astoria Bled (translated)</td><td>"Which one? Does it cover the night shift and languages?"</td></tr>
+        <tr><td>No need</td><td class="n">about 7</td><td><span class="say">"No need, thank you."</span> Cirman, Zlata ladjica (translated)</td><td>Ask question 5 or 8, then stay quiet.</td></tr>
+        <tr><td>Nothing with a monthly bill</td><td class="n">3</td><td><span class="say">"For now I'm not interested in anything that comes with a monthly bill."</span> Vodišek (translated)</td><td>You pay per use, so no usage means no cost.</td></tr>
+        <tr><td>Personal contact is sacred</td><td class="n">3</td><td><span class="say">"We rely on personal contact; it matters enormously to us."</span> Biderman, Sotelia (translated)</td><td>Use the objection answer from problem 10: which jobs belong to people and which don't.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section id="en-necitiraj">
+    <div class="warn">
+      <h2>Do not quote as fact</h2>
+      <ul>
+        <li>"78% of calls to the front desk are the same five questions." A Skool post with no method and no list of hotels.</li>
+        <li>"More than 60% of contacts are the same questions" and "front-desk calls down 40% in 60 days." Our own copy, with no external source.</li>
+        <li>"The platform runs in more than 20 hotels in Europe." In markets where we have no customers, this is a prohibited customer claim.</li>
+        <li>"Casting influences the booking decision for 50% of guests." It comes only from TV equipment vendors, and there is no original study.</li>
+        <li>Oracle / Skift "Hospitality in 2025": the survey is from spring 2022.</li>
+        <li>Check-in waiting times by nationality (Canada 7 min, UK 17 min). The figures cannot be traced.</li>
+        <li>CSRD as a burden for small hotels: since March 2026 it applies only to companies with more than 1,000 employees and €450 million in turnover.</li>
+        <li>"A tenth of a point on the score moves the room rate." Our copy attributes this to "Cornell, STR" without naming a specific study; the only traceable one is from 2012.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="en-vrzeli">
+    <p class="eyebrow">Gaps in the research</p>
+    <h2 class="sec">What we didn't find</h2>
+    <div class="gaps"><ul>
+      <li>Hotel Tech Report gave us no dated data for 2025 or 2026; it only turns up old lists and gated surveys.</li>
+      <li>We have no local transcripts of Hostfulness episodes. The podcast evidence comes from guest emails and our own briefs.</li>
+      <li>We have no quotes from existing customers. All the hotelier quotes come from prospects or from the Mews Unfold 2026 conference.</li>
+      <li>The Hotelier Middle East GM survey 2025/2026 is not accessible, so the UAE section relies on Skift, The National and JLL.</li>
+      <li>The Croatian staffing percentages (68% bureaucracy, 10,000 workers) come from the 2024 HUT survey; there is nothing more recent.</li>
+      <li>Candidates we left off the list: cyber attacks (82% of hotels, USA, vendor source), overtourism and regulation (Dubrovnik), the drop in UAE demand after February 2026 (occupancy down 28 points) and the Slovenian debate on the tourist tax.</li>
+    </ul></div>
+  </section>
+
+  <section id="en-viri">
+    <p class="eyebrow">Sources</p>
+    <h2 class="sec">Primary sources by problem</h2>
+    <div class="sources"><ol>
+      <li><a href="https://www.deloitte.com/uk/en/about/press-room/london-and-edinburgh-remain-top-destinations-for-hotel-investmen.html">Deloitte, European Hotel Industry and Investment Survey 2025</a> (1, 2)</li>
+      <li><a href="https://www.hospitalitynet.org/news/4132218">HOTREC, workforce in Europe, January 2026, via Hospitality Net</a> (1)</li>
+      <li><a href="https://www.intellinews.com/slovenia-heads-into-peak-tourist-season-on-a-high-but-staffing-pressures-persist-452954/">IntelliNews, Pobegajlo (TGZS), 7 July 2026</a> (1, 6)</li>
+      <li><a href="https://www.slovenia.info/sl/novinarsko-sredisce/novice/38462-14-konferenca-zdruzenja-hotelirjev-slovenije-v-ospredju-slovenskega-turizma-ostajajo-zaposleni">STO, 14th conference of Združenje hotelirjev Slovenije (Slovenian Hoteliers' Association), June 2026</a> (1)</li>
+      <li><a href="https://www.hospitalitynet.org/news/4133898">AHLA / Actabl, cost of staff turnover, August 2026</a> (1)</li>
+      <li><a href="https://www.tportal.hr/vijesti/clanak/plenkovic-poslao-jasnu-poruku-uoci-sezone-sefica-hup-a-neki-ce-morati-korigirati-cijene-20260506">tportal, Weber (HUP), 6 May 2026</a> (2)</li>
+      <li><a href="https://research.skift.com/reports/profit-performance-in-u-s-hotels-2025-insights/">Skift Research, Profit &amp; Performance 2025</a> (2)</li>
+      <li><a href="https://www.hospitalitynet.org/news/4132167">Cloudbeds, Independent Hotels Report 2026, via Hospitality Net</a> (2, 3, 7, 10)</li>
+      <li><a href="https://www.phocuswire.com/news/distribution/hotel-direct-ota-distribution-europe-hotrec">Phocuswire, HOTREC European Hotel Distribution Study 2026</a> (3, 10)</li>
+      <li><a href="https://www.phocuswire.com/news/distribution/hotel-distribution-ai-trends-cloudbeds-canary">Phocuswire, Cloudbeds OTA share and acquisition cost</a> (3)</li>
+      <li><a href="https://www.bookboost.io/post/direct-booking-vs-ota-guest-return-rate">Bookboost, direct versus OTA guests, 2.2 million guests</a> (3, 4)</li>
+      <li><a href="https://www.travelmole.com/news/european-hotels-booking-com">TravelMole, lawsuit by 10,000+ hotels against Booking</a> (3)</li>
+      <li><a href="https://www.siteminder.com/de/news/changing-traveller-report-2025/">SiteMinder, Changing Traveller Report 2025</a> (4)</li>
+      <li><a href="https://www.shijigroup.com/press-news/shiji-releases-q2-2026-guest-experience-benchmark-global-satisfaction-continues-to-rise-as-hotels-respond-faster-and-engage-guests-more-effectively">Shiji ReviewPro, Guest Experience Benchmark Q2 2026</a> (5, 8)</li>
+      <li><a href="https://hyperleap.ai/blog/hotels-lose-revenue-after-hours-inquiries">Hyperleap, analysis of 1,712 conversations (vendor)</a> (5)</li>
+      <li><a href="https://hsmai.eu/2025/11/19/losing-time-money-and-guests-the-high-price-of-disconnected-hotel-systems/">HSMAI Europe, Access Hospitality survey, November 2025</a> (2, 7)</li>
+      <li><a href="https://www.phocuswire.com/news/technology/hotels-still-stuck-on-manual-work-despite-increased-ai-adoption">Phocuswire, NYU / RateGain / HEDNA State of Distribution 2026</a> (7)</li>
+      <li><a href="https://www.hotelmanagement.net/tech/2026-hotel-technology-outlook-report-released">Hotel Management, NYU / Stayntouch / IDeaS Technology Outlook 2026</a> (7)</li>
+      <li><a href="https://www.hospitalitynet.org/report/4129081/from-rome-to-stockholm-summer-2025-hotel-guest-experience-snapshot">TrustYou, Summer 2025 Guest Experience Snapshot</a> (8, 9)</li>
+      <li><a href="https://www.hospitalitynet.org/news/4096035.html">Hospitality Net, Qualtrics survey on WiFi</a> (9)</li>
+      <li><a href="https://www.phocuswire.com/ai-adoption-hotels-independents-large-groups">Phocuswire, H2c AI &amp; Automation 2025</a> (7, 10)</li>
+      <li><a href="https://www.phocuswire.com/european-hotels-show-ai-interest-gaps-remain">Phocuswire, HES-SO Valais-Wallis and Booking.com barometer</a> (10)</li>
+      <li><a href="https://www.hospitalitynet.org/editorial/4131145">Hospitality Net, NYU / BCG, AI in travel planning, March 2026</a> (10)</li>
+      <li><a href="https://www.consilium.europa.eu/en/press/press-releases/2026/02/24/council-signs-off-simplification-of-sustainability-reporting-and-due-diligence-requirements-to-boost-eu-competitiveness/">Council of the EU, Omnibus I, CSRD thresholds, February 2026</a> (do not quote)</li>
+    </ol></div>
+  </section>
+
+  <footer>
+    <span>Nevron · internal material for discovery calls · English version</span>
+    <span>This is the English version, created by transcreation rather than translation. The Slovenian original is the reference.</span>
+  </footer>
+</div>
+</div>
+<script>
+(function(){
+  var TITLES={sl:"Deset bolečin hotelirjev",hr:"Deset najvećih problema hotelijera",en:"Ten hotelier pain points"}, LABELS={sl:"Jezik",hr:"Jezik",en:"Language"}, CODES=["sl","hr","en"];
+  var panels=document.querySelectorAll(".panel"), btns=document.querySelectorAll("[data-set-lang]"), lbl=document.getElementById("langlbl");
+  function setLang(code, scrollTo){
+    if(CODES.indexOf(code)<0) code="sl";
+    panels.forEach(function(p){ p.hidden = p.getAttribute("data-lang")!==code; });
+    btns.forEach(function(b){ b.setAttribute("aria-pressed", b.getAttribute("data-set-lang")===code ? "true":"false"); });
+    document.documentElement.lang=code; document.title=TITLES[code]; if(lbl) lbl.textContent=LABELS[code];
+    try{ localStorage.setItem("dbh-lang", code); }catch(e){}
+    if(scrollTo){ var el=document.getElementById(scrollTo); if(el) el.scrollIntoView(); }
+  }
+  function fromHash(){
+    var h=(location.hash||"").replace("#","");
+    if(!h) return null;
+    if(CODES.indexOf(h)>=0) return {code:h};
+    var m=h.match(/^(sl|hr|en)-(.+)$/); if(m) return {code:m[1], anchor:h};
+    return null;
+  }
+  btns.forEach(function(b){ b.addEventListener("click", function(){ var c=b.getAttribute("data-set-lang"); history.replaceState(null,"","#"+c); setLang(c); }); });
+  window.addEventListener("hashchange", function(){ var f=fromHash(); if(f) setLang(f.code, f.anchor); });
+  var init=fromHash(), stored=null; try{ stored=localStorage.getItem("dbh-lang"); }catch(e){}
+  if(init) setLang(init.code, init.anchor); else setLang(stored||"sl");
+})();
+</script>
 </body>
 </html>
