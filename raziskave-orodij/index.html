@@ -1,0 +1,869 @@
+<!doctype html>
+<html lang="sl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Raziskave orodij</title>
+<meta name="description" content="Dvanajst raziskav orodij, kanalov in trgov za Nevronovo prodajo, s stopnjami zaupanja in viri.">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="../ikona.ico" sizes="16x16 32x32 48x48">
+<link rel="icon" type="image/png" sizes="32x32" href="../ikona-32.png">
+<link rel="apple-touch-icon" href="../ikona-180.png">
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+
+  :root {
+    --bg:      #FAF8F4;
+    --panel:   #F2EFE8;
+    --line:    #E4E0D7;
+    --line-2:  #EFECE4;
+    --ink:     #16191C;
+    --ink-2:   #4E5458;
+    --ink-3:   #8A8F8C;
+    --accent:  #2F7D6E;
+    --hi-fg:   #2F7D6E;  --hi-bg: #E4F0EC;
+    --mid-fg:  #7A6320;  --mid-bg: #F5EFDC;
+    --lo-fg:   #9A3D2E;  --lo-bg: #F6E4DF;
+    --mono: ui-monospace, "Cascadia Mono", "SF Mono", Menlo, Consolas, monospace;
+    --sans: ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #10141A; --panel: #161B23; --line: #262D38; --line-2: #1E242D;
+      --ink: #E9E7E2; --ink-2: #A9AFAD; --ink-3: #6D7375; --accent: #5FB3A1;
+      --hi-fg: #5FB3A1; --hi-bg: #12211E;
+      --mid-fg: #D9BC6A; --mid-bg: #241F12;
+      --lo-fg: #E08B78; --lo-bg: #2A1714;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #10141A; --panel: #161B23; --line: #262D38; --line-2: #1E242D;
+    --ink: #E9E7E2; --ink-2: #A9AFAD; --ink-3: #6D7375; --accent: #5FB3A1;
+    --hi-fg: #5FB3A1; --hi-bg: #12211E;
+    --mid-fg: #D9BC6A; --mid-bg: #241F12;
+    --lo-fg: #E08B78; --lo-bg: #2A1714;
+  }
+
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--sans); font-size: 16px; line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 48px 28px 88px; }
+  a { color: var(--accent); }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+
+  .back { font-family: var(--mono); font-size: 12.5px; letter-spacing: .02em; }
+  .back a { text-decoration: none; }
+  header.top { border-bottom: 2px solid var(--ink); padding: 18px 0 22px; }
+  h1 {
+    margin: 0; font-family: var(--serif); font-weight: 600;
+    font-size: clamp(34px, 5vw, 50px); line-height: 1.06; letter-spacing: -.015em;
+  }
+  .lead { margin: 12px 0 0; color: var(--ink-2); font-size: 17px; max-width: 64ch; }
+  .legend { margin: 14px 0 0; display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; font-size: 13px; color: var(--ink-3); }
+
+  .z {
+    display: inline-block; font-family: var(--mono); font-size: 10.5px; font-weight: 700;
+    letter-spacing: .08em; text-transform: uppercase; padding: 1.5px 7px; border-radius: 999px;
+    vertical-align: 1px; white-space: nowrap; max-width: 100%; box-shadow: inset 0 0 0 1px currentColor;
+  }
+  .z-v { color: var(--hi-fg); background: var(--hi-bg); }
+  .z-z { color: var(--mid-fg); background: var(--mid-bg); }
+  .z-n { color: var(--lo-fg); background: var(--lo-bg); }
+
+  nav.toc { margin: 28px 0 0; padding: 18px 20px; background: var(--panel); border-radius: 10px; }
+  nav.toc h2 { margin: 0 0 6px; }
+  nav.toc ol { margin: 0; padding-left: 22px; columns: 2 300px; column-gap: 32px; }
+  nav.toc li { margin: 3px 0; break-inside: avoid; font-size: 15px; }
+  nav.toc .g { list-style: none; margin: 10px 0 2px -22px; font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-3); }
+  nav.toc .g:first-child { margin-top: 0; }
+
+  h2 {
+    margin: 0; font-family: var(--mono); font-size: 11.5px; font-weight: 700;
+    letter-spacing: .17em; text-transform: uppercase; color: var(--accent);
+  }
+  .group { margin: 56px 0 0; padding-bottom: 8px; border-bottom: 1px solid var(--line); }
+
+  article { padding: 34px 0 30px; border-bottom: 1px solid var(--line-2); scroll-margin-top: 16px; }
+  article h3 {
+    margin: 0; font-family: var(--serif); font-size: clamp(23px, 3vw, 28px); line-height: 1.2;
+    font-weight: 600; letter-spacing: -.01em;
+  }
+  article h3 .n { font-family: var(--mono); font-size: 14px; color: var(--ink-3); margin-right: 8px; vertical-align: 3px; }
+  .meta { margin: 8px 0 0; font-family: var(--mono); font-size: 12px; color: var(--ink-3); display: flex; flex-wrap: wrap; gap: 4px 14px; }
+  h4 { margin: 22px 0 6px; font-size: 16px; font-weight: 650; letter-spacing: -.005em; }
+  p { margin: 10px 0 0; }
+  .q { color: var(--ink-2); font-style: italic; }
+  .answer { margin: 16px 0 0; padding: 14px 18px; border-left: 3px solid var(--accent); background: var(--panel); border-radius: 0 8px 8px 0; }
+  .answer p:first-child { margin-top: 0; }
+  ul, ol { margin: 8px 0 0; padding-left: 22px; }
+  li { margin: 5px 0; }
+  .note { font-size: 14px; color: var(--ink-2); }
+  .warn { margin: 14px 0 0; padding: 12px 16px; border: 1px solid var(--mid-fg); border-radius: 8px; background: var(--mid-bg); font-size: 14.5px; }
+  .tbl { margin: 12px 0 0; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  table { border-collapse: collapse; width: 100%; font-size: 14px; min-width: 520px; }
+  th, td { text-align: left; vertical-align: top; padding: 7px 10px; border-bottom: 1px solid var(--line); }
+  th { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); font-weight: 700; }
+  code { font-family: var(--mono); font-size: .88em; background: var(--panel); padding: 1px 5px; border-radius: 4px; overflow-wrap: anywhere; }
+  .quote { margin: 12px 0 0; padding: 10px 14px; border: 1px solid var(--line); border-radius: 8px; font-size: 14.5px; }
+  .quote .de { font-style: italic; }
+  .quote .sl { margin-top: 6px; color: var(--ink-2); }
+  details.viri { margin: 18px 0 0; font-size: 14px; }
+  details.viri summary { cursor: pointer; font-family: var(--mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); }
+  details.viri ol { margin-top: 8px; }
+  details.viri li { overflow-wrap: anywhere; }
+  footer { margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--line); color: var(--ink-3); font-size: 13.5px; }
+  footer p { margin: 0 0 8px; }
+
+  @media (max-width: 640px) {
+    .wrap { padding: 32px 16px 64px; }
+    nav.toc { padding: 14px 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="back"><a href="../">← Kazalo projektov</a></p>
+
+  <header class="top">
+    <h1>Raziskave orodij</h1>
+    <p class="lead">
+      Dvanajst raziskav, ki sem jih s Claudom naredil za Nevronovo prodajo med avgustom in oktobrom 2026:
+      orodja za klice in snemanje, Attio, LinkedIn, trgi, konkurenca in domene. Vsaka trditev nosi stopnjo
+      zaupanja, viri so pod vsako raziskavo.
+    </p>
+    <p class="legend">
+      Zaupanje: <span class="z z-v">visoko</span> <span class="z z-z">zmerno</span> <span class="z z-n">nizko</span>
+      · Cene in pogoji veljajo na datum raziskave.
+    </p>
+  </header>
+
+  <nav class="toc" aria-label="Vsebina">
+    <h2>Vsebina</h2>
+    <ol>
+      <li class="g">Klici in snemanje</li>
+      <li><a href="#r1">Snemanje zaslona za support</a></li>
+      <li><a href="#r2">Dialer za prodajne klice iz Attia</a></li>
+      <li><a href="#r3">Snemanje mobilnih klicev v slovenščini</a></li>
+      <li><a href="#r4">Attio, Gong, Fathom in Fireflies za snemanje klicev</a></li>
+      <li class="g">CRM in orodja</li>
+      <li><a href="#r5">Attio: e-pošta adminu ob novem zapisu</a></li>
+      <li><a href="#r6">LinkedIn video: specifikacije, pregled, doseg</a></li>
+      <li><a href="#r7">Warp: obnova Claude sej po ponovnem zagonu</a></li>
+      <li class="g">Trgi in konkurenca</li>
+      <li><a href="#r8">Koliko hotelov ima Slovenija zares</a></li>
+      <li><a href="#r9">Phobs workshops: kdo stoji zadaj</a></li>
+      <li><a href="#r10">Avstrija: hladni e-mail, klici in LinkedIn</a></li>
+      <li class="g">Vloge in infrastruktura</li>
+      <li><a href="#r11">GTM engineer, ki polno uporablja AI</a></li>
+      <li><a href="#r12">Domena hostfulness.com in prenos na SiteGround</a></li>
+    </ol>
+  </nav>
+
+  <!-- ===================== KLICI IN SNEMANJE ===================== -->
+  <div class="group"><h2>Klici in snemanje</h2></div>
+
+  <article id="r1">
+    <h3><span class="n">01</span>Snemanje zaslona za support</h3>
+    <p class="meta"><span>20. 10. 2026</span><span>spletna raziskava + pregled nameščenih programov</span></p>
+    <p class="q">Kako posnamem postopek v spletni aplikaciji (HeyReach) in ga pošljem njihovemu supportu? Najprej orodja,
+      ki so že na računalniku, nato brezplačna s spleta, nato plačljiva s trialom in na koncu plačljiva brez triala.</p>
+    <div class="answer">
+      <p><strong>Priporočilo:</strong> Snipping Tool (Win+Shift+R). Označiš samo okno aplikacije, posnetek se shrani kot MP4,
+        supportu pošlješ povezavo do datoteke v Dropboxu ali OneDrivu. Pri tehnični napaki (nekaj se ne shrani, javi napako,
+        kampanja obvisi) je boljši Jam.dev, ker poleg videa samodejno priloži console in network loge.</p>
+    </div>
+
+    <h4>1. Že na računalniku (Windows 11 z Microsoft 365)</h4>
+    <ol>
+      <li><strong>Snipping Tool</strong> (Win+Shift+R): izbereš območje, vklopiš mikrofon ali zvok sistema, MP4 gre v
+        <code>Videos\Screen Recordings</code>. <span class="z z-v">visoko</span></li>
+      <li><strong>Xbox Game Bar</strong> (Win+Alt+R): snema samo eno okno (brskalnik deluje) in ne sledi, če preskočiš v drugo okno. <span class="z z-v">visoko</span></li>
+      <li><strong>PowerPoint</strong>: Insert &gt; Screen Recording, nato desni klik na video &gt; Save Media As. Deluje, je pa ovinek. <span class="z z-v">visoko</span></li>
+      <li><strong>Clipchamp</strong>: Record &amp; create &gt; Screen, izvoz brez vodnega žiga. Omejitve dolžine nisem preveril. <span class="z z-n">nizko za omejitve</span></li>
+      <li><strong>OBS Studio</strong>: največ nadzora, za ta namen preveč. V Settings &gt; Output nastavi MP4 ali Hybrid MP4; MKV pretvoriš z
+        File &gt; Remux Recordings, sicer ga support morda ne odpre. <span class="z z-z">zmerno</span></li>
+      <li><strong>NVIDIA App (ShadowPlay)</strong>: Alt+F9 začne snemanje. Instant Replay (vklopiš vnaprej, Alt+F10 shrani zadnje minute)
+        ujame napako, ki se pojavlja samo občasno. Pogoj: v nastavitvah zasebnosti vklopi Desktop capture. <span class="z z-z">zmerno</span></li>
+      <li><strong>Zoom Workplace</strong>: sestanek sam s sabo, deljenje zaslona, Record on this computer, po koncu MP4.
+        Zoom Clips ima na brezplačnem računu menda 2 minuti in 5 posnetkov (vir iz leta 2023). <span class="z z-n">nizko za Clips</span></li>
+      <li><strong>Steps Recorder</strong> (Win+R, <code>psr</code>): ni video, zapiše vsak klik s sliko zaslona in opisom koraka, izvoz v ZIP.
+        Windows ga ukinja, na tem računalniku je še prisoten. <span class="z z-z">zmerno</span></li>
+      <li><strong>FFmpeg</strong>: <code>ffmpeg -f gdigrab -framerate 30 -i desktop -c:v libx264 -pix_fmt yuv420p posnetek.mp4</code>, ustaviš s <code>q</code>. Brez zvoka.</li>
+    </ol>
+    <p class="note">Teams in Microsoft Stream (stream.office.com &gt; Create &gt; Record screen, do 15 minut) sta odvisna od licence; paket
+      "Microsoft 365 Apps for business" ju morda ne vključuje. Greenshot dela samo slike.</p>
+
+    <h4>2. Brezplačno s spleta</h4>
+    <ol>
+      <li><strong>Jam.dev</strong> (razširitev za Chrome in Chromium brskalnike): do 5 minut na posnetek, 30 posnetkov in 5 snemalnih povezav na mesec.
+        Priloži console loge, network zahteve, podatke o brskalniku in korake. Network logi lahko vsebujejo podatke iz računa, zato snemaj samo zavihek aplikacije.
+        <span class="z z-z">zmerno</span> Free plan so v začetku 2026 že zmanjšali.</li>
+      <li><strong>Loom</strong> (Starter): 25 videov, 5 minut na video, 720p, support dobi povezavo. <span class="z z-z">zmerno</span></li>
+      <li><strong>Screenity</strong> (razširitev za Chrome, odprta koda): brez omejitev, brez vodnega žiga, brez računa, shrani lokalno. <span class="z z-z">zmerno</span></li>
+      <li><strong>ScreenPal</strong>: 15 minut, vodni žig na brezplačni verziji. <span class="z z-z">zmerno</span></li>
+    </ol>
+    <p class="note">Dropbox Capture ne obstaja več, ukinjen je bil 24. 3. 2025.</p>
+
+    <h4>3. Plačljivo s free trialom</h4>
+    <ol>
+      <li><strong>Snagit</strong>: 15-dnevni trial s polno verzijo, snema MP4, dobra anotacija. <span class="z z-z">zmerno</span></li>
+      <li><strong>Camtasia</strong>: viri si nasprotujejo (14 dni, 30 dni ali neomejen trial z vodnim žigom). Za posnetek za support je preveč. <span class="z z-n">nizko</span></li>
+      <li><strong>Tella</strong>: 7-dnevni trial, po izteku snemanje in izvoz prenehata delovati. <span class="z z-z">zmerno</span></li>
+    </ol>
+
+    <h4>4. Plačljivo brez triala</h4>
+    <p>Kategorija je praktično prazna: vsak resen snemalnik ima trial ali brezplačno verzijo. Edina kandidata (ScreenSnap Pro za 39 USD enkratno,
+      iToolShare za 30 USD) omenjata samo lastni blog in SEO strani. <span class="z z-n">nizko, ne priporočam</span></p>
+
+    <h4>Pred pošiljanjem</h4>
+    <ul>
+      <li>Snemaj samo okno ali območje aplikacije. Drugi zavihki in seznami leadov pokažejo osebne podatke, ki jih support ne potrebuje.</li>
+      <li>Povezava je zanesljivejša od priponke, ker omejitev velikosti priponk v podpornem klepetu nisem potrdil.</li>
+      <li>Govori angleško ali pa korake napiši v besedilo zahtevka: ID kampanje, pošiljatelj, točen čas napake.</li>
+    </ul>
+
+    <details class="viri"><summary>Viri</summary><ol>
+      <li><a href="https://www.costbench.com/software/communication/loom/free-plan/">Loom free plan 2026 (Costbench)</a></li>
+      <li><a href="https://toolradar.com/tools/jam">Jam pricing (Toolradar)</a></li>
+      <li><a href="https://pricingsaas.com/companies/jam/diffs/2026Q1">Jam: sprememba free plana 2026 (PricingSaaS)</a></li>
+      <li><a href="https://github.com/ally9335/screenity">Screenity (GitHub)</a></li>
+      <li><a href="https://costbench.com/software/screen-recording/screenpal/free-plan/">ScreenPal free plan (Costbench)</a></li>
+      <li><a href="https://help.dropbox.com/capture">Dropbox: konec podpore za Capture</a></li>
+      <li><a href="https://support.microsoft.com/en-au/office/create-screen-recording-d4c066c1-d517-44ce-8bd4-65314c97aa40">Microsoft Stream: snemanje zaslona</a></li>
+      <li><a href="https://www.elevenforum.com/t/record-screen-with-snipping-tool-app-in-windows-11.11190">Snipping Tool: snemanje zaslona (ElevenForum)</a></li>
+      <li><a href="https://www.techradar.com/pro/zoom-will-now-let-you-share-short-video-clips-when-youre-not-in-the-office">Zoom Clips Basic (TechRadar)</a></li>
+      <li><a href="https://gizmodo.com/download/snagit">Snagit trial (Gizmodo)</a></li>
+      <li><a href="https://www.costbench.com/software/screen-recording/camtasia/free-plan/">Camtasia free plan (Costbench)</a></li>
+      <li><a href="https://trainn.co/blog/tella-pricing/">Tella pricing (Trainn)</a></li>
+      <li><a href="https://www.screensnap.pro/blog/free-screen-recorder-windows">Plačljivi snemalniki z enkratno licenco (ScreenSnap blog)</a></li>
+    </ol></details>
+  </article>
+
+  <article id="r2">
+    <h3><span class="n">02</span>Dialer za prodajne klice iz Attia</h3>
+    <p class="meta"><span>6. 9. 2026</span><span>spletna raziskava</span></p>
+    <p class="q">Kako v Attiu beležim prodajne klice iz kadence, s snemanjem in prepisom v slovenščini ali angleščini? Kateri dialer ima trial,
+      ki pokrije cel prvi klicni teden?</p>
+    <div class="answer">
+      <p><strong>Kratek odgovor:</strong> Attio sam snema samo video sestanke. Za telefonske klice rabiš dialer. Aircall ima nativno Attio
+        integracijo, a trial s samo 40 minutami in plačljivo minimum tri licence. Ringover ima 7-dnevni trial s 300 odhodnimi minutami in
+        snemanje že v najcenejšem paketu, zato je bil izbran za premostitev. Slovenski prepis zahteva lasten cevovod, ker ga Aircallov AI ne zna.</p>
+    </div>
+
+    <h4>Kaj zna Attio sam</h4>
+    <ul>
+      <li>Call Intelligence snema sestanke prek bota, ki se pridruži klicu na Zoomu, Google Meetu ali Teams, in jih prepiše v več kot 100 jezikih.
+        Za telefonske klice to ne velja. <span class="z z-v">visoko</span></li>
+      <li>Attio nima lastnega dialerja. <span class="z z-v">visoko</span></li>
+    </ul>
+
+    <h4>Aircall</h4>
+    <ul>
+      <li>Nativna Attio integracija: klic iz zapisa osebe, power dialing, vsak klic ustvari noto na osebi (kdo, kdaj, trajanje, izid), povezava do
+        posnetka pride naknadno. Pogoji: odprta namizna aplikacija, oseba mora v Attiu že obstajati s pravilno številko, e-naslov Aircall računa
+        se mora ujemati z Attio prijavo. <span class="z z-v">visoko</span></li>
+      <li>Integracija ne sinhronizira prepisa. Aircallov AI prepis podpira 24 jezikov, slovenščine ni (angleščina in italijanščina da,
+        hrvaščina samo "best effort"). <span class="z z-z">zmerno</span></li>
+      <li>Trial: 7 dni, funkcije Essentials in Professional, a skupaj samo 40 odhodnih minut, en klic naenkrat, brez prenosa številke. <span class="z z-v">visoko</span></li>
+      <li>Plačljivo: minimum 3 licence, Essentials okvirno 40 USD na licenco mesečno ali 30 USD pri letni vezavi. <span class="z z-z">zmerno</span></li>
+      <li>Za Slovenijo ponuja samo stacionarne (national) številke; mobilne številke ne moreš prenesti in prikaza tuje številke kot odhodne ne podpira. <span class="z z-z">zmerno do visoko</span></li>
+    </ul>
+
+    <h4>Ringover in CloudTalk</h4>
+    <ul>
+      <li>Ringover trial: 7 dni, brez kreditne kartice, do 5 uporabnikov, 300 odhodnih minut, slovenske številke v ponudbi. <span class="z z-z">zmerno</span></li>
+      <li>Snemanje, AI prepis in povzetki so že v najcenejšem paketu TALK (okvirno 15 USD na uporabnika pri letnem plačilu). Paketa BUSINESS in
+        ADVANCED imata minimum 3 uporabnike in letno vezavo. Plačljivi paketi vključujejo neomejene klice v 110 evropskih destinacij. <span class="z z-z">zmerno</span></li>
+      <li>Webhooki in API so samostojna sekcija v nadzorni plošči, z javno dokumentacijo in peskovnikom. <span class="z z-v">visoko</span></li>
+      <li>Rezerva: CloudTalk Essential okvirno 29 USD na uporabnika, minimum 1 uporabnik, snemanje in API vključena. <span class="z z-z">zmerno</span></li>
+      <li>3CX nima nativne Attio integracije, zato zahteva delo po meri prek API-ja. <span class="z z-z">zmerno</span></li>
+    </ul>
+    <p class="note"><strong>Popravek 12. 10. 2026</strong> (raziskava 04): v Attio app directory sta poleg Aircalla tudi Ringover in JustCall.
+      Trditev "Aircall je edina nativna pot" iz te raziskave zato ne drži več. <span class="z z-v">visoko</span></p>
+
+    <h4>Slovenski prepis: lasten cevovod</h4>
+    <ol>
+      <li>Webhook ob koncu klica sproži opravilo na lastnem strežniku.</li>
+      <li>Opravilo prek API-ja dialerja prenese posnetek.</li>
+      <li>Prepis: Soniox (slovensko podjetje, slovenščina je prvorazredno podprta) ali Whisper large-v3 kot rezerva.</li>
+      <li>LLM naredi povzetek (izid, ugovori, naslednji korak), opravilo zapiše noto v Attio in posodobi polja zadnjega klica.</li>
+      <li>Posnetek, prepis in metapodatki gredo v lasten arhiv, šele nato se datoteka na strežniku izbriše. Tako posnetki ne izginejo, če dialer zamenjaš.</li>
+    </ol>
+    <p class="warn"><strong>Pravno:</strong> snemanje telefonskih klicev v EU zahteva, da sogovornika ob začetku obvestiš (GDPR in ZEKom).
+      Za trajni arhiv posnetkov določi rok hrambe. <span class="z z-v">visoko</span> (da obvestilo mora biti)</p>
+
+    <details class="viri"><summary>Viri</summary><ol>
+      <li><a href="https://attio.com/platform/call-intelligence">Attio Call Intelligence</a></li>
+      <li><a href="https://www.attio.community/c/changelog/call-transcripts-in-any-language">Attio changelog: prepisi v vseh jezikih</a></li>
+      <li><a href="https://attio.com/help/apps/other-apps/aircall-app">Attio: Aircall app</a></li>
+      <li><a href="https://support.aircall.io/en-gb/articles/28735103719709">Aircall Live Transcription FAQ</a></li>
+      <li><a href="https://support.aircall.io/en-gb/articles/15149698584733">Aircall: trial</a></li>
+      <li><a href="https://aircall.io/countries/">Aircall: države</a></li>
+      <li><a href="https://help.aircall.io/en/articles/5716989-aircall-phone-number-types">Aircall: vrste številk</a></li>
+      <li><a href="https://aloware.com/blog/aircall-pricing">Aloware: Aircall cene</a></li>
+      <li><a href="https://tldv.io/blog/aircall-pricing/">tl;dv: Aircall cene 2026</a></li>
+      <li><a href="https://www.ringover.com/pricing">Ringover: cene in trial</a></li>
+      <li><a href="https://www.ringover.com/en-ca/unlimited-calls">Ringover: neomejeni klici</a></li>
+      <li><a href="https://www.ringover.co.uk/virtual-number-slovenia">Ringover: slovenska številka</a></li>
+      <li><a href="https://developer.ringover.com/">Ringover API</a></li>
+      <li><a href="https://support.ringover.com/hc/en-us/articles/15206913970577-Using-our-webhooks">Ringover: webhooki</a></li>
+      <li><a href="https://www.cloudtalk.io/pricing/">CloudTalk: cene</a></li>
+      <li><a href="https://soniox.com/speech-to-text/slovenian">Soniox: slovenski speech-to-text</a></li>
+    </ol></details>
+  </article>
+
+  <article id="r3">
+    <h3><span class="n">03</span>Snemanje mobilnih klicev v slovenščini</h3>
+    <p class="meta"><span>7. 10. 2026</span><span>spletna raziskava + preizkus na Samsung Galaxy S24 Ultra</span></p>
+    <p class="q">Katera Android aplikacija najbolje posname klic in ga prepiše v slovenščino, idealno s povezavo v Attio prek API-ja ali MCP?</p>
+    <div class="answer">
+      <p><strong>Kratek odgovor:</strong> na Google Playu ni aplikacije, ki bi sama posnela obe strani klica na Androidu 10 ali novejšem.
+        Delujeta dve poti. Za klice za mizo: Fireflies Desktop, ki zajame klic z Androida prek Microsoftove Povezave s telefonom (Phone Link).
+        Za teren: ACR Phone s pomožno aplikacijo ACR Phone Helper in vgrajenim Shizukujem.</p>
+    </div>
+
+    <h4>Zakaj Play aplikacije ne delujejo</h4>
+    <ul>
+      <li>Google je maja 2022 v Play politiki prepovedal uporabo Accessibility API za snemanje klicev. Vsaka Play aplikacija zato posname tišino ali samo tvoj
+        mikrofon, ali pa rabi pomožno aplikacijo mimo Playa. <span class="z z-v">visoko</span></li>
+      <li>Samsungovo vgrajeno snemanje je zaklenjeno po državi (koda CSC), ne po modelu. Na Samsungovem seznamu ni nobene države EU, zato ga slovenska
+        programska oprema nima. Menjava CSC izbriše telefon in lahko pokvari VoLTE, Samsung Pay in garancijo, zato je odsvetovana. <span class="z z-v">visoko</span></li>
+      <li>Pixel snema klice od februarja 2026 povsod, a Call Notes prepisujejo samo angleško. <span class="z z-z">zmerno</span></li>
+    </ul>
+
+    <div class="tbl"><table>
+      <tr><th>Možnost</th><th>Snemanje klicev</th><th>Slovenski prepis</th><th>Pot v Attio</th></tr>
+      <tr><td>ACR Phone + APH (Shizuku)</td><td>Da, obe strani, brez roota</td><td>Prek lastnega ključa Gemini ali Whisper</td><td>Webhook na lasten strežnik</td></tr>
+      <tr><td>Fireflies Desktop + Phone Link</td><td>Da, za mizo</td><td>Da, 100+ jezikov</td><td>Vgrajena integracija (z omejitvijo spodaj)</td></tr>
+      <tr><td>Cube ACR</td><td>Da, s pomožnim APK</td><td>Šibkejši</td><td>Samo Drive ali e-pošta</td></tr>
+      <tr><td>Samsung vgrajeno</td><td>Ne v EU</td><td>Ne</td><td>Ročni izvoz</td></tr>
+      <tr><td>Pixel vgrajeno</td><td>Da</td><td>Ne (samo angleščina)</td><td>Ostane na napravi</td></tr>
+      <tr><td>Attio Call Intelligence</td><td>Samo Zoom, Meet, Teams</td><td>Da</td><td>Vgrajeno, a ne za telefon</td></tr>
+    </table></div>
+
+    <h4>Pot A: Fireflies prek Povezave s telefonom</h4>
+    <ul>
+      <li>Fireflies na telefonu ne snema. Namizna aplikacija za Windows pa zazna klic, ki teče prek Phone Linka (Bluetooth, zvok gre skozi računalnik),
+        in ponudi Take Notes. <span class="z z-v">visoko</span> (uradni vodič Fireflies)</li>
+      <li>Ob začetku lahko v klic predvaja glasovno obvestilo o snemanju, kar pokrije zakonsko zahtevo.</li>
+      <li>Omejitve: deluje samo za mizo, Take Notes ne shrani zvočne datoteke (samo prepis in povzetek), govorca sta "Speaker 1" in "Speaker 2",
+        prepis nastane v oblaku.</li>
+      <li><strong>Past pri prijavi:</strong> Phone Link ne sprejme službenega računa Microsoft 365 (Entra ID). Rabi osebni Microsoftov račun, enak na
+        računalniku in telefonu. <span class="z z-v">visoko</span></li>
+      <li><strong>Past pri zvoku:</strong> če zvok klica po nekaj deset sekundah utihne, je pogost vzrok Windowsovo varčevanje energije na Bluetooth
+        adapterju (Device Manager &gt; adapter &gt; Power Management). Na telefonu nastavi baterijo za Povezavo z Windows na Neomejeno. <span class="z z-z">zmerno</span></li>
+      <li><strong>Past pri Attiu:</strong> Fireflies poveže posnetek z osebo v CRM po e-naslovih udeležencev iz koledarskega dogodka. Klic prek Phone Linka
+        dogodka nima, zato se ne pripne sam. Rešitev: ročno dodaš udeleženca ali opravilo prek Fireflies API vsako uro pobere prepise in jih pripne. <span class="z z-z">zmerno</span></li>
+    </ul>
+
+    <h4>Pot B: ACR Phone + Shizuku (Samsung S24 Ultra)</h4>
+    <ol>
+      <li>Izklopi Samsungov Auto Blocker (Varnost in zasebnost), ker blokira APK-je in brezžično razhroščevanje.</li>
+      <li>Vklopi razvijalske možnosti (7-krat tapni Številka gradnje), nato Odpravljanje napak USB in Brezžično odpravljanje napak.</li>
+      <li>Iz Playa namesti ACR Phone (NLL Apps) in ga nastavi kot privzeto aplikacijo za telefon.</li>
+      <li>Iz NLL Stora namesti ACR Phone Helper; različica z vgrajenim Shizukujem je samo tam.</li>
+      <li>V APH seznani Shizuku s kodo iz Brezžičnega odpravljanja napak in ga zaženi. Po vsakem ponovnem zagonu telefona ga zaženi znova.</li>
+      <li>Baterija za APH in ACR Phone: Neomejeno, dodaj ju med "aplikacije, ki nikoli ne spijo".</li>
+      <li>Testni klic z izklopljenim klicanjem prek Wi-Fi; pri VoWiFi druga stran na Samsungu pogosto ni posneta.</li>
+      <li>Prepis: v ACR Phone vpiši lasten Gemini ključ (brezplačni dnevni paket) ali Whisper. Telefonski zvok je ozkopasoven, zato preizkusi oba na nekaj klicih.</li>
+    </ol>
+    <p class="note">Na One UI 8.5 beta so od julija 2026 poročila, da se Shizuku na S24 Ultra po minuti sam ustavi. <span class="z z-n">nizko za beta</span></p>
+
+    <p class="warn"><strong>Pravno:</strong> ZEKom dovoljuje snemanje poslovne komunikacije kot dokaz, če je sogovornik vnaprej obveščen o snemanju,
+      namenu in roku hrambe. Informacijski pooblaščenec je leta 2019 zapisal, da "izboljšanje kakovosti" ni zadostna podlaga; neupravičeno snemanje
+      pade pod 137. člen KZ-1. Mnenje je po ZEKom-1, ZEKom-2 ima enakovredno določbo. <span class="z z-v">visoko</span></p>
+
+    <details class="viri"><summary>Viri</summary><ol>
+      <li><a href="https://www.tomsguide.com/news/google-killing-call-recording-apps-may-11">Tom's Guide: Google ukine aplikacije za snemanje klicev</a></li>
+      <li><a href="https://www.engadget.com/google-is-banning-third-party-call-recording-apps-from-the-play-store-093201443.html">Engadget: prepoved v Play Storu</a></li>
+      <li><a href="https://nllapps.com/apps/cb/transcription-help.htm">NLL Apps: ACR Phone, transkripcija</a></li>
+      <li><a href="https://github.com/NLLAPPS/Shizuku/wiki/User-manual">NLL Apps: Shizuku, priročnik</a></li>
+      <li><a href="https://nllapps.com/store">NLL Store</a></li>
+      <li><a href="https://cubeacr.app/">Cube ACR</a></li>
+      <li><a href="https://9to5google.com/2026/02/19/pixel-call-recording-international/">9to5Google: Pixel snemanje klicev mednarodno</a></li>
+      <li><a href="https://support.google.com/phoneapp/answer/9803950?hl=en">Google: snemanje klicev v aplikaciji Telefon</a></li>
+      <li><a href="https://sammyguru.com/one-ui-7-0-brings-native-call-recording-and-transcripts-to-us/">One UI 7: snemanje klicev v ZDA</a></li>
+      <li><a href="https://guide.fireflies.ai/articles/6666374717-how-to-record-meetings-without-a-bot-on-the-fireflies-desktop-app">Fireflies: snemanje brez bota na namizju</a></li>
+      <li><a href="https://learn.microsoft.com/en-us/answers/questions/4697000/phone-link-is-it-possible-to-connect-a-work-school">Microsoft: Phone Link in službeni računi</a></li>
+      <li><a href="https://attio.com/help/reference/productivity-collaborating/call-intelligence/enable-call-recording">Attio: vklop snemanja klicev</a></li>
+      <li><a href="https://wave.co/compare/fireflies">Wave proti Fireflies</a></li>
+      <li><a href="https://www.ip-rs.si/mnenja-gdpr/6048a38d35380">Informacijski pooblaščenec: mnenje o snemanju klicev</a></li>
+    </ol></details>
+  </article>
+
+  <article id="r4">
+    <h3><span class="n">04</span>Attio, Gong, Fathom in Fireflies za snemanje klicev</h3>
+    <p class="meta"><span>12. 10. 2026</span><span>spletna raziskava (agent researcher)</span></p>
+    <p class="q">Kako snemati prodajne klice (Google Meet in navadne mobilne klice) s samodejnim zapisom posnetka, prepisa in povzetka v Attio?</p>
+    <div class="answer">
+      <p><strong>Priporočilo:</strong> dvojni pristop. Za Google Meet zadošča Attiov Call Intelligence na planu Pro, a najprej s
+        1-minutnim testom slovenskega prepisa, ker slovenščina ni uradno navedena. Za mobilne klice Attio ne pomaga: realni poti sta
+        Fireflies (mobilna aplikacija in nalaganje, slovenščina podprta, nativen vpis v Attio) ali VoIP številka z Attio integracijo.
+        Gong je za majhno ekipo predrag. <span class="z z-z">zmerno</span></p>
+    </div>
+
+    <h4>Attio Call Intelligence</h4>
+    <ul>
+      <li>Bot se pridruži sestanku na Zoomu, Google Meetu ali Teams; drugih platform ne podpira. <span class="z z-v">visoko</span></li>
+      <li>Na voljo samo na planih Pro in Enterprise, za vse člane delovnega prostora. Cene na sedež: Plus 39 EUR mesečno (31 letno), Pro 93 EUR (74 letno).
+        Plan velja za cel delovni prostor. <span class="z z-v">visoko</span></li>
+      <li>Vsak član poveže svoj Google račun (Account settings &gt; Email and calendar accounts). Zasebni koledarski dogodki se nikoli ne sinhronizirajo.
+        Če Google Workspace omejuje aplikacije, mora admin dodati Attio med zaupane. <span class="z z-v">visoko</span></li>
+      <li>Vklop: Account settings &gt; Call intelligence &gt; Auto-record "External meetings". Bota mora nekdo spustiti v klic tudi pri samodejnem snemanju. <span class="z z-v">visoko</span></li>
+      <li>Snema samo sestanke iz sinhroniziranega koledarja; ročni zagon je mogoč v 10 minutah od začetka dogodka. Nov dogodek rabi 3 do 5 minut za sinhronizacijo. <span class="z z-v">visoko</span></li>
+      <li>Rezultat je na zavihku Activity pri osebi in podjetju; samodejna povezava na deal ni potrjena. Avgusta 2026 je Attio dodal API za ustvarjanje
+        sestankov in posnetkov klicev (tudi samih prepisov), kar odpre pot za zunanje posnetke. <span class="z z-v">visoko</span></li>
+      <li>Jezik: samodejna zaznava, "100+ jezikov", slovenščina in hrvaščina nista poimensko navedeni. <span class="z z-n">nizko, obvezen test</span></li>
+    </ul>
+
+    <h4>Primerjava</h4>
+    <div class="tbl"><table>
+      <tr><th>Orodje</th><th>Meet klici</th><th>Mobilni klici</th><th>SL in HR</th><th>Attio</th><th>Cena za 4 prodajalce</th><th>EU hramba</th></tr>
+      <tr><td>Attio native</td><td>Da, bot, plan Pro</td><td>Ne</td><td>Ni uradno navedeno</td><td>Vgrajeno</td><td>296 do 372 EUR mesečno, če je prostor že na Pro</td><td>Srednja</td></tr>
+      <tr><td>Fathom</td><td>Da, bot</td><td>Ne</td><td>Da, poimensko</td><td>Samo Zapier ali Make</td><td>okoli 60 do 100 USD</td><td>Ni potrjena</td></tr>
+      <tr><td>Gong</td><td>Da</td><td>Da, lasten dialer</td><td>Da</td><td>Ni nativno</td><td>11.000 do 13.000+ USD na leto</td><td>EU center z omejitvami</td></tr>
+      <tr><td>Fireflies</td><td>Da, bot</td><td>Da, aplikacija in nalaganje</td><td>Da, poimensko</td><td>Nativno v app directory</td><td>okoli 76 do 150 USD</td><td>Samo Enterprise</td></tr>
+    </table></div>
+    <ul>
+      <li>Fathom: 38 jezikov s slovenščino in hrvaščino; Free, Premium 20 USD, Team 19 USD na uporabnika (min. 2), Business 34 USD. Ni v Attio app directory. <span class="z z-v">visoko</span></li>
+      <li>Gong: mobilni dialer in Gong Connect s samodejnim snemanjem; cena ni javna, tretji viri navajajo 1.300 do 1.920 USD na uporabnika letno plus platformsko pristojbino, samo letne pogodbe. <span class="z z-n">nizko za ceno</span></li>
+      <li>Fireflies: mobilna aplikacija snema osebna srečanja in sprejme nalaganje datotek (MP3, MP4, M4A, WAV do 100 MB in 150 minut); 100+ jezikov. <span class="z z-v">visoko</span></li>
+      <li>VoIP z Attio integracijo v app directory: Aircall, Ringover, JustCall; Dialpad ni najden. <span class="z z-v">visoko</span></li>
+    </ul>
+
+    <h4>Odpravljanje težav pri Attiu</h4>
+    <ul>
+      <li>Sestanek se ne sinhronizira: vsaj en udeleženec mora imeti vklopljen sync koledarja in snemanje; dogodek ne sme biti zaseben.</li>
+      <li>"Recorder denied entry": nihče ni spustil bota.</li>
+      <li>Google Meet: brez nastavitve "udeleženci lahko vstopijo brez gostitelja" bot ne pride noter, dokler gostitelja ni. Pri Zoomu mora biti gostitelj prisoten.</li>
+    </ul>
+    <p class="note">Nepreverjeno ob raziskavi: omejitev ur snemanja po planu, samodejna povezava posnetka na deal, mehanizem Fathomovega bota in EU hramba pri Fathomu.</p>
+
+    <details class="viri"><summary>Viri</summary><ol>
+      <li><a href="https://attio.com/help/reference/productivity-collaborating/call-recording/recording-calls-with-attio">Attio: snemanje klicev</a></li>
+      <li><a href="https://attio.com/help/reference/productivity-collaborating/call-intelligence/enable-call-recording">Attio: vklop snemanja</a></li>
+      <li><a href="https://attio.com/help/reference/productivity-collaborating/call-intelligence/troubleshoot-call-recording-in-attio">Attio: odpravljanje težav</a></li>
+      <li><a href="https://attio.com/help/reference/email-calendar/email-and-calendar-syncing">Attio: sinhronizacija e-pošte in koledarja</a></li>
+      <li><a href="https://attio.com/pricing">Attio: cene</a></li>
+      <li><a href="https://attio.com/changelog/2026/updates-to-developer-platform">Attio changelog: razvijalska platforma, avgust 2026</a></li>
+      <li><a href="https://attio.com/apps">Attio app directory</a></li>
+      <li><a href="https://help.fathom.video/en/articles/296192">Fathom: jeziki</a></li>
+      <li><a href="https://fathom.ai/pricing">Fathom: cene</a></li>
+      <li><a href="https://help.gong.io/hc/en-us/articles/360041931991-What-languages-are-supported-in-Gong">Gong: jeziki</a></li>
+      <li><a href="https://help.gong.io/gong-dialer-in-the-eu-data-center">Gong: dialer v EU podatkovnem centru</a></li>
+      <li><a href="https://www.raftlabs.com/blog/gong-pricing">RaftLabs: Gong cene</a></li>
+      <li><a href="https://guide.fireflies.ai/articles/4565146696-how-to-transcribe-offline-meetings-using-fireflies-mobile-app">Fireflies: mobilna aplikacija</a></li>
+      <li><a href="https://guide.fireflies.ai/articles/2973706448-learn-about-fireflies-supported-languages">Fireflies: jeziki</a></li>
+      <li><a href="https://www.rtvslo.si/slovenija/informacijska-pooblascenka-svari-pred-nezakonitim-snemanjem-pogovorov/344603">RTV SLO: pooblaščenka svari pred nezakonitim snemanjem</a></li>
+    </ol></details>
+  </article>
+
+  <!-- ===================== CRM IN ORODJA ===================== -->
+  <div class="group"><h2>CRM in orodja</h2></div>
+
+  <article id="r5">
+    <h3><span class="n">05</span>Attio: e-pošta adminu ob novem zapisu v pipelineu</h3>
+    <p class="meta"><span>15. 9. 2026</span><span>uradna dokumentacija Attio</span></p>
+    <p class="q">Kako nastavim, da admin dobi e-pošto vsakič in takoj, ko se v pipelineu pojavi nov zapis?</p>
+    <div class="answer">
+      <p><strong>Kratek odgovor:</strong> Attio tega stikala nima. Obvestila pokrivajo samo omembe, odgovore, dodelitve nalog, deljene vire in dnevni
+        povzetek, workflowi pa nimajo bloka "Send email". Rešitev je workflow, ki adminu dodeli nalogo, ali HTTP klic na zunanjo storitev. <span class="z z-v">visoko</span></p>
+    </div>
+    <h4>Najhitreje brez zunanjih orodij</h4>
+    <ol>
+      <li>Admin v Account settings &gt; Notifications vklopi Email pri "Task assignments".</li>
+      <li>Workflows &gt; New workflow, sprožilec "Record added to list", izberi pipeline (pipeline je v Attiu lista).</li>
+      <li>Akcija "Create task", Assignee je admin kot konkretna oseba, v naslov vstavi spremenljivko z imenom zapisa ("Nov lead: {ime}") in nalogo poveži z zapisom.</li>
+      <li>Vklopi workflow in ga preizkusi s testnim zapisom.</li>
+    </ol>
+    <p>Admin dobi e-pošto v nekaj sekundah. Stranski učinek je naloga za vsak zapis. Korak porabi kredite delovnega prostora (na planu Plus jih je 1.500 na mesec). <span class="z z-z">zmerno</span></p>
+    <h4>Pravi e-mail brez nalog</h4>
+    <ul>
+      <li>Isti sprožilec, akcija "Send HTTP request" na lasten webhook, ki iz podatkov sestavi e-pošto.</li>
+      <li>Zapier ali Relay.app s sprožilcem "Record added to list" in Gmail akcijo: najbolj klikljivo, a še eno plačljivo orodje.</li>
+      <li>Resend prek HTTP bloka za čisto transakcijsko e-pošto.</li>
+    </ul>
+    <h4>Omejitvi, ki ju ne obideš</h4>
+    <ul>
+      <li>Prejemnik ni dinamičen po vlogi "admin": vedno izbereš konkretno osebo, ob menjavi admina popraviš workflow.</li>
+      <li>Nativna bloka za obveščanje sta "Broadcast message" (pojavno okno v Attiu) in Slack (objava v kanal). Nobeden ne pošlje e-pošte.</li>
+    </ul>
+    <details class="viri"><summary>Viri</summary><ol>
+      <li><a href="https://attio.com/help/reference/automations/workflows/workflows-block-library">Attio: knjižnica blokov za workflowe</a></li>
+      <li><a href="https://attio.com/help/reference/account-settings/notifications">Attio: obvestila</a></li>
+      <li><a href="https://attio.com/help/apps/automations-apps/slack-app">Attio: Slack app</a></li>
+      <li><a href="https://attio.com/help/reference/automations/workflows/getting-started-with-workflows">Attio: pregled workflowov</a></li>
+      <li><a href="https://www.relay.app/how-to/automatically-send-an-email-via-gmail-every-time-a-record-is-added-to-an-attio-list">Relay.app: e-pošta ob novem zapisu v listi</a></li>
+    </ol></details>
+  </article>
+
+  <article id="r6">
+    <h3><span class="n">06</span>LinkedIn video: specifikacije, pregled oglasov in doseg</h3>
+    <p class="meta"><span>1. 10. 2026</span><span>uradna pomoč LinkedIn + lastni oglasi za podcast</span></p>
+    <p class="q">Ali naši kratki videi ustrezajo LinkedInovim zahtevam, koliko časa traja pregled oglasa in kako za isti proračun dobiti več prepoznavnosti?</p>
+    <div class="answer">
+      <p><strong>Kratek odgovor:</strong> navpični video 1080 x 1920, H.264, 25 do 33 sekund, ustreza vsem zahtevam za objave in skoraj vsem za oglase.
+        Pregled oglasa uradno traja do 24 ur, v praksi minute do ene ure. Največ prepoznavnosti za isti denar dajo Thought Leader Ads s profila voditelja.</p>
+    </div>
+
+    <h4>Video v organski objavi</h4>
+    <div class="tbl"><table>
+      <tr><th>Zahteva</th><th>LinkedIn</th></tr>
+      <tr><td>Velikost</td><td>75 KB do 5 GB</td></tr>
+      <tr><td>Dolžina</td><td>3 s do 15 min (namizno), 10 min (aplikacija)</td></tr>
+      <tr><td>Ločljivost</td><td>256 x 144 do 4096 x 2304</td></tr>
+      <tr><td>Razmerje</td><td>1 : 2,4 do 2,4 : 1</td></tr>
+      <tr><td>Sličice na sekundo</td><td>10 do 60</td></tr>
+      <tr><td>Format</td><td>MP4, MOV, AVI, WEBM, MKV, WMV</td></tr>
+    </table></div>
+
+    <h4>Video kot oglas (velja tudi za sponzorirane objave)</h4>
+    <div class="tbl"><table>
+      <tr><th>Zahteva</th><th>LinkedIn</th><th>Opomba</th></tr>
+      <tr><td>Velikost</td><td>75 KB do 500 MB</td><td></td></tr>
+      <tr><td>Dolžina</td><td>3 s do 30 min, priporočeno 15 do 30 s</td><td></td></tr>
+      <tr><td>9 : 16</td><td>360 x 640 do 1080 x 1920</td><td>1080 x 1920 je zgornja meja</td></tr>
+      <tr><td>Kodek</td><td>H.264 ali VP8</td><td></td></tr>
+      <tr><td>Sličice na sekundo</td><td>"manj kot 30"</td><td>30 fps je bil sprejet</td></tr>
+      <tr><td>Zvok</td><td>AAC, vzorčenje pod 64 kHz</td><td>96 kHz je bil sprejet, ker LinkedIn video prekodira; za nove izvoze nastavi 48 kHz</td></tr>
+      <tr><td>Sličica</td><td>JPG ali PNG do 2 MB, isto razmerje kot video</td><td></td></tr>
+    </table></div>
+
+    <h4>Pregled, ogledi in doseg</h4>
+    <ul>
+      <li>Pregled oglasa: LinkedIn uradno "običajno v 24 urah". Naša izkušnja: odobritev ali zavrnitev v nekaj minutah do ene ure, posamezen oglas je čakal 15 ur. <span class="z z-v">visoko za uradno</span> <span class="z z-z">zmerno za prakso</span></li>
+      <li>Ogled se šteje, ko je video predvajan vsaj 2 zaporedni sekundi ob vsaj 50 % videa na zaslonu. "Completion" je 97 do 100 % dolžine. <span class="z z-v">visoko</span></li>
+      <li>Pri cilju "video views" kliki niso zaračunani in jih LinkedIn ne loči po gumbu.</li>
+      <li>"Dosežen delež publike" je doseg deljeno z velikostjo publike. Za B2B je 10 do 40 % normalno območje; frekvenca 3 do 5 gradi prepoznavnost, nad 7 postane nadležna. <span class="z z-z">zmerno</span></li>
+      <li>YouTube Studio ne razbije naročnin iz vira "External" po domeni. Približek: Traffic sources &gt; External, kjer sta linkedin.com in lnkd.in navedena posebej.
+        Pripona <code>?sub_confirmation=1</code> na povezavi do kanala takoj odpre poziv k naročnini, a sprememba URL-ja pošlje oglas v ponovni pregled. <span class="z z-z">zmerno do visoko</span></li>
+    </ul>
+
+    <h4>Kaj za isti proračun prinese več prepoznavnosti</h4>
+    <ol>
+      <li><strong>Thought Leader Ads:</strong> voditelj objavi kratke videe na svojem profilu, podjetje jih sponzorira. LinkedIn jih prikazuje kot osebno objavo; v panogi poročajo o 2- do 3-krat višji angažiranosti. <span class="z z-v">visoko za smer</span> <span class="z z-z">zmerno za velikost</span></li>
+      <li><strong>Ime v videu:</strong> vodni žig z imenom oddaje ves čas in 2-sekundna zaključna kartica. Ogled brez imena gradi samo obraz, ne blagovne znamke.</li>
+      <li><strong>Retargeting publika:</strong> "gledali vsaj 50 % videa" se polni sama in ne stane nič; čez dva tedna tem ljudem pokažeš drugi dotik.</li>
+      <li><strong>Sosednji trg z isto angleško kopijo:</strong> več različnih ljudi po isti ceni na ogled.</li>
+      <li><strong>Organski množitelj:</strong> isti dan organska objava na profilu in strani, ekipa deli, voditelj odgovarja na komentarje.</li>
+      <li><strong>Pritožba za zavrnjene oglase,</strong> da rotira več kreativ in se publika počasneje utrudi.</li>
+    </ol>
+    <p>Odsvetovano: dvig proračuna, ki ga predlaga LinkedIn, in cost cap. Pri majhni publiki samo dvigneta frekvenco.</p>
+
+    <details class="viri"><summary>Viri</summary><ol>
+      <li><a href="https://www.linkedin.com/help/linkedin/answer/a525309">LinkedIn: Share photos or videos</a></li>
+      <li><a href="https://www.linkedin.com/help/linkedin/answer/a548372">LinkedIn: Video sharing troubleshooting</a></li>
+      <li><a href="https://www.linkedin.com/help/lms/answer/a424737">LinkedIn: Video ads advertising specifications</a></li>
+      <li><a href="https://www.linkedin.com/help/linkedin/answer/a1311816">LinkedIn: Video specifications for LinkedIn Pages</a></li>
+      <li><a href="https://www.linkedin.com/help/lms/answer/a421048">LinkedIn: Ads under review</a></li>
+      <li><a href="https://www.linkedin.com/help/lms/answer/a426666">LinkedIn: Video metrics in Campaign Manager</a></li>
+    </ol></details>
+  </article>
+
+  <article id="r7">
+    <h3><span class="n">07</span>Warp: obnova Claude sej po ponovnem zagonu</h3>
+    <p class="meta"><span>30. 9. in 15. 10. 2026</span><span>dokumentacija Warp + preizkus (24 od 24 sej)</span></p>
+    <p class="q">Kako po ponovnem zagonu računalnika najdem Claude Code seje, ki so bile odprte v Warpu, in jih odprem nazaj tako, kot so bile?</p>
+    <div class="answer">
+      <p><strong>Kratek odgovor:</strong> Warp po ponovnem zagonu obnovi samo okna, zavihke in prazne lupine, Claude procesov ne. Seje najdeš po času
+        zadnjega zapisa transkripta, odpreš jih s Tab Configi, ki v vsakem podoknu poženejo <code>claude --resume &lt;id&gt;</code>. Katera seja je bila v
+        katerem podoknu, Warp ne shrani. <span class="z z-v">visoko</span></p>
+    </div>
+    <h4>Kako najdeš seje, ki so tekle ob izklopu</h4>
+    <ul>
+      <li>Transkripti so v <code>~/.claude/projects/&lt;projekt&gt;/*.jsonl</code>. Žive seje so tiste, katerih datoteka ima čas spremembe v istem minutnem
+        oknu tik pred izklopom, ker vsaka ob gašenju zapiše zadnji zapis. <span class="z z-v">visoko</span> (preizkušeno 15. 10.)</li>
+      <li>Register <code>~/.claude/sessions/&lt;pid&gt;.json</code> poveže proces z ID-jem seje. Pri drugem profilu ostane do prvega zagona, glavni profil
+        ga počisti ob zagonu, zato ga beri, preden poženeš Claude.</li>
+      <li>Warpova baza <code>warp.sqlite</code> nima povezave podokno proti seji. Delni sledi: bloki z istim <code>pane_leaf_uuid</code> in dnevnik
+        <code>warp.log.old.0</code> omogočita približno razvrstitev po zavihkih. <span class="z z-z">zmerno za razvrstitev</span></li>
+    </ul>
+    <h4>Kako jih odpreš</h4>
+    <ol>
+      <li>Za vsak zavihek napiši Tab Config (TOML) v <code>%APPDATA%\warp\Warp\data\tab_configs\</code>, s podokni drug ob drugem in ukazom
+        <code>claude --resume &lt;id&gt;</code> v vsakem. <code>--resume</code> ohrani isti ID seje.</li>
+      <li>Prvi zavihek odpri z <code>warp://tab_config/&lt;ime&gt;?new_window=true</code>, ostale brez <code>new_window</code>, da pristanejo v istem oknu.</li>
+      <li>Med zavihki počakaj okoli 20 sekund. Dvajset in več sej z velikim kontekstom pobere skoraj ves RAM.</li>
+      <li>Ne zapiraj starega okna v celoti, če v njem teče seja, ki obnovo izvaja. Zapri samo prazne zavihke.</li>
+    </ol>
+    <p class="note">Ob načrtovanem zapiranju odpri najprej seje, ki si najbolj izmenjujejo informacije, ostale šele, ko jih rabiš: prvi odgovor po
+      resume ni v predpomnilniku in pri velikem kontekstu je drag.</p>
+    <details class="viri"><summary>Viri</summary><ol>
+      <li><a href="https://docs.warp.dev/terminal/windows/tab-configs">Warp: Tab Configs</a></li>
+      <li><a href="https://docs.warp.dev/terminal/sessions/launch-configurations">Warp: Launch Configurations</a></li>
+    </ol></details>
+  </article>
+
+  <!-- ===================== TRGI IN KONKURENCA ===================== -->
+  <div class="group"><h2>Trgi in konkurenca</h2></div>
+
+  <article id="r8">
+    <h3><span class="n">08</span>Koliko hotelov ima Slovenija zares</h3>
+    <p class="meta"><span>25. 8. 2026</span><span>AJPES RNO, SURS, STO, Booking</span></p>
+    <p class="q">Booking prek sloveniahotel.net kaže veliko več "hotelov" kot register AJPES. Ali register del trga zgreši?</p>
+    <div class="answer">
+      <p><strong>Kratek odgovor:</strong> ne. Razlika je v definiciji, ne v manjkajočih hotelih. Booking šteje samooznako ponudnika, register
+        uradno vrsto obrata. Vpis v register je obvezen za vsak nastanitveni obrat. <span class="z z-v">visoko</span></p>
+    </div>
+    <h4>Booking (prek sloveniahotel.net)</h4>
+    <p>11.676 objektov: 10.205 brez zvezdic, 963 s tremi, 405 s štirimi, 18 s petimi. Po tipu: apartmaji 7.318, počitniške hiše 1.393, guest houses 768,
+      <strong>hoteli 598</strong>, B&amp;B 302, hostli 196, aparthoteli 59, moteli 16, resorti 10.</p>
+    <h4>AJPES, Register nastanitvenih obratov</h4>
+    <ul>
+      <li>836 objektov v skupini hoteli in podobni: <strong>hoteli 421</strong>, gostišča 239, penzioni 140, apartmajska naselja 23, moteli 13.</li>
+      <li>Hoteli po kategoriji: 3★ 220, 4★ 171, 5★ 14, 1 do 2★ 16.</li>
+      <li>Po velikosti: pod 10 sob 46, 10 do 29 sob 179, 30 do 74 sob 105, 75 do 200 sob 73, nad 200 sob 18. Več kot polovica slovenskih hotelov ima manj kot 30 sob.</li>
+    </ul>
+    <h4>Zakaj register ne zgreši trga</h4>
+    <ul>
+      <li>Vpis v RNO je po Zakonu o gostinstvu obvezen pred začetkom poslovanja (od 1. 12. 2017), SURS statistiko zmogljivosti dela neposredno iz RNO.
+        Obrat zunaj registra ne more legalno oddajati sob in poročati gostov v eTurizem. <span class="z z-v">visoko</span></li>
+      <li>Ležišča se ujemajo: hoteli v RNO 45.541 ležišč; SURS za 2024 navaja 182.000 stalnih ležišč, od tega 23 % v hotelih (okoli 41.900; RNO šteje tudi pomožna).
+        Hoteli in podobni obrati v RNO 55.835, STO za 2023 navaja 61.600. <span class="z z-v">visoko</span></li>
+      <li>Razlika 598 proti 421: penzioni in gostišča z "Hotel" v imenu, apartmajski objekti z besedo hotel, depandanse kot ločeni vnosi, zaprti objekti, ki na Bookingu še obstajajo.</li>
+    </ul>
+    <p>Hoteli s 4 ali 5 zvezdicami in 30 do 200 sobami: 114. Če dodaš penzione in gostišča s 4 zvezdicami in vsaj 30 sobami, pride zraven en objekt; s
+      tremi zvezdicami in 30 do 200 sobami 61 hotelov. Na Hrvaškem je uradni vir popis ministrstva za turizem (MINT) s 783 hoteli. <span class="z z-v">visoko</span></p>
+    <details class="viri"><summary>Viri</summary><ol>
+      <li><a href="https://www.sloveniahotel.net/en/all-hotels/">Booking prek sloveniahotel.net</a></li>
+      <li><a href="https://www.ajpes.si/Registri/Drugi_registri/Register_nastanitvenih_obratov/Splosno">AJPES: Register nastanitvenih obratov</a></li>
+      <li><a href="https://www.stat.si/StatWeb/news/Index/13509">SURS: prihodi in prenočitve 2024</a></li>
+      <li><a href="https://www.stat.si/statweb/File/DocSysFile/7779">SURS: metodološko pojasnilo (RNO kot vir)</a></li>
+      <li><a href="https://www.slovenia.info/uploads/dokumenti/tvs/2023/2024_04_STO_TVS_2023_SLO.pdf">STO: Turizem v številkah 2023</a></li>
+      <li><a href="https://vezpa.it/si/blog/eturizem-rno-ajpes/">Vezpa: eTurizem in RNO 2026</a></li>
+    </ol></details>
+  </article>
+
+  <article id="r9">
+    <h3><span class="n">09</span>Phobs workshops: kdo stoji zadaj</h3>
+    <p class="meta"><span>12. 9. 2026</span><span>spletna raziskava, poslovni registri</span></p>
+    <p class="q">Kaj so Phobs workshops, kdo jih organizira in kdo je dejansko zadaj? Je to za Nevron primerno?</p>
+    <div class="answer">
+      <p><strong>Kratek odgovor:</strong> brezplačna prodajna turneja podjetja Phobs za lastne stranke in prospekte. Rentlio ni neodvisen gost, ampak
+        sestrsko podjetje pod istim švicarskim holdingom, ki ga od aprila 2025 večinsko obvladujeta dva srednjeevropska private equity sklada.
+        Za Nevron je smiselno kot obisk zaradi publike, ne kot partnerstvo. <span class="z z-v">visoko</span></p>
+    </div>
+    <h4>Dogodek</h4>
+    <ul>
+      <li>Letna turneja z naslovom "kako povečati prodajo hotelov in kampov": novi Phobs produkti, trendi, več direktnih rezervacij. Publika: direktorji hotelov,
+        revenue in sales managerji, vodje recepcij. Brezplačno.</li>
+      <li>2026: Rovinj 30. 9., Zadar 21. 10., Maribor 25. 11. in Dubrovnik 2. 12. (oba z Booking.com), Zagreb 9. 12.</li>
+      <li>Formalno produktni in prodajni dogodek, ne nevtralna izobraževalna konferenca. <span class="z z-v">visoko</span></li>
+    </ul>
+    <h4>Lastništvo</h4>
+    <ul>
+      <li>PHOBS d.o.o., Dubrovnik, od 2003/2004: booking engine, channel manager, yield manager, Google Hotel Ads, B2B modul, AI virtualni asistent.
+        Večina prihodkov iz Hrvaške, dodatno iz Slovenije.</li>
+      <li>Lastnik je Travelnode GmbH (Švica). Aprila 2025 sta večinski delež prevzela Sandberg Capital (Bratislava in Praga) in ARX Equity Partners (Češka),
+        z napovedanim buy-and-build: širitev produktov, geografije in prevzemi. <span class="z z-v">visoko</span></li>
+      <li>Prevzemi po tem: Pod.camp (Italija, kampi, april 2026) in Rentlio (Zadar, PMS, julij 2026). Phobs in Rentlio skupaj: skoraj 100 zaposlenih in več kot 10 mio EUR prihodkov.</li>
+    </ul>
+    <h4>Pomen za Nevron</h4>
+    <ul>
+      <li>Kot udeleženec: da, predvsem Maribor in Zagreb, ker bodo v sobi slovenski in hrvaški hotelirji iz ciljne skupine.</li>
+      <li>Kot partner ali sopredavatelj: ne. Oder je rezerviran za podjetja skupine in Booking.com, Phobs pa prodaja lasten AI asistent, ki se delno
+        prekriva z Nevronovo ponudbo. <span class="z z-z">zmerno</span></li>
+      <li>Dogodek je namenjen hotelirjem, ponudnike lahko odklonijo.</li>
+      <li>Najcenejši način, da v živo slišiš, kako Phobs in Rentlio hotelirjem pozicionirata AI agente in "več direktnih rezervacij".</li>
+    </ul>
+    <details class="viri"><summary>Viri</summary><ol>
+      <li><a href="https://www.phobs.net/content/invitation-to-the-phobs-workshop">Phobs: povabilo na workshop</a></li>
+      <li><a href="https://www.phobs.net/">Phobs</a></li>
+      <li><a href="https://www.fininfo.hr/Poduzece/Pregled/phobs/Detaljno/47283">Fininfo: PHOBS d.o.o.</a></li>
+      <li><a href="https://www.baerkarrer.ch/en/news/bar-karrer-advised-sandberg-capital-and-arx-equity-partners-on-the-acquisition-of-a-majority-stake-in-travelnode">Bär &amp; Karrer: Sandberg in ARX prevzemata Travelnode</a></li>
+      <li><a href="https://sandbergcapital.com/en/sandberg-capital-and-arx-equity-partners-acquire-majority-stake-in-travel-tech-group-travelnode-phobs/">Sandberg Capital: objava o prevzemu</a></li>
+      <li><a href="https://www.netokracija.com/travelnode-akvizirao-rentlio-245734">Netokracija: Travelnode prevzel Rentlio</a></li>
+      <li><a href="https://www.tportal.hr/tehno/clanak/veliki-iskorak-hrvatskih-it-firmi-u-turizmu-svicarski-travelnode-kupio-zadarski-rentlio-20260724">tportal: Travelnode kupil Rentlio</a></li>
+      <li><a href="https://www.campingbusiness.eu/en/phobs-rafforza-la-propria-presenza-nel-settore-open-air-acquisita-la-maggioranza-di-pod-camp/">Camping Business: Phobs prevzel Pod.camp</a></li>
+    </ol></details>
+  </article>
+
+  <article id="r10">
+    <h3><span class="n">10</span>Avstrija: hladni e-mail, klici in LinkedIn</h3>
+    <p class="meta"><span>11. 9. 2026</span><span>RIS (uradno besedilo), sodna praksa, odvetniška stroka</span></p>
+    <p class="q">Ali v Avstriji sme podjetje hladno pisati in klicati hotelirjem, in ali LinkedIn sporočila spadajo pod isto prepoved?
+      Člen naj bo v izvirniku in v prevodu.</p>
+    <div class="answer">
+      <p><strong>Kratek odgovor:</strong> hladna e-pošta in hladni klici so brez predhodne privolitve prepovedani, brez B2B izjeme. Po prevladujoči
+        razlagi to velja tudi za LinkedIn sporočila z oglaševalsko vsebino, ker TKG 2021 "elektronsko pošto" definira široko. Odprti ostajajo
+        javne objave, oglasi, navadna pošta, dogodki in vse po dokumentirani privolitvi.</p>
+    </div>
+    <p class="warn">To ni pravni nasvet. Prevod je delovni, zavezujoče je nemško besedilo. Pred kampanjo naj ga potrdi avstrijski odvetnik.</p>
+
+    <h4>Členi v izvirniku in prevodu (RIS, različica 11. 9. 2026)</h4>
+    <div class="quote">
+      <div><strong>§ 174 Abs. 1 TKG 2021</strong></div>
+      <div class="de">"Anrufe – einschließlich das Senden von Fernkopien – zu Werbezwecken ohne vorherige Einwilligung des Nutzers sind unzulässig."</div>
+      <div class="sl">Klici, vključno s pošiljanjem telefaksov, za namene oglaševanja brez predhodne privolitve uporabnika niso dopustni.</div>
+    </div>
+    <div class="quote">
+      <div><strong>§ 174 Abs. 3 TKG 2021</strong></div>
+      <div class="de">"Die Zusendung einer elektronischen Post – einschließlich SMS – ist ohne vorherige Einwilligung des Empfängers unzulässig, wenn die Zusendung zu Zwecken der Direktwerbung erfolgt."</div>
+      <div class="sl">Pošiljanje elektronske pošte, vključno s sporočili SMS, brez predhodne privolitve prejemnika ni dopustno, če se pošilja za namene neposrednega oglaševanja.</div>
+    </div>
+    <div class="quote">
+      <div><strong>§ 160 Abs. 3 Z 13 TKG 2021</strong> (ključ za LinkedIn)</div>
+      <div class="de">"„elektronische Post" jede über ein öffentliches Kommunikationsnetz verschickte Text-, Sprach-, Ton- oder Bildnachricht, die im Netz oder im Endgerät des Empfängers gespeichert werden kann, bis sie von diesem abgerufen wird"</div>
+      <div class="sl">"Elektronska pošta" pomeni vsako besedilno, govorno, zvočno ali slikovno sporočilo, poslano prek javnega komunikacijskega omrežja, ki se lahko shrani v omrežju ali v končni napravi prejemnika, dokler ga ta ne prevzame.</div>
+    </div>
+    <p class="note">Narekovaji in pomišljaji v nemških citatih so dobesedni iz uradnega besedila.</p>
+
+    <h4>Kaj iz tega sledi</h4>
+    <ul>
+      <li>Z 14 istega odstavka definira ozek pojem "E-Mail" (SMTP), § 174 Abs. 3 pa uporablja širokega. LinkedInovo sporočilo se vanj uvrsti.
+        Dunajska pisarna GEUER to izrecno potrjuje in se sklicuje na OLG Hamm, 3. 5. 2023, 18 U 154/22; zgolj prijava v poklicno omrežje ni privolitev.
+        Sodbe avstrijskega vrhovnega sodišča neposredno o LinkedInu nisem našel. <span class="z z-z">zmerno</span> (prevladujoča razlaga stroke)</li>
+      <li>§ 174 Abs. 6: prekršek, storjen zunaj Avstrije, se šteje za storjenega tam, kjer je sporočilo doseglo prejemnika. Pošiljanje iz Slovenije ne pomaga. <span class="z z-v">visoko</span></li>
+      <li>§ 188 Abs. 7: pri odmeri kazni šteje, ali je bilo dejanje storjeno poklicno in koliko koristi je prineslo. Kazen za oglaševalske klice je do 100.000 EUR. <span class="z z-v">visoko</span></li>
+      <li>§ 7 Abs. 2 ECG govori o "Personen und Unternehmen", osebah in podjetjih. To je besedilni dokaz, da B2B izjeme ni. <span class="z z-v">visoko</span></li>
+    </ul>
+
+    <h4>Ali pomaga vprašanje za privolitev v samem povabilu?</h4>
+    <ul>
+      <li>Ne. OGH, 18. 5. 1999, 4 Ob 112/99t: tudi telefonsko povpraševanje po dovoljenju za oglaševalski klic je nedopustno, ker "že prvi stik služi oglaševanju
+        v širšem smislu". Odločba je o klicih po starem TKG; sklep, da isti pojem velja v Abs. 1 in Abs. 3 istega člena, je trden. <span class="z z-z">zmerno do visoko</span></li>
+      <li>Povabilo z opisom izdelka in ponudbo je oglas; vprašanje "ali vam smem poslati povezavo" na koncu ne spremeni narave sporočila. LG München I (2002) je
+        že obvestilo, da je nekaj pripravljeno na določenem naslovu, štelo za oglaševalsko pošto.</li>
+      <li>Osebni profil zaposlenega namesto podjetniškega je slabši: § 188 kaznuje "wer", torej osebo, § 174 Abs. 5 Z 1 pa prepoveduje prikrivanje identitete
+        naročnika, po čigar naročilu se sporočilo pošilja (kazen do 50.000 EUR). <span class="z z-z">zmerno</span></li>
+      <li>Povabilo namesto Sales Navigator InMaila pravno ne spremeni ničesar: obe sta shranljivo sporočilo po § 160 Abs. 3 Z 13.</li>
+    </ul>
+
+    <h4>Kaj v Avstriji ostane odprto</h4>
+    <div class="tbl"><table>
+      <tr><th>Kanal</th><th>Status</th><th>Podlaga</th></tr>
+      <tr><td>Hladen e-mail</td><td>zaprt</td><td>§ 174 Abs. 3</td></tr>
+      <tr><td>Hladen klic</td><td>zaprt</td><td>§ 174 Abs. 1, kazen do 100.000 EUR</td></tr>
+      <tr><td>Hladen LinkedIn DM z oglaševalsko vsebino</td><td>zaprt</td><td>§ 174 Abs. 3 + § 160 Abs. 3 Z 13</td></tr>
+      <tr><td>WhatsApp, SMS</td><td>zaprt</td><td>isti člen</td></tr>
+      <tr><td>Povabilo za povezavo brez besedila</td><td>verjetno odprt, ni zanesljivo</td><td>ni oglaševalske vsebine; rabi potrditev odvetnika</td></tr>
+      <tr><td>Javne objave, komentarji, članki</td><td>odprt</td><td>ni pošiljanja posamezniku; GEUER to priporoča</td></tr>
+      <tr><td>LinkedIn Ads, Google Ads</td><td>odprt</td><td>prikazno oglaševanje</td></tr>
+      <tr><td>Navadno poštno pismo</td><td>odprt</td><td>§ 174 fizične pošte ne pokriva; velja GDPR čl. 14 in Robinsonliste (opt-out)</td></tr>
+      <tr><td>Sejmi, dogodki, obisk</td><td>odprt</td><td>najčistejši način za zajem privolitve</td></tr>
+      <tr><td>Priporočilo, kjer posrednik prejemnika vnaprej vpraša</td><td>odprt</td><td>to je privolitev, če jo zapišeš</td></tr>
+      <tr><td>Vhodni stik, ki ga sproži hotel</td><td>odprt</td><td></td></tr>
+      <tr><td>Karkoli po dokumentirani privolitvi</td><td>odprt</td><td></td></tr>
+    </table></div>
+
+    <h4>Strategija, ki iz tega sledi</h4>
+    <ul>
+      <li>Sistem mora biti stroj za pridobivanje privolitev: nemška pristajalna stran z nečim uporabnim za direktorja (primerjalno poročilo, kalkulator,
+        kontrolni seznam) in izrecno privolitvijo za kanal, obseg in produkt.</li>
+      <li>Kooperative in združenja (Best Alpine Wellness Hotels, Familienhotels, Kinderhotels, Bio-Hotels, Verwöhnhotels, ÖHV, Fachverband Hotellerie pri WKO)
+        odprejo 20 do 50 članskih hotelov s toplim okvirom.</li>
+      <li>LinkedIn kot javni kanal: objave in komentarji pod objavami odločevalcev, povabila brez ponudbe v besedilu.</li>
+      <li>Poštno pismo direktorju z osebno povezavo je edini zakonit odhodni kanal v volumnu.</li>
+      <li>Alpski hoteli so dosegljivi v dveh oknih (sredina aprila do konca maja, oktober do sredine novembra); Dunaj je celoleten trg.</li>
+    </ul>
+
+    <details class="viri"><summary>Viri</summary><ol>
+      <li><a href="https://www.ris.bka.gv.at/eli/bgbl/i/2021/190/P174/NOR40238632">RIS: § 174 TKG 2021</a></li>
+      <li><a href="https://www.ris.bka.gv.at/eli/bgbl/i/2021/190/P160/NOR40238618">RIS: § 160 TKG 2021</a></li>
+      <li><a href="https://www.ris.bka.gv.at/eli/bgbl/i/2021/190/P188/NOR40274118">RIS: § 188 TKG 2021</a></li>
+      <li><a href="https://www.ris.bka.gv.at/eli/bgbl/i/2001/152/P7/NOR40025803">RIS: § 7 ECG</a></li>
+      <li><a href="https://www.ris.bka.gv.at/eli/bgbl/i/2001/152/P26/NOR40025822">RIS: § 26 ECG</a></li>
+      <li><a href="https://www.geuer.at/2023/10/04/werbenachrichten-ueber-online-portale-ohne-einwilligung-rechtswidriger-spam/">GEUER Rechtsanwälte: oglaševalska sporočila prek portalov</a></li>
+      <li><a href="https://www.justiz.nrw.de/nrwe/olgs/hamm/j2023/18_U_154_22_Beschluss_20230503.html">OLG Hamm 18 U 154/22</a></li>
+      <li><a href="http://www.internet4jurists.at/entscheidungen/ogh4_112_99t.htm">OGH 4 Ob 112/99t (internet4jurists)</a></li>
+      <li><a href="https://www.wko.at/internetrecht/e-mail-fax-telefonwerbung-telekommunikationsgesetz-detail">WKO: e-poštno in telefonsko oglaševanje</a></li>
+      <li><a href="https://www.lexology.com/library/detail.aspx?g=0549c480-a020-482a-9926-32e41293b621">BGH VI ZR 721/15: širok pojem oglaševanja</a></li>
+    </ol></details>
+  </article>
+
+  <!-- ===================== VLOGE IN INFRASTRUKTURA ===================== -->
+  <div class="group"><h2>Vloge in infrastruktura</h2></div>
+
+  <article id="r11">
+    <h3><span class="n">11</span>GTM engineer, ki polno uporablja AI</h3>
+    <p class="meta"><span>4. 9. 2026</span><span>analiza brez spletnih virov</span></p>
+    <p class="q">Katere so najbolj značilne vloge in vrste dela za GTM engineerja, ki na polno uporablja AI?</p>
+    <div class="answer">
+      <p><strong>Protiargument najprej:</strong> to v praksi ni AI vloga. Okoli 70 do 80 % dela je "vodovodarstvo": kakovost podatkov, razreševanje identitet,
+        dostavljivost, shema CRM, ponovljivost skript. AI je komponenta, ne identiteta poklica. Kdor vlogo definira kot generiranje sporočil z LLM-jem,
+        v šestih mesecih ubije domene in onesnaži CRM. <span class="z z-v">visoko</span></p>
+    </div>
+    <h4>Šest arhetipov (ocena deleža časa)</h4>
+    <ol>
+      <li><strong>Podatkovni inženir za GTM</strong> (30 do 40 %): univerzum računov iz javnih registrov in imenikov, razreševanje entitet, deduplikacija proti CRM pred porabo kreditov, verzioniranje seznamov.</li>
+      <li><strong>Operater kanalov in dostavljivosti</strong> (10 do 15 %): domene, poštni predali, SPF, DKIM, DMARC, MTA-STS, warmup, rampe, bounci in blackliste.</li>
+      <li><strong>Arhitekt CRM in RevOps</strong> (15 do 20 %): shema, stopnje pipelinea, usmerjanje, atribucija, izključitve, DNC, sinhronizacija med orodji.</li>
+      <li><strong>Graditelj raziskovalnih agentov</strong> (15 do 20 %): agenti, ki iz nestrukturiranega vira poberejo strukturirano dejstvo. Izdelek je shema izhoda z dokazno sledjo (URL, zaupanje, "ni najdeno" kot veljaven izid).</li>
+      <li><strong>Sistemi za sporočila</strong> (10 do 15 %): variante, testiranje kotov, spremenljivke s pokritostjo in rezervo, klasifikacija odgovorov.</li>
+      <li><strong>Merilni in odločitveni sloj</strong> (5 do 10 %): konverzije med stopnjami, strošek na preverjen zapis, strošek na sestanek, kapacitetni model.</li>
+    </ol>
+    <h4>Kje AI nosi in kje pade</h4>
+    <ul>
+      <li>Nosi: pretvorba nestrukturirane strani v polja, mehko ujemanje imen podjetij, klasifikacija odgovorov, lepilne skripte, povzetki, variante sporočil, evalvacije lastnih pipelineov. <span class="z z-v">visoko</span></li>
+      <li>Pade: pri vsem, kar zahteva osnovno resnico (telefonske številke, imena odločevalcev, število sob). Prepričljivo napačna vrednost gre naravnost v CRM. Halucinirana osebna referenca je slabša od generičnega maila. <span class="z z-v">visoko</span></li>
+    </ul>
+    <h4>Navade, ki ločijo dobrega od povprečnega</h4>
+    <ul>
+      <li>Vsako obogateno polje ima vir in zaupanje; "ni najdeno" je dovoljen izhod.</li>
+      <li>En prehod (gateway) na ponudnika, ne pet skript, ki vsaka po svoje kliče isti API.</li>
+      <li>Ponovljivost in varnostna kopija pred vsakim pisanjem v CRM.</li>
+      <li>Človeška zapora pred vsakim odhodnim pošiljanjem in vsako plačljivo serijo.</li>
+      <li>Merjenje stroška na preverjen zapis, ne na obogaten zapis. Obogaten in napačen zapis ima negativno vrednost.</li>
+    </ul>
+    <p>Veščine: Python za skripte in API-je, SQL, HTTP in webhooki, modeliranje podatkov, dovolj DNS in e-poštne infrastrukture za dostavljivost,
+      pisanje evalvacij za lastne agente. Prodajna intuicija je pogoj. Ni potrebno: treniranje modelov in vektorske baze za vsako opravilo.</p>
+    <p class="note">Zaupanje: visoko za arhetipe 1 do 3 in razmerje vodovodarstvo proti AI, zmerno za deleže časa, nizko za napovedi o razvoju vloge v naslednjih dveh letih.</p>
+  </article>
+
+  <article id="r12">
+    <h3><span class="n">12</span>Domena hostfulness.com in prenos na SiteGround</h3>
+    <p class="meta"><span>7. 10. 2026, dopolnjeno 20. 10. 2026</span><span>WHOIS, DNS poizvedbe, dokumentacija SiteGround</span></p>
+    <p class="q">Kje je domena kupljena in registrirana, kje gostuje DNS in kako jo prenesemo na SiteGround, kjer že gostuje spletna stran?</p>
+    <div class="answer">
+      <p><strong>Kratek odgovor:</strong> domena je kupljena pri Domenci, ki .com domene prodaja prek registrarja Joker.com. Registrar ostane isti;
+        za prenos gostovanja zadošča zamenjava imenskih strežnikov na SiteGroundove. <span class="z z-v">visoko</span></p>
+    </div>
+    <h4>Kako se to ugotovi</h4>
+    <ul>
+      <li>WHOIS pokaže uradnega registrarja (Joker.com, Düsseldorf). Domenca prodaja .com domene prek Jokerja: tam sta registrirani tudi domenca.com in webtasy.com.</li>
+      <li>Imenska strežnika <code>cdns1.controlpanel.si</code> in <code>cdns2.controlpanel.si</code> sta Domencin oziroma Webtasyjev nadzorni panel.</li>
+      <li>Cona na obeh strežnikih je bila prazna, zato pri prenosu ni bilo česa ohraniti in ni bilo prekinitve.</li>
+    </ul>
+    <h4>Postopek</h4>
+    <ol>
+      <li>Na SiteGroundu dodaš novo spletno mesto za obstoječo domeno (Existing Domain), brez WordPressa, če gre za statično stran.</li>
+      <li>Ustvariš FTP račun za samodejno nalaganje in vrednosti vpišeš v skrivnosti repozitorija, ki stran gradi.</li>
+      <li>Pri Domenci zamenjaš imenska strežnika na <code>ns1.siteground.net</code> in <code>ns2.siteground.net</code>. Nič drugega.</li>
+      <li>Po propagaciji v Site Tools izdaš Let's Encrypt certifikat, vklopiš HTTPS, preveriš <code>www</code> in samodejno DNS cono (SiteGround pogosto doda svoj MX).</li>
+      <li>Staro pot (podmapo na prejšnji domeni) preusmeriš s 301 na novo domeno.</li>
+    </ol>
+    <p class="warn"><strong>Past v statičnih straneh:</strong> stran, ki je prej živela v podmapi (npr. Astro z osnovno potjo <code>/hostfulness</code>), ob selitvi na koren domene
+      dobi napačne poti do slik (<code>//brand/...</code>) in prazen preklop jezika. Preizkusni build pred preklopom to pokaže.</p>
+    <h4>E-pošta na lastni domeni pri SiteGroundu</h4>
+    <ul>
+      <li>Neomejeno število e-poštnih računov na vseh paketih, brez doplačila. <span class="z z-v">visoko</span></li>
+      <li>Prostor: na deljenem gostovanju lahko vsi računi skupaj porabijo do 10 GB, na Cloud paketu velja skupna kvota diska. Priponke do 50 MB. <span class="z z-v">visoko</span></li>
+      <li>Pošiljanje: do 400 sporočil na uro na paketih StartUp in GrowBig, do 800 na GoGeek in Cloud. <span class="z z-v">visoko</span></li>
+      <li>To je gostiteljska pošta (webmail, posredovanje, vzdevki), ne Google Workspace; MX se nastavi samodejno, ko je DNS na SiteGroundu.</li>
+    </ul>
+    <p class="note"><strong>Popravek 20. 10. 2026:</strong> prvotna raziskava je 10 GB navedla kot omejitev posameznega nabiralnika in 800 sporočil na uro za vse pakete.
+      Po uradni bazi znanja SiteGround je 10 GB skupna omejitev na deljenem gostovanju, 800 na uro pa velja samo za GoGeek in Cloud.</p>
+    <details class="viri"><summary>Viri</summary><ol>
+      <li><a href="https://eu.siteground.com/kb/acceptable-use-sitegrounds-email-service">SiteGround: pravila uporabe e-poštne storitve</a></li>
+      <li><a href="https://eu.siteground.com/tutorials/getting-started/create-email-accounts/">SiteGround: ustvarjanje e-poštnih računov</a></li>
+      <li><a href="https://www.siteground.co.uk/kb/what_is_the_limit_on_the_maximum_size_single_email_may_have">SiteGround: največja velikost sporočila</a></li>
+      <li>Javni WHOIS in DNS poizvedbe za hostfulness.com, 7. 10. 2026</li>
+    </ol></details>
+  </article>
+
+  <footer>
+    <p>Javna različica. Iz raziskav so umaknjeni osebni podatki in interno stanje: telefonske številke, e-naslovi, imena sodelavcev in
+      partnerjev, številke iz CRM, stroški orodij in dostopi.</p>
+    <p>Raziskave so nastale s Claude Code v sejah od avgusta do oktobra 2026. Cene in pogoji ponudnikov se spreminjajo; pred odločitvijo preveri vir.</p>
+    <p><a href="../">← Kazalo projektov</a> · <a href="../cold-outreach-domene/">Cold outreach: domene in dostavljivost</a></p>
+  </footer>
+
+</div>
+</body>
+</html>

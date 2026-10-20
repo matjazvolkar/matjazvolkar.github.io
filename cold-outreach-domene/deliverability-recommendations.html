@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Cold email deliverability cheatsheet | Nevron SDR</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface-2: #232733;
+    --border: #2e3344;
+    --text: #e2e4e9;
+    --text-muted: #8b8fa3;
+    --accent: #6c63ff;
+    --accent-light: #8b84ff;
+    --green: #34d399;
+    --orange: #f59e0b;
+    --red: #ef4444;
+    --code-bg: #161820;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 14.5px;
+  }
+  .container {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+  .header {
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  .header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    background: linear-gradient(135deg, var(--accent-light), var(--green));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .header .subtitle {
+    color: var(--text-muted);
+    font-size: 14px;
+  }
+  .header .meta {
+    margin-top: 10px;
+    font-size: 12.5px;
+    color: var(--text-muted);
+  }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 20px 0 28px;
+  }
+  .legend .pill {
+    font-size: 11.5px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+  }
+
+  .pill-crit { background: rgba(239, 68, 68, 0.15); color: var(--red); border: 1px solid rgba(239, 68, 68, 0.3); }
+  .pill-imp { background: rgba(245, 158, 11, 0.15); color: var(--orange); border: 1px solid rgba(245, 158, 11, 0.3); }
+  .pill-rec { background: rgba(52, 211, 153, 0.15); color: var(--green); border: 1px solid rgba(52, 211, 153, 0.3); }
+  .pill-opt { background: rgba(139, 143, 163, 0.15); color: var(--text-muted); border: 1px solid var(--border); }
+
+  .section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 20px;
+  }
+  .section h2 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    color: var(--accent-light);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section h2 .letter {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    background: var(--surface-2);
+    color: var(--text-muted);
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .rules { list-style: none; padding: 0; }
+  .rules li {
+    display: grid;
+    grid-template-columns: 118px 1fr;
+    gap: 14px;
+    align-items: start;
+    padding: 8px 0;
+    border-top: 1px solid var(--border);
+    font-size: 14px;
+  }
+  .rules li:first-child { border-top: none; padding-top: 2px; }
+  .rules .pill {
+    font-size: 10.5px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    text-align: center;
+    display: inline-block;
+    width: 100%;
+    box-sizing: border-box;
+    justify-self: start;
+  }
+
+  .rules .detail { color: var(--text-muted); display: block; font-size: 12.5px; margin-top: 2px; }
+  strong { color: #fff; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0;
+    font-size: 13.5px;
+  }
+  th {
+    background: var(--surface-2);
+    text-align: left;
+    padding: 10px 14px;
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border);
+  }
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    text-align: left;
+  }
+  tr:last-child td { border-bottom: none; }
+  table code { font-size: 12px; }
+
+  code {
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    font-size: 12.5px;
+    background: var(--code-bg);
+    padding: 1px 6px;
+    border-radius: 4px;
+    color: var(--accent-light);
+  }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  @media (max-width: 720px) {
+    .grid-2 { grid-template-columns: 1fr; }
+    .rules li { grid-template-columns: 108px 1fr; gap: 10px; }
+  }
+
+  .callout {
+    background: var(--surface);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 14px 18px;
+    margin: 16px 0;
+    font-size: 13.5px;
+  }
+  .callout.warning { border-left-color: var(--orange); }
+  .callout.success { border-left-color: var(--green); }
+  .callout > strong:first-child { display: block; margin-bottom: 4px; }
+
+  .footer-note {
+    margin-top: 32px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    font-size: 12.5px;
+    color: var(--text-muted);
+  }
+
+  /* Phase cards (scaling timeline) */
+  .phases {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin: 20px 0;
+  }
+  .phase-card {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 14px 16px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+  .phase-card.phase-now {
+    border-color: var(--green);
+    background: linear-gradient(180deg, rgba(52, 211, 153, 0.08), var(--surface-2));
+  }
+  .phase-card.phase-tip {
+    border-color: rgba(245, 158, 11, 0.4);
+    background: linear-gradient(180deg, rgba(245, 158, 11, 0.06), var(--surface-2));
+  }
+  .phase-card.phase-future {
+    border-color: var(--border);
+    opacity: 0.88;
+  }
+  .phase-bar {
+    height: 5px;
+    background: linear-gradient(90deg, var(--accent), var(--green));
+    border-radius: 3px;
+    margin-bottom: 14px;
+    min-width: 14px;
+  }
+  .phase-card.phase-now .phase-bar { background: var(--green); }
+  .phase-card.phase-tip .phase-bar { background: linear-gradient(90deg, var(--accent), var(--orange)); }
+  .phase-card.phase-future .phase-bar { background: linear-gradient(90deg, var(--accent), var(--red)); }
+  .phase-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  .phase-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--text-muted);
+  }
+  .phase-date {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-family: 'SF Mono', 'Consolas', monospace;
+  }
+  .phase-card h4 {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--text);
+    margin: 4px 0 4px;
+    line-height: 1.35;
+  }
+  .phase-volume {
+    font-size: 13px;
+    color: var(--accent-light);
+    font-weight: 600;
+    margin: 0 0 10px 0;
+  }
+  .phase-notes {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 11.5px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+  .phase-notes li {
+    padding: 2px 0;
+    border-top: 1px dashed var(--border);
+  }
+  .phase-notes li:first-child { border-top: none; }
+
+  @media (max-width: 960px) {
+    .phases { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 520px) {
+    .phases { grid-template-columns: 1fr; }
+  }
+
+  /* Hero */
+  .hero {
+    margin: 0 0 28px;
+    padding: 44px 40px 40px;
+    border-radius: 16px;
+    background:
+      radial-gradient(circle at 80% 10%, rgba(52, 211, 153, 0.12), transparent 55%),
+      radial-gradient(circle at 10% 90%, rgba(108, 99, 255, 0.18), transparent 55%),
+      linear-gradient(135deg, #181c28, #1f2331);
+    border: 1px solid rgba(139, 132, 255, 0.22);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero .eyebrow {
+    display: inline-block;
+    font-size: 11.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--accent-light);
+    padding: 5px 12px;
+    border-radius: 20px;
+    background: rgba(139, 132, 255, 0.12);
+    border: 1px solid rgba(139, 132, 255, 0.3);
+    margin-bottom: 18px;
+  }
+  .hero h1 {
+    font-size: 40px;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 14px;
+    background: linear-gradient(135deg, #e2e4e9 0%, var(--accent-light) 45%, var(--green) 95%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.5px;
+  }
+  .hero .lede {
+    font-size: 16px;
+    color: var(--text);
+    line-height: 1.55;
+    max-width: 780px;
+    margin-bottom: 22px;
+  }
+  .hero .lede strong { color: var(--accent-light); }
+  .hero .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-top: 26px;
+    padding-top: 22px;
+    border-top: 1px solid rgba(139, 132, 255, 0.15);
+  }
+  .hero .stat .value {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--green);
+    line-height: 1.1;
+    margin-bottom: 4px;
+  }
+  .hero .stat .label {
+    font-size: 11.5px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+  }
+  .hero .meta-line {
+    font-size: 12.5px;
+    color: var(--text-muted);
+    margin-top: 18px;
+  }
+  @media (max-width: 720px) {
+    .hero { padding: 32px 24px 28px; }
+    .hero h1 { font-size: 30px; }
+    .hero .lede { font-size: 14.5px; }
+    .hero .stats { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* Big doc link cards */
+  .doc-links {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 36px;
+  }
+  .doc-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px 24px;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .doc-card::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    background: linear-gradient(180deg, var(--accent), var(--green));
+  }
+  .doc-card.back::before {
+    background: linear-gradient(180deg, var(--accent-light), var(--accent));
+  }
+  .doc-card:hover {
+    border-color: var(--accent-light);
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, rgba(108, 99, 255, 0.08), rgba(52, 211, 153, 0.04)), var(--surface);
+  }
+  .doc-card .doc-tag {
+    font-size: 10.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+  .doc-card h3 {
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 8px;
+    line-height: 1.25;
+  }
+  .doc-card p {
+    font-size: 13.5px;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-bottom: 14px;
+  }
+  .doc-card .doc-cta {
+    font-size: 13px;
+    color: var(--accent-light);
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .doc-card:hover .doc-cta { color: var(--green); }
+  @media (max-width: 720px) {
+    .doc-links { grid-template-columns: 1fr; }
+  }
+</style>
+<style>
+  @media (max-width: 700px) {
+    table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    code { overflow-wrap: anywhere; word-break: break-word; }
+    pre { overflow-x: auto; white-space: pre-wrap; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div style="margin: 0 0 28px; padding: 14px 18px; border: 1px solid rgba(245,158,11,.55); border-radius: 10px; background: rgba(245,158,11,.10); font-size: 14px; line-height: 1.55;">
+    <strong>Javna kopija, stanje 22. 4. 2026.</strong> Od takrat se je spremenilo: sledenje odprtjem in klikom je zdaj izklopljeno povsod (zero tracking), razdelitev pošiljateljev po domenah in kanalih je drugačna, kot piše tu.
+    Imena in naslovi pošiljateljev, interni prihodki, cene in napoved strank so na tej kopiji umaknjeni.
+    <a href="index.html" style="color: inherit;">Vsi trije deli</a>
+  </div>
+
+  <div class="hero">
+    <span class="eyebrow">Part 2 of 3 · The rules</span>
+    <h1>Cold email deliverability: the cheatsheet</h1>
+    <p class="lede">
+      Every rule, setting, and guardrail that keeps Nevron's cold outreach out of spam folders.
+      Organized A-L, priority-tagged, and written for the person actually configuring Google Workspace + Instantly.
+      The standard: <strong>6 accounts per domain × N domains</strong>, pacing under 33 sends/mailbox/day.
+    </p>
+    <div class="stats">
+      <div class="stat"><div class="value">12</div><div class="label">Sections A-L</div></div>
+      <div class="stat"><div class="value">80+</div><div class="label">Rules &amp; settings</div></div>
+      <div class="stat"><div class="value">4</div><div class="label">Auth protocols</div></div>
+      <div class="stat"><div class="value">GDPR</div><div class="label">+ CAN-SPAM covered</div></div>
+    </div>
+    <p class="meta-line">Nevron SDR &middot; Last updated 2026-04-22 &middot; Companion to the scaling strategy and trynevron.com DNS setup</p>
+  </div>
+
+  <div class="doc-links">
+    <a class="doc-card back" href="scaling-strategy.html">
+      <div class="doc-tag">← Back · Part 1</div>
+      <h3>Cold outreach scaling strategy</h3>
+      <p>The 18-month plan - why 6×N, how the ramp builds to 1,584/day, where the money actually comes from.</p>
+      <span class="doc-cta">← Return to strategy overview</span>
+    </a>
+    <a class="doc-card" href="dns-setup-cheatsheet.html">
+      <div class="doc-tag">Continue → Part 3</div>
+      <h3>trynevron.com: full DNS setup</h3>
+      <p>Hands-on implementation. Every DNS record, Workspace step, and Instantly config to launch a new domain cleanly.</p>
+      <span class="doc-cta">Continue to setup guide →</span>
+    </a>
+  </div>
+
+  <div class="legend">
+    <span class="pill pill-crit">Critical</span>
+    <span class="pill pill-imp">Important</span>
+    <span class="pill pill-rec">Recommended</span>
+    <span class="pill pill-opt">Optional</span>
+  </div>
+
+  <!-- Scaling strategy -->
+  <div class="section">
+    <h2><span class="letter" style="background: var(--accent); color: #fff;">★</span> Scaling strategy: domains, accounts, personas</h2>
+
+    <p style="margin-bottom: 16px; color: var(--text-muted);">
+      The safe way to scale cold email is horizontally - more domains &amp; accounts, not more volume per account.
+      Each account maxes at ~33/day on Google Workspace. Each domain maxes at ~200-300/day before domain-level filters kick in.
+    </p>
+
+    <h4 style="color: var(--text); margin-top: 20px;">Standard: 6 real-name accounts per domain</h4>
+    <p style="color: var(--text-muted); font-size: 13.5px;">
+      Every new outreach domain uses the same 6-person roster. Same names, same LinkedIn URLs, same signatures across domains.
+      One identity per person - just multiple mailboxes.
+    </p>
+    <table>
+      <tr><th>Persona</th><th>Mailbox pattern</th><th>Role</th></tr>
+      <tr><td>Sodelavec 1</td><td><code>first.last@{domain}</code></td><td>CEO</td></tr>
+      <tr><td>Sodelavec 2</td><td><code>first.last@{domain}</code></td><td>CTO</td></tr>
+      <tr><td>Sodelavec 3</td><td><code>first.last@{domain}</code></td><td>GTM Manager</td></tr>
+      <tr><td>Sodelavec 4</td><td><code>first.last@{domain}</code></td><td>Product Manager</td></tr>
+      <tr><td>Sodelavec 5</td><td><code>first.last@{domain}</code></td><td>AI Solutions Lead</td></tr>
+      <tr><td>Sodelavec 6</td><td><code>first.last@{domain}</code></td><td>Project Manager</td></tr>
+    </table>
+    <p style="color: var(--text-muted); font-size: 12.5px; margin-top: 8px;">
+      All six roles are sales-facing or client-adjacent - credible senders for cold outreach to hotel GMs/owners.
+    </p>
+    <div class="callout warning" style="margin-top: 12px;">
+      <strong>6 is the ceiling per domain - do not go to 7+</strong>
+      At 6 × 33 = 198/day you sit at the top of Google Workspace's safe zone (~200-300/day domain-level ceiling).
+      If you want a safety buffer, drop per-account limit to 30/day → 6 × 30 = 180/day.
+      Need more volume? Add another domain, not another account.
+    </div>
+
+    <h4 style="color: var(--text); margin-top: 24px;">TLD ranking for cold email</h4>
+    <table>
+      <tr><th>TLD</th><th>Reputation</th><th>Notes</th></tr>
+      <tr><td><code>.com</code></td><td class="check">Best</td><td style="color: var(--text-muted);">Gold standard. Highest inbox placement. Go here first.</td></tr>
+      <tr><td><code>.co</code></td><td class="check">Strong</td><td style="color: var(--text-muted);">Nearly as good as .com. Nevron's primary site uses it.</td></tr>
+      <tr><td><code>.io</code></td><td class="check">Strong</td><td style="color: var(--text-muted);">Tech-leaning but reputable.</td></tr>
+      <tr><td><code>.net</code></td><td class="check">Good</td><td style="color: var(--text-muted);">Solid. Nevron owns nevron.net already.</td></tr>
+      <tr><td><code>.ai</code></td><td class="check">Good</td><td style="color: var(--text-muted);">Strong reputation, pricey (~$80/yr).</td></tr>
+      <tr><td><code>.info</code></td><td class="warn">Acceptable</td><td style="color: var(--text-muted);">Works, slightly lower reputation than .com/.co.</td></tr>
+      <tr><td><code>.app / .dev</code></td><td class="warn">Acceptable</td><td style="color: var(--text-muted);">Newer, still building reputation.</td></tr>
+      <tr><td><code>.xyz .top .click .site .online .work .biz</code></td><td class="bad">Avoid</td><td style="color: var(--text-muted);">Historically abused by spammers. Avoid.</td></tr>
+    </table>
+
+    <h4 style="color: var(--text); margin-top: 24px;">Best names for new Nevron outreach domains</h4>
+    <p style="color: var(--text-muted); font-size: 13.5px;">
+      Search pattern: <code>{verb}nevron.com</code> or <code>nevron{word}.com</code>.
+      Candidates (check availability): <code>trynevron.com</code>, <code>getnevron.com</code>, <code>heynevron.com</code>, <code>usenevron.com</code>, <code>withnevron.com</code>, <code>nevron.io</code>, <code>nevronhq.com</code>.
+    </p>
+
+    <!-- Duplicate personas -->
+    <div class="callout" style="margin-top: 28px; border-left-color: var(--green);">
+      <strong style="color: var(--green); font-size: 15px; display: block; margin-bottom: 8px;">★ Duplicate personas across domains - allowed &amp; recommended</strong>
+      Using the same real-person name on multiple domains (e.g. <code>ana.novak@nevron.net</code> + <code>ana.novak@trynevron.com</code>) is a <strong>supported scaling pattern,</strong> not a spam signal. Each domain has independent reputation. Real people commonly hold multiple mailboxes (corporate + subsidiary + acquired brand).
+    </div>
+
+    <div class="callout danger">
+      <strong style="color: var(--red); font-size: 15px; display: block; margin-bottom: 8px;">⚠ The one hard rule</strong>
+      <strong>No prospect may ever receive outreach from the same human name across two domains.</strong>
+      If a hotel GM gets an email from <code>ana.novak@nevron.net</code> Monday and <code>ana.novak@trynevron.com</code> Wednesday, they flag both as spam → both domains burn at once.
+    </div>
+
+    <h4 style="color: var(--text); margin-top: 16px;">Three ways to enforce non-overlap</h4>
+    <ol class="instructions" style="padding-left: 22px;">
+      <li>
+        <strong>Geographic / ICP split (recommended for Nevron).</strong>
+        <span style="color: var(--text-muted);">E.g., nevron.net → EU (NL, SI, HR), trynevron.com → US (Florida). Lists naturally disjoint. Matches Nevron's two-region ICP structure.</span>
+      </li>
+      <li>
+        <strong>Angle split.</strong>
+        <span style="color: var(--text-muted);">Domain A runs Renovation + Rating angles, Domain B runs Competitor + AI. Same audience, different sequences. Dedupe on lead import.</span>
+      </li>
+      <li>
+        <strong>Cross-workspace suppression list.</strong>
+        <span style="color: var(--text-muted);">Single shared suppression file, every campaign blocks against it. Fragile - one slip and both domains catch heat. Prefer #1 or #2.</span>
+      </li>
+    </ol>
+
+    <h4 style="color: var(--text); margin-top: 20px;">Signature consistency rule</h4>
+    <p style="color: var(--text-muted); font-size: 13.5px;">
+      Across all domains for the same person: same LinkedIn URL, same job title, same phone number, same profile photo.
+      One identity, multiple mailboxes. If signatures diverge, prospects see fake personas and reputation collapses.
+    </p>
+
+    <h4 style="color: var(--text); margin-top: 20px;">Optional: local-part variation for extra safety</h4>
+    <p style="color: var(--text-muted); font-size: 13.5px;">
+      If you want extra inbox-header distance in case of accidental list collision:
+      <code>ana.novak@nevron.net</code> + <code>ana@trynevron.com</code>, or
+      <code>marko.kos@nevron.net</code> + <code>marko@trynevron.com</code>.
+      Costs nothing, buys a little protection. Not required if enforcement rule #1 or #2 is in place.
+    </p>
+  </div>
+
+  <!-- Scaling ceilings -->
+  <div class="section">
+    <h2><span class="letter" style="background: var(--orange); color: #fff;">⚡</span> Scaling ceilings: limits &amp; tipping points</h2>
+
+    <p style="margin-bottom: 16px; color: var(--text-muted);">
+      Domains are not infinitely stackable. Three different ceilings kick in at different scales: Instantly plan, TAM, and deliverability pattern risk.
+    </p>
+
+    <h4 style="color: var(--text); margin-top: 20px;">1. Instantly plan ceilings (verified 2026-04)</h4>
+    <table>
+      <tr>
+        <th>Plan</th>
+        <th>Cost</th>
+        <th>Emails/month</th>
+        <th>Supports ~</th>
+        <th>Key extras</th>
+      </tr>
+      <tr>
+        <td>Growth</td>
+        <td><code>$47/mo</code></td>
+        <td>5,000</td>
+        <td>1 domain, part-time</td>
+        <td style="color: var(--text-muted);">Too low for scaled cold email</td>
+      </tr>
+      <tr style="background: rgba(108, 99, 255, 0.08);">
+        <td><strong>Hypergrowth</strong><br><span style="color: var(--accent-light); font-size: 11px;">Nevron's plan</span></td>
+        <td><code>$97/mo</code></td>
+        <td>100,000</td>
+        <td>7-8 fully-utilized domains</td>
+        <td style="color: var(--text-muted);">Unlimited accounts + warmup, A/B testing, Unibox direct reply</td>
+      </tr>
+      <tr>
+        <td><strong>Light Speed</strong></td>
+        <td><code>$358/mo</code></td>
+        <td>500,000</td>
+        <td>35-40 domains</td>
+        <td style="color: var(--text-muted);">SISR system - dedicated IP / server management. Big jump in deliverability control.</td>
+      </tr>
+      <tr>
+        <td>Enterprise</td>
+        <td><code>Custom</code></td>
+        <td>500K+</td>
+        <td>Unlimited</td>
+        <td style="color: var(--text-muted);">Private Deliverability Network, dedicated account manager, shared Slack channel</td>
+      </tr>
+    </table>
+    <p style="color: var(--text-muted); font-size: 12.5px; margin-top: 8px;">
+      Fully-utilized domain = 6 accounts × 33/day × 22 working days ≈ 4,360 emails/month. Hypergrowth's 100K cap = ~23 domains theoretical, ~7-8 in practice when you account for follow-up sequences multiplying touches per lead.
+      <strong>Upgrade trigger:</strong> hitting &gt; 70K emails/month on Hypergrowth.
+    </p>
+
+    <h4 style="color: var(--text); margin-top: 28px;">2. Nevron TAM: revised</h4>
+    <p style="color: var(--text-muted); font-size: 13.5px;">
+      Nevron Mobile (the foot-in-door guest app) has <strong>global TAM</strong> across all independent hotels - not just FL / NL / SI / HR. Full NevronCore platform has a tighter TAM.
+    </p>
+    <table>
+      <tr><th>Product</th><th>TAM estimate</th><th>Geography</th></tr>
+      <tr><td>Nevron Mobile (guest app)</td><td><strong>~12K-20K hotels</strong></td><td>All independent 75-200 room hotels, globally</td></tr>
+      <tr><td>Full NevronCore (IPTV, Cast, Digital Signage, AI)</td><td>~3K-6K hotels</td><td>Upper-upscale / luxury / wellness only, high GOP</td></tr>
+      <tr><td>Current pilot (FL + NL + SI + HR)</td><td>~500-1,500 hotels</td><td>Immediate reachable set</td></tr>
+    </table>
+    <p style="color: var(--text-muted); font-size: 12.5px; margin-top: 8px;">
+      <strong>Implication:</strong> TAM is NOT the early ceiling. If Nevron Mobile's global expansion plays out, the 100K/mo Hypergrowth cap eventually becomes the bottleneck - but only after 2-3 years of geo-expansion.
+    </p>
+
+    <h4 style="color: var(--text); margin-top: 28px;">3. Deliverability pattern risk: how to dodge it at scale</h4>
+    <p style="color: var(--text-muted); font-size: 13.5px;">
+      At 5+ domains, the infrastructure fingerprint becomes visible to Google/Microsoft filters.
+      Known spammer signatures: all domains registered within days, same registrar, same DNS, same redirect target, same WHOIS contact, similar names.
+      Below is how to <strong>vary the fingerprint</strong> so your domain cluster looks like organic corporate growth, not a spam farm.
+    </p>
+    <table>
+      <tr><th>Signal</th><th>Spammer pattern</th><th>Nevron mitigation</th></tr>
+      <tr>
+        <td>Registration timing</td>
+        <td>10 domains in 3 days</td>
+        <td>Stagger 3-6 weeks between registrations</td>
+      </tr>
+      <tr>
+        <td>Registrar</td>
+        <td>All same (e.g. Namecheap)</td>
+        <td>Rotate: Cloudflare, Namecheap, Porkbun, Gandi</td>
+      </tr>
+      <tr>
+        <td>DNS provider</td>
+        <td>All Cloudflare free tier</td>
+        <td>Mix: Cloudflare, AWS Route 53, DNSimple, DNSMadeEasy</td>
+      </tr>
+      <tr>
+        <td>Naming logic</td>
+        <td>Obvious prefix variants (try/get/hey/use-nevron)</td>
+        <td>Vary: <code>nevron.co</code>, <code>nevronhq.com</code>, <code>hotelmobilepartner.io</code>, <code>guestappworks.com</code></td>
+      </tr>
+      <tr>
+        <td>TLD diversity</td>
+        <td>All .com</td>
+        <td>Mix .com / .co / .io / .net</td>
+      </tr>
+      <tr>
+        <td>Redirect target</td>
+        <td>All → same URL</td>
+        <td>Point some to nevron.co, some to dedicated landing pages, some to nevron.co/mobile, etc.</td>
+      </tr>
+      <tr>
+        <td>WHOIS contact</td>
+        <td>Same name on every record</td>
+        <td>Different legitimate registrant per domain (still Nevron staff, just rotated)</td>
+      </tr>
+      <tr>
+        <td>Warmup start</td>
+        <td>All warmup starts same day</td>
+        <td>Stagger by 2-4 weeks</td>
+      </tr>
+      <tr>
+        <td>Sending IPs</td>
+        <td>Shared Instantly IP pool = poisoned by other customers' spam</td>
+        <td>Upgrade to Light Speed ($358) at 5+ domains for SISR dedicated IP/server</td>
+      </tr>
+    </table>
+    <div class="callout success">
+      <strong>Rule of thumb</strong>
+      Below 4 domains: don't overthink it, use Cloudflare + .com and move on. <br>
+      4-7 domains: start varying registrar + DNS + naming pattern. <br>
+      8+ domains: upgrade Instantly plan + full fingerprint diversification + dedicated ops.
+    </div>
+
+  </div>
+
+  <h2 style="margin-top: 56px; margin-bottom: 20px; font-size: 28px; font-weight: 700; background: linear-gradient(135deg, var(--accent-light), var(--green)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; padding: 0 4px;">The cheatsheet</h2>
+
+  <!-- A: Domain Fundamentals -->
+  <div class="section">
+    <h2><span class="letter">A</span> Domain fundamentals</h2>
+    <ul class="rules">
+      <li><span class="pill pill-crit">Critical</span><div>Use a dedicated outreach domain - <strong>never the primary corp domain</strong>.<span class="detail">Protects nevron.co reputation.</span></div></li>
+      <li><span class="pill pill-crit">Critical</span><div>Domain age ≥ 30 days before first send, ideally ≥ 90 days.<span class="detail">Fresh domains trigger spam filters instantly.</span></div></li>
+      <li><span class="pill pill-imp">Important</span><div>Register for ≥ 2 years upfront.<span class="detail">1-year registrations are a common spammer pattern.</span></div></li>
+      <li><span class="pill pill-rec">Recommended</span><div>WHOIS not fully private - show legitimate registrant where possible.<span class="detail">Fully private WHOIS + new domain = spam signal combo.</span></div></li>
+      <li><span class="pill pill-rec">Recommended</span><div>Consistent registrant info across all outreach domains you own.</div></li>
+      <li><span class="pill pill-opt">Optional</span><div>Avoid TLDs with bad reputation (<code>.xyz</code>, <code>.top</code>, <code>.click</code>).<span class="detail">.com / .net / .io / .co are safe. .info is fine but slightly lower reputation than .com.</span></div></li>
+    </ul>
+  </div>
+
+  <!-- B: Email infrastructure -->
+  <div class="section">
+    <h2><span class="letter">B</span> Email infrastructure (Google Workspace)</h2>
+    <ul class="rules">
+      <li><span class="pill pill-crit">Critical</span><div>Google Workspace (Business Starter $6/user) - gold standard deliverability.<span class="detail">Much better than self-hosted. Microsoft 365 is a fine alternative.</span></div></li>
+      <li><span class="pill pill-crit">Critical</span><div>Real named mailboxes (first.last@domain) - never <code>info@</code>, <code>office@</code>, <code>sales@</code>, <code>contact@</code>.<span class="detail">Role accounts are a textbook spam signal.</span></div></li>
+      <li><span class="pill pill-imp">Important</span><div>Real employees behind each mailbox - 6-persona standard per domain.<span class="detail">Same six people across every new outreach domain.</span></div></li>
+      <li><span class="pill pill-imp">Important</span><div>Max 33 emails/day per account on Google Workspace - Instantly's official recommendation is 30-50/day.<span class="detail">NOT 100 or 200. Google filters get aggressive above this.</span></div></li>
+      <li><span class="pill pill-imp">Important</span><div>Scale horizontally - more domains, not more volume per account.<span class="detail">Ceiling per domain ≈ 200-300/day. 6 accounts × 33 = 198/day sits at the top of safe zone - don't push to 7+.</span></div></li>
+      <li><span class="pill pill-rec">Recommended</span><div>Login to Gmail web UI once a week per account.<span class="detail">Accounts with no human activity look botted.</span></div></li>
+    </ul>
+  </div>
+
+  <!-- C: DNS Authentication -->
+  <div class="section">
+    <h2><span class="letter">C</span> DNS authentication</h2>
+    <ul class="rules">
+      <li><span class="pill pill-crit">Critical</span><div><strong>SPF</strong> - single record, <code>v=spf1 include:_spf.google.com ~all</code>.<span class="detail">Multiple SPF records = instant fail. Upgrade <code>~all</code> → <code>-all</code> after 2 weeks clean.</span></div></li>
+      <li><span class="pill pill-crit">Critical</span><div><strong>DKIM 2048-bit</strong> - generated in Google Admin → Gmail → Authenticate email.<span class="detail">1024-bit is deprecated. Publish the TXT record, then hit "Start authentication".</span></div></li>
+      <li><span class="pill pill-crit">Critical</span><div><strong>DMARC</strong> - phased rollout: <code>p=none</code> → <code>p=quarantine</code> → <code>p=reject</code>.<span class="detail">Start: <code>v=DMARC1; p=none; rua=mailto:dmarc@nevron.net; pct=100</code>. 2 weeks each phase.</span></div></li>
+      <li><span class="pill pill-imp">Important</span><div>Valid MX records pointing to Google - <code>SMTP.GOOGLE.COM</code> priority 1.<span class="detail">Workspace uses single record now (not the old 5-record set).</span></div></li>
+      <li><span class="pill pill-rec">Recommended</span><div><strong>MTA-STS</strong> + <strong>TLS-RPT</strong> - TLS enforcement + reporting.<span class="detail">Shows mail hygiene. Host <code>mta-sts.txt</code> at <code>https://mta-sts.domain/.well-known/</code>.</span></div></li>
+      <li><span class="pill pill-rec">Recommended</span><div><strong>DNSSEC</strong> enabled at registrar.<span class="detail">Defense against spoofing. One click at most registrars.</span></div></li>
+      <li><span class="pill pill-opt">Optional</span><div><strong>BIMI</strong> - brand logo in inbox (requires VMC certificate, ~$1,500/yr).<span class="detail">Nice-to-have. Not worth it until volume justifies.</span></div></li>
+    </ul>
+  </div>
+
+  <!-- D: Web Presence -->
+  <div class="section">
+    <h2><span class="letter">D</span> Web presence</h2>
+    <ul class="rules">
+      <li><span class="pill pill-crit">Critical</span><div>The domain <strong>must resolve to something</strong> - blank/ECONNREFUSED is a major spam signal.</div></li>
+      <li><span class="pill pill-imp">Important</span><div><strong>301 redirect</strong> to nevron.co (real site) - fastest, cleanest fix.<span class="detail">Signals: legitimate business, no cloaking, one canonical brand.</span></div></li>
+      <li><span class="pill pill-rec">Recommended</span><div>Valid SSL cert on redirect host.<span class="detail">Let's Encrypt via Cloudflare or your host - free, auto-renew.</span></div></li>
+      <li><span class="pill pill-opt">Optional</span><div>Dedicated landing page per outreach domain.<span class="detail">Overkill unless you're running high-volume campaigns.</span></div></li>
+    </ul>
+  </div>
+
+  <!-- E: Instantly -->
+  <div class="section">
+    <h2><span class="letter">E</span> Instantly configuration</h2>
+    <ul class="rules">
+      <li><span class="pill pill-crit">Critical</span><div>Enable warmup on every account for 3-4 weeks before first campaign send.<span class="detail"><code>warmup.limit: 10</code>, <code>enable_slow_ramp: true</code>, <code>weekday_only: true</code>.</span></div></li>
+      <li><span class="pill pill-crit">Critical</span><div>Per-account daily limit = <code>33</code>.</div></li>
+      <li><span class="pill pill-imp">Important</span><div>Sending gap: <code>1</code> minute minimum between sends from the same account.<span class="detail">Burst sends look automated.</span></div></li>
+      <li><span class="pill pill-imp">Important</span><div><strong>Custom tracking domain</strong> - <code>track.nevron.net</code> via CNAME to <code>open.sleadtrack.com</code>.<span class="detail">UNPROXIED if using Cloudflare. Default Instantly tracking domain is shared = bad.</span></div></li>
+      <li><span class="pill pill-rec">Recommended</span><div>Turn off open tracking, keep link tracking only.<span class="detail">Open-tracking pixels now hurt more than they help (Apple MPP, etc.).</span></div></li>
+      <li><span class="pill pill-rec">Recommended</span><div>Account rotation enabled across all campaigns.</div></li>
+    </ul>
+  </div>
+
+  <!-- F: Email content -->
+  <div class="section">
+    <h2><span class="letter">F</span> Email content</h2>
+    <ul class="rules">
+      <li><span class="pill pill-crit">Critical</span><div>Plain text only - no HTML, no images, no fancy formatting, no tracking pixels visible.<span class="detail">Looks like a human wrote it in Gmail.</span></div></li>
+      <li><span class="pill pill-crit">Critical</span><div>Personalized first line with a hotel-specific detail - every single email.<span class="detail">Non-negotiable per Nevron SDR rules.</span></div></li>
+      <li><span class="pill pill-imp">Important</span><div>Length: 50-125 words per email.<span class="detail">Sweet spot for replies and spam filters alike.</span></div></li>
+      <li><span class="pill pill-imp">Important</span><div>No spam trigger words: "free", "guarantee", "act now", "limited time", "$$$", "click here".</div></li>
+      <li><span class="pill pill-imp">Important</span><div>Max 1 link per email, 0 on email #1 ideally.<span class="detail">Link-heavy cold email = spam folder.</span></div></li>
+      <li><span class="pill pill-rec">Recommended</span><div>Vary subject line / opener per sequence step - A/B spintax.</div></li>
+      <li><span class="pill pill-rec">Recommended</span><div>Plain-text signature: name, role, company, LinkedIn URL.</div></li>
+    </ul>
+  </div>
+
+  <!-- G: List hygiene -->
+  <div class="section">
+    <h2><span class="letter">G</span> List hygiene</h2>
+    <ul class="rules">
+      <li><span class="pill pill-crit">Critical</span><div>Verify every email before send - Instantly bulk verify or <code>mcp__instantly__verify_email</code>.<span class="detail">Bounce rate > 3% = ISP penalty.</span></div></li>
+      <li><span class="pill pill-crit">Critical</span><div>Drop all catch-all results - they're roulette.</div></li>
+      <li><span class="pill pill-imp">Important</span><div>Never re-import unsubscribes or hard bounces.<span class="detail">Instantly's suppression list is per-workspace - check it.</span></div></li>
+      <li><span class="pill pill-imp">Important</span><div>ICP-qualified leads only (75-200 rooms, independent, owner-operated).<span class="detail">Low-quality list = low reply rate = flagged as spam.</span></div></li>
+      <li><span class="pill pill-rec">Recommended</span><div>Honor unsubscribe within 10 business days (CAN-SPAM) / 30 days (GDPR).</div></li>
+    </ul>
+  </div>
+
+  <!-- H: Warmup & Ramp -->
+  <div class="section">
+    <h2><span class="letter">H</span> Warmup & ramp</h2>
+    <ul class="rules">
+      <li><span class="pill pill-crit">Critical</span><div>Minimum 3 weeks warmup before first real send. 4 weeks preferred.</div></li>
+      <li><span class="pill pill-imp">Important</span><div>Ramp real sends gradually: Week 1: 10/day, Week 2: 20/day, Week 3: 33/day.<span class="detail">Instantly slow-ramp handles this automatically.</span></div></li>
+      <li><span class="pill pill-imp">Important</span><div>Keep warmup running <strong>forever</strong> alongside real campaigns.<span class="detail">Not just during onboarding. Preserves reputation long-term.</span></div></li>
+    </ul>
+  </div>
+
+  <!-- I: Monitoring -->
+  <div class="section">
+    <h2><span class="letter">I</span> Deliverability monitoring</h2>
+    <ul class="rules">
+      <li><span class="pill pill-crit">Critical</span><div>Google Postmaster Tools - register every domain.<span class="detail">Spam rate, domain/IP reputation, authentication stats.</span></div></li>
+      <li><span class="pill pill-imp">Important</span><div><strong>Dmarcian</strong> free tier - parses DMARC aggregate reports.<span class="detail">Email <code>dmarc@nevron.net</code> → auto-forward to Dmarcian RUA.</span></div></li>
+      <li><span class="pill pill-imp">Important</span><div><strong>Mail-Tester.com</strong> - pre-launch check, aim for 10/10.<span class="detail">Send one test email per account before going live.</span></div></li>
+      <li><span class="pill pill-rec">Recommended</span><div>GlockApps or MXToolbox inbox placement tests monthly.</div></li>
+      <li><span class="pill pill-rec">Recommended</span><div>Monitor blacklists: Spamhaus, Barracuda, SORBS (MXToolbox free).</div></li>
+    </ul>
+  </div>
+
+  <!-- J: Sending behavior -->
+  <div class="section">
+    <h2><span class="letter">J</span> Sending behavior</h2>
+    <ul class="rules">
+      <li><span class="pill pill-imp">Important</span><div>Send during business hours in the lead's timezone - <code>weekday_only: true</code>.</div></li>
+      <li><span class="pill pill-imp">Important</span><div>Consistent daily volume - avoid on/off patterns.<span class="detail">33/day every weekday &gt; 150/day in bursts.</span></div></li>
+      <li><span class="pill pill-rec">Recommended</span><div>Follow-ups: max 4-5 per sequence, 2-4 day spacing.<span class="detail">Nevron sequence: 5 touches over 14 days - already compliant.</span></div></li>
+      <li><span class="pill pill-rec">Recommended</span><div>Stop sequences immediately on any reply (Instantly default).</div></li>
+    </ul>
+  </div>
+
+  <!-- K: Compliance -->
+  <div class="section">
+    <h2><span class="letter">K</span> Compliance (GDPR + CAN-SPAM)</h2>
+    <ul class="rules">
+      <li><span class="pill pill-crit">Critical</span><div>Unsubscribe link in every email.<span class="detail">Both GDPR and CAN-SPAM require it.</span></div></li>
+      <li><span class="pill pill-crit">Critical</span><div>Physical business address in footer.<span class="detail">CAN-SPAM mandate for US sends.</span></div></li>
+      <li><span class="pill pill-imp">Important</span><div>Honor opt-out requests: 10 business days (US) / 30 days (EU).</div></li>
+      <li><span class="pill pill-imp">Important</span><div>Document legitimate interest basis (B2B hospitality decision-makers).<span class="detail">Required under GDPR Art. 6(1)(f).</span></div></li>
+      <li><span class="pill pill-rec">Recommended</span><div>No misleading subject lines or sender identity.</div></li>
+    </ul>
+  </div>
+
+  <!-- L: Red flags -->
+  <div class="section">
+    <h2><span class="letter">L</span> Red flags: never do</h2>
+    <ul class="rules">
+      <li><span class="pill pill-crit">Critical</span><div><strong>Never</strong> send from the primary corporate domain (nevron.co).</div></li>
+      <li><span class="pill pill-crit">Critical</span><div><strong>Never</strong> use purchased email lists.</div></li>
+      <li><span class="pill pill-crit">Critical</span><div><strong>Never</strong> spin up 5+ domains in one week - registrar-level spam pattern.</div></li>
+      <li><span class="pill pill-imp">Important</span><div><strong>Never</strong> skip warmup - "fast launch" = dead domain in 3 weeks.</div></li>
+      <li><span class="pill pill-imp">Important</span><div><strong>Never</strong> use HTML emails with images/tables for cold outreach.</div></li>
+      <li><span class="pill pill-imp">Important</span><div><strong>Never</strong> use shared tracking domain (Instantly default).</div></li>
+    </ul>
+  </div>
+
+  <p class="footer-note">
+    <strong style="color: var(--accent-light);">Companion documents:</strong><br>
+    →  <a href="scaling-strategy.html" style="color: var(--accent-light);">Cold outreach scaling strategy</a> - ops tipping points, 18-month ramp plan, reply-rate benchmarks<br>
+    →  <a href="dns-setup-cheatsheet.html" style="color: var(--accent-light);">trynevron.com DNS setup guide</a> - full step-by-step for provisioning a new outreach domain</p>
+
+</div>
+</body>
+</html>

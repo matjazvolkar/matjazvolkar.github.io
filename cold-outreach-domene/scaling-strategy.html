@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Cold outreach scaling strategy | Nevron SDR</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface-2: #232733;
+    --border: #2e3344;
+    --text: #e2e4e9;
+    --text-muted: #8b8fa3;
+    --accent: #6c63ff;
+    --accent-light: #8b84ff;
+    --green: #34d399;
+    --orange: #f59e0b;
+    --red: #ef4444;
+    --code-bg: #161820;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 14.5px;
+  }
+  .container {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+  .header {
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  .header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    background: linear-gradient(135deg, var(--accent-light), var(--green));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .header .subtitle {
+    color: var(--text-muted);
+    font-size: 14px;
+  }
+  .header .meta {
+    margin-top: 10px;
+    font-size: 12.5px;
+    color: var(--text-muted);
+  }
+
+  .section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 20px;
+  }
+  .section h2 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    color: var(--accent-light);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section h2 .letter {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    background: var(--surface-2);
+    color: var(--text-muted);
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  strong { color: #fff; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0;
+    font-size: 13.5px;
+  }
+  th {
+    background: var(--surface-2);
+    text-align: left;
+    padding: 10px 14px;
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border);
+  }
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    text-align: left;
+  }
+  tr:last-child td { border-bottom: none; }
+  table code { font-size: 12px; }
+
+  code {
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    font-size: 12.5px;
+    background: var(--code-bg);
+    padding: 1px 6px;
+    border-radius: 4px;
+    color: var(--accent-light);
+  }
+
+  .callout {
+    background: var(--surface);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 14px 18px;
+    margin: 16px 0;
+    font-size: 13.5px;
+  }
+  .callout.warning { border-left-color: var(--orange); }
+  .callout.success { border-left-color: var(--green); }
+  .callout.danger { border-left-color: var(--red); }
+  .callout > strong:first-child { display: block; margin-bottom: 4px; }
+
+  .check { color: var(--green); }
+  .warn { color: var(--orange); }
+  .bad { color: var(--red); }
+
+  .footer-note {
+    margin-top: 32px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    font-size: 12.5px;
+    color: var(--text-muted);
+  }
+
+  /* Phase cards (scaling timeline) */
+  .phases {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin: 20px 0;
+  }
+  .phase-card {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 14px 16px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+  .phase-card.phase-now {
+    border-color: var(--green);
+    background: linear-gradient(180deg, rgba(52, 211, 153, 0.08), var(--surface-2));
+  }
+  .phase-card.phase-tip {
+    border-color: rgba(245, 158, 11, 0.4);
+    background: linear-gradient(180deg, rgba(245, 158, 11, 0.06), var(--surface-2));
+  }
+  .phase-card.phase-future {
+    border-color: var(--border);
+    opacity: 0.88;
+  }
+  .phase-bar {
+    height: 5px;
+    background: linear-gradient(90deg, var(--accent), var(--green));
+    border-radius: 3px;
+    margin-bottom: 14px;
+    min-width: 14px;
+  }
+  .phase-card.phase-now .phase-bar { background: var(--green); }
+  .phase-card.phase-tip .phase-bar { background: linear-gradient(90deg, var(--accent), var(--orange)); }
+  .phase-card.phase-future .phase-bar { background: linear-gradient(90deg, var(--accent), var(--red)); }
+  .phase-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  .phase-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--text-muted);
+  }
+  .phase-date {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-family: 'SF Mono', 'Consolas', monospace;
+  }
+  .phase-card h4 {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--text);
+    margin: 4px 0 4px;
+    line-height: 1.35;
+  }
+  .phase-volume {
+    font-size: 13px;
+    color: var(--accent-light);
+    font-weight: 600;
+    margin: 0 0 10px 0;
+  }
+  .phase-notes {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 11.5px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+  .phase-notes li {
+    padding: 2px 0;
+    border-top: 1px dashed var(--border);
+  }
+  .phase-notes li:first-child { border-top: none; }
+
+  @media (max-width: 960px) {
+    .phases { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 520px) {
+    .phases { grid-template-columns: 1fr; }
+  }
+
+  .bottom-line {
+    margin-top: 32px;
+    padding: 22px 26px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(108, 99, 255, 0.12), rgba(52, 211, 153, 0.08));
+    border: 1px solid rgba(139, 132, 255, 0.3);
+    font-size: 14.5px;
+  }
+  .bottom-line h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    background: linear-gradient(135deg, var(--accent-light), var(--green));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Hero */
+  .hero {
+    margin: 0 0 32px;
+    padding: 44px 40px 40px;
+    border-radius: 16px;
+    background:
+      radial-gradient(circle at 80% 10%, rgba(52, 211, 153, 0.12), transparent 55%),
+      radial-gradient(circle at 10% 90%, rgba(108, 99, 255, 0.18), transparent 55%),
+      linear-gradient(135deg, #181c28, #1f2331);
+    border: 1px solid rgba(139, 132, 255, 0.22);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero .eyebrow {
+    display: inline-block;
+    font-size: 11.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--accent-light);
+    padding: 5px 12px;
+    border-radius: 20px;
+    background: rgba(139, 132, 255, 0.12);
+    border: 1px solid rgba(139, 132, 255, 0.3);
+    margin-bottom: 18px;
+  }
+  .hero h1 {
+    font-size: 40px;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 14px;
+    background: linear-gradient(135deg, #e2e4e9 0%, var(--accent-light) 45%, var(--green) 95%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.5px;
+  }
+  .hero .lede {
+    font-size: 16px;
+    color: var(--text);
+    line-height: 1.55;
+    max-width: 780px;
+    margin-bottom: 22px;
+  }
+  .hero .lede strong { color: var(--accent-light); }
+  .hero .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-top: 26px;
+    padding-top: 22px;
+    border-top: 1px solid rgba(139, 132, 255, 0.15);
+  }
+  .hero .stat .value {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--green);
+    line-height: 1.1;
+    margin-bottom: 4px;
+  }
+  .hero .stat .label {
+    font-size: 11.5px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+  }
+  .hero .meta-line {
+    font-size: 12.5px;
+    color: var(--text-muted);
+    margin-top: 18px;
+  }
+  @media (max-width: 720px) {
+    .hero { padding: 32px 24px 28px; }
+    .hero h1 { font-size: 30px; }
+    .hero .lede { font-size: 14.5px; }
+    .hero .stats { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* Big doc link cards */
+  .doc-links {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 36px;
+  }
+  .doc-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px 24px;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .doc-card::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    background: linear-gradient(180deg, var(--accent), var(--green));
+  }
+  .doc-card:hover {
+    border-color: var(--accent-light);
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, rgba(108, 99, 255, 0.08), rgba(52, 211, 153, 0.04)), var(--surface);
+  }
+  .doc-card .doc-tag {
+    font-size: 10.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+  .doc-card h3 {
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 8px;
+    line-height: 1.25;
+  }
+  .doc-card p {
+    font-size: 13.5px;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-bottom: 14px;
+  }
+  .doc-card .doc-cta {
+    font-size: 13px;
+    color: var(--accent-light);
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .doc-card:hover .doc-cta { color: var(--green); }
+  @media (max-width: 720px) {
+    .doc-links { grid-template-columns: 1fr; }
+  }
+
+  /* Section group dividers (Scaling / Results) */
+  .group-heading {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin: 44px 4px 22px;
+  }
+  .group-heading h2 {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    background: linear-gradient(135deg, var(--accent-light), var(--green));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    white-space: nowrap;
+  }
+  .group-heading .rule {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(139, 132, 255, 0.45), rgba(52, 211, 153, 0.12) 60%, transparent);
+  }
+  .group-heading:first-of-type { margin-top: 12px; }
+  @media (max-width: 720px) {
+    .group-heading h2 { font-size: 22px; }
+    .group-heading { gap: 12px; margin: 32px 2px 18px; }
+  }
+
+  /* Sub heading (mid-level between group-heading and section h2) */
+  .sub-heading {
+    margin: 36px 4px 16px;
+    padding: 16px 20px;
+    border-left: 3px solid var(--orange);
+    background: linear-gradient(90deg, rgba(245, 158, 11, 0.08), transparent 70%);
+    border-radius: 0 8px 8px 0;
+  }
+  .sub-heading .sub-eyebrow {
+    display: inline-block;
+    font-size: 10.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--orange);
+    margin-bottom: 6px;
+  }
+  .sub-heading h3 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.3;
+  }
+</style>
+<style>
+  @media (max-width: 700px) {
+    table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    code { overflow-wrap: anywhere; word-break: break-word; }
+    pre { overflow-x: auto; white-space: pre-wrap; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div style="margin: 0 0 28px; padding: 14px 18px; border: 1px solid rgba(245,158,11,.55); border-radius: 10px; background: rgba(245,158,11,.10); font-size: 14px; line-height: 1.55;">
+    <strong>Javna kopija, stanje 22. 4. 2026.</strong> Od takrat se je spremenilo: sledenje odprtjem in klikom je zdaj izklopljeno povsod (zero tracking), razdelitev pošiljateljev po domenah in kanalih je drugačna, kot piše tu.
+    Imena in naslovi pošiljateljev, interni prihodki, cene in napoved strank so na tej kopiji umaknjeni.
+    <a href="index.html" style="color: inherit;">Vsi trije deli</a>
+  </div>
+
+  <!-- Hero -->
+  <section class="hero">
+    <span class="eyebrow">Nevron SDR · Growth Plan</span>
+    <h1>Cold outreach<br>scaling strategy</h1>
+    <p class="lede">
+      The 18-month plan for scaling Nevron's cold email channel.
+      Cost curves, ops tipping points, month-by-month ramp and reply-rate benchmarks,
+      grounded in what actually works, not hopium.
+    </p>
+    <div class="stats">
+      <div class="stat">
+        <div class="value">18 mo</div>
+        <div class="label">To plan target</div>
+      </div>
+      <div class="stat">
+        <div class="value">1,584/day</div>
+        <div class="label">M18 send volume</div>
+      </div>
+      <div class="stat">
+        <div class="value">8</div>
+        <div class="label">Domains at M18</div>
+      </div>
+      <div class="stat">
+        <div class="value">48</div>
+        <div class="label">Mailboxes at M18</div>
+      </div>
+    </div>
+    <p class="meta-line">
+      Nevron SDR &middot; Last updated 2026-04-22
+    </p>
+  </section>
+
+  <!-- Big links to companion docs -->
+  <div class="doc-links">
+    <a href="deliverability-recommendations.html" class="doc-card">
+      <div class="doc-tag">Companion · Rules index</div>
+      <h3>Cold email deliverability cheatsheet</h3>
+      <p>
+        The 12-section (A-L) rules playbook: persona roster, domain setup, auth (SPF/DKIM/DMARC/MTA-STS),
+        warmup schedules, content rules, hygiene, compliance (GDPR + CAN-SPAM), and red flags.
+      </p>
+      <span class="doc-cta">Open cheatsheet →</span>
+    </a>
+    <a href="dns-setup-cheatsheet.html" class="doc-card">
+      <div class="doc-tag">Companion · Step-by-step</div>
+      <h3>trynevron.com DNS setup guide</h3>
+      <p>
+        Full provisioning walkthrough for a new outreach domain on Google Workspace + Instantly -
+        registrar to first real send in ~4 weeks. All DNS records, auth setup, warmup calendar.
+      </p>
+      <span class="doc-cta">Open DNS setup →</span>
+    </a>
+  </div>
+
+  <div class="group-heading">
+    <h2>Scaling</h2>
+    <span class="rule"></span>
+  </div>
+
+  <!-- 1: Cost per new domain -->
+  <div class="section">
+    <h2><span class="letter">1</span> Cost per new domain (6 accounts)</h2>
+    <table>
+      <tr><th>Item</th><th>Cost</th><th>Notes</th></tr>
+      <tr><td>Domain registration (<code>.com</code>)</td><td><code>~$12/year</code></td><td style="color: var(--text-muted);">Cloudflare Registrar, at-cost</td></tr>
+      <tr><td>Google Workspace Business Starter</td><td><code>$6/user/month</code></td><td style="color: var(--text-muted);">6 × $6 = $36/mo = $432/year</td></tr>
+      <tr><td>DNS hosting, redirects, MTA-STS</td><td><code>$0</code></td><td style="color: var(--text-muted);">Cloudflare free tier</td></tr>
+      <tr><td>Dmarcian (DMARC reports)</td><td><code>$0</code></td><td style="color: var(--text-muted);">Free tier up to 5K msgs/day</td></tr>
+      <tr><td>Instantly</td><td><code>$0 marginal</code></td><td style="color: var(--text-muted);">Hypergrowth $97/mo is flat - unlimited accounts</td></tr>
+      <tr><td><strong>Per-domain total</strong></td><td><strong><code>~$37/month</code></strong></td><td><strong><code>~$444/year</code></strong></td></tr>
+    </table>
+  </div>
+
+  <!-- 2: Scale table -->
+  <div class="section">
+    <h2><span class="letter">2</span> Scale table: cost vs. daily capacity</h2>
+    <table>
+      <tr>
+        <th>Domains</th>
+        <th>Accounts</th>
+        <th>Daily sends</th>
+        <th>Monthly total</th>
+        <th>Annual total</th>
+      </tr>
+      <tr>
+        <td>1</td><td>6</td><td>198/day</td>
+        <td><code>$134</code></td><td><code>$1,608</code></td>
+      </tr>
+      <tr>
+        <td>2</td><td>12</td><td>396/day</td>
+        <td><code>$171</code></td><td><code>$2,052</code></td>
+      </tr>
+      <tr>
+        <td>3</td><td>18</td><td>594/day</td>
+        <td><code>$208</code></td><td><code>$2,496</code></td>
+      </tr>
+      <tr>
+        <td>4</td><td>24</td><td>792/day</td>
+        <td><code>$245</code></td><td><code>$2,940</code></td>
+      </tr>
+      <tr>
+        <td>5</td><td>30</td><td>990/day</td>
+        <td><code>$282</code></td><td><code>$3,384</code></td>
+      </tr>
+    </table>
+    <p style="color: var(--text-muted); font-size: 12.5px; margin-top: 8px;">
+      Includes $97/mo Instantly Hypergrowth (flat) + $37/mo × N domains. Add-on costs like BIMI, GlockApps, MXToolbox are optional and not included.
+    </p>
+  </div>
+
+  <div class="sub-heading">
+    <div class="sub-eyebrow">▲ Key hiring trigger</div>
+    <h3>Hiring a GTM engineer in Q1 of 2027</h3>
+  </div>
+
+  <!-- 3: Ops person math -->
+  <div class="section">
+    <h2><span class="letter">3</span> Ops person math: tipping points</h2>
+    <p style="color: var(--text-muted); font-size: 13.5px;">
+      Cold email infrastructure requires ongoing ops: weekly deliverability checks, warmup health, Postmaster / Dmarcian review, blacklist monitoring, reply triage, DKIM rotation, new-domain orchestration.
+      <strong>Today: 1 ops person, who is also the GTM Manager with many other responsibilities.</strong>
+    </p>
+    <table>
+      <tr>
+        <th>Domains</th>
+        <th>Accounts</th>
+        <th>Ops hours/week</th>
+        <th>Who owns it</th>
+        <th>Status</th>
+      </tr>
+      <tr>
+        <td>1</td><td>6</td><td>2-3 hrs</td>
+        <td>GTM Manager (shared)</td>
+        <td class="check">Sustainable</td>
+      </tr>
+      <tr style="background: rgba(52, 211, 153, 0.06);">
+        <td><strong>2</strong></td><td>12</td><td>4-6 hrs</td>
+        <td>GTM Manager (shared)</td>
+        <td class="check">Still sustainable - <strong>current ceiling before hiring</strong></td>
+      </tr>
+      <tr style="background: rgba(245, 158, 11, 0.08);">
+        <td><strong>3-4</strong></td><td>18-24</td><td>8-12 hrs</td>
+        <td>Dedicated part-time SDR ops</td>
+        <td class="warn"><strong>Tipping point #1</strong> - GTM Manager bandwidth breaks. Hire part-time ops or contractor.</td>
+      </tr>
+      <tr>
+        <td>5-8</td><td>30-48</td><td>15-25 hrs</td>
+        <td>1 full-time SDR ops</td>
+        <td class="warn"><strong>Tipping point #2</strong> - dedicated FT role.</td>
+      </tr>
+      <tr>
+        <td>10-15</td><td>60-90</td><td>30-50 hrs</td>
+        <td>1 FT + 1 PT, or Instantly VIP Service</td>
+        <td class="warn">Consider outsourcing deliverability ops.</td>
+      </tr>
+      <tr>
+        <td>20+</td><td>120+</td><td>60+ hrs</td>
+        <td>2+ FT ops, specialized team</td>
+        <td class="bad"><strong>Tipping point #3</strong> - upgrade to Light Speed plan for SISR + Enterprise deliverability network.</td>
+      </tr>
+    </table>
+    <div class="callout warning">
+      <strong>Hard truth for Nevron today</strong>
+      With 1 GTM-shared ops person, the realistic ceiling is <strong>2 domains (12 accounts, 396/day).</strong> Push past that without hiring help and quality drops - missed warmup anomalies, slow reply triage, DNS drift. The right move is to saturate 2 domains first, then hire.
+    </div>
+  </div>
+
+  <!-- 4: Scaling timeline -->
+  <div class="section">
+    <h2><span class="letter">4</span> Scaling timeline: Nevron's realistic path</h2>
+    <p style="color: var(--text-muted); font-size: 13.5px;">
+      Visual map of how Nevron's cold email stack should scale over the next 2-3 years, assuming global Nevron Mobile expansion.
+    </p>
+
+    <!-- Phase cards visualization -->
+    <div class="phases">
+      <div class="phase-card phase-now">
+        <div class="phase-bar" style="width: 10%;"></div>
+        <div class="phase-head">
+          <span class="phase-label">Phase 1 <span style="color: var(--green);">● NOW</span></span>
+          <span class="phase-date">Q2 2026</span>
+        </div>
+        <h4>1 domain · 6 accounts</h4>
+        <p class="phase-volume">~198 emails/day</p>
+        <ul class="phase-notes">
+          <li>nevron.net, 6 accounts @ 33/day</li>
+          <li>Markets: SI + HR + initial NL</li>
+          <li>Ops: 1 (GTM Manager, shared)</li>
+          <li>Plan: Hypergrowth $97</li>
+        </ul>
+      </div>
+      <div class="phase-card">
+        <div class="phase-bar" style="width: 20%;"></div>
+        <div class="phase-head">
+          <span class="phase-label">Phase 2</span>
+          <span class="phase-date">Q3-Q4 2026</span>
+        </div>
+        <h4>2 domains · 12 accounts</h4>
+        <p class="phase-volume">~396 emails/day</p>
+        <ul class="phase-notes">
+          <li>Add trynevron.com (or similar)</li>
+          <li>Markets: + FL USA launched</li>
+          <li>Ops: 1 (still the GTM Manager, at capacity)</li>
+          <li>Plan: Hypergrowth $97</li>
+        </ul>
+      </div>
+      <div class="phase-card phase-tip">
+        <div class="phase-bar" style="width: 38%;"></div>
+        <div class="phase-head">
+          <span class="phase-label">Phase 3 <span style="color: var(--orange);">▲ HIRE</span></span>
+          <span class="phase-date">2027</span>
+        </div>
+        <h4>3-4 domains · 18-24 accounts</h4>
+        <p class="phase-volume">~594-792 emails/day</p>
+        <ul class="phase-notes">
+          <li>Markets: + DACH, Italy, France</li>
+          <li>Ops: hire PT SDR ops (10 hrs/wk)</li>
+          <li>Start varying registrar + DNS</li>
+          <li>Plan: Hypergrowth (still)</li>
+        </ul>
+      </div>
+      <div class="phase-card phase-tip">
+        <div class="phase-bar" style="width: 60%;"></div>
+        <div class="phase-head">
+          <span class="phase-label">Phase 4 <span style="color: var(--orange);">▲ FT OPS</span></span>
+          <span class="phase-date">2027-2028</span>
+        </div>
+        <h4>5-8 domains · 30-48 accounts</h4>
+        <p class="phase-volume">~990-1,584 emails/day</p>
+        <ul class="phase-notes">
+          <li>Markets: full EU + North America</li>
+          <li>Ops: 1 FT SDR ops role</li>
+          <li>Full fingerprint diversification</li>
+          <li>Plan: <strong>upgrade Light Speed $358</strong></li>
+        </ul>
+      </div>
+      <div class="phase-card phase-future">
+        <div class="phase-bar" style="width: 100%;"></div>
+        <div class="phase-head">
+          <span class="phase-label">Phase 5</span>
+          <span class="phase-date">2028+</span>
+        </div>
+        <h4>10+ domains · 60+ accounts</h4>
+        <p class="phase-volume">~2,000+ emails/day</p>
+        <ul class="phase-notes">
+          <li>Markets: global, all segments</li>
+          <li>Ops: 2+ FT, or Instantly VIP Service</li>
+          <li>Dedicated IPs, private deliverability net</li>
+          <li>Plan: Enterprise (custom)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>Key tipping-point summary</strong>
+      → <strong>2 domains</strong>: current ops-shared ceiling. Saturate here before hiring.<br>
+      → <strong>3 domains</strong>: hire part-time SDR ops. GTM Manager can't absorb more.<br>
+      → <strong>5 domains</strong>: hire full-time ops + upgrade Instantly to Light Speed ($358).<br>
+      → <strong>8 domains</strong>: varied fingerprint becomes mandatory, not optional.<br>
+      → <strong>20 domains</strong>: Enterprise plan + dedicated team.
+    </div>
+  </div>
+
+  <div class="group-heading">
+    <h2>Results</h2>
+    <span class="rule"></span>
+  </div>
+
+  <!-- 5: Month-by-month ramp plan -->
+  <div class="section">
+    <h2><span class="letter">5</span> Month-by-month ramp plan: volume &amp; cost</h2>
+    <p style="color: var(--text-muted); font-size: 13.5px;">
+      Concrete monthly plan starting from today (nevron.net fully warmed), adding one new domain every ~2 months with proper warmup (2 wks DNS/setup + 4 wks mailbox ramp 5→33/day). Monthly cost column includes Google Workspace mailboxes ($6/seat), domain registration ($1/mo per domain), and Instantly plan. <strong>Ops headcount cost excluded</strong> - that's a separate HR line.
+    </p>
+    <table>
+      <tr>
+        <th>Month</th>
+        <th>Activity</th>
+        <th>Daily sends</th>
+        <th>Monthly sends</th>
+        <th>Monthly cost</th>
+      </tr>
+      <tr>
+        <td><strong>M0</strong><br><span style="color: var(--text-muted); font-size: 11px;">Apr 2026</span></td>
+        <td>nevron.net only, 6 accounts warmed</td>
+        <td><strong>198</strong></td>
+        <td>4,356</td>
+        <td><code>$134</code><br><span style="color: var(--text-muted); font-size: 11px;">6 mbx + 1 dom + Hypergrowth</span></td>
+      </tr>
+      <tr>
+        <td><strong>M1</strong><br><span style="color: var(--text-muted); font-size: 11px;">May 2026</span></td>
+        <td>Register trynevron.com, DNS setup, provision 6 mailboxes</td>
+        <td>198</td>
+        <td>4,356</td>
+        <td><code>$171</code><br><span style="color: var(--text-muted); font-size: 11px;">12 mbx + 2 dom + Hypergrowth</span></td>
+      </tr>
+      <tr>
+        <td><strong>M2</strong><br><span style="color: var(--text-muted); font-size: 11px;">Jun 2026</span></td>
+        <td>trynevron.com warmup (wk 1-4, 5→30/day per acct)</td>
+        <td><strong>~300</strong></td>
+        <td>6,600</td>
+        <td><code>$171</code></td>
+      </tr>
+      <tr>
+        <td><strong>M3</strong><br><span style="color: var(--text-muted); font-size: 11px;">Jul 2026</span></td>
+        <td>trynevron.com fully warmed → <strong>2-domain ceiling</strong></td>
+        <td><strong>396</strong></td>
+        <td>8,712</td>
+        <td><code>$171</code></td>
+      </tr>
+      <tr>
+        <td><strong>M4</strong><br><span style="color: var(--text-muted); font-size: 11px;">Aug 2026</span></td>
+        <td><strong>Hire PT ops</strong>. Register domain #3, provision mailboxes</td>
+        <td>396</td>
+        <td>8,712</td>
+        <td><code>$208</code><br><span style="color: var(--text-muted); font-size: 11px;">18 mbx + 3 dom</span></td>
+      </tr>
+      <tr>
+        <td><strong>M5</strong><br><span style="color: var(--text-muted); font-size: 11px;">Sep 2026</span></td>
+        <td>Domain #3 DNS + warmup starts</td>
+        <td><strong>~500</strong></td>
+        <td>11,000</td>
+        <td><code>$208</code></td>
+      </tr>
+      <tr>
+        <td><strong>M6</strong><br><span style="color: var(--text-muted); font-size: 11px;">Oct 2026</span></td>
+        <td>Domain #3 fully warmed</td>
+        <td><strong>594</strong></td>
+        <td>13,068</td>
+        <td><code>$208</code></td>
+      </tr>
+      <tr>
+        <td><strong>M7</strong><br><span style="color: var(--text-muted); font-size: 11px;">Nov 2026</span></td>
+        <td>Register domain #4 (start varying registrar)</td>
+        <td>594</td>
+        <td>13,068</td>
+        <td><code>$245</code><br><span style="color: var(--text-muted); font-size: 11px;">24 mbx + 4 dom</span></td>
+      </tr>
+      <tr>
+        <td><strong>M8</strong><br><span style="color: var(--text-muted); font-size: 11px;">Dec 2026</span></td>
+        <td>Domain #4 warmup</td>
+        <td><strong>~690</strong></td>
+        <td>15,180</td>
+        <td><code>$245</code></td>
+      </tr>
+      <tr>
+        <td><strong>M9</strong><br><span style="color: var(--text-muted); font-size: 11px;">Jan 2027</span></td>
+        <td>Domain #4 fully warmed</td>
+        <td><strong>792</strong></td>
+        <td>17,424</td>
+        <td><code>$245</code></td>
+      </tr>
+      <tr>
+        <td><strong>M10</strong><br><span style="color: var(--text-muted); font-size: 11px;">Feb 2027</span></td>
+        <td><strong>Hire FT ops</strong>. Register domain #5 (new DNS provider)</td>
+        <td>792</td>
+        <td>17,424</td>
+        <td><code>$282</code><br><span style="color: var(--text-muted); font-size: 11px;">30 mbx + 5 dom</span></td>
+      </tr>
+      <tr>
+        <td><strong>M11</strong><br><span style="color: var(--text-muted); font-size: 11px;">Mar 2027</span></td>
+        <td>Domain #5 warmup</td>
+        <td><strong>~890</strong></td>
+        <td>19,580</td>
+        <td><code>$282</code></td>
+      </tr>
+      <tr>
+        <td><strong>M12</strong><br><span style="color: var(--text-muted); font-size: 11px;">Apr 2027</span></td>
+        <td>Domain #5 fully warmed → <strong>upgrade Light Speed</strong></td>
+        <td><strong>990</strong></td>
+        <td>21,780</td>
+        <td><code>$543</code><br><span style="color: var(--text-muted); font-size: 11px;">30 mbx + 5 dom + Light Speed</span></td>
+      </tr>
+      <tr>
+        <td><strong>M14</strong><br><span style="color: var(--text-muted); font-size: 11px;">Jun 2027</span></td>
+        <td>Domain #6 fully warmed</td>
+        <td><strong>1,188</strong></td>
+        <td>26,136</td>
+        <td><code>$580</code><br><span style="color: var(--text-muted); font-size: 11px;">36 mbx + 6 dom</span></td>
+      </tr>
+      <tr>
+        <td><strong>M16</strong><br><span style="color: var(--text-muted); font-size: 11px;">Aug 2027</span></td>
+        <td>Domain #7 fully warmed</td>
+        <td><strong>1,386</strong></td>
+        <td>30,492</td>
+        <td><code>$617</code><br><span style="color: var(--text-muted); font-size: 11px;">42 mbx + 7 dom</span></td>
+      </tr>
+      <tr>
+        <td><strong>M18</strong><br><span style="color: var(--text-muted); font-size: 11px;">Oct 2027</span></td>
+        <td>Domain #8 fully warmed - <strong>plan target</strong></td>
+        <td><strong>1,584</strong></td>
+        <td>34,848</td>
+        <td><code>$654</code><br><span style="color: var(--text-muted); font-size: 11px;">48 mbx + 8 dom</span></td>
+      </tr>
+    </table>
+
+    <div class="callout" style="margin-top: 16px; border-left-color: var(--accent-light);">
+      <strong style="color: var(--accent-light); font-size: 15px; display: block; margin-bottom: 8px;">Pacing rules baked in</strong>
+      → <strong>6 weeks per new domain</strong> (2 wks DNS/setup + 4 wks mailbox warmup). Respects the "never spin up 5+ domains in one week" rule - registrar fingerprint stays clean.<br>
+      → <strong>~2-month gap between new domains.</strong> Makes the cluster look like organic corporate expansion, not a spam farm. Staggered registration dates = staggered WHOIS = no clustered fingerprint signal.<br>
+      → <strong>Hire triggers land before the pain hits.</strong> PT ops at M4 (before 3rd domain goes live), FT ops at M10 (before 5th). The cheatsheet rule is clear: GTM-shared ops breaks at 3+ domains.<br>
+      → <strong>Instantly upgrades are volume-safe.</strong> Hypergrowth ($97, 100K/mo cap) covers you through M11 at only ~20% utilization. Light Speed upgrade at M12 is driven by <em>SISR dedicated IP requirements at 5+ domains</em>, not volume - you hit Light Speed's 500K cap at less than 7% utilization at M18.<br>
+      → <strong>Fingerprint diversification starts at M7</strong> (4th domain = vary registrar), M10 (5th = vary DNS provider). Matches the cheatsheet's "4-7 domains: start varying" rule exactly.
+    </div>
+
+    <div class="callout warning" style="margin-top: 16px;">
+      <strong>Reality check</strong>
+      M0 → M18 = <strong>18 months to reach 1,584/day (~35K/month).</strong> If sales velocity demands a faster ramp, the squeeze point is <strong>always ops hours, not Instantly's cap</strong>. Shortcuts that look tempting but burn everything down:
+      <br>→ Spinning up 3 domains in one quarter instead of one every 2 months → registrar fingerprint flags the cluster.<br>
+      → Skipping warmup and going straight to 33/day on fresh mailboxes → Google blacklists the IP before M2.<br>
+      → Running 4+ domains on shared GTM Manager bandwidth → missed blacklist alerts, DNS drift, reply-triage gaps. Quality collapses silently before volume does.<br>
+      <br><strong>If you need more volume faster</strong>, the only safe lever is <em>hire ops earlier</em> - not compress the warmup curve or stack domains faster. The human bottleneck is real; the software/DNS bottleneck is fake.
+    </div>
+  </div>
+
+  <!-- 6: Performance benchmarks -->
+  <div class="section">
+    <h2><span class="letter">6</span> Performance benchmarks: reply rate trajectory</h2>
+    <p style="color: var(--text-muted); font-size: 13.5px;">
+      Current Nevron baseline (as of 2026-04-22): <strong>236 sent · 7% reply rate · 2 opportunities</strong> (0.85% opp rate). That's already <em>above</em> the B2B cold email average of 2-5%. First-month reply rate for most campaigns is only 3-4% as infrastructure warms - Nevron is starting from a strong baseline.
+    </p>
+    <p style="color: var(--text-muted); font-size: 13.5px; margin-top: 10px;">
+      Benchmark trajectory assuming disciplined iteration (copy A/B testing, ICP tightening, product diversification, case study development):
+    </p>
+    <table>
+      <tr>
+        <th>Month</th>
+        <th>Volume sent/mo</th>
+        <th>Reply rate</th>
+        <th>Positive reply</th>
+        <th>Opportunity rate</th>
+        <th>Meetings booked</th>
+      </tr>
+      <tr style="background: rgba(52, 211, 153, 0.06);">
+        <td><strong>M0 (now)</strong></td>
+        <td>~250</td>
+        <td><strong>7%</strong></td>
+        <td>~1.5%</td>
+        <td><strong>0.85%</strong></td>
+        <td>~0.5%</td>
+      </tr>
+      <tr>
+        <td>M3</td>
+        <td>~9K</td>
+        <td>8-9%</td>
+        <td>2%</td>
+        <td>1-1.2%</td>
+        <td>0.7%</td>
+      </tr>
+      <tr>
+        <td>M6</td>
+        <td>~13K</td>
+        <td>9-11%</td>
+        <td>2.5-3%</td>
+        <td>1.3-1.5%</td>
+        <td>0.9%</td>
+      </tr>
+      <tr>
+        <td>M9</td>
+        <td>~17K</td>
+        <td>10-12%</td>
+        <td>3-3.5%</td>
+        <td>1.5-1.8%</td>
+        <td>1.1%</td>
+      </tr>
+      <tr>
+        <td>M12</td>
+        <td>~22K</td>
+        <td>11-13%</td>
+        <td>3.5-4%</td>
+        <td>1.8-2%</td>
+        <td>1.3%</td>
+      </tr>
+      <tr style="background: rgba(139, 132, 255, 0.06);">
+        <td><strong>M18</strong></td>
+        <td>~35K</td>
+        <td><strong>12-15%</strong></td>
+        <td>4-5%</td>
+        <td><strong>2-2.5%</strong></td>
+        <td>1.5%</td>
+      </tr>
+    </table>
+    <p style="color: var(--text-muted); font-size: 12.5px; margin-top: 8px;">
+      <strong>Absolute opportunities/month at M18 plateau:</strong> ~700-875 opps/month at 2-2.5% rate on 35K sends. Conservatively at 1% → 350 opps/month. Reply-rate ceiling for niche B2B is ~12-15% for disciplined operators; only the top 10% hit 18-20%.
+    </p>
+  </div>
+
+  <!-- 7: Multi-product campaigns -->
+  <div class="section">
+    <h2><span class="letter">7</span> Multi-product campaign lift</h2>
+    <p style="color: var(--text-muted); font-size: 13.5px;">
+      Single-product NevronCore campaigns plateau around 9-10% reply rate. Splitting by product with angle-specific ICP matching unlocks higher-reply positioning. The lift is real and measurable:
+    </p>
+    <table>
+      <tr><th>Product angle</th><th>Expected reply rate</th><th>Why it lifts (or caps)</th></tr>
+      <tr>
+        <td><strong>Full NevronCore</strong></td>
+        <td>5-8%</td>
+        <td style="color: var(--text-muted);">Big ticket, requires full-platform buying committee - filters hard</td>
+      </tr>
+      <tr style="background: rgba(52, 211, 153, 0.05);">
+        <td><strong>Nevron Mobile standalone</strong></td>
+        <td class="check">10-14%</td>
+        <td style="color: var(--text-muted);">Small commitment, visible ROI, GMs can approve alone</td>
+      </tr>
+      <tr style="background: rgba(52, 211, 153, 0.05);">
+        <td><strong>Mobile Check-in</strong></td>
+        <td class="check">12-16%</td>
+        <td style="color: var(--text-muted);">Concrete operational pain (front desk queues, 2am calls) - GMs instantly get it</td>
+      </tr>
+      <tr style="background: rgba(52, 211, 153, 0.05);">
+        <td><strong>AI Assistant</strong></td>
+        <td class="check">13-18%</td>
+        <td style="color: var(--text-muted);">Topical, executives <em>want</em> to learn, "what are peers doing?" framing</td>
+      </tr>
+      <tr>
+        <td><strong>Digital Signage / Cast</strong></td>
+        <td>6-9%</td>
+        <td style="color: var(--text-muted);">Niche unless hotel has recent renovation trigger</td>
+      </tr>
+    </table>
+    <div class="callout success" style="margin-top: 12px;">
+      <strong>Composite lift math</strong>
+      Single-product (NevronCore only) plateaus at 9-10% reply rate.<br>
+      Add 2-3 standalone product angles with product-specific ICP matching → plateau at <strong>12-14%</strong>.<br>
+      That's a <strong>~40% lift on reply rate alone</strong>, plus better reply-to-opportunity conversion because standalone products have clearer yes/no signals (~20-25% vs. ~12% today).
+    </div>
+    <p style="color: var(--text-muted); font-size: 12.5px; margin-top: 8px;">
+      14% reply × 22% opp conversion = <strong>3% opportunity rate</strong> - that's 3.5× today's 0.85%. The real unlock is in reply-to-opportunity conversion, not headline reply rate.
+    </p>
+  </div>
+
+  <!-- 8: Three levers -->
+  <div class="section">
+    <h2><span class="letter">8</span> The three levers ranked by ROI</h2>
+    <table>
+      <tr>
+        <th>#</th>
+        <th>Lever</th>
+        <th>ROI</th>
+        <th>What it means in practice</th>
+      </tr>
+      <tr style="background: rgba(52, 211, 153, 0.06);">
+        <td><strong>1</strong></td>
+        <td><strong>Reply-to-opportunity conversion</strong></td>
+        <td class="check">Highest</td>
+        <td style="color: var(--text-muted);">Reply rate is already decent; the gap is qualifying better. Tighter CTAs, clearer offers, sharper ICP-product match. Moves the needle from 0.85% → 2.5% opp rate.</td>
+      </tr>
+      <tr style="background: rgba(245, 158, 11, 0.06);">
+        <td><strong>2</strong></td>
+        <td><strong>Product diversification</strong></td>
+        <td class="warn">Medium-term</td>
+        <td style="color: var(--text-muted);">Splits audience, multiplies learning velocity, unlocks higher-reply angles. Mobile Check-in / AI Assistant / Nevron Mobile standalone all pull different responses.</td>
+      </tr>
+      <tr>
+        <td><strong>3</strong></td>
+        <td><strong>Reply rate itself</strong></td>
+        <td style="color: var(--text-muted);">Lowest</td>
+        <td style="color: var(--text-muted);">Diminishing returns above 10%. Easy to obsess over, rarely moves revenue as much as #1 and #2. After M6, copy tweaks alone plateau around 10-12%.</td>
+      </tr>
+    </table>
+    <p style="color: var(--text-muted); font-size: 12.5px; margin-top: 8px;">
+      <strong>What doesn't scale:</strong> copy tweaks in isolation. Past M6, the only meaningful lever is <strong>ICP + product + offer match</strong>, not better words.
+    </p>
+  </div>
+
+  <!-- 12: Honest caveats -->
+  <div class="section">
+    <h2><span class="letter">9</span> The honest caveats</h2>
+    <p style="color: var(--text-muted); font-size: 13.5px;">
+      Three things that will bite if ignored. All of them are execution-dependent, not market-dependent - you control every lever.
+    </p>
+
+    <div class="callout warning">
+      <strong>1. Sales cycle lag is brutal in Year 1</strong>
+      You'll be generating 20+ opps/month by M6 but only closing 1-2 customers/month until M9. Don't panic - the pipe is filling. The lag feels like the channel is broken when it's actually compounding silently.
+    </div>
+
+    <div class="callout warning">
+      <strong>2. ICP drift risk</strong>
+      Cold email is strongest when ICP stays narrow. Temptation to chase outliers (hotels outside 75-200 rooms, chains, budget segment) dilutes conversion. The plan assumes you stay disciplined on the hard filters. Drift by 30% on ICP and conversion drops with it.
+    </div>
+
+    <div class="callout warning">
+      <strong>3. Ops hiring must land before it bites</strong>
+      PT ops at M4. FT ops at M10. Miss these triggers by even 2 months and quality collapses silently - missed blacklist alerts, DNS drift, slow reply triage. You don't notice until the pipeline dries up 3 months later. The cheatsheet is explicit: shared GTM bandwidth breaks at 3+ domains.
+    </div>
+  </div>
+
+  <!-- Bottom line -->
+  <div class="bottom-line">
+    <h3>Bottom line</h3>
+    <p>
+      The plan holds if Nevron executes the 18-month ramp without shortcuts - 6-week domain cadence, 2-month gap between registrations, hire triggers landing on time (PT at M4, FT at M10), product diversification launched by M6, first case study by M9.
+    </p>
+    <p style="margin-top: 8px;">
+      The squeeze point is <strong>always ops hours, never Instantly's cap</strong>. If sales demands faster, the only safe lever is hire ops earlier - not compress warmup, not stack domains. The human bottleneck is real; the software/DNS bottleneck is fake.
+    </p>
+  </div>
+
+  <p class="footer-note">
+    <strong style="color: var(--accent-light);">Companion documents:</strong><br>
+    →  <a href="deliverability-recommendations.html" style="color: var(--accent-light);">Cold email deliverability cheatsheet</a> - the 12-section rules index (A-L): domain setup, auth, warmup, content, technical, hygiene, compliance, red flags<br>
+    →  <a href="dns-setup-cheatsheet.html" style="color: var(--accent-light);">trynevron.com DNS setup guide</a> - full step-by-step for provisioning a new outreach domain</p>
+
+</div>
+</body>
+</html>

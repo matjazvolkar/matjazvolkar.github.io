@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>trynevron.com DNS setup (hypothetical) | Nevron SDR</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface-2: #232733;
+    --border: #2e3344;
+    --text: #e2e4e9;
+    --text-muted: #8b8fa3;
+    --accent: #6c63ff;
+    --accent-light: #8b84ff;
+    --green: #34d399;
+    --orange: #f59e0b;
+    --red: #ef4444;
+    --code-bg: #161820;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 15px;
+  }
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+
+  .header {
+    margin-bottom: 40px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .header h1 {
+    font-size: 30px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    background: linear-gradient(135deg, var(--accent-light), var(--green));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .header .subtitle { color: var(--text-muted); font-size: 15px; line-height: 1.6; }
+  .header .meta { margin-top: 12px; font-size: 13px; color: var(--text-muted); }
+
+  .toc {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 22px 28px;
+    margin-bottom: 40px;
+  }
+  .toc h2 {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+  }
+  .toc ol { padding-left: 20px; }
+  .toc li { margin-bottom: 6px; font-size: 14px; }
+  .toc a {
+    color: var(--accent-light);
+    text-decoration: none;
+  }
+  .toc a:hover { color: var(--green); }
+
+  .phase {
+    margin-bottom: 48px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid var(--border);
+  }
+  .phase:last-child { border-bottom: none; }
+  .phase h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .phase-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: var(--accent);
+    color: #fff;
+    font-weight: 700;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 24px 0 12px;
+    color: var(--accent-light);
+  }
+  h4 {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 18px 0 8px;
+    color: var(--text);
+  }
+
+  ol.instructions, ul.instructions { padding-left: 22px; }
+  .instructions li { margin-bottom: 8px; }
+
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 18px;
+    overflow-x: auto;
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    margin: 12px 0;
+    color: var(--text);
+  }
+  code {
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    font-size: 13px;
+    background: var(--surface-2);
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: var(--accent-light);
+  }
+  pre code { background: none; padding: 0; color: inherit; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0;
+    font-size: 13.5px;
+  }
+  th {
+    background: var(--surface-2);
+    text-align: left;
+    padding: 10px 14px;
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border);
+  }
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+  table code { font-size: 12px; color: var(--green); background: var(--code-bg); }
+
+  .callout {
+    background: var(--surface);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 14px 18px;
+    margin: 16px 0;
+    font-size: 14px;
+  }
+  .callout.warning { border-left-color: var(--orange); }
+  .callout.danger { border-left-color: var(--red); }
+  .callout.success { border-left-color: var(--green); }
+  .callout strong { display: block; margin-bottom: 4px; color: #fff; }
+
+  strong { color: #fff; }
+
+  .timeline {
+    position: relative;
+    padding-left: 32px;
+    margin: 24px 0;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 11px;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: var(--border);
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 20px;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -25px;
+    top: 8px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--bg);
+  }
+  .timeline-item h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+  .timeline-item p { font-size: 13px; color: var(--text-muted); margin: 0; }
+
+  .check { color: var(--green); }
+  .warn { color: var(--orange); }
+  .bad { color: var(--red); }
+
+  p { margin-bottom: 12px; }
+
+  /* Hero */
+  .hero {
+    margin: 0 0 28px;
+    padding: 44px 40px 40px;
+    border-radius: 16px;
+    background:
+      radial-gradient(circle at 80% 10%, rgba(52, 211, 153, 0.12), transparent 55%),
+      radial-gradient(circle at 10% 90%, rgba(108, 99, 255, 0.18), transparent 55%),
+      linear-gradient(135deg, #181c28, #1f2331);
+    border: 1px solid rgba(139, 132, 255, 0.22);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero .eyebrow {
+    display: inline-block;
+    font-size: 11.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--accent-light);
+    padding: 5px 12px;
+    border-radius: 20px;
+    background: rgba(139, 132, 255, 0.12);
+    border: 1px solid rgba(139, 132, 255, 0.3);
+    margin-bottom: 18px;
+  }
+  .hero h1 {
+    font-size: 40px;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 14px;
+    background: linear-gradient(135deg, #e2e4e9 0%, var(--accent-light) 45%, var(--green) 95%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.5px;
+  }
+  .hero .lede {
+    font-size: 16px;
+    color: var(--text);
+    line-height: 1.55;
+    max-width: 780px;
+    margin-bottom: 22px;
+  }
+  .hero .lede strong { color: var(--accent-light); }
+  .hero .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-top: 26px;
+    padding-top: 22px;
+    border-top: 1px solid rgba(139, 132, 255, 0.15);
+  }
+  .hero .stat .value {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--green);
+    line-height: 1.1;
+    margin-bottom: 4px;
+  }
+  .hero .stat .label {
+    font-size: 11.5px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+  }
+  .hero .meta-line {
+    font-size: 12.5px;
+    color: var(--text-muted);
+    margin-top: 18px;
+  }
+  @media (max-width: 720px) {
+    .hero { padding: 32px 24px 28px; }
+    .hero h1 { font-size: 30px; }
+    .hero .lede { font-size: 14.5px; }
+    .hero .stats { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* Big doc link cards */
+  .doc-links {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 36px;
+  }
+  .doc-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px 24px;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .doc-card::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    background: linear-gradient(180deg, var(--accent), var(--green));
+  }
+  .doc-card.back::before {
+    background: linear-gradient(180deg, var(--accent-light), var(--accent));
+  }
+  .doc-card:hover {
+    border-color: var(--accent-light);
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, rgba(108, 99, 255, 0.08), rgba(52, 211, 153, 0.04)), var(--surface);
+  }
+  .doc-card .doc-tag {
+    font-size: 10.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+  .doc-card h3 {
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 8px;
+    line-height: 1.25;
+  }
+  .doc-card p {
+    font-size: 13.5px;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-bottom: 14px;
+  }
+  .doc-card .doc-cta {
+    font-size: 13px;
+    color: var(--accent-light);
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .doc-card:hover .doc-cta { color: var(--green); }
+  @media (max-width: 720px) {
+    .doc-links { grid-template-columns: 1fr; }
+  }
+</style>
+<style>
+  @media (max-width: 700px) {
+    table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    code { overflow-wrap: anywhere; word-break: break-word; }
+    pre { overflow-x: auto; white-space: pre-wrap; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div style="margin: 0 0 28px; padding: 14px 18px; border: 1px solid rgba(245,158,11,.55); border-radius: 10px; background: rgba(245,158,11,.10); font-size: 14px; line-height: 1.55;">
+    <strong>Javna kopija, stanje 22. 4. 2026.</strong> Od takrat se je spremenilo: sledenje odprtjem in klikom je zdaj izklopljeno povsod (zero tracking), razdelitev pošiljateljev po domenah in kanalih je drugačna, kot piše tu.
+    Imena in naslovi pošiljateljev, interni prihodki, cene in napoved strank so na tej kopiji umaknjeni.
+    <a href="index.html" style="color: inherit;">Vsi trije deli</a>
+  </div>
+
+  <div class="hero">
+    <span class="eyebrow">Part 3 of 3 · The implementation</span>
+    <h1>trynevron.com: the full DNS setup</h1>
+    <p class="lede">
+      Every DNS record, Google Workspace click, and Instantly configuration required to stand up a
+      <strong>new outreach domain</strong> cleanly - from purchase to first real send in ~4 weeks.
+      <code>trynevron.com</code> is the worked example; swap the name when you run it for real.
+    </p>
+    <div class="stats">
+      <div class="stat"><div class="value">~4 wk</div><div class="label">To first real send</div></div>
+      <div class="stat"><div class="value">11+</div><div class="label">DNS records</div></div>
+      <div class="stat"><div class="value">6</div><div class="label">Mailbox personas</div></div>
+      <div class="stat"><div class="value">4</div><div class="label">Auth protocols</div></div>
+    </div>
+    <p class="meta-line">Nevron SDR &middot; Stack: Google Workspace + Instantly + nevron.co redirect target</p>
+  </div>
+
+  <div class="doc-links">
+    <a class="doc-card back" href="scaling-strategy.html">
+      <div class="doc-tag">← Back · Part 1</div>
+      <h3>Cold outreach scaling strategy</h3>
+      <p>The 18-month plan - why we add domains on this cadence, how volume ramps, what the funnel math looks like.</p>
+      <span class="doc-cta">← Return to strategy overview</span>
+    </a>
+    <a class="doc-card back" href="deliverability-recommendations.html">
+      <div class="doc-tag">← Back · Part 2</div>
+      <h3>Cold email deliverability: cheatsheet</h3>
+      <p>The rules index - A-L reference for settings, pacing, authentication, and the guardrails this setup must satisfy.</p>
+      <span class="doc-cta">← Return to the rules</span>
+    </a>
+  </div>
+
+  <div class="callout warning">
+    <strong>This is a reference template</strong>
+    The domain <code>trynevron.com</code> is hypothetical - not purchased. If you proceed, swap the name wherever it appears. Assumes Google Workspace as ESP (not self-hosted / Hetzner).
+    Uses the standard <strong>6-persona roster</strong> (six real employees, names hidden on this public copy) applied to every new Nevron outreach domain.
+  </div>
+
+  <div class="toc">
+    <h2>Table of contents</h2>
+    <ol>
+      <li><a href="#phase-0">Phase 0 - Domain purchase & pre-flight</a></li>
+      <li><a href="#phase-1">Phase 1 - Google Workspace setup</a></li>
+      <li><a href="#phase-2">Phase 2 - Core authentication (MX / SPF / DKIM / DMARC)</a></li>
+      <li><a href="#phase-3">Phase 3 - Web presence (301 redirect to nevron.co)</a></li>
+      <li><a href="#phase-4">Phase 4 - Advanced DNS (MTA-STS / TLS-RPT / DNSSEC)</a></li>
+      <li><a href="#phase-5">Phase 5 - Instantly custom tracking domain</a></li>
+      <li><a href="#phase-6">Phase 6 - Monitoring (Postmaster / Dmarcian / Mail-Tester)</a></li>
+      <li><a href="#phase-7">Phase 7 - Warmup & first send</a></li>
+      <li><a href="#cheatsheet">DNS records cheatsheet (all-in-one)</a></li>
+      <li><a href="#timeline">Timeline summary</a></li>
+    </ol>
+  </div>
+
+  <!-- Phase 0 -->
+  <div class="phase" id="phase-0">
+    <h2><span class="phase-number">0</span> Domain purchase & pre-flight</h2>
+
+    <h3>Registrar</h3>
+    <p>Recommended: <strong>Cloudflare Registrar</strong> (at-cost pricing, free DNS, DNSSEC one-click, no upsells). Backup: Namecheap, Porkbun.</p>
+    <p>Avoid: GoDaddy (upsell hell, slower DNS propagation).</p>
+
+    <h3>Purchase checklist</h3>
+    <ul class="instructions">
+      <li><strong>Registration period:</strong> minimum 2 years - 1-year is a spammer signal.</li>
+      <li><strong>WHOIS privacy:</strong> enable (Cloudflare does it by default) but use a legitimate registrant org when asked.</li>
+      <li><strong>Auto-renew:</strong> ON - a domain that expires mid-campaign = dead accounts.</li>
+      <li><strong>Registrant info:</strong> match other Nevron-owned domains for consistency.</li>
+    </ul>
+
+    <h3>Wait before sending</h3>
+    <div class="callout warning">
+      <strong>Do not send before Day 30</strong>
+      Fresh domains are filtered aggressively by Gmail/Outlook regardless of DNS setup. 30 days minimum, 90 preferred.
+    </div>
+
+    <h3>Nameservers</h3>
+    <p>If you use Cloudflare DNS (recommended - fast propagation, clean UI), point registrar nameservers to:</p>
+    <pre><code>ella.ns.cloudflare.com
+walt.ns.cloudflare.com</code></pre>
+    <p>(Your actual pair is shown in the Cloudflare dashboard when you add the domain.)</p>
+  </div>
+
+  <!-- Phase 1 -->
+  <div class="phase" id="phase-1">
+    <h2><span class="phase-number">1</span> Google Workspace setup</h2>
+
+    <h3>Plan</h3>
+    <p><strong>Business Starter ($6/user/month)</strong> is sufficient - you only need mailboxes, not Drive/Meet enterprise features. Scale to Standard only if you need 2TB+ per user.</p>
+
+    <h3>Add domain to existing Workspace</h3>
+    <ol class="instructions">
+      <li>Google Admin → <strong>Account → Domains → Manage domains</strong></li>
+      <li>"Add a domain" → enter <code>trynevron.com</code> → "Secondary domain" (users in primary workspace can receive @trynevron.com).</li>
+      <li>Verify via DNS TXT - Google gives you a record like <code>google-site-verification=abc123...</code> - publish it at root (<code>@</code>).</li>
+    </ol>
+
+    <h3>Create mailboxes: 6-persona roster</h3>
+    <p>Same six real employees on every new outreach domain. Each person keeps a matching mailbox across every Nevron outreach domain - same name, same LinkedIn URL, same signature everywhere.</p>
+    <table>
+      <tr><th>Email</th><th>Person</th><th>Role</th></tr>
+      <tr><td><code>first.last@trynevron.com</code></td><td>Sodelavec 1</td><td>CEO</td></tr>
+      <tr><td><code>first.last@trynevron.com</code></td><td>Sodelavec 2</td><td>CTO</td></tr>
+      <tr><td><code>first.last@trynevron.com</code></td><td>Sodelavec 3</td><td>GTM Manager</td></tr>
+      <tr><td><code>first.last@trynevron.com</code></td><td>Sodelavec 4</td><td>Product Manager</td></tr>
+      <tr><td><code>first.last@trynevron.com</code></td><td>Sodelavec 5</td><td>AI Solutions Lead</td></tr>
+      <tr><td><code>first.last@trynevron.com</code></td><td>Sodelavec 6</td><td>Project Manager</td></tr>
+    </table>
+    <p>Capacity at full ramp: 6 × 33/day = <strong>198/day</strong> from this domain. That's the top of the safe zone - do not add a 7th account to the same domain.</p>
+
+    <div class="callout danger">
+      <strong>Never use role mailboxes</strong>
+      No <code>info@</code>, <code>office@</code>, <code>sales@</code>, <code>contact@</code>, <code>hello@</code>. Textbook spam signals.
+    </div>
+
+    <div class="callout warning">
+      <strong>Persona consistency with other domains</strong>
+      The same 6 people also have mailboxes on nevron.net. Rules for running duplicate personas safely across multiple domains - and the lead-list non-overlap rule - live in the <a href="deliverability-recommendations.html" style="color: var(--accent-light);">deliverability cheatsheet</a>. Read that section before launching campaigns.
+    </div>
+
+    <h3>Per-mailbox post-creation checklist</h3>
+    <ul class="instructions">
+      <li>Full display name (e.g. "Ana Novak")</li>
+      <li>Profile photo uploaded in Gmail settings</li>
+      <li>Real signature: name + role + Nevron + LinkedIn URL</li>
+      <li>2FA enabled</li>
+      <li>App password generated (for Instantly OAuth - or use OAuth directly if Instantly supports)</li>
+      <li>Login to Gmail web UI at least weekly going forward</li>
+    </ul>
+  </div>
+
+  <!-- Phase 2 -->
+  <div class="phase" id="phase-2">
+    <h2><span class="phase-number">2</span> Core authentication (MX / SPF / DKIM / DMARC)</h2>
+
+    <h3>MX records: route mail to Google</h3>
+    <p>Google Workspace now uses a single MX record (modernized from the old 5-record set):</p>
+    <pre><code>Type   Name   Priority   Value
+MX     @      1          SMTP.GOOGLE.COM.</code></pre>
+    <p>Delete any existing MX records first - mixed MX = broken mail.</p>
+
+    <h3>SPF: a single TXT record</h3>
+    <pre><code>Type   Name   Value
+TXT    @      v=spf1 include:_spf.google.com ~all</code></pre>
+    <div class="callout danger">
+      <strong>Only ONE SPF record at root</strong>
+      Two SPF records = automatic SPF failure → DMARC failure → inbox placement dies. If you later add Instantly / SendGrid / etc. to the send path, merge them into this single record.
+    </div>
+
+    <h4>Upgrade after 2 weeks clean</h4>
+    <p>Once DMARC reports show no legit senders failing, tighten the policy:</p>
+    <pre><code>v=spf1 include:_spf.google.com -all</code></pre>
+    <p><code>-all</code> (hard fail) &gt; <code>~all</code> (soft fail).</p>
+
+    <h3>DKIM: 2048-bit, generated in Google Admin</h3>
+    <ol class="instructions">
+      <li>Google Admin → <strong>Apps → Google Workspace → Gmail → Authenticate email</strong></li>
+      <li>Select domain <code>trynevron.com</code></li>
+      <li><strong>Generate new record</strong> → DKIM key length: <strong>2048 bit</strong> (never 1024) → Selector: <code>google</code> (default).</li>
+      <li>Google shows the TXT record to publish:</li>
+    </ol>
+    <pre><code>Type   Name                    Value
+TXT    google._domainkey       v=DKIM1; k=rsa; p=MIIBIjANBgkq... (long string)</code></pre>
+    <ol class="instructions" start="5">
+      <li>Publish the record in DNS → wait 10-30 minutes for propagation.</li>
+      <li>Return to Admin → <strong>"Start authentication"</strong>. Status flips to "Authenticating email" → "Authenticated" within an hour.</li>
+    </ol>
+
+    <h3>DMARC: phased rollout over 6 weeks</h3>
+    <p>Create a dedicated inbox for aggregate reports first: <code>dmarc@trynevron.com</code> (or forward to Dmarcian's inbox - see Phase 6).</p>
+
+    <h4>Phase 2a: Monitor only (Week 1-2)</h4>
+    <pre><code>Type   Name      Value
+TXT    _dmarc    v=DMARC1; p=none; rua=mailto:dmarc@trynevron.com; pct=100; adkim=s; aspf=s; fo=1</code></pre>
+
+    <h4>Phase 2b: Quarantine (Week 3-4, after reports are clean)</h4>
+    <pre><code>v=DMARC1; p=quarantine; rua=mailto:dmarc@trynevron.com; pct=100; adkim=s; aspf=s; fo=1</code></pre>
+
+    <h4>Phase 2c: Reject (Week 5+, full enforcement)</h4>
+    <pre><code>v=DMARC1; p=reject; rua=mailto:dmarc@trynevron.com; pct=100; adkim=s; aspf=s; fo=1</code></pre>
+
+    <div class="callout warning">
+      <strong>Don't skip phases</strong>
+      Jumping straight to <code>p=reject</code> can silently drop legit mail (e.g., Google Calendar invites, Zoom notifications forwarded via the domain). Each phase is a checkpoint.
+    </div>
+  </div>
+
+  <!-- Phase 3 -->
+  <div class="phase" id="phase-3">
+    <h2><span class="phase-number">3</span> Web presence: 301 redirect to nevron.co</h2>
+
+    <p>A cold-email domain that returns ECONNREFUSED is a textbook spam signal. The cheapest robust fix: 301 redirect to the real Nevron website.</p>
+
+    <h3>Option A: Cloudflare Pages / Worker (recommended, free)</h3>
+    <ol class="instructions">
+      <li>Cloudflare dashboard → <strong>Rules → Redirect Rules → Create rule</strong></li>
+      <li>Name: <code>trynevron.com → nevron.co</code></li>
+      <li>When incoming requests match: hostname equals <code>trynevron.com</code> OR hostname equals <code>www.trynevron.com</code></li>
+      <li>Then: Static redirect → <strong>301 Permanent Redirect</strong> → Target URL: <code>https://nevron.co$1</code> (preserves path).</li>
+      <li>DNS: proxied A record at root pointing to <code>192.0.2.1</code> (any dummy - Cloudflare intercepts via proxy).</li>
+    </ol>
+
+    <h3>Option B: Registrar-level URL forwarding</h3>
+    <p>Namecheap, Porkbun, Cloudflare all offer "URL forwarding" - simpler, one click. Confirm it's <strong>301 permanent</strong> (not 302 temporary, not frame forwarding).</p>
+
+    <h3>Verify the redirect</h3>
+    <pre><code>curl -I https://trynevron.com
+# Expect:
+# HTTP/2 301
+# location: https://nevron.co/</code></pre>
+
+    <h3>SSL</h3>
+    <p>Let's Encrypt via Cloudflare or your host - free, auto-renew. A broken cert on the redirect host is as bad as no redirect.</p>
+
+    <div class="callout success">
+      <strong>Bonus: www record</strong>
+      Add <code>CNAME www @</code> so <code>www.trynevron.com</code> also redirects. Users occasionally type it that way.
+    </div>
+  </div>
+
+  <!-- Phase 4 -->
+  <div class="phase" id="phase-4">
+    <h2><span class="phase-number">4</span> Advanced DNS (MTA-STS / TLS-RPT / DNSSEC)</h2>
+
+    <h3>MTA-STS: force TLS for inbound mail</h3>
+    <p>Requires both a DNS record AND an HTTPS-hosted policy file.</p>
+
+    <h4>DNS record</h4>
+    <pre><code>Type   Name                 Value
+TXT    _mta-sts             v=STSv1; id=2026042100</code></pre>
+    <p>(The <code>id</code> is a version string - change whenever you update the policy file.)</p>
+
+    <h4>Policy file</h4>
+    <p>Host at <code>https://mta-sts.trynevron.com/.well-known/mta-sts.txt</code>:</p>
+    <pre><code>version: STSv1
+mode: enforce
+mx: *.google.com
+mx: aspmx.l.google.com
+mx: *.googlemail.com
+max_age: 604800</code></pre>
+    <p>Easiest: Cloudflare Pages with a static file, or GitHub Pages with a CNAME for <code>mta-sts.trynevron.com</code>.</p>
+
+    <h3>TLS-RPT: TLS failure reports</h3>
+    <pre><code>Type   Name               Value
+TXT    _smtp._tls         v=TLSRPTv1; rua=mailto:tlsrpt@trynevron.com</code></pre>
+
+    <h3>DNSSEC</h3>
+    <p>At Cloudflare Registrar / most modern registrars: <strong>Domain → DNSSEC → Enable</strong>. One click. Confirm with <code>dig trynevron.com +dnssec +short</code> showing RRSIG records.</p>
+
+    <h3>BIMI (optional, costs money)</h3>
+    <p>Requires DMARC at <code>p=quarantine</code>+ AND a Verified Mark Certificate (VMC) - about $1,500/year from DigiCert or Entrust. Only worth it if Nevron's logo is trademark-registered and volume is 10K+/month. <strong>Skip for now.</strong></p>
+  </div>
+
+  <!-- Phase 5 -->
+  <div class="phase" id="phase-5">
+    <h2><span class="phase-number">5</span> Instantly custom tracking domain</h2>
+
+    <p>Instantly's default tracking domain is shared across all customers - poisoned by other people's spam. Always use your own.</p>
+
+    <h3>Setup</h3>
+    <ol class="instructions">
+      <li>Instantly → <strong>Settings → Custom Tracking Domain → Add domain</strong></li>
+      <li>Instantly gives you a CNAME target like <code>open.sleadtrack.com</code></li>
+      <li>In Cloudflare DNS, add:</li>
+    </ol>
+    <pre><code>Type    Name     Target                   Proxy
+CNAME   track    open.sleadtrack.com      DNS only (unproxied, gray cloud)</code></pre>
+
+    <div class="callout danger">
+      <strong>DNS only - never proxied</strong>
+      If you leave the orange Cloudflare cloud ON, Instantly's tracking breaks. Grey cloud is mandatory for this record.
+    </div>
+
+    <ol class="instructions" start="4">
+      <li>Back in Instantly → click "Verify" - status flips to green within 10 minutes.</li>
+      <li>Assign <code>track.trynevron.com</code> to all campaigns sending from this domain.</li>
+    </ol>
+
+    <h3>Open tracking: turn it OFF</h3>
+    <p>In 2026, Apple Mail Privacy Protection pre-fetches pixels → fake opens. Track links only. This also reduces the number of tracking-related elements in your emails = better deliverability.</p>
+  </div>
+
+  <!-- Phase 6 -->
+  <div class="phase" id="phase-6">
+    <h2><span class="phase-number">6</span> Monitoring (Postmaster / Dmarcian / Mail-Tester)</h2>
+
+    <h3>Google Postmaster Tools</h3>
+    <ol class="instructions">
+      <li><a href="https://postmaster.google.com" style="color: var(--accent-light)">postmaster.google.com</a> → Add domain <code>trynevron.com</code>.</li>
+      <li>Verify via DNS TXT (Google provides the record).</li>
+      <li>Wait 1-2 weeks after first real sends for data to populate.</li>
+      <li>Watch: <strong>Spam rate &lt; 0.1%</strong>, Domain reputation "High", IP reputation "High", Authentication 100%.</li>
+    </ol>
+
+    <h3>Dmarcian: free DMARC report parser</h3>
+    <ol class="instructions">
+      <li>Sign up at <a href="https://dmarcian.com" style="color: var(--accent-light)">dmarcian.com</a> - free tier covers up to 5K messages/day.</li>
+      <li>They give you an RUA address like <code>xyz-trynevron@rua.dmarcian.com</code>.</li>
+      <li>Update your DMARC record to forward reports there:</li>
+    </ol>
+    <pre><code>v=DMARC1; p=none; rua=mailto:dmarc@trynevron.com,mailto:xyz-trynevron@rua.dmarcian.com; pct=100</code></pre>
+    <p>Dmarcian parses the daily XML blobs into a readable dashboard. Required for moving safely from <code>p=none</code> → <code>quarantine</code> → <code>reject</code>.</p>
+
+    <h3>Mail-Tester: pre-launch sanity check</h3>
+    <ol class="instructions">
+      <li>Visit <a href="https://mail-tester.com" style="color: var(--accent-light)">mail-tester.com</a>, get a throwaway address.</li>
+      <li>Send one email from each new mailbox to that address.</li>
+      <li>Score should be <strong class="check">10/10</strong>. Anything below 9 → fix before first real send.</li>
+      <li>Repeat monthly as a drift check.</li>
+    </ol>
+
+    <h3>MXToolbox: blacklist monitoring</h3>
+    <p>Manual spot-check at <code>mxtoolbox.com/blacklists.aspx</code> - enter <code>trynevron.com</code>. Paid tier does this automatically with alerts.</p>
+  </div>
+
+  <!-- Phase 7 -->
+  <div class="phase" id="phase-7">
+    <h2><span class="phase-number">7</span> Warmup & first send</h2>
+
+    <h3>Connect mailboxes to Instantly</h3>
+    <p>Per mailbox:</p>
+    <ul class="instructions">
+      <li>Instantly → Email Accounts → Add → Google OAuth</li>
+      <li>Settings:</li>
+    </ul>
+    <pre><code>daily_limit:         33
+warmup.limit:        10
+enable_slow_ramp:    true
+weekday_only:        true
+sending_gap:         1   (minute between sends)</code></pre>
+
+    <h3>Warmup duration</h3>
+    <div class="timeline">
+      <div class="timeline-item">
+        <h4>Week 1: Pure warmup</h4>
+        <p>~10 warmup messages/day. Zero real sends. Watch warmup health in Instantly → should hit 90%+ by end of week.</p>
+      </div>
+      <div class="timeline-item">
+        <h4>Week 2: Warmup + small ramp</h4>
+        <p>Warmup continues. Real sends: 5-10/day, soft audience (LinkedIn 1st-degree, known contacts).</p>
+      </div>
+      <div class="timeline-item">
+        <h4>Week 3: Gradual ramp</h4>
+        <p>Real sends: 15-25/day. Still warm audiences preferred.</p>
+      </div>
+      <div class="timeline-item">
+        <h4>Week 4+: Full production</h4>
+        <p>33/day per account to cold ICP leads. Warmup stays ON forever in the background.</p>
+      </div>
+    </div>
+
+    <div class="callout success">
+      <strong>Infrastructure target</strong>
+      trynevron.com contributes 6 × 33 = <strong>198/day</strong> at full ramp. Running parallel to nevron.net's 6 accounts (also 198/day) = <strong>396/day total</strong> across 2 domains.
+      Per-domain economics, full N-domain scale table, and the 18-month ramp plan live in the <a href="scaling-strategy.html" style="color: var(--accent-light);">cold outreach scaling strategy</a>.
+    </div>
+  </div>
+
+  <!-- Cheatsheet -->
+  <div class="phase" id="cheatsheet">
+    <h2><span class="phase-number">∑</span> DNS records cheatsheet (all-in-one)</h2>
+
+    <p>Publish all of these at Cloudflare (or equivalent) for <code>trynevron.com</code>:</p>
+
+    <table>
+      <tr><th>Type</th><th>Name</th><th>Value</th><th>Proxy</th></tr>
+      <tr><td>MX</td><td><code>@</code></td><td><code>SMTP.GOOGLE.COM.</code> (priority 1)</td><td>-</td></tr>
+      <tr><td>TXT</td><td><code>@</code></td><td><code>v=spf1 include:_spf.google.com ~all</code></td><td>-</td></tr>
+      <tr><td>TXT</td><td><code>google._domainkey</code></td><td><code>v=DKIM1; k=rsa; p=...</code> (from Admin)</td><td>-</td></tr>
+      <tr><td>TXT</td><td><code>_dmarc</code></td><td><code>v=DMARC1; p=none; rua=...; pct=100; adkim=s; aspf=s; fo=1</code></td><td>-</td></tr>
+      <tr><td>TXT</td><td><code>_mta-sts</code></td><td><code>v=STSv1; id=2026042100</code></td><td>-</td></tr>
+      <tr><td>TXT</td><td><code>_smtp._tls</code></td><td><code>v=TLSRPTv1; rua=mailto:tlsrpt@trynevron.com</code></td><td>-</td></tr>
+      <tr><td>TXT</td><td><code>@</code></td><td><code>google-site-verification=...</code> (Workspace)</td><td>-</td></tr>
+      <tr><td>A</td><td><code>@</code></td><td><code>192.0.2.1</code> (dummy - redirect intercepts)</td><td class="check">Proxied</td></tr>
+      <tr><td>CNAME</td><td><code>www</code></td><td><code>trynevron.com</code></td><td class="check">Proxied</td></tr>
+      <tr><td>CNAME</td><td><code>mta-sts</code></td><td>(Cloudflare Pages or GitHub Pages host)</td><td class="check">Proxied</td></tr>
+      <tr><td>CNAME</td><td><code>track</code></td><td><code>open.sleadtrack.com</code> (Instantly)</td><td class="bad">DNS only</td></tr>
+    </table>
+
+    <p class="meta" style="margin-top: 16px; color: var(--text-muted); font-size: 13px;">
+      Replace DKIM <code>p=...</code> with the real key from Google Admin.
+      Replace MTA-STS <code>id</code> with a current YYYYMMDD + sequence when you update the policy file.
+    </p>
+  </div>
+
+  <!-- Timeline -->
+  <div class="phase" id="timeline">
+    <h2><span class="phase-number">⏱</span> Timeline summary</h2>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <h4>Day 0: Purchase</h4>
+        <p>Register <code>trynevron.com</code> (Cloudflare Registrar, 2-year). Point nameservers to Cloudflare. Enable DNSSEC.</p>
+      </div>
+      <div class="timeline-item">
+        <h4>Day 1: Google Workspace</h4>
+        <p>Add domain as secondary. Verify. Create the six mailboxes.</p>
+      </div>
+      <div class="timeline-item">
+        <h4>Day 1: Core DNS</h4>
+        <p>Publish MX, SPF, DKIM (2048), DMARC <code>p=none</code>. Start DKIM authentication in Admin.</p>
+      </div>
+      <div class="timeline-item">
+        <h4>Day 2: Web & redirect</h4>
+        <p>Set up 301 redirect to nevron.co. Verify with <code>curl -I</code>.</p>
+      </div>
+      <div class="timeline-item">
+        <h4>Day 3: Advanced DNS</h4>
+        <p>Publish MTA-STS (DNS + policy file), TLS-RPT.</p>
+      </div>
+      <div class="timeline-item">
+        <h4>Day 4: Instantly</h4>
+        <p>Add custom tracking domain <code>track.trynevron.com</code>. Connect both mailboxes. Enable warmup.</p>
+      </div>
+      <div class="timeline-item">
+        <h4>Day 4: Monitoring</h4>
+        <p>Register Postmaster Tools, Dmarcian. Run Mail-Tester → aim for 10/10.</p>
+      </div>
+      <div class="timeline-item">
+        <h4>Day 5 - Day 30: Warmup</h4>
+        <p>Instantly warmup running. No cold sends. Domain aging naturally.</p>
+      </div>
+      <div class="timeline-item">
+        <h4>Day 30: First real sends</h4>
+        <p>Ramp to 33/day per account. DMARC → <code>p=quarantine</code> after reports are clean.</p>
+      </div>
+      <div class="timeline-item">
+        <h4>Day 45: Tighten DMARC</h4>
+        <p>SPF <code>~all</code> → <code>-all</code>. DMARC <code>quarantine</code> → <code>reject</code>.</p>
+      </div>
+    </div>
+
+    <div class="callout success">
+      <strong>Total: ~4-5 weeks from purchase to full-volume cold sending</strong>
+      With all 6 accounts warmed up and ramping, trynevron.com contributes <strong>198/day</strong> at full capacity - 396/day total across nevron.net + trynevron.com, scaling up by +198/day per additional domain.
+    </div>
+  </div>
+
+  <p style="margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--border); font-size: 13px; color: var(--text-muted);">
+    <strong style="color: var(--accent-light);">Companion documents:</strong><br>
+    →  <a href="deliverability-recommendations.html" style="color: var(--accent-light);">Cold email deliverability cheatsheet</a> - the 12-section rules index (A-L): domain setup, auth, warmup, content, compliance<br>
+    →  <a href="scaling-strategy.html" style="color: var(--accent-light);">Cold outreach scaling strategy</a> - ops tipping points, 18-month ramp plan, benchmarks</p>
+
+</div>
+</body>
+</html>
