@@ -100,7 +100,12 @@
 
   /* sections */
   .sec { margin-top: 26px; }
-  .sec + .sec { margin-top: 8px; }
+  .split { display: grid; grid-template-columns: 1fr 1fr; margin-top: 26px; }
+  .split > .sec { margin-top: 0; min-width: 0; }
+  .split > .sec:first-child { padding-right: 24px; }
+  .split > .sec + .sec { padding-left: 24px; border-left: 1px solid var(--line); }
+  .split:has(> .sec[hidden]) { grid-template-columns: 1fr; }
+  .split:has(> .sec[hidden]) > .sec { padding: 0; border-left: 0; }
   .sec-head { display: flex; align-items: center; gap: 12px; margin: 0 0 10px; }
   .sec-head h2 {
     margin: 0; display: flex; align-items: center; gap: 9px;
@@ -119,7 +124,7 @@
   .cat { min-width: 0; break-inside: avoid; padding-bottom: 18px; }
   .cat[hidden] { display: none; }
   .cat-head { display: flex; align-items: center; gap: 8px; margin: 0 0 7px; padding-left: 1px; }
-  .cat-head::before { content: ""; flex: none; width: 3px; height: 11px; border-radius: 1px; background: var(--acc); opacity: .75; }
+  .cat-head::before { content: ""; flex: none; width: 3px; height: 11px; border-radius: 1px; background: var(--acc); background: oklch(0.78 0.12 var(--h)); }
   .cat-head h3 {
     margin: 0; font-family: var(--mono); font-size: 11.5px; font-weight: 500; letter-spacing: .1em;
     text-transform: uppercase; color: var(--ink-2); white-space: nowrap;
@@ -136,8 +141,25 @@
   }
   .tile[hidden] { display: none; }
   .tile:hover { background: var(--panel-2); border-color: var(--line-2); }
-  .tile:has(.tile-link:hover) { border-color: var(--acc); }
-  .tile:has(.tile-link:focus-visible) { border-color: var(--acc); }
+
+  /* tint: each category sets --h (oklch hue), tiles shift it slightly so no two look the same */
+  .cat { --h: 250; }
+  .tile { --dh: 0; --th: calc(var(--h) + var(--dh)); }
+  .cat-list > .tile:nth-child(5n+2) { --dh: 14; }
+  .cat-list > .tile:nth-child(5n+3) { --dh: 28; }
+  .cat-list > .tile:nth-child(5n+4) { --dh: -14; }
+  .cat-list > .tile:nth-child(5n+5) { --dh: -28; }
+  .cat .tile { background: oklch(0.215 0.03 var(--th)); border-color: oklch(0.3 0.04 var(--th)); }
+  .cat .tile:hover { background: oklch(0.245 0.038 var(--th)); border-color: oklch(0.38 0.05 var(--th)); }
+  .cat .tile:has(.tile-link:hover),
+  .cat .tile:has(.tile-link:focus-visible) { border-color: oklch(0.74 0.11 var(--th)); }
+  .cat .tile:hover .go { color: oklch(0.82 0.11 var(--th)); }
+  .cat .meta a:hover { color: oklch(0.84 0.1 var(--th)); border-bottom-color: currentColor; }
+  .cat .locked { background: oklch(0.185 0.024 var(--th)); }
+  .cat .locked:hover { background: oklch(0.215 0.03 var(--th)); }
+  .cat .cat-head h3 { color: oklch(0.84 0.1 var(--h)); }
+  .cat .cat-count { color: oklch(0.66 0.05 var(--h)); }
+  .cat .cat-rule { background: linear-gradient(to right, oklch(0.36 0.06 var(--h)), transparent); }
 
   .t-head { display: flex; align-items: center; gap: 8px; min-width: 0; }
   .tile h4 {
@@ -179,6 +201,11 @@
   }
 
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+  @media (max-width: 980px) {
+    .split { grid-template-columns: 1fr; }
+    .split > .sec:first-child { padding-right: 0; }
+    .split > .sec + .sec { padding-left: 0; border-left: 0; margin-top: 8px; }
+  }
   @media (max-width: 720px) {
     .wrap { padding: 0 16px 32px; }
     .top { padding-top: 16px; }
@@ -223,9 +250,12 @@
     Zaklenjena: <article class="tile locked">, namesto puscice <span class="lock">...prijava</span>;
                 brez povezave, ce stran ni dosegljiva niti s prijavo.
     Opis je ena kratka vrstica (do ~55 znakov). Meta: tehnologija, gostitelj ali jeziki, mesec (LLLL-MM), koda.
-    Nova kategorija: kopiraj cel <div class="cat"> z glavo. Stevci v glavi, razdelkih in kategorijah
+    Nova kategorija: kopiraj cel <div class="cat" style="--h: ..."> z glavo in ji daj svoj odtenek
+    (--h, 0 do 360, oklch), ki ga se nima nobena kategorija. Stevci v glavi, razdelkih in kategorijah
     se izracunajo sami, iskanje uposteva tudi ime kategorije.
   -->
+
+  <div class="split">
 
   <section class="sec nev" aria-labelledby="h-nev">
     <div class="sec-head">
@@ -236,7 +266,7 @@
     </div>
     <div class="cats">
 
-      <div class="cat">
+      <div class="cat" style="--h: 250">
         <div class="cat-head"><h3>GTM</h3><span class="cat-count">03</span><span class="cat-rule"></span></div>
         <div class="cat-list">
           <article class="tile">
@@ -257,7 +287,7 @@
         </div>
       </div>
 
-      <div class="cat">
+      <div class="cat" style="--h: 30">
         <div class="cat-head"><h3>SDR in outreach</h3><span class="cat-count">02</span><span class="cat-rule"></span></div>
         <div class="cat-list">
           <article class="tile locked">
@@ -273,7 +303,7 @@
         </div>
       </div>
 
-      <div class="cat">
+      <div class="cat" style="--h: 195">
         <div class="cat-head"><h3>Raziskave</h3><span class="cat-count">03</span><span class="cat-rule"></span></div>
         <div class="cat-list">
           <article class="tile">
@@ -294,7 +324,7 @@
         </div>
       </div>
 
-      <div class="cat">
+      <div class="cat" style="--h: 345">
         <div class="cat-head"><h3>Marketing</h3><span class="cat-count">01</span><span class="cat-rule"></span></div>
         <div class="cat-list">
           <article class="tile">
@@ -310,14 +340,14 @@
 
   <section class="sec own" aria-labelledby="h-own">
     <div class="sec-head">
-      <h2 id="h-own">Osebni</h2>
+      <h2 id="h-own">Osebno</h2>
       <span class="sec-count">07</span>
       <span class="sec-rule"></span>
-      <span class="sec-note">osebna orodja in zasebni pregledi</span>
+      <span class="sec-note">orodja, pregledi in rast</span>
     </div>
     <div class="cats">
 
-      <div class="cat">
+      <div class="cat" style="--h: 150">
         <div class="cat-head"><h3>Orodja in vodniki</h3><span class="cat-count">03</span><span class="cat-rule"></span></div>
         <div class="cat-list">
           <article class="tile">
@@ -338,19 +368,9 @@
         </div>
       </div>
 
-      <div class="cat">
-        <div class="cat-head"><h3>Zasebno</h3><span class="cat-count">04</span><span class="cat-rule"></span></div>
+      <div class="cat" style="--h: 85">
+        <div class="cat-head"><h3>Improve &amp; Upgrade</h3><span class="cat-count">02</span><span class="cat-rule"></span></div>
         <div class="cat-list">
-          <article class="tile locked">
-            <div class="t-head"><h4><a class="tile-link" href="https://cashflow-matjaz.vercel.app/">Cashflow</a></h4><span class="lock"><svg aria-hidden="true"><use href="#i-lock"/></svg>prijava</span></div>
-            <p class="desc">Osebni pregled denarnega toka</p>
-            <p class="meta"><span>HTML · Python</span><span>vercel.app</span><span class="end">2026-10</span></p>
-          </article>
-          <article class="tile locked">
-            <div class="t-head"><h4><a class="tile-link" href="https://delovne-ure.pages.dev/">Delovne ure v Nevronu</a></h4><span class="lock"><svg aria-hidden="true"><use href="#i-lock"/></svg>prijava</span></div>
-            <p class="desc">Analiza delovnih ur po mesecih, z grafi</p>
-            <p class="meta"><span>HTML · Python</span><span>pages.dev · GitHub</span><span class="end">2026-10</span></p>
-          </article>
           <article class="tile locked">
             <div class="t-head"><h4><a class="tile-link" href="https://my-longevity.pages.dev/">Moja dolgoživost</a></h4><span class="lock"><svg aria-hidden="true"><use href="#i-lock"/></svg>prijava</span></div>
             <p class="desc">Lastne meritve skozi čas</p>
@@ -364,8 +384,26 @@
         </div>
       </div>
 
+      <div class="cat" style="--h: 295">
+        <div class="cat-head"><h3>Zasebno</h3><span class="cat-count">02</span><span class="cat-rule"></span></div>
+        <div class="cat-list">
+          <article class="tile locked">
+            <div class="t-head"><h4><a class="tile-link" href="https://cashflow-matjaz.vercel.app/">Cashflow</a></h4><span class="lock"><svg aria-hidden="true"><use href="#i-lock"/></svg>prijava</span></div>
+            <p class="desc">Osebni pregled denarnega toka</p>
+            <p class="meta"><span>HTML · Python</span><span>vercel.app</span><span class="end">2026-10</span></p>
+          </article>
+          <article class="tile locked">
+            <div class="t-head"><h4><a class="tile-link" href="https://delovne-ure.pages.dev/">Delovne ure v Nevronu</a></h4><span class="lock"><svg aria-hidden="true"><use href="#i-lock"/></svg>prijava</span></div>
+            <p class="desc">Analiza delovnih ur po mesecih, z grafi</p>
+            <p class="meta"><span>HTML · Python</span><span>pages.dev · GitHub</span><span class="end">2026-10</span></p>
+          </article>
+        </div>
+      </div>
+
     </div>
   </section>
+
+  </div>
 
   <p class="empty" id="empty" hidden>Ni zadetkov. Esc počisti iskanje.</p>
 
