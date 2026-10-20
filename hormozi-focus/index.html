@@ -166,6 +166,13 @@
   .top5 li.muted { color: var(--ink-3); list-style: none; margin-left: -18px; }
   .t5-count { font-family: var(--mono); color: var(--ink-3); white-space: nowrap; }
 
+  /* reminders panel */
+  .alarm-panel .note { margin: 6px 0 12px; color: var(--ink-3); font-size: 12.5px; }
+  .alarm-state { margin: 8px 0 12px; font-size: 13.5px; color: var(--ink-2); }
+  .alarm-state strong { color: var(--ink); }
+  .alarm-switch { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .alarm-switch .btn-ghost.is-active { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+
   /* backup panel */
   .backup-panel .note { margin: 6px 0 12px; color: var(--ink-3); font-size: 12.5px; }
   .backup-actions { display: flex; gap: 10px; flex-wrap: wrap; }
@@ -253,6 +260,16 @@
     </section>
 
     <aside class="sidebar">
+
+      <section class="panel alarm-panel">
+        <h2>Opomniki na 15 minut</h2>
+        <p class="alarm-state" id="alarmState">Stanje: <strong>ni znano</strong></p>
+        <div class="alarm-switch">
+          <button id="alarmOn" class="btn-ghost" type="button">Vklopi</button>
+          <button id="alarmOff" class="btn-ghost" type="button">Izklopi</button>
+        </div>
+        <p class="note">Deluje samo na računalniku z nameščenim opomnikom. Windows spremembo potrdi v oknu.</p>
+      </section>
 
       <section class="panel cal-panel">
         <h2>Koledar</h2>
@@ -682,9 +699,39 @@
     reader.readAsText(file);
   });
 
+  // Reminders: the hormozi-alarm: protocol runs alarm-toggle.ps1 on this PC.
+  // The page cannot read the real state, so it remembers the last click;
+  // the Windows confirmation box shows the actual result.
+  var LS_ALARM = "hormoziFocus.alarm.v1";
+  var alarmEl = {
+    state: document.getElementById("alarmState"),
+    on: document.getElementById("alarmOn"),
+    off: document.getElementById("alarmOff")
+  };
+
+  function renderAlarm(){
+    var a = loadJSON(LS_ALARM, null);
+    var on = a && a.state === "on", off = a && a.state === "off";
+    alarmEl.on.classList.toggle("is-active", !!on);
+    alarmEl.off.classList.toggle("is-active", !!off);
+    alarmEl.state.innerHTML = a
+      ? "Zadnje: <strong>" + (on ? "vklopljeni" : "izklopljeni") + "</strong> · " + escapeHtml(formatDateTimeSl(a.at))
+      : "Stanje: <strong>ni znano</strong>";
+  }
+
+  function setAlarm(state){
+    saveJSON(LS_ALARM, { state: state, at: new Date().toISOString() });
+    renderAlarm();
+    window.location.href = "hormozi-alarm:" + state;
+  }
+
+  alarmEl.on.addEventListener("click", function(){ setAlarm("on"); });
+  alarmEl.off.addEventListener("click", function(){ setAlarm("off"); });
+
   loadAndRenderDay(toKey(selectedDate));
   renderCalendar();
   computeStats();
+  renderAlarm();
 })();
 </script>
 </body>
