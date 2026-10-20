@@ -460,8 +460,8 @@
 
   <div style="margin: 0 0 28px; padding: 14px 18px; border: 1px solid rgba(245,158,11,.55); border-radius: 10px; background: rgba(245,158,11,.10); font-size: 14px; line-height: 1.55;">
     <strong>Javna kopija, stanje 22. 4. 2026.</strong> Od takrat se je spremenilo: sledenje odprtjem in klikom je zdaj izklopljeno povsod (zero tracking), razdelitev pošiljateljev po domenah in kanalih je drugačna, kot piše tu.
-    Imena in naslovi pošiljateljev, interni prihodki, cene in napoved strank so na tej kopiji umaknjeni.
-    <a href="index.html" style="color: inherit;">Vsi trije deli</a>
+    Imena in naslovi pošiljateljev, dejanske outreach domene, interni prihodki, cene, izhodišče in napoved strank so na tej kopiji umaknjeni ali nadomeščeni z oznakami.
+    <a href="index.html" style="color: inherit;">Vsi štirje deli</a>
   </div>
 
   <!-- Hero -->
@@ -575,8 +575,8 @@
   </div>
 
   <div class="sub-heading">
-    <div class="sub-eyebrow">▲ Key hiring trigger</div>
-    <h3>Hiring a GTM engineer in Q1 of 2027</h3>
+    <div class="sub-eyebrow">▲ Ops capacity</div>
+    <h3>When the channel needs dedicated ops</h3>
   </div>
 
   <!-- 3: Ops person math -->
@@ -649,7 +649,7 @@
         <h4>1 domain · 6 accounts</h4>
         <p class="phase-volume">~198 emails/day</p>
         <ul class="phase-notes">
-          <li>nevron.net, 6 accounts @ 33/day</li>
+          <li>existing-domain.com, 6 accounts @ 33/day</li>
           <li>Markets: SI + HR + initial NL</li>
           <li>Ops: 1 (GTM Manager, shared)</li>
           <li>Plan: Hypergrowth $97</li>
@@ -673,14 +673,14 @@
       <div class="phase-card phase-tip">
         <div class="phase-bar" style="width: 38%;"></div>
         <div class="phase-head">
-          <span class="phase-label">Phase 3 <span style="color: var(--orange);">▲ HIRE</span></span>
+          <span class="phase-label">Phase 3 <span style="color: var(--orange);">▲ OPS</span></span>
           <span class="phase-date">2027</span>
         </div>
         <h4>3-4 domains · 18-24 accounts</h4>
         <p class="phase-volume">~594-792 emails/day</p>
         <ul class="phase-notes">
           <li>Markets: + DACH, Italy, France</li>
-          <li>Ops: hire PT SDR ops (10 hrs/wk)</li>
+          <li>Ops: part-time SDR ops (10 hrs/wk)</li>
           <li>Start varying registrar + DNS</li>
           <li>Plan: Hypergrowth (still)</li>
         </ul>
@@ -736,7 +736,7 @@
   <div class="section">
     <h2><span class="letter">5</span> Month-by-month ramp plan: volume &amp; cost</h2>
     <p style="color: var(--text-muted); font-size: 13.5px;">
-      Concrete monthly plan starting from today (nevron.net fully warmed), adding one new domain every ~2 months with proper warmup (2 wks DNS/setup + 4 wks mailbox ramp 5→33/day). Monthly cost column includes Google Workspace mailboxes ($6/seat), domain registration ($1/mo per domain), and Instantly plan. <strong>Ops headcount cost excluded</strong> - that's a separate HR line.
+      Concrete monthly plan starting from one fully warmed domain, adding one new domain every ~2 months with proper warmup (2 wks DNS/setup + 4 wks mailbox ramp 5→33/day). Monthly cost column includes Google Workspace mailboxes ($6/seat), domain registration ($1/mo per domain), and Instantly plan. <strong>Ops headcount cost excluded</strong> - that's a separate HR line.
     </p>
     <table>
       <tr>
@@ -748,7 +748,7 @@
       </tr>
       <tr>
         <td><strong>M0</strong><br><span style="color: var(--text-muted); font-size: 11px;">Apr 2026</span></td>
-        <td>nevron.net only, 6 accounts warmed</td>
+        <td>existing-domain.com only, 6 accounts warmed</td>
         <td><strong>198</strong></td>
         <td>4,356</td>
         <td><code>$134</code><br><span style="color: var(--text-muted); font-size: 11px;">6 mbx + 1 dom + Hypergrowth</span></td>
@@ -776,7 +776,7 @@
       </tr>
       <tr>
         <td><strong>M4</strong><br><span style="color: var(--text-muted); font-size: 11px;">Aug 2026</span></td>
-        <td><strong>Hire PT ops</strong>. Register domain #3, provision mailboxes</td>
+        <td>Register domain #3, provision mailboxes</td>
         <td>396</td>
         <td>8,712</td>
         <td><code>$208</code><br><span style="color: var(--text-muted); font-size: 11px;">18 mbx + 3 dom</span></td>
@@ -818,7 +818,7 @@
       </tr>
       <tr>
         <td><strong>M10</strong><br><span style="color: var(--text-muted); font-size: 11px;">Feb 2027</span></td>
-        <td><strong>Hire FT ops</strong>. Register domain #5 (new DNS provider)</td>
+        <td>Register domain #5 (new DNS provider)</td>
         <td>792</td>
         <td>17,424</td>
         <td><code>$282</code><br><span style="color: var(--text-muted); font-size: 11px;">30 mbx + 5 dom</span></td>
@@ -864,7 +864,7 @@
       <strong style="color: var(--accent-light); font-size: 15px; display: block; margin-bottom: 8px;">Pacing rules baked in</strong>
       → <strong>6 weeks per new domain</strong> (2 wks DNS/setup + 4 wks mailbox warmup). Respects the "never spin up 5+ domains in one week" rule - registrar fingerprint stays clean.<br>
       → <strong>~2-month gap between new domains.</strong> Makes the cluster look like organic corporate expansion, not a spam farm. Staggered registration dates = staggered WHOIS = no clustered fingerprint signal.<br>
-      → <strong>Hire triggers land before the pain hits.</strong> PT ops at M4 (before 3rd domain goes live), FT ops at M10 (before 5th). The cheatsheet rule is clear: GTM-shared ops breaks at 3+ domains.<br>
+      → <strong>Ops capacity grows before the pain hits:</strong> part-time ops before the 3rd domain goes live, full-time before the 5th. The cheatsheet rule is clear: GTM-shared ops breaks at 3+ domains.<br>
       → <strong>Instantly upgrades are volume-safe.</strong> Hypergrowth ($97, 100K/mo cap) covers you through M11 at only ~20% utilization. Light Speed upgrade at M12 is driven by <em>SISR dedicated IP requirements at 5+ domains</em>, not volume - you hit Light Speed's 500K cap at less than 7% utilization at M18.<br>
       → <strong>Fingerprint diversification starts at M7</strong> (4th domain = vary registrar), M10 (5th = vary DNS provider). Matches the cheatsheet's "4-7 domains: start varying" rule exactly.
     </div>
@@ -883,7 +883,7 @@
   <div class="section">
     <h2><span class="letter">6</span> Performance benchmarks: reply rate trajectory</h2>
     <p style="color: var(--text-muted); font-size: 13.5px;">
-      Current Nevron baseline (as of 2026-04-22): <strong>236 sent · 7% reply rate · 2 opportunities</strong> (0.85% opp rate). That's already <em>above</em> the B2B cold email average of 2-5%. First-month reply rate for most campaigns is only 3-4% as infrastructure warms - Nevron is starting from a strong baseline.
+      The B2B cold email average is a 2-5% reply rate. First-month reply rate for most campaigns is only 3-4% as infrastructure warms.
     </p>
     <p style="color: var(--text-muted); font-size: 13.5px; margin-top: 10px;">
       Benchmark trajectory assuming disciplined iteration (copy A/B testing, ICP tightening, product diversification, case study development):
@@ -896,14 +896,6 @@
         <th>Positive reply</th>
         <th>Opportunity rate</th>
         <th>Meetings booked</th>
-      </tr>
-      <tr style="background: rgba(52, 211, 153, 0.06);">
-        <td><strong>M0 (now)</strong></td>
-        <td>~250</td>
-        <td><strong>7%</strong></td>
-        <td>~1.5%</td>
-        <td><strong>0.85%</strong></td>
-        <td>~0.5%</td>
       </tr>
       <tr>
         <td>M3</td>
@@ -951,54 +943,9 @@
     </p>
   </div>
 
-  <!-- 7: Multi-product campaigns -->
-  <div class="section">
-    <h2><span class="letter">7</span> Multi-product campaign lift</h2>
-    <p style="color: var(--text-muted); font-size: 13.5px;">
-      Single-product NevronCore campaigns plateau around 9-10% reply rate. Splitting by product with angle-specific ICP matching unlocks higher-reply positioning. The lift is real and measurable:
-    </p>
-    <table>
-      <tr><th>Product angle</th><th>Expected reply rate</th><th>Why it lifts (or caps)</th></tr>
-      <tr>
-        <td><strong>Full NevronCore</strong></td>
-        <td>5-8%</td>
-        <td style="color: var(--text-muted);">Big ticket, requires full-platform buying committee - filters hard</td>
-      </tr>
-      <tr style="background: rgba(52, 211, 153, 0.05);">
-        <td><strong>Nevron Mobile standalone</strong></td>
-        <td class="check">10-14%</td>
-        <td style="color: var(--text-muted);">Small commitment, visible ROI, GMs can approve alone</td>
-      </tr>
-      <tr style="background: rgba(52, 211, 153, 0.05);">
-        <td><strong>Mobile Check-in</strong></td>
-        <td class="check">12-16%</td>
-        <td style="color: var(--text-muted);">Concrete operational pain (front desk queues, 2am calls) - GMs instantly get it</td>
-      </tr>
-      <tr style="background: rgba(52, 211, 153, 0.05);">
-        <td><strong>AI Assistant</strong></td>
-        <td class="check">13-18%</td>
-        <td style="color: var(--text-muted);">Topical, executives <em>want</em> to learn, "what are peers doing?" framing</td>
-      </tr>
-      <tr>
-        <td><strong>Digital Signage / Cast</strong></td>
-        <td>6-9%</td>
-        <td style="color: var(--text-muted);">Niche unless hotel has recent renovation trigger</td>
-      </tr>
-    </table>
-    <div class="callout success" style="margin-top: 12px;">
-      <strong>Composite lift math</strong>
-      Single-product (NevronCore only) plateaus at 9-10% reply rate.<br>
-      Add 2-3 standalone product angles with product-specific ICP matching → plateau at <strong>12-14%</strong>.<br>
-      That's a <strong>~40% lift on reply rate alone</strong>, plus better reply-to-opportunity conversion because standalone products have clearer yes/no signals (~20-25% vs. ~12% today).
-    </div>
-    <p style="color: var(--text-muted); font-size: 12.5px; margin-top: 8px;">
-      14% reply × 22% opp conversion = <strong>3% opportunity rate</strong> - that's 3.5× today's 0.85%. The real unlock is in reply-to-opportunity conversion, not headline reply rate.
-    </p>
-  </div>
-
   <!-- 8: Three levers -->
   <div class="section">
-    <h2><span class="letter">8</span> The three levers ranked by ROI</h2>
+    <h2><span class="letter">7</span> The three levers ranked by ROI</h2>
     <table>
       <tr>
         <th>#</th>
@@ -1010,7 +957,7 @@
         <td><strong>1</strong></td>
         <td><strong>Reply-to-opportunity conversion</strong></td>
         <td class="check">Highest</td>
-        <td style="color: var(--text-muted);">Reply rate is already decent; the gap is qualifying better. Tighter CTAs, clearer offers, sharper ICP-product match. Moves the needle from 0.85% → 2.5% opp rate.</td>
+        <td style="color: var(--text-muted);">Reply rate is already decent; the gap is qualifying better. Tighter CTAs, clearer offers, sharper ICP-product match. Can lift the opportunity rate to ~2.5%.</td>
       </tr>
       <tr style="background: rgba(245, 158, 11, 0.06);">
         <td><strong>2</strong></td>
@@ -1032,7 +979,7 @@
 
   <!-- 12: Honest caveats -->
   <div class="section">
-    <h2><span class="letter">9</span> The honest caveats</h2>
+    <h2><span class="letter">8</span> The honest caveats</h2>
     <p style="color: var(--text-muted); font-size: 13.5px;">
       Three things that will bite if ignored. All of them are execution-dependent, not market-dependent - you control every lever.
     </p>
@@ -1049,7 +996,7 @@
 
     <div class="callout warning">
       <strong>3. Ops hiring must land before it bites</strong>
-      PT ops at M4. FT ops at M10. Miss these triggers by even 2 months and quality collapses silently - missed blacklist alerts, DNS drift, slow reply triage. You don't notice until the pipeline dries up 3 months later. The cheatsheet is explicit: shared GTM bandwidth breaks at 3+ domains.
+      Part-time ops before the 3rd domain, full-time before the 5th. Miss these triggers by even 2 months and quality collapses silently - missed blacklist alerts, DNS drift, slow reply triage. You don't notice until the pipeline dries up 3 months later. The cheatsheet is explicit: shared GTM bandwidth breaks at 3+ domains.
     </div>
   </div>
 
@@ -1057,7 +1004,7 @@
   <div class="bottom-line">
     <h3>Bottom line</h3>
     <p>
-      The plan holds if Nevron executes the 18-month ramp without shortcuts - 6-week domain cadence, 2-month gap between registrations, hire triggers landing on time (PT at M4, FT at M10), product diversification launched by M6, first case study by M9.
+      The plan holds if Nevron executes the 18-month ramp without shortcuts - 6-week domain cadence, 2-month gap between registrations, ops capacity added on time, product diversification launched by M6, first case study by M9.
     </p>
     <p style="margin-top: 8px;">
       The squeeze point is <strong>always ops hours, never Instantly's cap</strong>. If sales demands faster, the only safe lever is hire ops earlier - not compress warmup, not stack domains. The human bottleneck is real; the software/DNS bottleneck is fake.

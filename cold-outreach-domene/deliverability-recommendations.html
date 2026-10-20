@@ -446,8 +446,8 @@
 
   <div style="margin: 0 0 28px; padding: 14px 18px; border: 1px solid rgba(245,158,11,.55); border-radius: 10px; background: rgba(245,158,11,.10); font-size: 14px; line-height: 1.55;">
     <strong>Javna kopija, stanje 22. 4. 2026.</strong> Od takrat se je spremenilo: sledenje odprtjem in klikom je zdaj izklopljeno povsod (zero tracking), razdelitev pošiljateljev po domenah in kanalih je drugačna, kot piše tu.
-    Imena in naslovi pošiljateljev, interni prihodki, cene in napoved strank so na tej kopiji umaknjeni.
-    <a href="index.html" style="color: inherit;">Vsi trije deli</a>
+    Imena in naslovi pošiljateljev, dejanske outreach domene, interni prihodki, cene, izhodišče in napoved strank so na tej kopiji umaknjeni ali nadomeščeni z oznakami.
+    <a href="index.html" style="color: inherit;">Vsi štirje deli</a>
   </div>
 
   <div class="hero">
@@ -528,7 +528,7 @@
       <tr><td><code>.com</code></td><td class="check">Best</td><td style="color: var(--text-muted);">Gold standard. Highest inbox placement. Go here first.</td></tr>
       <tr><td><code>.co</code></td><td class="check">Strong</td><td style="color: var(--text-muted);">Nearly as good as .com. Nevron's primary site uses it.</td></tr>
       <tr><td><code>.io</code></td><td class="check">Strong</td><td style="color: var(--text-muted);">Tech-leaning but reputable.</td></tr>
-      <tr><td><code>.net</code></td><td class="check">Good</td><td style="color: var(--text-muted);">Solid. Nevron owns nevron.net already.</td></tr>
+      <tr><td><code>.net</code></td><td class="check">Good</td><td style="color: var(--text-muted);">Solid.</td></tr>
       <tr><td><code>.ai</code></td><td class="check">Good</td><td style="color: var(--text-muted);">Strong reputation, pricey (~$80/yr).</td></tr>
       <tr><td><code>.info</code></td><td class="warn">Acceptable</td><td style="color: var(--text-muted);">Works, slightly lower reputation than .com/.co.</td></tr>
       <tr><td><code>.app / .dev</code></td><td class="warn">Acceptable</td><td style="color: var(--text-muted);">Newer, still building reputation.</td></tr>
@@ -544,20 +544,20 @@
     <!-- Duplicate personas -->
     <div class="callout" style="margin-top: 28px; border-left-color: var(--green);">
       <strong style="color: var(--green); font-size: 15px; display: block; margin-bottom: 8px;">★ Duplicate personas across domains - allowed &amp; recommended</strong>
-      Using the same real-person name on multiple domains (e.g. <code>ana.novak@nevron.net</code> + <code>ana.novak@trynevron.com</code>) is a <strong>supported scaling pattern,</strong> not a spam signal. Each domain has independent reputation. Real people commonly hold multiple mailboxes (corporate + subsidiary + acquired brand).
+      Using the same real-person name on multiple domains (e.g. <code>ana.novak@existing-domain.com</code> + <code>ana.novak@trynevron.com</code>) is a <strong>supported scaling pattern,</strong> not a spam signal. Each domain has independent reputation. Real people commonly hold multiple mailboxes (corporate + subsidiary + acquired brand).
     </div>
 
     <div class="callout danger">
       <strong style="color: var(--red); font-size: 15px; display: block; margin-bottom: 8px;">⚠ The one hard rule</strong>
       <strong>No prospect may ever receive outreach from the same human name across two domains.</strong>
-      If a hotel GM gets an email from <code>ana.novak@nevron.net</code> Monday and <code>ana.novak@trynevron.com</code> Wednesday, they flag both as spam → both domains burn at once.
+      If a hotel GM gets an email from <code>ana.novak@existing-domain.com</code> Monday and <code>ana.novak@trynevron.com</code> Wednesday, they flag both as spam → both domains burn at once.
     </div>
 
     <h4 style="color: var(--text); margin-top: 16px;">Three ways to enforce non-overlap</h4>
     <ol class="instructions" style="padding-left: 22px;">
       <li>
         <strong>Geographic / ICP split (recommended for Nevron).</strong>
-        <span style="color: var(--text-muted);">E.g., nevron.net → EU (NL, SI, HR), trynevron.com → US (Florida). Lists naturally disjoint. Matches Nevron's two-region ICP structure.</span>
+        <span style="color: var(--text-muted);">E.g., existing-domain.com → EU markets, trynevron.com → US. Lists naturally disjoint.</span>
       </li>
       <li>
         <strong>Angle split.</strong>
@@ -578,8 +578,8 @@
     <h4 style="color: var(--text); margin-top: 20px;">Optional: local-part variation for extra safety</h4>
     <p style="color: var(--text-muted); font-size: 13.5px;">
       If you want extra inbox-header distance in case of accidental list collision:
-      <code>ana.novak@nevron.net</code> + <code>ana@trynevron.com</code>, or
-      <code>marko.kos@nevron.net</code> + <code>marko@trynevron.com</code>.
+      <code>ana.novak@existing-domain.com</code> + <code>ana@trynevron.com</code>, or
+      <code>marko.kos@existing-domain.com</code> + <code>marko@trynevron.com</code>.
       Costs nothing, buys a little protection. Not required if enforcement rule #1 or #2 is in place.
     </p>
   </div>
@@ -589,7 +589,7 @@
     <h2><span class="letter" style="background: var(--orange); color: #fff;">⚡</span> Scaling ceilings: limits &amp; tipping points</h2>
 
     <p style="margin-bottom: 16px; color: var(--text-muted);">
-      Domains are not infinitely stackable. Three different ceilings kick in at different scales: Instantly plan, TAM, and deliverability pattern risk.
+      Domains are not infinitely stackable. Two different ceilings kick in at different scales: the Instantly plan and deliverability pattern risk.
     </p>
 
     <h4 style="color: var(--text); margin-top: 20px;">1. Instantly plan ceilings (verified 2026-04)</h4>
@@ -635,21 +635,7 @@
       <strong>Upgrade trigger:</strong> hitting &gt; 70K emails/month on Hypergrowth.
     </p>
 
-    <h4 style="color: var(--text); margin-top: 28px;">2. Nevron TAM: revised</h4>
-    <p style="color: var(--text-muted); font-size: 13.5px;">
-      Nevron Mobile (the foot-in-door guest app) has <strong>global TAM</strong> across all independent hotels - not just FL / NL / SI / HR. Full NevronCore platform has a tighter TAM.
-    </p>
-    <table>
-      <tr><th>Product</th><th>TAM estimate</th><th>Geography</th></tr>
-      <tr><td>Nevron Mobile (guest app)</td><td><strong>~12K-20K hotels</strong></td><td>All independent 75-200 room hotels, globally</td></tr>
-      <tr><td>Full NevronCore (IPTV, Cast, Digital Signage, AI)</td><td>~3K-6K hotels</td><td>Upper-upscale / luxury / wellness only, high GOP</td></tr>
-      <tr><td>Current pilot (FL + NL + SI + HR)</td><td>~500-1,500 hotels</td><td>Immediate reachable set</td></tr>
-    </table>
-    <p style="color: var(--text-muted); font-size: 12.5px; margin-top: 8px;">
-      <strong>Implication:</strong> TAM is NOT the early ceiling. If Nevron Mobile's global expansion plays out, the 100K/mo Hypergrowth cap eventually becomes the bottleneck - but only after 2-3 years of geo-expansion.
-    </p>
-
-    <h4 style="color: var(--text); margin-top: 28px;">3. Deliverability pattern risk: how to dodge it at scale</h4>
+    <h4 style="color: var(--text); margin-top: 28px;">2. Deliverability pattern risk: how to dodge it at scale</h4>
     <p style="color: var(--text-muted); font-size: 13.5px;">
       At 5+ domains, the infrastructure fingerprint becomes visible to Google/Microsoft filters.
       Known spammer signatures: all domains registered within days, same registrar, same DNS, same redirect target, same WHOIS contact, similar names.
@@ -746,7 +732,7 @@
     <ul class="rules">
       <li><span class="pill pill-crit">Critical</span><div><strong>SPF</strong> - single record, <code>v=spf1 include:_spf.google.com ~all</code>.<span class="detail">Multiple SPF records = instant fail. Upgrade <code>~all</code> → <code>-all</code> after 2 weeks clean.</span></div></li>
       <li><span class="pill pill-crit">Critical</span><div><strong>DKIM 2048-bit</strong> - generated in Google Admin → Gmail → Authenticate email.<span class="detail">1024-bit is deprecated. Publish the TXT record, then hit "Start authentication".</span></div></li>
-      <li><span class="pill pill-crit">Critical</span><div><strong>DMARC</strong> - phased rollout: <code>p=none</code> → <code>p=quarantine</code> → <code>p=reject</code>.<span class="detail">Start: <code>v=DMARC1; p=none; rua=mailto:dmarc@nevron.net; pct=100</code>. 2 weeks each phase.</span></div></li>
+      <li><span class="pill pill-crit">Critical</span><div><strong>DMARC</strong> - phased rollout: <code>p=none</code> → <code>p=quarantine</code> → <code>p=reject</code>.<span class="detail">Start: <code>v=DMARC1; p=none; rua=mailto:dmarc@existing-domain.com; pct=100</code>. 2 weeks each phase.</span></div></li>
       <li><span class="pill pill-imp">Important</span><div>Valid MX records pointing to Google - <code>SMTP.GOOGLE.COM</code> priority 1.<span class="detail">Workspace uses single record now (not the old 5-record set).</span></div></li>
       <li><span class="pill pill-rec">Recommended</span><div><strong>MTA-STS</strong> + <strong>TLS-RPT</strong> - TLS enforcement + reporting.<span class="detail">Shows mail hygiene. Host <code>mta-sts.txt</code> at <code>https://mta-sts.domain/.well-known/</code>.</span></div></li>
       <li><span class="pill pill-rec">Recommended</span><div><strong>DNSSEC</strong> enabled at registrar.<span class="detail">Defense against spoofing. One click at most registrars.</span></div></li>
@@ -772,7 +758,7 @@
       <li><span class="pill pill-crit">Critical</span><div>Enable warmup on every account for 3-4 weeks before first campaign send.<span class="detail"><code>warmup.limit: 10</code>, <code>enable_slow_ramp: true</code>, <code>weekday_only: true</code>.</span></div></li>
       <li><span class="pill pill-crit">Critical</span><div>Per-account daily limit = <code>33</code>.</div></li>
       <li><span class="pill pill-imp">Important</span><div>Sending gap: <code>1</code> minute minimum between sends from the same account.<span class="detail">Burst sends look automated.</span></div></li>
-      <li><span class="pill pill-imp">Important</span><div><strong>Custom tracking domain</strong> - <code>track.nevron.net</code> via CNAME to <code>open.sleadtrack.com</code>.<span class="detail">UNPROXIED if using Cloudflare. Default Instantly tracking domain is shared = bad.</span></div></li>
+      <li><span class="pill pill-imp">Important</span><div><strong>Custom tracking domain</strong> - <code>track.existing-domain.com</code> via CNAME to <code>open.sleadtrack.com</code>.<span class="detail">UNPROXIED if using Cloudflare. Default Instantly tracking domain is shared = bad.</span></div></li>
       <li><span class="pill pill-rec">Recommended</span><div>Turn off open tracking, keep link tracking only.<span class="detail">Open-tracking pixels now hurt more than they help (Apple MPP, etc.).</span></div></li>
       <li><span class="pill pill-rec">Recommended</span><div>Account rotation enabled across all campaigns.</div></li>
     </ul>
@@ -819,7 +805,7 @@
     <h2><span class="letter">I</span> Deliverability monitoring</h2>
     <ul class="rules">
       <li><span class="pill pill-crit">Critical</span><div>Google Postmaster Tools - register every domain.<span class="detail">Spam rate, domain/IP reputation, authentication stats.</span></div></li>
-      <li><span class="pill pill-imp">Important</span><div><strong>Dmarcian</strong> free tier - parses DMARC aggregate reports.<span class="detail">Email <code>dmarc@nevron.net</code> → auto-forward to Dmarcian RUA.</span></div></li>
+      <li><span class="pill pill-imp">Important</span><div><strong>Dmarcian</strong> free tier - parses DMARC aggregate reports.<span class="detail">Email <code>dmarc@existing-domain.com</code> → auto-forward to Dmarcian RUA.</span></div></li>
       <li><span class="pill pill-imp">Important</span><div><strong>Mail-Tester.com</strong> - pre-launch check, aim for 10/10.<span class="detail">Send one test email per account before going live.</span></div></li>
       <li><span class="pill pill-rec">Recommended</span><div>GlockApps or MXToolbox inbox placement tests monthly.</div></li>
       <li><span class="pill pill-rec">Recommended</span><div>Monitor blacklists: Spamhaus, Barracuda, SORBS (MXToolbox free).</div></li>

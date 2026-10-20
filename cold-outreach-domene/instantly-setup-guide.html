@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Instantly campaign setup guide | Nevron SDR</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface-2: #232733;
+    --border: #2e3344;
+    --text: #e2e4e9;
+    --text-muted: #8b8fa3;
+    --accent: #6c63ff;
+    --accent-light: #8b84ff;
+    --green: #34d399;
+    --orange: #f59e0b;
+    --red: #ef4444;
+    --code-bg: #161820;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 15px;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+
+  /* Header */
+  .header {
+    margin-bottom: 48px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--border);
+  }
+  .header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    background: linear-gradient(135deg, var(--accent-light), var(--green));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .header .subtitle {
+    color: var(--text-muted);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  .header .meta {
+    margin-top: 12px;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  /* Architecture diagram */
+  .architecture {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin: 32px 0;
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    font-size: 13.5px;
+    line-height: 1.8;
+    color: var(--text-muted);
+    white-space: pre;
+    overflow-x: auto;
+  }
+  .architecture .highlight { color: var(--accent-light); font-weight: 600; }
+  .architecture .green { color: var(--green); }
+  .architecture .orange { color: var(--orange); }
+
+  /* TOC */
+  .toc {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-bottom: 48px;
+  }
+  .toc h2 {
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+  }
+  .toc ol { padding-left: 20px; }
+  .toc li { margin-bottom: 6px; }
+  .toc a {
+    color: var(--accent-light);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .toc a:hover { color: var(--green); }
+
+  /* Steps */
+  .step {
+    margin-bottom: 48px;
+    padding-bottom: 48px;
+    border-bottom: 1px solid var(--border);
+  }
+  .step:last-child { border-bottom: none; }
+  .step-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: var(--accent);
+    color: #fff;
+    font-weight: 700;
+    font-size: 14px;
+    margin-right: 12px;
+    flex-shrink: 0;
+  }
+  .step-number.prereq { background: var(--orange); }
+  .step-number.ref {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+  }
+  .step h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+  }
+
+  h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 24px 0 12px;
+    color: var(--accent-light);
+  }
+
+  .instructions { padding-left: 20px; }
+  .instructions li { margin-bottom: 8px; }
+
+  .checklist { list-style: none; padding-left: 0; }
+  .checklist li {
+    position: relative;
+    padding-left: 28px;
+    margin-bottom: 8px;
+  }
+  .checklist li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 5px;
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--border);
+    border-radius: 4px;
+  }
+
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 20px;
+    overflow-x: auto;
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    font-size: 13.5px;
+    line-height: 1.6;
+    margin: 12px 0;
+  }
+  code {
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    font-size: 13.5px;
+    background: var(--surface-2);
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+  pre code { background: none; padding: 0; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 14px;
+  }
+  th {
+    background: var(--surface-2);
+    text-align: left;
+    padding: 10px 14px;
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border);
+  }
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+  table code { font-size: 12.5px; }
+
+  .callout {
+    background: var(--surface);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 14px 18px;
+    margin: 16px 0;
+    font-size: 14px;
+  }
+  .callout.warning { border-left-color: var(--orange); }
+  .callout.danger { border-left-color: var(--red); }
+  .callout.success { border-left-color: var(--green); }
+  .callout strong { display: block; margin-bottom: 4px; }
+
+  p { margin-bottom: 12px; }
+  strong { color: #fff; }
+
+  /* Flow diagram */
+  .flow-box {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr;
+    gap: 0;
+    align-items: center;
+    margin: 24px 0;
+    text-align: center;
+  }
+  .flow-node {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 12px;
+  }
+  .flow-node h4 {
+    font-size: 13px;
+    color: var(--accent-light);
+    margin-bottom: 4px;
+  }
+  .flow-node p {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin: 0;
+  }
+  .flow-arrow {
+    font-size: 20px;
+    color: var(--text-muted);
+    padding: 0 8px;
+  }
+
+  /* Campaign cards */
+  .campaign-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 16px 0;
+  }
+  .campaign-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 18px;
+  }
+  .campaign-card h4 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .campaign-card .tag {
+    display: inline-block;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-right: 4px;
+    margin-bottom: 4px;
+  }
+  .tag-fl { background: #1e3a5f; color: #60a5fa; }
+  .tag-nl { background: #3b2e1a; color: #f59e0b; }
+  .tag-si { background: #1a3b2e; color: #34d399; }
+  .tag-hr { background: #3b1a2e; color: #f472b6; }
+  .tag-angle { background: var(--surface-2); color: var(--text-muted); }
+
+  /* Phase timeline */
+  .timeline {
+    position: relative;
+    padding-left: 32px;
+    margin: 24px 0;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 11px;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: var(--border);
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 24px;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -25px;
+    top: 8px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--bg);
+  }
+  .timeline-item.active::before { background: var(--green); }
+  .timeline-item.future::before { background: var(--surface-2); border: 2px solid var(--border); }
+  .timeline-item h4 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .timeline-item p {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  /* Metric card row */
+  .metric-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    margin: 16px 0;
+  }
+  .metric-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+  }
+  .metric-card .value {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--green);
+  }
+  .metric-card .label {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  @media (max-width: 640px) {
+    .campaign-grid { grid-template-columns: 1fr; }
+    .flow-box { grid-template-columns: 1fr; gap: 8px; }
+    .flow-arrow { transform: rotate(90deg); }
+    .metric-row { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+<style>
+  @media (max-width: 700px) {
+    table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    code { overflow-wrap: anywhere; word-break: break-word; }
+    pre { overflow-x: auto; white-space: pre-wrap; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div style="margin: 0 0 28px; padding: 14px 18px; border: 1px solid rgba(245,158,11,.55); border-radius: 10px; background: rgba(245,158,11,.10); font-size: 14px; line-height: 1.55;">
+    <strong>Javna kopija, stanje 30. 3. 2026.</strong> Od takrat se je spremenilo: sledenje odprtjem in klikom je zdaj izklopljeno povsod (zero tracking), razdelitev pošiljateljev po domenah in kanalih je drugačna, kot piše tu.
+    Imena in naslovi pošiljateljev, dejanske outreach domene, interni prihodki, cene, izhodišče in napoved strank so na tej kopiji umaknjeni ali nadomeščeni z oznakami.
+    <a href="index.html" style="color: inherit;">Vsi štirje deli</a>
+  </div>
+
+  <!-- Header -->
+  <div class="header">
+    <h1>Instantly campaign setup guide</h1>
+    <p class="subtitle">
+      Step-by-step setup for Nevron's cold email campaigns in Instantly.
+      16 campaigns across 4 markets (Florida, Netherlands, Slovenia, Croatia) and 4 outreach angles (Renovation, Rating, Competitor, AI).
+    </p>
+    <p class="meta">Nevron SDR System &middot; Step 4 of 7 &middot; Estimated setup time: 2-3 hours (plus 3-4 weeks warmup)</p>
+  </div>
+
+  <!-- Flow diagram -->
+  <div class="flow-box">
+    <div class="flow-node">
+      <h4>Apollo</h4>
+      <p>Lead sourcing</p>
+    </div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-node">
+      <h4>Attio</h4>
+      <p>CRM + pipeline</p>
+    </div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-node" style="border-color: var(--green);">
+      <h4 style="color: var(--green);">Instantly</h4>
+      <p>Email campaigns</p>
+    </div>
+  </div>
+
+  <!-- TOC -->
+  <div class="toc">
+    <h2>Table of contents</h2>
+    <ol>
+      <li><a href="#plan">Plan selection</a></li>
+      <li><a href="#accounts">Connect email accounts</a></li>
+      <li><a href="#warmup">Enable warmup</a></li>
+      <li><a href="#tracking">Custom tracking domain</a></li>
+      <li><a href="#campaigns">Create campaigns</a></li>
+      <li><a href="#leads">Lead import</a></li>
+      <li><a href="#attio">Attio integration</a></li>
+      <li><a href="#unibox">Unibox setup</a></li>
+      <li><a href="#deliverability">Deliverability monitoring</a></li>
+      <li><a href="#launch">Launch sequence</a></li>
+      <li><a href="#compliance">Compliance checklist</a></li>
+      <li><a href="#api">API setup</a></li>
+    </ol>
+  </div>
+
+  <!-- Step 1: Plan selection -->
+  <div class="step" id="plan">
+    <h2><span class="step-number">1</span> Plan selection</h2>
+
+    <div class="callout success">
+      <strong>Recommended: Hypergrowth ($97/month)</strong>
+      Unlocks A/B testing, Unibox direct reply, webhooks, company send limits, and "prioritize new leads". All critical for multi-campaign management.
+    </div>
+
+    <table>
+      <tr><th>Feature</th><th>Growth ($47)</th><th>Hypergrowth ($97)</th></tr>
+      <tr><td>Unlimited email accounts + warmup</td><td>Yes</td><td>Yes</td></tr>
+      <tr><td>API v2 access</td><td>Yes</td><td>Yes</td></tr>
+      <tr><td>A/B testing (subject lines, body)</td><td>No</td><td><strong style="color:var(--green)">Yes</strong></td></tr>
+      <tr><td>Reply from Unibox</td><td>Preview only</td><td><strong style="color:var(--green)">Direct reply</strong></td></tr>
+      <tr><td>Webhooks (for Attio sync)</td><td>No</td><td><strong style="color:var(--green)">Yes</strong></td></tr>
+      <tr><td>Company send limits</td><td>No</td><td><strong style="color:var(--green)">Yes</strong></td></tr>
+      <tr><td>Prioritize new leads</td><td>No</td><td><strong style="color:var(--green)">Yes</strong></td></tr>
+      <tr><td>Emails/month</td><td>5,000</td><td>100,000</td></tr>
+    </table>
+
+    <h3>Sign up</h3>
+    <ol class="instructions">
+      <li>Go to <code>instantly.ai</code> and sign up</li>
+      <li>Select <strong>Hypergrowth</strong> plan</li>
+      <li>Annual billing saves ~20% ($77.60/month)</li>
+    </ol>
+  </div>
+
+  <!-- Step 2: Connect email accounts -->
+  <div class="step" id="accounts">
+    <h2><span class="step-number">2</span> Connect email accounts</h2>
+
+    <div class="callout warning">
+      <strong>Prerequisite</strong>
+      You should already have 5 secondary domains with Google Workspace, SPF, DKIM, and DMARC configured. See the <a href="dns-setup-cheatsheet.html">DNS setup guide</a>.
+    </div>
+
+    <h3>Connect to Instantly</h3>
+    <ol class="instructions">
+      <li>Go to <strong>Email Accounts</strong> &rarr; <strong>Add New</strong> &rarr; <strong>Google Workspace</strong></li>
+      <li>Sign in with each sending account (e.g., <code>ana@trynevron.com</code>)</li>
+      <li>Repeat for all accounts across all 5 domains</li>
+      <li>For each account, set:
+        <ul>
+          <li><strong>From name:</strong> <code>Ana from Nevron</code> or <code>Ana Novak | Nevron</code></li>
+          <li><strong>Reply-to:</strong> <code>first.last@</code> the main company domain</li>
+          <li><strong>Daily sending limit:</strong> <code>30</code></li>
+        </ul>
+      </li>
+    </ol>
+
+    <h3>Account count target</h3>
+    <div class="metric-row">
+      <div class="metric-card">
+        <div class="value">5-10</div>
+        <div class="label">Email accounts</div>
+      </div>
+      <div class="metric-card">
+        <div class="value">30</div>
+        <div class="label">Emails/day/account</div>
+      </div>
+      <div class="metric-card">
+        <div class="value">150-300</div>
+        <div class="label">Total daily capacity</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 3: Warmup -->
+  <div class="step" id="warmup">
+    <h2><span class="step-number">3</span> Enable warmup</h2>
+
+    <div class="callout danger">
+      <strong>Do this immediately after connecting accounts</strong>
+      New domains need 3-4 weeks of warmup before any campaign sends. Do not skip this.
+    </div>
+
+    <h3>Warmup settings per account</h3>
+    <table>
+      <tr><th>Setting</th><th>Value</th><th>Notes</th></tr>
+      <tr><td>Daily warmup limit</td><td><code>10</code></td><td>Starts low, auto-increases</td></tr>
+      <tr><td>Increase by day</td><td><code>Enabled</code></td><td>+1 per day until limit</td></tr>
+      <tr><td>Reply rate</td><td><code>30%</code></td><td>Default, good starting point</td></tr>
+      <tr><td>Spam protection</td><td><code>Enabled</code></td><td>Moves warmup from spam to inbox</td></tr>
+      <tr><td>Mark important</td><td><code>Enabled</code></td><td>Extra engagement signal</td></tr>
+      <tr><td>Read emulation</td><td><code>Enabled</code></td><td>Simulates human reading</td></tr>
+      <tr><td>Weekdays only</td><td><code>Disabled</code></td><td>Keep warmup 7 days</td></tr>
+    </table>
+
+    <h3>Warmup timeline</h3>
+    <div class="timeline">
+      <div class="timeline-item active">
+        <h4>Week 1-2: Warmup only</h4>
+        <p>No campaign sends. Accounts building reputation in the warmup network.</p>
+      </div>
+      <div class="timeline-item active">
+        <h4>Week 3: Health check</h4>
+        <p>Check health scores for each account. Need 90%+ to proceed.</p>
+      </div>
+      <div class="timeline-item">
+        <h4>Week 4: First campaign launch</h4>
+        <p>If healthy, start first campaign with slow ramp enabled.</p>
+      </div>
+    </div>
+
+    <div class="callout success">
+      <strong>Never turn warmup off</strong>
+      Keep it running alongside active campaigns, indefinitely.
+    </div>
+  </div>
+
+  <!-- Step 4: Custom tracking domain -->
+  <div class="step" id="tracking">
+    <h2><span class="step-number">4</span> Custom tracking domain</h2>
+
+    <p>Optional but recommended. Isolates your tracking reputation from Instantly's shared domain.</p>
+
+    <ol class="instructions">
+      <li>Pick a subdomain: <code>t.trynevron.com</code></li>
+      <li>Add CNAME record in DNS:<br>
+        <code>t.trynevron.com</code> &rarr; <code>prox.itrackly.com</code>
+      </li>
+      <li>In Instantly: <strong>Settings</strong> &rarr; <strong>Tracking Domain</strong> &rarr; add custom domain</li>
+      <li>Enable "Warm Custom Tracking Domain" in warmup settings</li>
+    </ol>
+  </div>
+
+  <!-- Step 5: Create campaigns -->
+  <div class="step" id="campaigns">
+    <h2><span class="step-number">5</span> Create campaigns</h2>
+
+    <h3>Naming convention</h3>
+    <pre><code>[Market] -- [Angle] -- [Version]</code></pre>
+
+    <h3>All 16 campaigns</h3>
+
+    <p><strong>Florida (EN)</strong></p>
+    <div class="campaign-grid">
+      <div class="campaign-card">
+        <h4>Florida -- Renovation -- v1</h4>
+        <span class="tag tag-fl">Florida</span><span class="tag tag-angle">Renovation</span>
+      </div>
+      <div class="campaign-card">
+        <h4>Florida -- Rating -- v1</h4>
+        <span class="tag tag-fl">Florida</span><span class="tag tag-angle">Rating</span>
+      </div>
+      <div class="campaign-card">
+        <h4>Florida -- Competitor -- v1</h4>
+        <span class="tag tag-fl">Florida</span><span class="tag tag-angle">Competitor</span>
+      </div>
+      <div class="campaign-card">
+        <h4>Florida -- AI -- v1</h4>
+        <span class="tag tag-fl">Florida</span><span class="tag tag-angle">AI</span>
+      </div>
+    </div>
+
+    <p><strong>Netherlands (EN)</strong></p>
+    <div class="campaign-grid">
+      <div class="campaign-card">
+        <h4>Netherlands -- Renovation -- v1</h4>
+        <span class="tag tag-nl">Netherlands</span><span class="tag tag-angle">Renovation</span>
+      </div>
+      <div class="campaign-card">
+        <h4>Netherlands -- Rating -- v1</h4>
+        <span class="tag tag-nl">Netherlands</span><span class="tag tag-angle">Rating</span>
+      </div>
+      <div class="campaign-card">
+        <h4>Netherlands -- Competitor -- v1</h4>
+        <span class="tag tag-nl">Netherlands</span><span class="tag tag-angle">Competitor</span>
+      </div>
+      <div class="campaign-card">
+        <h4>Netherlands -- AI -- v1</h4>
+        <span class="tag tag-nl">Netherlands</span><span class="tag tag-angle">AI</span>
+      </div>
+    </div>
+
+    <p><strong>Slovenia (SL)</strong></p>
+    <div class="campaign-grid">
+      <div class="campaign-card">
+        <h4>Slovenia -- Renovation -- v1</h4>
+        <span class="tag tag-si">Slovenia</span><span class="tag tag-angle">Renovation</span>
+      </div>
+      <div class="campaign-card">
+        <h4>Slovenia -- Rating -- v1</h4>
+        <span class="tag tag-si">Slovenia</span><span class="tag tag-angle">Rating</span>
+      </div>
+      <div class="campaign-card">
+        <h4>Slovenia -- Competitor -- v1</h4>
+        <span class="tag tag-si">Slovenia</span><span class="tag tag-angle">Competitor</span>
+      </div>
+      <div class="campaign-card">
+        <h4>Slovenia -- AI -- v1</h4>
+        <span class="tag tag-si">Slovenia</span><span class="tag tag-angle">AI</span>
+      </div>
+    </div>
+
+    <p><strong>Croatia (HR)</strong></p>
+    <div class="campaign-grid">
+      <div class="campaign-card">
+        <h4>Croatia -- Renovation -- v1</h4>
+        <span class="tag tag-hr">Croatia</span><span class="tag tag-angle">Renovation</span>
+      </div>
+      <div class="campaign-card">
+        <h4>Croatia -- Rating -- v1</h4>
+        <span class="tag tag-hr">Croatia</span><span class="tag tag-angle">Rating</span>
+      </div>
+      <div class="campaign-card">
+        <h4>Croatia -- Competitor -- v1</h4>
+        <span class="tag tag-hr">Croatia</span><span class="tag tag-angle">Competitor</span>
+      </div>
+      <div class="campaign-card">
+        <h4>Croatia -- AI -- v1</h4>
+        <span class="tag tag-hr">Croatia</span><span class="tag tag-angle">AI</span>
+      </div>
+    </div>
+
+    <h3>Sequence steps per campaign</h3>
+    <p>Each campaign has 5 email steps from the corresponding sequence file:</p>
+    <table>
+      <tr><th>Step</th><th>Content</th><th>Delay</th><th>Day from start</th></tr>
+      <tr><td>Step 1</td><td>Email 1 (opening)</td><td>--</td><td>Day 1</td></tr>
+      <tr><td>Step 2</td><td>Email 2 (follow-up)</td><td>2 days</td><td>Day 3</td></tr>
+      <tr><td>Step 3</td><td>Email 3 (value add)</td><td>4 days</td><td>Day 7</td></tr>
+      <tr><td>Step 4</td><td>Email 4 (social proof)</td><td>7 days</td><td>Day 14</td></tr>
+      <tr><td>Step 5</td><td>Email 5 (break-up)</td><td>7 days</td><td>Day 21</td></tr>
+    </table>
+
+    <h3>Variable mapping</h3>
+    <table>
+      <tr><th>Sequence variable</th><th>Instantly field</th><th>Source</th></tr>
+      <tr><td><code>{{First name}}</code></td><td><code>{{firstName}}</code></td><td>Apollo / CSV</td></tr>
+      <tr><td><code>{{Hotel Name}}</code></td><td><code>{{companyName}}</code></td><td>Apollo / CSV</td></tr>
+      <tr><td><code>{{renovation_detail}}</code></td><td><code>{{custom1}}</code></td><td>Manual enrichment</td></tr>
+      <tr><td><code>{{rating_detail}}</code></td><td><code>{{custom2}}</code></td><td>Manual enrichment</td></tr>
+      <tr><td><code>{{competitor_detail}}</code></td><td><code>{{custom3}}</code></td><td>Manual enrichment</td></tr>
+      <tr><td><code>{{city}}</code></td><td><code>{{city}}</code></td><td>Apollo / CSV</td></tr>
+    </table>
+
+    <h3>Campaign settings per market</h3>
+    <table>
+      <tr><th>Setting</th><th>Florida</th><th>Netherlands</th><th>Slovenia</th><th>Croatia</th></tr>
+      <tr><td>Timezone</td><td><code>America/New_York</code></td><td><code>Europe/Amsterdam</code></td><td><code>Europe/Ljubljana</code></td><td><code>Europe/Zagreb</code></td></tr>
+      <tr><td>Send window</td><td>9:00-14:00</td><td>9:00-14:00</td><td>9:00-14:00</td><td>9:00-14:00</td></tr>
+      <tr><td>Active days</td><td>Mon-Fri</td><td>Mon-Fri</td><td>Mon-Fri</td><td>Mon-Fri</td></tr>
+      <tr><td>Min time gap</td><td>9 min</td><td>9 min</td><td>9 min</td><td>9 min</td></tr>
+      <tr><td>Random delay</td><td>5 min</td><td>5 min</td><td>5 min</td><td>5 min</td></tr>
+    </table>
+
+    <h3>Advanced options (all campaigns)</h3>
+    <table>
+      <tr><th>Option</th><th>Value</th></tr>
+      <tr><td>Stop campaign for company on reply</td><td><strong style="color:var(--green)">Enabled</strong></td></tr>
+      <tr><td>Company send limit</td><td><code>2 per day</code> (don't bombard same hotel)</td></tr>
+      <tr><td>Campaign slow ramp</td><td><strong style="color:var(--green)">Enabled</strong> (starts 2/day, +2/day)</td></tr>
+      <tr><td>Stop on auto-reply</td><td><strong style="color:var(--green)">Enabled</strong></td></tr>
+      <tr><td>Unsubscribe link header</td><td><strong style="color:var(--green)">Enabled</strong> (required for compliance)</td></tr>
+      <tr><td>Provider matching</td><td><strong style="color:var(--green)">Enabled</strong> (Gmail-to-Gmail routing)</td></tr>
+      <tr><td>Tracking (first 2-4 weeks)</td><td><strong>Text-only</strong> (max deliverability)</td></tr>
+      <tr><td>Tracking (after reputation built)</td><td>Open tracking on, link tracking off in Email 1</td></tr>
+    </table>
+
+    <h3>Account assignment (with 5 accounts)</h3>
+    <table>
+      <tr><th>Account</th><th>Assigned campaigns</th></tr>
+      <tr><td><code>first.last@domain-1.com</code></td><td>Florida Renovation, Florida Rating</td></tr>
+      <tr><td><code>first.last@domain-2.com</code></td><td>Florida Competitor, Florida AI</td></tr>
+      <tr><td><code>first.last@domain-3.com</code></td><td>Netherlands (all 4)</td></tr>
+      <tr><td><code>first.last@domain-4.com</code></td><td>Slovenia (all 4)</td></tr>
+      <tr><td><code>first.last@domain-5.com</code></td><td>Croatia (all 4)</td></tr>
+    </table>
+  </div>
+
+  <!-- Step 6: Lead import -->
+  <div class="step" id="leads">
+    <h2><span class="step-number">6</span> Lead import</h2>
+
+    <h3>Recommended flow (Phase 1)</h3>
+    <div class="architecture"><span class="highlight">Apollo</span>  <span class="green">&rarr;</span>  <span class="highlight">apollo_attio_sync.py</span>  <span class="green">&rarr;</span>  <span class="highlight">Attio</span> (scored + enriched)  <span class="green">&rarr;</span>  <span class="orange">CSV export</span>  <span class="green">&rarr;</span>  <span class="highlight">Instantly</span></div>
+
+    <ol class="instructions">
+      <li>Run <code>apollo_attio_sync.py --market FL</code> to enrich and score leads in Attio</li>
+      <li>In Attio, filter: Market = Florida, ICP Tier = 1 or 2</li>
+      <li>Export filtered leads as CSV</li>
+      <li>In Instantly campaign &rarr; <strong>Leads</strong> &rarr; <strong>Upload CSV</strong></li>
+      <li>Map CSV columns to Instantly fields</li>
+      <li>Repeat per market</li>
+    </ol>
+
+    <h3>CSV required columns</h3>
+    <table>
+      <tr><th>Column</th><th>Maps to</th><th>Required</th></tr>
+      <tr><td>email</td><td><code>email</code></td><td>Yes</td></tr>
+      <tr><td>first_name</td><td><code>firstName</code></td><td>Yes</td></tr>
+      <tr><td>last_name</td><td><code>lastName</code></td><td>Yes</td></tr>
+      <tr><td>company_name</td><td><code>companyName</code></td><td>Yes</td></tr>
+      <tr><td>city</td><td><code>city</code></td><td>Recommended</td></tr>
+      <tr><td>custom1 (renovation/rating/etc.)</td><td><code>custom1</code></td><td>Recommended</td></tr>
+    </table>
+
+    <div class="callout warning">
+      <strong>One lead, one campaign</strong>
+      Never import the same lead into multiple campaigns. Use the outreach angle field from Attio to determine the best-matching campaign.
+    </div>
+
+    <h3>API import (future automation)</h3>
+<pre><code>POST https://api.instantly.ai/api/v2/leads
+Authorization: Bearer [INSTANTLY_API_KEY]
+
+{
+  "campaign_id": "campaign-uuid-here",
+  "leads": [
+    {
+      "email": "gm@hotelexample.com",
+      "first_name": "Marco",
+      "last_name": "Rossi",
+      "company_name": "Hotel Example",
+      "custom_variables": {
+        "city": "Miami Beach",
+        "custom1": "the lobby renovation you completed in January"
+      }
+    }
+  ]
+}</code></pre>
+  </div>
+
+  <!-- Step 7: Attio integration -->
+  <div class="step" id="attio">
+    <h2><span class="step-number">7</span> Attio integration</h2>
+
+    <p>Three options, from simplest to most automated. <strong>Start with Option C, upgrade to A when volume justifies it.</strong></p>
+
+    <h3>Option C: Manual sync (launch with this)</h3>
+    <ol class="instructions">
+      <li>Check Instantly Unibox daily for replies</li>
+      <li>When lead replies: update deal stage in Attio manually (Lead &rarr; Replied)</li>
+      <li>When meeting booked: update to Demo Booked in Attio</li>
+      <li>Upgrade to Zapier once sending 100+ emails/day</li>
+    </ol>
+
+    <h3>Option A: Zapier ($20+/month)</h3>
+    <table>
+      <tr><th>Zap</th><th>Trigger</th><th>Action</th></tr>
+      <tr>
+        <td><strong>Reply &rarr; Attio</strong></td>
+        <td>Instantly: New Event (reply_received)</td>
+        <td>Attio: Update List Entry &rarr; stage "Replied"</td>
+      </tr>
+      <tr>
+        <td><strong>Sent &rarr; Attio</strong></td>
+        <td>Instantly: New Event (email_sent, first only)</td>
+        <td>Attio: Update List Entry &rarr; stage "Sequence Active"</td>
+      </tr>
+      <tr>
+        <td><strong>Meeting &rarr; Attio</strong></td>
+        <td>Instantly: New Event (meeting_booked)</td>
+        <td>Attio: Update List Entry &rarr; stage "Demo Booked"</td>
+      </tr>
+      <tr>
+        <td><strong>Disqualified &rarr; Block</strong></td>
+        <td>Attio: Stage = "Disqualified"</td>
+        <td>Instantly: Add to Block List</td>
+      </tr>
+    </table>
+
+    <h3>Option B: Webhooks + custom script (no Zapier cost)</h3>
+    <ol class="instructions">
+      <li>In Instantly: <strong>Settings</strong> &rarr; <strong>Integrations</strong> &rarr; <strong>Webhooks</strong></li>
+      <li>Add endpoint URL (your server or serverless function)</li>
+      <li>Select events: <code>reply_received</code>, <code>email_sent</code>, <code>meeting_booked</code>, <code>bounced</code>, <code>unsubscribed</code></li>
+      <li>Build receiver that calls Attio API to update deal stages</li>
+    </ol>
+    <div class="callout">
+      <strong>Requires Hypergrowth plan</strong>
+      Webhooks are not available on the Growth plan.
+    </div>
+  </div>
+
+  <!-- Step 8: Unibox -->
+  <div class="step" id="unibox">
+    <h2><span class="step-number">8</span> Unibox setup</h2>
+
+    <p>All campaign replies from all accounts land here. This is your daily command center.</p>
+
+    <h3>Lead statuses</h3>
+    <table>
+      <tr><th>Status</th><th>When to use</th><th>Attio stage</th></tr>
+      <tr><td><strong style="color:var(--green)">Interested</strong></td><td>Positive reply, wants to learn more</td><td>Replied</td></tr>
+      <tr><td><strong style="color:var(--green)">Meeting booked</strong></td><td>Demo/call scheduled</td><td>Demo Booked</td></tr>
+      <tr><td><strong style="color:var(--red)">Not interested</strong></td><td>Declined, asked to stop</td><td>Closed Lost / Nurture</td></tr>
+      <tr><td><strong style="color:var(--orange)">Out of office</strong></td><td>Auto-reply, will return</td><td>Keep in Sequence Active</td></tr>
+      <tr><td><strong style="color:var(--accent-light)">Referral</strong></td><td>Forwarded to someone else</td><td>Update contact in Attio</td></tr>
+      <tr><td><strong style="color:var(--text-muted)">Wrong person</strong></td><td>Not the decision maker</td><td>Disqualified / reassign</td></tr>
+    </table>
+
+    <h3>Reply workflow (Phase 1: AI drafts, human approves)</h3>
+    <ol class="instructions">
+      <li>Reply lands in Unibox</li>
+      <li>AI drafts a response (Step 5 build -- coming next)</li>
+      <li>A human reviews the draft</li>
+      <li>Approve and send (or edit first)</li>
+      <li>Update lead status in Unibox</li>
+      <li>Update deal stage in Attio</li>
+    </ol>
+
+    <div class="callout success">
+      <strong>Reply within 24 hours</strong>
+      Same business day is ideal. On Hypergrowth, reply directly from Unibox.
+    </div>
+  </div>
+
+  <!-- Step 9: Deliverability -->
+  <div class="step" id="deliverability">
+    <h2><span class="step-number">9</span> Deliverability monitoring</h2>
+
+    <h3>Target metrics</h3>
+    <div class="metric-row">
+      <div class="metric-card">
+        <div class="value">90%+</div>
+        <div class="label">Health score</div>
+      </div>
+      <div class="metric-card">
+        <div class="value">50%+</div>
+        <div class="label">Open rate</div>
+      </div>
+      <div class="metric-card">
+        <div class="value">5%+</div>
+        <div class="label">Reply rate</div>
+      </div>
+      <div class="metric-card">
+        <div class="value">&lt;2%</div>
+        <div class="label">Bounce rate</div>
+      </div>
+      <div class="metric-card">
+        <div class="value">&lt;0.3%</div>
+        <div class="label">Spam complaints</div>
+      </div>
+    </div>
+
+    <h3>Daily checks (first 2 weeks)</h3>
+    <ol class="instructions">
+      <li><strong>Email Accounts:</strong> health score per account (target 90%+)</li>
+      <li><strong>Warmup analytics:</strong> warmup running, reply rates healthy</li>
+      <li><strong>Campaign analytics:</strong> bounce rate under 2%</li>
+    </ol>
+
+    <h3>Red flags -- immediate action</h3>
+    <table>
+      <tr><th>Signal</th><th>Action</th></tr>
+      <tr><td style="color:var(--red)">Health below 80%</td><td>Pause campaigns on that account, warmup only for 1 week</td></tr>
+      <tr><td style="color:var(--red)">Bounce rate above 3%</td><td>Pause campaign, re-verify all remaining leads</td></tr>
+      <tr><td style="color:var(--red)">Spam complaints above 0.3%</td><td>Pause campaign, review copy, check targeting</td></tr>
+      <tr><td style="color:var(--orange)">Open rate below 20%</td><td>Test new subject lines, check if landing in spam</td></tr>
+      <tr><td style="color:var(--orange)">0% reply after 100+ sends</td><td>Review copy, check ICP targeting, try different angle</td></tr>
+    </table>
+
+    <h3>Inbox placement testing</h3>
+    <ol class="instructions">
+      <li><strong>Campaigns</strong> &rarr; <strong>Inbox Placement</strong> &rarr; run seed test</li>
+      <li>Check placement across Gmail, Outlook, Yahoo</li>
+      <li>Run before launching each new market</li>
+      <li>Re-test monthly</li>
+    </ol>
+  </div>
+
+  <!-- Step 10: Launch sequence -->
+  <div class="step" id="launch">
+    <h2><span class="step-number">10</span> Launch sequence</h2>
+
+    <div class="timeline">
+      <div class="timeline-item active">
+        <h4>Week 1-4: Warmup (all accounts)</h4>
+        <p>Connect accounts, enable warmup, configure DNS. No campaign sends.</p>
+      </div>
+      <div class="timeline-item">
+        <h4>Week 4-5: Florida launch</h4>
+        <p>Start with 1 campaign (Florida Renovation). 20-30 Tier 1 leads. Slow ramp ON. Monitor 1 week, then expand.</p>
+      </div>
+      <div class="timeline-item future">
+        <h4>Week 6-7: Netherlands launch</h4>
+        <p>Same ramp pattern. Europe/Amsterdam timezone. English sequences.</p>
+      </div>
+      <div class="timeline-item future">
+        <h4>Week 8-10: Slovenia + Croatia</h4>
+        <p>Local language sequences. Smaller markets, can launch simultaneously. Extra GDPR compliance checks.</p>
+      </div>
+    </div>
+
+    <div class="callout danger">
+      <strong>Scaling rules</strong>
+      Never launch more than 2 new campaigns in the same week.
+      Never add more than 50 new leads per campaign per day.
+      Keep total daily volume under 80% of theoretical max.
+      When in doubt, slow down -- reputation is easier to maintain than rebuild.
+    </div>
+  </div>
+
+  <!-- Step 11: Compliance -->
+  <div class="step" id="compliance">
+    <h2><span class="step-number">11</span> Compliance checklist</h2>
+
+    <h3>CAN-SPAM (Florida campaigns)</h3>
+    <ul class="checklist">
+      <li>Physical address in email signature (Nevron business address)</li>
+      <li>Unsubscribe link/header enabled in Instantly</li>
+      <li>Honor unsubscribes within 10 business days (Instantly auto-handles)</li>
+      <li>No deceptive subject lines</li>
+      <li>Identify message as advertisement (first email)</li>
+    </ul>
+
+    <h3>GDPR (Netherlands, Slovenia, Croatia)</h3>
+    <ul class="checklist">
+      <li>Legitimate interest basis documented for B2B outreach</li>
+      <li>Business email addresses only (no personal emails)</li>
+      <li>Easy opt-out in every email</li>
+      <li>Data processing records maintained</li>
+      <li>Right to erasure: on request, block in Instantly + delete from Attio</li>
+      <li>Company registration info in EU email signatures</li>
+    </ul>
+  </div>
+
+  <!-- Step 12: API setup -->
+  <div class="step" id="api">
+    <h2><span class="step-number">12</span> API setup (for future automation)</h2>
+
+    <h3>Get API key</h3>
+    <ol class="instructions">
+      <li><strong>Settings</strong> &rarr; <strong>Integrations</strong> &rarr; <strong>API</strong></li>
+      <li>Create new V2 API key</li>
+      <li>Name: <code>nevron-sdr-sync</code></li>
+      <li>Scopes: Campaigns (R+W), Leads (R+W), Analytics (R)</li>
+      <li>Save key to <code>.env</code></li>
+    </ol>
+
+    <h3>Add to .env</h3>
+<pre><code># Add to your .env alongside the other API keys
+INSTANTLY_API_KEY=your_instantly_api_v2_key_here</code></pre>
+
+    <h3>Key endpoints</h3>
+    <table>
+      <tr><th>Endpoint</th><th>Method</th><th>Use case</th></tr>
+      <tr><td><code>/api/v2/campaigns</code></td><td>GET</td><td>List all campaigns</td></tr>
+      <tr><td><code>/api/v2/campaigns</code></td><td>POST</td><td>Create campaign via API</td></tr>
+      <tr><td><code>/api/v2/leads</code></td><td>POST</td><td>Push leads to campaign</td></tr>
+      <tr><td><code>/api/v2/campaigns/analytics</code></td><td>GET</td><td>Pull campaign performance</td></tr>
+      <tr><td><code>/api/v2/campaigns/{id}/activate</code></td><td>POST</td><td>Activate campaign</td></tr>
+      <tr><td><code>/api/v2/campaigns/{id}/pause</code></td><td>POST</td><td>Pause campaign</td></tr>
+    </table>
+  </div>
+
+  <!-- Quick reference -->
+  <div class="step">
+    <h2><span class="step-number ref">R</span> Quick reference</h2>
+
+    <h3>Monthly cost estimate</h3>
+    <table>
+      <tr><th>Item</th><th>Cost/month</th></tr>
+      <tr><td>Instantly Hypergrowth</td><td>$97</td></tr>
+      <tr><td>Google Workspace (5 domains)</td><td>$30</td></tr>
+      <tr><td>Zapier (if used)</td><td>$20</td></tr>
+      <tr><td>Email verification credits</td><td>~$50</td></tr>
+      <tr><td><strong>Total</strong></td><td><strong>~$197/month</strong></td></tr>
+    </table>
+
+  </div>
+
+</div>
+</body>
+</html>
