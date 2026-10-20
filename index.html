@@ -5,349 +5,435 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Matjaž Volkar</title>
 <meta name="description" content="Kazalo projektov Matjaža Volkarja: Nevron in osebni projekti, orodja in dokumentacija.">
-<meta name="color-scheme" content="light dark">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0A0D12">
 <link rel="icon" href="ikona.ico" sizes="16x16 32x32 48x48">
 <link rel="icon" type="image/png" sizes="32x32" href="ikona-32.png">
 <link rel="apple-touch-icon" href="ikona-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@400;500;600&display=swap">
 <style>
   *, *::before, *::after { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; }
 
   :root {
-    --bg:       #FAF8F4;
-    --line:     #E4E0D7;
-    --line-2:   #EFECE4;
-    --ink:      #16191C;
-    --ink-2:    #565C60;
-    --ink-3:    #8A8F8C;
-    --accent:   #2F7D6E;
-    --lock-fg:  #7A6320;
-    --lock-bg:  #F5EFDC;
-    --open-fg:  #2F7D6E;
-    --open-bg:  #E4F0EC;
-    --mono: ui-monospace, "Cascadia Mono", "SF Mono", Menlo, Consolas, monospace;
-    --sans: ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --bg:      #10141A;
-      --line:    #262D38;
-      --line-2:  #1E242D;
-      --ink:     #E9E7E2;
-      --ink-2:   #A2A8A6;
-      --ink-3:   #6D7375;
-      --accent:  #5FB3A1;
-      --lock-fg: #D9BC6A;
-      --lock-bg: #241F12;
-      --open-fg: #5FB3A1;
-      --open-bg: #12211E;
-    }
-  }
-  :root[data-theme="dark"] {
-    --bg:      #10141A;
-    --line:    #262D38;
-    --line-2:  #1E242D;
-    --ink:     #E9E7E2;
-    --ink-2:   #A2A8A6;
-    --ink-3:   #6D7375;
-    --accent:  #5FB3A1;
-    --lock-fg: #D9BC6A;
-    --lock-bg: #241F12;
-    --open-fg: #5FB3A1;
-    --open-bg: #12211E;
+    color-scheme: dark;
+    --bg:      #0A0D12;
+    --panel:   #10151C;
+    --panel-2: #151C26;
+    --line:    #1D2530;
+    --line-2:  #2B3644;
+    --ink:     #E6EAF0;
+    --ink-2:   #A3ADBB;
+    --ink-3:   #7F8A99;
+    --nev:     #7FD1FF;
+    --own:     #C3ABFF;
+    --lock:    #E6BF66;
+    --mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+    --sans: "IBM Plex Sans Condensed", "Arial Narrow", ui-sans-serif, system-ui, "Segoe UI", sans-serif;
   }
 
   body {
     margin: 0; min-height: 100vh;
     background: var(--bg); color: var(--ink);
-    font-family: var(--sans); font-size: 16px; line-height: 1.55;
+    font-family: var(--sans); font-size: 14px; line-height: 1.4;
     -webkit-font-smoothing: antialiased;
   }
-  .wrap { max-width: 1180px; margin: 0 auto; padding: 60px 32px 88px; }
-
-  header { border-bottom: 2px solid var(--ink); padding-bottom: 24px; }
-  .name {
-    margin: 0; font-family: var(--serif); font-weight: 600;
-    font-size: clamp(36px, 5.5vw, 56px); line-height: 1.04; letter-spacing: -.015em;
+  body::before {
+    content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background-image:
+      linear-gradient(to right, rgba(127,209,255,.035) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(127,209,255,.035) 1px, transparent 1px);
+    background-size: 32px 32px;
+    -webkit-mask-image: linear-gradient(to bottom, #000 0, transparent 420px);
+            mask-image: linear-gradient(to bottom, #000 0, transparent 420px);
   }
-  .tagline { margin: 13px 0 0; color: var(--ink-2); max-width: 62ch; font-size: 17px; }
-  .contact { margin: 17px 0 0; font-family: var(--mono); font-size: 12.5px; letter-spacing: .02em; }
-  .contact a { color: var(--accent); text-decoration: none; border-bottom: 1px solid transparent; }
-  .contact a:hover { border-bottom-color: var(--accent); }
-  .contact a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+  .wrap { position: relative; z-index: 1; max-width: 1600px; margin: 0 auto; padding: 0 32px 40px; }
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--nev); outline-offset: 2px; border-radius: 3px; }
 
-  /* two columns: Nevron | Osebni */
-  .columns {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 0 56px;
-    align-items: start;
+  /* top bar */
+  .top {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 14px 24px;
+    padding: 22px 0 18px; border-bottom: 1px solid var(--line);
   }
-  .col { min-width: 0; }
-  .col + .col { border-left: 1px solid var(--line); padding-left: 56px; }
-
-  h2 {
-    margin: 44px 0 0; font-family: var(--mono); font-size: 11.5px; font-weight: 700;
-    letter-spacing: .17em; text-transform: uppercase; color: var(--accent);
+  .id { display: flex; align-items: center; gap: 12px; min-width: 0; margin-right: auto; }
+  .mono-mark {
+    flex: none; width: 34px; height: 34px; display: grid; place-items: center;
+    border: 1px solid var(--line-2); border-radius: 7px; background: var(--panel);
+    font-family: var(--mono); font-size: 12.5px; font-weight: 500; letter-spacing: .04em; color: var(--nev);
   }
-  .col-note { margin: 8px 0 0; color: var(--ink-3); font-size: 13.5px; max-width: 46ch; }
-
-  .row { padding: 20px 0; border-bottom: 1px solid var(--line-2); }
-  .row:first-of-type { border-top: 1px solid var(--line); margin-top: 16px; }
-  .row-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 12px; }
-  .row h3 { margin: 0; font-size: 19.5px; line-height: 1.25; letter-spacing: -.012em; font-weight: 620; }
-  .row h3 a { color: var(--ink); text-decoration: none; border-bottom: 1.5px solid var(--accent); }
-  .row h3 a:hover { color: var(--accent); }
-  .row h3 a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
-  .locked h3 { color: var(--ink-2); }
-  .desc { margin: 7px 0 0; color: var(--ink-2); max-width: 50ch; font-size: 15px; }
-
-  .chip {
-    font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: .11em;
-    text-transform: uppercase; padding: 3.5px 9px; border-radius: 999px; white-space: nowrap;
-  }
-  .chip-open { color: var(--open-fg); background: var(--open-bg); box-shadow: inset 0 0 0 1px currentColor; }
-  .chip-lock { color: var(--lock-fg); background: var(--lock-bg); box-shadow: inset 0 0 0 1px currentColor; }
-
-  .meta {
-    margin: 9px 0 0; display: flex; flex-wrap: wrap; gap: 5px 15px;
-    font-family: var(--mono); font-size: 11.5px; color: var(--ink-3);
+  .name { margin: 0; font-size: 19px; font-weight: 600; line-height: 1.1; letter-spacing: -.005em; }
+  .stats {
+    margin: 4px 0 0; font-family: var(--mono); font-size: 11.5px; color: var(--ink-3);
     font-variant-numeric: tabular-nums;
   }
-  .meta a { color: var(--ink-2); text-decoration: none; border-bottom: 1px solid var(--line); }
-  .meta a:hover { color: var(--accent); border-bottom-color: var(--accent); }
-  .meta a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+  .stats b { color: var(--ink-2); font-weight: 500; }
+  .stats span { white-space: nowrap; }
+
+  .search { position: relative; width: min(340px, 100%); }
+  .search input {
+    width: 100%; height: 34px; padding: 0 34px 0 32px;
+    background: var(--panel); color: var(--ink);
+    border: 1px solid var(--line-2); border-radius: 7px;
+    font-family: var(--mono); font-size: 12.5px;
+  }
+  .search input::placeholder { color: var(--ink-3); }
+  .search input:focus { outline: none; border-color: var(--nev); }
+  .search input::-webkit-search-cancel-button { display: none; }
+  .search svg { position: absolute; left: 10px; top: 10px; width: 14px; height: 14px; color: var(--ink-3); }
+  .search kbd {
+    position: absolute; right: 8px; top: 8px; height: 18px; min-width: 18px; padding: 0 5px;
+    display: grid; place-items: center; border: 1px solid var(--line-2); border-radius: 4px;
+    font-family: var(--mono); font-size: 11px; color: var(--ink-3); background: var(--bg);
+  }
+  .search input:focus + kbd { display: none; }
+
+  .ext {
+    display: inline-flex; align-items: center; gap: 7px; height: 34px; padding: 0 12px;
+    border: 1px solid var(--line-2); border-radius: 7px; text-decoration: none;
+    font-family: var(--mono); font-size: 12px; color: var(--ink-2);
+  }
+  .ext:hover { color: var(--ink); border-color: var(--ink-3); }
+  .ext svg { width: 14px; height: 14px; }
+
+  /* sections */
+  .sec { margin-top: 26px; }
+  .sec + .sec { margin-top: 8px; }
+  .sec-head { display: flex; align-items: center; gap: 12px; margin: 0 0 10px; }
+  .sec-head h2 {
+    margin: 0; display: flex; align-items: center; gap: 9px;
+    font-family: var(--mono); font-size: 12px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase;
+    color: var(--acc);
+  }
+  .sec-head h2::before { content: ""; width: 8px; height: 8px; border-radius: 2px; background: var(--acc); }
+  .sec-count { font-family: var(--mono); font-size: 11.5px; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+  .sec-rule { flex: 1; height: 1px; background: var(--line); }
+  .sec-note { font-family: var(--mono); font-size: 11.5px; color: var(--ink-3); }
+  .nev { --acc: var(--nev); }
+  .own { --acc: var(--own); }
+
+  /* categories: masonry columns, short categories stack under each other */
+  .cats { columns: 290px; column-gap: 12px; }
+  .cat { min-width: 0; break-inside: avoid; padding-bottom: 18px; }
+  .cat[hidden] { display: none; }
+  .cat-head { display: flex; align-items: center; gap: 8px; margin: 0 0 7px; padding-left: 1px; }
+  .cat-head::before { content: ""; flex: none; width: 3px; height: 11px; border-radius: 1px; background: var(--acc); opacity: .75; }
+  .cat-head h3 {
+    margin: 0; font-family: var(--mono); font-size: 11.5px; font-weight: 500; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--ink-2); white-space: nowrap;
+  }
+  .cat-count { font-family: var(--mono); font-size: 11.5px; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+  .cat-rule { flex: 1; height: 1px; background: linear-gradient(to right, var(--line-2), transparent); }
+  .cat-list { display: flex; flex-direction: column; gap: 6px; }
+
+  /* tile */
+  .tile {
+    position: relative; display: flex; flex-direction: column; gap: 3px; min-width: 0;
+    padding: 10px 12px 9px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel);
+    transition: border-color .12s, background-color .12s;
+  }
+  .tile[hidden] { display: none; }
+  .tile:hover { background: var(--panel-2); border-color: var(--line-2); }
+  .tile:has(.tile-link:hover) { border-color: var(--acc); }
+  .tile:has(.tile-link:focus-visible) { border-color: var(--acc); }
+
+  .t-head { display: flex; align-items: center; gap: 8px; min-width: 0; }
+  .tile h4 {
+    margin: 0; flex: 1; min-width: 0; font-size: 15px; font-weight: 600; line-height: 1.25;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .tile-link { text-decoration: none; }
+  .tile-link::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }
+  .tile-link:focus-visible { outline: none; }
+  .go { flex: none; width: 13px; height: 13px; color: var(--ink-3); transition: color .12s, transform .12s; }
+  .tile:hover .go { color: var(--acc); transform: translate(1px, -1px); }
+
+  .lock {
+    flex: none; display: inline-flex; align-items: center; gap: 4px;
+    font-family: var(--mono); font-size: 11px; color: var(--lock); white-space: nowrap;
+  }
+  .lock svg { width: 11px; height: 11px; }
+  .locked { background: transparent; border-style: dashed; }
+  .locked:not(:has(.tile-link)) h4 { color: var(--ink-2); }
+
+  .desc {
+    margin: 0; font-size: 13px; color: var(--ink-2);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .meta {
+    margin: 2px 0 0; display: flex; flex-wrap: wrap; align-items: center; gap: 2px 10px;
+    font-family: var(--mono); font-size: 11.5px; color: var(--ink-3); font-variant-numeric: tabular-nums;
+  }
+  .meta a { position: relative; z-index: 1; color: var(--ink-2); text-decoration: none; border-bottom: 1px solid var(--line-2); }
+  .meta a:hover { color: var(--acc); border-bottom-color: var(--acc); }
+  .meta .end { margin-left: auto; display: inline-flex; gap: 8px; }
+
+  .empty { margin: 30px 0 0; font-family: var(--mono); font-size: 12.5px; color: var(--ink-3); }
 
   footer {
-    margin-top: 60px; padding-top: 22px; border-top: 1px solid var(--line);
-    color: var(--ink-3); font-size: 13.5px; max-width: 72ch;
+    margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--line);
+    display: flex; flex-wrap: wrap; gap: 4px 18px;
+    font-family: var(--mono); font-size: 11.5px; color: var(--ink-3);
   }
-  footer p { margin: 0 0 8px; }
 
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
-  @media (max-width: 780px) {
-    .wrap { padding: 44px 22px 64px; }
-    .columns { grid-template-columns: 1fr; gap: 0; }
-    .col + .col { border-left: 0; padding-left: 0; }
+  @media (max-width: 720px) {
+    .wrap { padding: 0 16px 32px; }
+    .top { padding-top: 16px; }
+    .search { width: 100%; order: 3; }
+    .cats { columns: 1; }
+    .sec-note { display: none; }
+    .id { flex: 1 1 0; }
+    .ext { width: 34px; padding: 0; justify-content: center; }
+    .ext-txt { display: none; }
   }
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-go" viewBox="0 0 16 16"><path d="M5 11 11 5M6 5h5v5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 16 16"><rect x="3" y="7" width="10" height="7" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+</svg>
 <div class="wrap">
 
-  <header>
-    <h1 class="name">Matjaž Volkar</h1>
-    <p class="tagline">
-      Kazalo mojih projektov. Levo poslovni pod Nevronom, desno osebni.
-      Odprto je dosegljivo vsem, zaklenjeno zahteva prijavo.
-    </p>
-    <nav class="contact">
-      <a href="https://github.com/matjazvolkar">github.com/matjazvolkar</a>
-    </nav>
+  <header class="top">
+    <div class="id">
+      <div class="mono-mark" aria-hidden="true">MV</div>
+      <div>
+        <h1 class="name">Matjaž Volkar</h1>
+        <p class="stats" id="stats"><span>kazalo projektov</span> · <span><b>16</b> skupaj</span> · <span><b>11</b> javnih</span> · <span><b>5</b> s prijavo</span></p>
+      </div>
+    </div>
+    <label class="search">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="m10.5 10.5 3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <input type="search" id="q" placeholder="išči projekt, orodje, leto" aria-label="Išči po projektih" autocomplete="off" spellcheck="false">
+      <kbd aria-hidden="true">/</kbd>
+    </label>
+    <a class="ext" href="https://github.com/matjazvolkar" aria-label="GitHub: matjazvolkar">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+      <span class="ext-txt">github.com/matjazvolkar</span>
+    </a>
   </header>
 
-  <div class="columns">
+  <!--
+    Nova kartica: kopiraj eno <article> v pravo kategorijo (<div class="cat">).
+    Javna:      <article class="tile">, v <h4> povezava <a class="tile-link" href="...">, za njim <svg class="go">.
+    Zaklenjena: <article class="tile locked">, namesto puscice <span class="lock">...prijava</span>;
+                brez povezave, ce stran ni dosegljiva niti s prijavo.
+    Opis je ena kratka vrstica (do ~55 znakov). Meta: tehnologija, gostitelj ali jeziki, mesec (LLLL-MM), koda.
+    Nova kategorija: kopiraj cel <div class="cat"> z glavo. Stevci v glavi, razdelkih in kategorijah
+    se izracunajo sami, iskanje uposteva tudi ime kategorije.
+  -->
 
-    <section class="col">
-      <h2>Nevron</h2>
-      <p class="col-note">Poslovni projekti in dokumentacija.</p>
+  <section class="sec nev" aria-labelledby="h-nev">
+    <div class="sec-head">
+      <h2 id="h-nev">Nevron</h2>
+      <span class="sec-count">09</span>
+      <span class="sec-rule"></span>
+      <span class="sec-note">poslovni projekti in dokumentacija</span>
+    </div>
+    <div class="cats">
 
-      <article class="row locked">
-        <div class="row-head">
-          <h3>Nevron AI SDR</h3>
-          <span class="chip chip-lock">zahteva prijavo</span>
+      <div class="cat">
+        <div class="cat-head"><h3>GTM</h3><span class="cat-count">03</span><span class="cat-rule"></span></div>
+        <div class="cat-list">
+          <article class="tile">
+            <div class="t-head"><h4><a class="tile-link" href="https://matjazvolkar.github.io/GTM-kapacitete-2026-2027/">GTM kapacitete 2026-2027</a></h4><svg class="go" aria-hidden="true"><use href="#i-go"/></svg></div>
+            <p class="desc">Sedem trgov, trije kanali: kontakti, kapaciteta, scenariji</p>
+            <p class="meta"><span>HTML</span><span>github.io</span><span class="end">2026-08</span></p>
+          </article>
+          <article class="tile">
+            <div class="t-head"><h4><a class="tile-link" href="https://matjazvolkar.github.io/GTM-aktivnosti-v2-2026-2027/">GTM aktivnosti v2</a></h4><svg class="go" aria-hidden="true"><use href="#i-go"/></svg></div>
+            <p class="desc">Prenovljena točka 2: aktivnosti, cilji, scenariji</p>
+            <p class="meta"><span>HTML</span><span>github.io</span><span class="end">2026-10</span></p>
+          </article>
+          <article class="tile">
+            <div class="t-head"><h4><a class="tile-link" href="https://matjazvolkar.github.io/GTM-copy-2026-2027/">GTM copy 2026/2027</a></h4><svg class="go" aria-hidden="true"><use href="#i-go"/></svg></div>
+            <p class="desc">Copy po trgih in krogih, variable, sporočilni korpus</p>
+            <p class="meta"><span>HTML</span><span>SL · HR · IT · EN</span><span class="end">2026-09</span></p>
+          </article>
         </div>
-        <p class="desc">
-          Dokumentacija sistema za hladno pridobivanje strank. Vodiči za postavitev
-          kampanj, zaporedja sporočil in delovni postopki.
-        </p>
-        <p class="meta">
-          <span>HTML</span>
-          <span>april 2026</span>
-        </p>
-      </article>
+      </div>
 
-      <article class="row">
-        <div class="row-head">
-          <h3><a href="https://matjazvolkar.github.io/cold-outreach-domene/">Cold outreach: domene in dostavljivost</a></h3>
-          <span class="chip chip-open">javno</span>
+      <div class="cat">
+        <div class="cat-head"><h3>SDR in outreach</h3><span class="cat-count">02</span><span class="cat-rule"></span></div>
+        <div class="cat-list">
+          <article class="tile locked">
+            <div class="t-head"><h4>Nevron AI SDR</h4><span class="lock"><svg aria-hidden="true"><use href="#i-lock"/></svg>prijava</span></div>
+            <p class="desc">Dokumentacija sistema za hladno pridobivanje strank</p>
+            <p class="meta"><span>HTML</span><span>zasebni repo</span><span class="end">2026-04</span></p>
+          </article>
+          <article class="tile">
+            <div class="t-head"><h4><a class="tile-link" href="https://matjazvolkar.github.io/cold-outreach-domene/">Cold outreach: domene in dostavljivost</a></h4><svg class="go" aria-hidden="true"><use href="#i-go"/></svg></div>
+            <p class="desc">Domene, dostavljivost, skaliranje in Instantly</p>
+            <p class="meta"><span>HTML</span><span>4 dok. · EN</span><span class="end">2026-04</span></p>
+          </article>
         </div>
-        <p class="desc">
-          Kako postaviti domeno za hladno e-pošto od nakupa do prvega pošiljanja, pravila dostavljivosti,
-          načrt skaliranja na več domen in postavitev kampanj v Instantlyju. Štirje dokumenti v angleščini.
-        </p>
-        <p class="meta">
-          <span>HTML</span>
-          <span>april 2026</span>
-        </p>
-      </article>
+      </div>
 
-      <article class="row">
-        <div class="row-head">
-          <h3><a href="https://matjazvolkar.github.io/raziskave-orodij/">Raziskave orodij</a></h3>
-          <span class="chip chip-open">javno</span>
+      <div class="cat">
+        <div class="cat-head"><h3>Raziskave</h3><span class="cat-count">03</span><span class="cat-rule"></span></div>
+        <div class="cat-list">
+          <article class="tile">
+            <div class="t-head"><h4><a class="tile-link" href="https://matjazvolkar.github.io/raziskave-orodij/">Raziskave orodij</a></h4><svg class="go" aria-hidden="true"><use href="#i-go"/></svg></div>
+            <p class="desc">12 raziskav za prodajo, s stopnjami zaupanja in viri</p>
+            <p class="meta"><span>HTML</span><span>github.io</span><span class="end">2026-10</span></p>
+          </article>
+          <article class="tile">
+            <div class="t-head"><h4><a class="tile-link" href="https://matjazvolkar.github.io/deset-bolecin-hotelirjev/">Deset bolečin hotelirjev</a></h4><svg class="go" aria-hidden="true"><use href="#i-go"/></svg></div>
+            <p class="desc">Problemi hotelirjev 2026 in vprašanja za discovery klic</p>
+            <p class="meta"><span>HTML</span><span><a href="https://matjazvolkar.github.io/deset-bolecin-hotelirjev/">SL</a> · <a href="https://matjazvolkar.github.io/deset-bolecin-hotelirjev/#hr">HR</a> · <a href="https://matjazvolkar.github.io/deset-bolecin-hotelirjev/#en">EN</a></span><span class="end">2026-10</span></p>
+          </article>
+          <article class="tile">
+            <div class="t-head"><h4><a class="tile-link" href="https://matjazvolkar.github.io/prodajni-trenerji-hladni-klici/">Prodajni trenerji za hladne klice</a></h4><svg class="go" aria-hidden="true"><use href="#i-go"/></svg></div>
+            <p class="desc">Slovenski in tuji trenerji B2B, cene, kontakti</p>
+            <p class="meta"><span>HTML</span><span>github.io</span><span class="end">2026-09</span></p>
+          </article>
         </div>
-        <p class="desc">
-          Dvanajst raziskav za prodajo: snemanje klicev in zaslona, dialerji, Attio, LinkedIn video,
-          trgi in konkurenca, s stopnjami zaupanja in viri.
-        </p>
-        <p class="meta">
-          <span>HTML</span>
-          <span>oktober 2026</span>
-        </p>
-      </article>
+      </div>
 
-      <article class="row">
-        <div class="row-head">
-          <h3><a href="https://matjazvolkar.github.io/deset-bolecin-hotelirjev/">Deset bolečin hotelirjev</a></h3>
-          <span class="chip chip-open">javno</span>
+      <div class="cat">
+        <div class="cat-head"><h3>Marketing</h3><span class="cat-count">01</span><span class="cat-rule"></span></div>
+        <div class="cat-list">
+          <article class="tile">
+            <div class="t-head"><h4><a class="tile-link" href="https://matjazvolkar.github.io/hostfulness/promocijski-nacrt.html">Hostfulness</a></h4><svg class="go" aria-hidden="true"><use href="#i-go"/></svg></div>
+            <p class="desc">Promocijski načrt za podcast Hostfulness</p>
+            <p class="meta"><span>HTML</span><span>github.io</span><span class="end">2026-08 <a href="https://github.com/matjazvolkar/hostfulness">koda</a></span></p>
+          </article>
         </div>
-        <p class="desc">
-          Deset najbolj perečih problemov hotelirjev v letu 2026, za vsakega vprašanje za
-          discovery klic po metodi Donalda Millerja, dokazi z oceno zanesljivosti, ugovori in viri.
-          V slovenščini, <a href="https://matjazvolkar.github.io/deset-bolecin-hotelirjev/#hr">hrvaščini</a>
-          in <a href="https://matjazvolkar.github.io/deset-bolecin-hotelirjev/#en">angleščini</a>.
-        </p>
-        <p class="meta">
-          <span>HTML</span>
-          <span>oktober 2026</span>
-        </p>
-      </article>
+      </div>
 
-      <article class="row">
-        <div class="row-head">
-          <h3><a href="https://matjazvolkar.github.io/GTM-kapacitete-2026-2027/">GTM kapacitete 2026-2027</a></h3>
-          <span class="chip chip-open">javno</span>
+    </div>
+  </section>
+
+  <section class="sec own" aria-labelledby="h-own">
+    <div class="sec-head">
+      <h2 id="h-own">Osebni</h2>
+      <span class="sec-count">07</span>
+      <span class="sec-rule"></span>
+      <span class="sec-note">orodja in gradivo izven Nevrona</span>
+    </div>
+    <div class="cats">
+
+      <div class="cat">
+        <div class="cat-head"><h3>Orodja in vodniki</h3><span class="cat-count">03</span><span class="cat-rule"></span></div>
+        <div class="cat-list">
+          <article class="tile">
+            <div class="t-head"><h4><a class="tile-link" href="https://matjazvolkar.github.io/hormozi-focus/">Hormozi Focus</a></h4><svg class="go" aria-hidden="true"><use href="#i-go"/></svg></div>
+            <p class="desc">Dan v 15-minutnih blokih, koledar in statistika</p>
+            <p class="meta"><span>HTML · JS</span><span>github.io</span><span class="end">2026-09 <a href="https://github.com/matjazvolkar/matjazvolkar.github.io/tree/main/hormozi-focus">koda</a></span></p>
+          </article>
+          <article class="tile">
+            <div class="t-head"><h4><a class="tile-link" href="https://matjazvolkar.github.io/vodnik-po-nakupih/">Vodnik po nakupih</a></h4><svg class="go" aria-hidden="true"><use href="#i-go"/></svg></div>
+            <p class="desc">Nakupne raziskave z živimi cenami in pravim stroškom</p>
+            <p class="meta"><span>HTML · JS</span><span>github.io</span><span class="end">2026-10 <a href="https://github.com/matjazvolkar/vodnik-po-nakupih">koda</a></span></p>
+          </article>
+          <article class="tile">
+            <div class="t-head"><h4><a class="tile-link" href="https://matjazvolkar.github.io/spektralni-rob/">Spektralni rob</a></h4><svg class="go" aria-hidden="true"><use href="#i-go"/></svg></div>
+            <p class="desc">Ali je zvočna datoteka res lossless ali prekodiran mp3</p>
+            <p class="meta"><span>HTML · JS · Python</span><span>github.io</span><span class="end">2026-08 <a href="https://github.com/matjazvolkar/spektralni-rob">koda</a></span></p>
+          </article>
         </div>
-        <p class="desc">
-          Sedem hotelskih trgov, tri kanale, ena prodajna sezona: hoteli po slojih, kontakti
-          odločevalcev, kapaciteta in scenariji sproženja sekvenc.
-        </p>
-        <p class="meta">
-          <span>HTML</span>
-          <span>avgust 2026</span>
-        </p>
-      </article>
+      </div>
 
-      <article class="row">
-        <div class="row-head">
-          <h3><a href="https://matjazvolkar.github.io/hostfulness/promocijski-nacrt.html">Hostfulness</a></h3>
-          <span class="chip chip-open">javno</span>
+      <div class="cat">
+        <div class="cat-head"><h3>Zasebno</h3><span class="cat-count">04</span><span class="cat-rule"></span></div>
+        <div class="cat-list">
+          <article class="tile locked">
+            <div class="t-head"><h4><a class="tile-link" href="https://cashflow-matjaz.vercel.app/">Cashflow</a></h4><span class="lock"><svg aria-hidden="true"><use href="#i-lock"/></svg>prijava</span></div>
+            <p class="desc">Osebni pregled denarnega toka</p>
+            <p class="meta"><span>HTML · Python</span><span>vercel.app</span><span class="end">2026-10</span></p>
+          </article>
+          <article class="tile locked">
+            <div class="t-head"><h4><a class="tile-link" href="https://delovne-ure.pages.dev/">Delovne ure v Nevronu</a></h4><span class="lock"><svg aria-hidden="true"><use href="#i-lock"/></svg>prijava</span></div>
+            <p class="desc">Analiza delovnih ur po mesecih, z grafi</p>
+            <p class="meta"><span>HTML · Python</span><span>pages.dev · GitHub</span><span class="end">2026-10</span></p>
+          </article>
+          <article class="tile locked">
+            <div class="t-head"><h4><a class="tile-link" href="https://my-longevity.pages.dev/">Moja dolgoživost</a></h4><span class="lock"><svg aria-hidden="true"><use href="#i-lock"/></svg>prijava</span></div>
+            <p class="desc">Lastne meritve skozi čas</p>
+            <p class="meta"><span>HTML</span><span>pages.dev · Access</span><span class="end">2026-08</span></p>
+          </article>
+          <article class="tile locked">
+            <div class="t-head"><h4>Psihologija Brin</h4><span class="lock"><svg aria-hidden="true"><use href="#i-lock"/></svg>prijava</span></div>
+            <p class="desc">Osebno gradivo, zasebno</p>
+            <p class="meta"><span>HTML</span><span>zasebno</span><span class="end">2026-08</span></p>
+          </article>
         </div>
-        <p class="desc">
-          Promocijski načrt za podcast Hostfulness.
-        </p>
-        <p class="meta">
-          <span>HTML</span>
-          <span>avgust 2026</span>
-          <a href="https://github.com/matjazvolkar/hostfulness">koda</a>
-        </p>
-      </article>
-    </section>
+      </div>
 
-    <section class="col">
-      <h2>Osebni</h2>
-      <p class="col-note">Orodja in gradivo, ki niso vezani na Nevron.</p>
+    </div>
+  </section>
 
-      <article class="row">
-        <div class="row-head">
-          <h3><a href="https://matjazvolkar.github.io/hormozi-focus/">Hormozi Focus</a></h3>
-          <span class="chip chip-open">javno</span>
-        </div>
-        <p class="desc">
-          Dan po 15-minutnih blokih od 5.00 do polnoči, s koledarjem in statistiko zapolnjenosti,
-          nizom polnih dni in top 5 opisov dela. Podatki ostanejo samo v tem brskalniku.
-        </p>
-        <p class="meta">
-          <span>HTML · JavaScript</span>
-          <span>september 2026</span>
-          <a href="https://github.com/matjazvolkar/matjazvolkar.github.io/tree/main/hormozi-focus">koda</a>
-        </p>
-      </article>
-
-      <article class="row">
-        <div class="row-head">
-          <h3><a href="https://matjazvolkar.github.io/vodnik-po-nakupih/">Vodnik po nakupih</a></h3>
-          <span class="chip chip-open">javno</span>
-        </div>
-        <p class="desc">
-          Nakupne raziskave s cenami z živih strani, poštnino do Slovenije in pravim stroškom.
-          Seznam se dopolni z vsako novo raziskavo.
-        </p>
-        <p class="meta">
-          <span>HTML · JavaScript</span>
-          <span>oktober 2026</span>
-          <a href="https://github.com/matjazvolkar/vodnik-po-nakupih">koda</a>
-        </p>
-      </article>
-
-      <article class="row">
-        <div class="row-head">
-          <h3><a href="https://matjazvolkar.github.io/spektralni-rob/">Spektralni rob</a></h3>
-          <span class="chip chip-open">javno</span>
-        </div>
-        <p class="desc">
-          Preveri, ali je zvočna datoteka res lossless ali le prekodiran mp3, ki se za to
-          izdaja. Meri, kje se spekter konča in kako naglo. Teče v brskalniku, datoteka
-          se nikamor ne naloži.
-        </p>
-        <p class="meta">
-          <span>HTML · JavaScript · Python</span>
-          <span>avgust 2026</span>
-          <a href="https://github.com/matjazvolkar/spektralni-rob">koda</a>
-        </p>
-      </article>
-
-      <article class="row locked">
-        <div class="row-head">
-          <h3><a href="https://cashflow-matjaz.vercel.app/">Cashflow</a></h3>
-          <span class="chip chip-lock">zahteva prijavo</span>
-        </div>
-        <p class="desc">
-          Osebni pregled denarnega toka. Dostop je zaščiten s prijavo prek Vercela.
-        </p>
-        <p class="meta">
-          <span>HTML · Python</span>
-          <span>oktober 2026</span>
-          <a href="https://cashflow-matjaz.vercel.app/">stran</a>
-        </p>
-      </article>
-
-      <article class="row locked">
-        <div class="row-head">
-          <h3><a href="https://my-longevity.pages.dev/">Moja dolgoživost</a></h3>
-          <span class="chip chip-lock">zahteva prijavo</span>
-        </div>
-        <p class="desc">
-          Osebni pregled lastnih meritev skozi čas. Dostop je zaščiten s prijavo
-          prek Cloudflare Access.
-        </p>
-        <p class="meta">
-          <span>HTML</span>
-          <span>avgust 2026</span>
-          <a href="https://my-longevity.pages.dev/">stran</a>
-        </p>
-      </article>
-
-      <article class="row locked">
-        <div class="row-head">
-          <h3>Psihologija Brin</h3>
-          <span class="chip chip-lock">zahteva prijavo</span>
-        </div>
-        <p class="desc">Osebno gradivo. Zasebno.</p>
-        <p class="meta">
-          <span>HTML</span>
-          <span>avgust 2026</span>
-        </p>
-      </article>
-    </section>
-
-  </div>
+  <p class="empty" id="empty" hidden>Ni zadetkov. Esc počisti iskanje.</p>
 
   <footer>
-    <p>Stran je statična in jo gosti GitHub Pages. Seznam se ne osvežuje sam, zato ga je ob novem projektu treba dopolniti.</p>
-    <p>Zaklenjeni projekti so navedeni z imenom, njihova vsebina pa brez prijave ni dosegljiva.</p>
+    <span>statična stran · GitHub Pages</span>
+    <span>seznam se dopolni ročno</span>
+    <span>zaklenjeni projekti brez prijave niso dosegljivi</span>
   </footer>
 
 </div>
+<script>
+(() => {
+  const q = document.getElementById('q');
+  const sections = [...document.querySelectorAll('.sec')];
+  const tiles = [...document.querySelectorAll('.tile')];
+  const empty = document.getElementById('empty');
+  const norm = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+  const pad = n => String(n).padStart(2, '0');
+
+  document.querySelectorAll('.cat').forEach(c => {
+    const label = c.querySelector('.cat-head h3').textContent;
+    c.querySelectorAll('.tile').forEach(t => { t.dataset.text = norm(label + ' ' + t.textContent.replace(/\s+/g, ' ')); });
+  });
+  document.querySelectorAll('.tile h4, .desc').forEach(el => { el.title = el.textContent.trim(); });
+
+  const locked = tiles.filter(t => t.classList.contains('locked')).length;
+  document.getElementById('stats').innerHTML =
+    `<span>kazalo projektov</span> · <span><b>${tiles.length}</b> skupaj</span> · <span><b>${tiles.length - locked}</b> javnih</span> · <span><b>${locked}</b> s prijavo</span>`;
+
+  function apply() {
+    const terms = norm(q.value).trim().split(/\s+/).filter(Boolean);
+    const frac = (n, all) => terms.length ? `${pad(n)}/${pad(all)}` : pad(all);
+    let shown = 0;
+    sections.forEach(sec => {
+      let secShown = 0, secAll = 0;
+      sec.querySelectorAll('.cat').forEach(c => {
+        const own = [...c.querySelectorAll('.tile')];
+        let n = 0;
+        own.forEach(t => {
+          const hit = terms.every(w => (t.dataset.text || '').includes(w));
+          t.hidden = !hit;
+          if (hit) n++;
+        });
+        c.querySelector('.cat-count').textContent = frac(n, own.length);
+        c.hidden = n === 0;
+        secShown += n; secAll += own.length;
+      });
+      sec.querySelector('.sec-count').textContent = frac(secShown, secAll);
+      sec.hidden = secShown === 0;
+      shown += secShown;
+    });
+    empty.hidden = shown > 0;
+  }
+  apply();
+
+  q.addEventListener('input', apply);
+  q.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { q.value = ''; apply(); q.blur(); }
+    if (e.key === 'Enter') {
+      const first = document.querySelector('.tile:not([hidden]) .tile-link');
+      if (first) first.click();
+    }
+  });
+  document.addEventListener('keydown', e => {
+    const typing = /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName);
+    if (e.key === '/' && !typing && !e.ctrlKey && !e.metaKey && !e.altKey) { e.preventDefault(); q.focus(); }
+  });
+})();
+</script>
 </body>
 </html>
