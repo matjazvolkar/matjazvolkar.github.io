@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Matjaž Volkar</title>
-<meta name="description" content="Kazalo projektov Matjaža Volkarja: Nevron in osebni projekti, orodja in dokumentacija.">
+<meta name="description" content="Kazalo Matjaža Volkarja: projekti pod Nevronom in osebni projekti ter agenti in skilli, ki jih uporablja s Claude Code.">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#0A0D12">
 <link rel="icon" href="ikona.ico" sizes="16x16 32x32 48x48">
@@ -182,6 +182,8 @@
   }
   .lock svg { width: 11px; height: 11px; }
   .locked { background: transparent; border-style: dashed; }
+  .local { border-style: dotted; }
+  .lock.loc { color: oklch(0.82 0.09 200); }
   .locked:not(:has(.tile-link)) h4 { color: var(--ink-2); }
 
   .desc {
@@ -242,6 +244,7 @@
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="i-go" viewBox="0 0 16 16"><path d="M5 11 11 5M6 5h5v5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-local" viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="8" rx="1.2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M6 14h4M8 11v3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
   <symbol id="i-lock" viewBox="0 0 16 16"><rect x="3" y="7" width="10" height="7" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
 </svg>
 <div class="wrap">
@@ -251,7 +254,7 @@
       <div class="mono-mark" aria-hidden="true">MV</div>
       <div>
         <h1 class="name">Matjaž Volkar</h1>
-        <p class="stats" id="stats"><a href="#projekti"><b>16</b> projektov</a> · <a href="#agenti"><b>36</b> agentov</a> · <a href="#skilli"><b>90</b> skillov</a> · <span>11 javnih, 5 s prijavo</span></p>
+        <p class="stats" id="stats"><a href="#projekti"><b>18</b> projektov</a> · <a href="#agenti"><b>36</b> agentov</a> · <a href="#skilli"><b>90</b> skillov</a> · <span>projekti: 11 javnih, 6 s prijavo, 1 lokalno</span></p>
       </div>
     </div>
     <label class="search">
@@ -270,6 +273,7 @@
     Javna:      <article class="tile">, v <h4> povezava <a class="tile-link" href="...">, za njim <svg class="go">.
     Zaklenjena: <article class="tile locked">, namesto puscice <span class="lock">...prijava</span>;
                 brez povezave, ce stran ni dosegljiva niti s prijavo.
+    Lokalna:    <article class="tile local">, oznaka <span class="lock loc">...lokalno</span> (tece samo na prenosniku).
     Opis je ena kratka vrstica (do ~55 znakov). Meta: tehnologija, gostitelj ali jeziki, mesec (LLLL-MM), koda.
     Nova kategorija: kopiraj cel <div class="cat" style="--h: ..."> z glavo in ji daj svoj odtenek
     (--h, 0 do 360, oklch), ki ga se nima nobena kategorija. Stevci v glavi, razdelkih in kategorijah
@@ -281,10 +285,10 @@
 
   <section class="sec nev" aria-labelledby="h-nev">
     <div class="sec-head">
-      <h2 id="h-nev">Nevron</h2>
-      <span class="sec-count">09</span>
+      <h2 id="h-nev">Nevron projekti</h2>
+      <span class="sec-count">11</span>
       <span class="sec-rule"></span>
-      <span class="sec-note">poslovni projekti in dokumentacija</span>
+      <span class="sec-note">dokumentacija, raziskave, orodja</span>
     </div>
     <div class="cats">
 
@@ -310,12 +314,17 @@
       </div>
 
       <div class="cat" style="--h: 30">
-        <div class="cat-head"><h3>SDR in outreach</h3><span class="cat-count">02</span><span class="cat-rule"></span></div>
+        <div class="cat-head"><h3>SDR in outreach</h3><span class="cat-count">03</span><span class="cat-rule"></span></div>
         <div class="cat-list">
           <article class="tile locked">
             <div class="t-head"><h4>Nevron AI SDR</h4><span class="lock"><svg aria-hidden="true"><use href="#i-lock"/></svg>prijava</span></div>
             <p class="desc">Dokumentacija sistema za hladno pridobivanje strank</p>
             <p class="meta"><span>HTML</span><span>zasebni repo</span><span class="end">2026-04</span></p>
+          </article>
+          <article class="tile locked">
+            <div class="t-head"><h4><a class="tile-link" href="https://nevron-sdr-blueprint.pages.dev/">SDR Blueprint</a></h4><span class="lock"><svg aria-hidden="true"><use href="#i-lock"/></svg>prijava</span></div>
+            <p class="desc">Strategija in arhitektura, iz katere je nastal AI SDR</p>
+            <p class="meta"><span>HTML</span><span>pages.dev · GitHub</span><span class="end">2026-03</span></p>
           </article>
           <article class="tile">
             <div class="t-head"><h4><a class="tile-link" href="https://matjazvolkar.github.io/cold-outreach-domene/">Cold outreach: domene in dostavljivost</a></h4><svg class="go" aria-hidden="true"><use href="#i-go"/></svg></div>
@@ -347,12 +356,17 @@
       </div>
 
       <div class="cat" style="--h: 345">
-        <div class="cat-head"><h3>Marketing</h3><span class="cat-count">01</span><span class="cat-rule"></span></div>
+        <div class="cat-head"><h3>Marketing</h3><span class="cat-count">02</span><span class="cat-rule"></span></div>
         <div class="cat-list">
           <article class="tile">
             <div class="t-head"><h4><a class="tile-link" href="https://matjazvolkar.github.io/hostfulness/promocijski-nacrt.html">Hostfulness</a></h4><svg class="go" aria-hidden="true"><use href="#i-go"/></svg></div>
             <p class="desc">Promocijski načrt za podcast Hostfulness</p>
             <p class="meta"><span>HTML</span><span>github.io</span><span class="end">2026-08 <a href="https://github.com/matjazvolkar/hostfulness">koda</a></span></p>
+          </article>
+          <article class="tile local">
+            <div class="t-head"><h4><a class="tile-link" href="http://localhost:8765/">Urejevalnik shortov</a></h4><span class="lock loc"><svg aria-hidden="true"><use href="#i-local"/></svg>lokalno</span></div>
+            <p class="desc">Besedila shortov za pet kanalov pred objavo</p>
+            <p class="meta"><span>Python · HTML</span><span>localhost · VPN</span><span class="end">2026-10</span></p>
           </article>
         </div>
       </div>
@@ -362,7 +376,7 @@
 
   <section class="sec own" aria-labelledby="h-own">
     <div class="sec-head">
-      <h2 id="h-own">Osebno</h2>
+      <h2 id="h-own">Osebni projekti</h2>
       <span class="sec-count">07</span>
       <span class="sec-rule"></span>
       <span class="sec-note">orodja, pregledi in rast</span>
@@ -1212,10 +1226,11 @@
 
   const proj = [...document.querySelectorAll('.split .tile')];
   const locked = proj.filter(t => t.classList.contains('locked')).length;
+  const local = proj.filter(t => t.classList.contains('local')).length;
   const n = sel => document.querySelectorAll(sel).length;
   document.getElementById('stats').innerHTML =
     `<a href="#projekti"><b>${proj.length}</b> projektov</a> · <a href="#agenti"><b>${n('#agenti .tile')}</b> agentov</a> · ` +
-    `<a href="#skilli"><b>${n('#skilli .tile')}</b> skillov</a> · <span>${proj.length - locked} javnih, ${locked} s prijavo</span>`;
+    `<a href="#skilli"><b>${n('#skilli .tile')}</b> skillov</a> · <span>projekti: ${proj.length - locked - local} javnih, ${locked} s prijavo${local ? `, ${local} lokalno` : ''}</span>`;
 
   function apply() {
     const terms = norm(q.value).trim().split(/\s+/).filter(Boolean);
