@@ -103,12 +103,6 @@
 
   /* sections */
   .sec { margin-top: 26px; }
-  .split { display: grid; grid-template-columns: 1fr 1fr; margin-top: 26px; }
-  .split > .sec { margin-top: 0; min-width: 0; }
-  .split > .sec:first-child { padding-right: 24px; }
-  .split > .sec + .sec { padding-left: 24px; border-left: 1px solid var(--line); }
-  .split:has(> .sec[hidden]) { grid-template-columns: 1fr; }
-  .split:has(> .sec[hidden]) > .sec { padding: 0; border-left: 0; }
   .sec-head { display: flex; align-items: center; gap: 12px; margin: 0 0 10px; }
   .sec-head h2 {
     margin: 0; display: flex; align-items: center; gap: 9px;
@@ -208,7 +202,8 @@
   }
 
   /* agents and skills: framed full-width bands, mono identifiers, two-line descriptions */
-  .split, .band { scroll-margin-top: 14px; }
+  .proj, .band { scroll-margin-top: 14px; }
+  .sec.own { margin-top: 30px; }
   .band {
     margin-top: 30px; padding: 16px 18px 0; border: 1px solid var(--line); border-radius: 12px;
     background: var(--bg);
@@ -224,11 +219,6 @@
   }
 
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
-  @media (max-width: 980px) {
-    .split { grid-template-columns: 1fr; }
-    .split > .sec:first-child { padding-right: 0; }
-    .split > .sec + .sec { padding-left: 0; border-left: 0; margin-top: 8px; }
-  }
   @media (max-width: 720px) {
     .wrap { padding: 0 16px 32px; }
     .top { padding-top: 16px; }
@@ -469,8 +459,10 @@
       // first category stays top left, the rest go largest first; each column keeps the original order
       const items = cats.map((c, idx) => ({ c, idx, w: c.hidden ? 0 : c.querySelectorAll('.tile:not([hidden])').length * 3 + 1 }));
       const first = items.find(o => o.w > 0) || items[0];
+      // projekti (data-vrstni): kategorije po vrsti v najkrajsi stolpec, da se prva vrstica bere v dolocenem vrstnem redu
+      const zaporedje = box.dataset.vrstni === 'da' ? items : [first, ...items.filter(o => o !== first).sort((x, y) => y.w - x.w)];
       const h = new Array(n).fill(0), put = cols.map(() => []);
-      [first, ...items.filter(o => o !== first).sort((x, y) => y.w - x.w)].forEach(o => {
+      zaporedje.forEach(o => {
         const i = h.indexOf(Math.min(...h));
         put[i].push(o);
         h[i] += o.w;

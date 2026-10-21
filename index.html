@@ -102,12 +102,6 @@
 
   /* sections */
   .sec { margin-top: 26px; }
-  .split { display: grid; grid-template-columns: 1fr 1fr; margin-top: 26px; }
-  .split > .sec { margin-top: 0; min-width: 0; }
-  .split > .sec:first-child { padding-right: 24px; }
-  .split > .sec + .sec { padding-left: 24px; border-left: 1px solid var(--line); }
-  .split:has(> .sec[hidden]) { grid-template-columns: 1fr; }
-  .split:has(> .sec[hidden]) > .sec { padding: 0; border-left: 0; }
   .sec-head { display: flex; align-items: center; gap: 12px; margin: 0 0 10px; }
   .sec-head h2 {
     margin: 0; display: flex; align-items: center; gap: 9px;
@@ -207,7 +201,8 @@
   }
 
   /* agents and skills: framed full-width bands, mono identifiers, two-line descriptions */
-  .split, .band { scroll-margin-top: 14px; }
+  .proj, .band { scroll-margin-top: 14px; }
+  .sec.own { margin-top: 30px; }
   .band {
     margin-top: 30px; padding: 16px 18px 0; border: 1px solid var(--line); border-radius: 12px;
     background: var(--bg);
@@ -223,11 +218,6 @@
   }
 
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
-  @media (max-width: 980px) {
-    .split { grid-template-columns: 1fr; }
-    .split > .sec:first-child { padding-right: 0; }
-    .split > .sec + .sec { padding-left: 0; border-left: 0; margin-top: 8px; }
-  }
   @media (max-width: 720px) {
     .wrap { padding: 0 16px 32px; }
     .top { padding-top: 16px; }
@@ -254,7 +244,7 @@
       <div class="mono-mark" aria-hidden="true">MV</div>
       <div>
         <h1 class="name">Matjaž Volkar</h1>
-        <p class="stats" id="stats"><a href="#projekti"><b>46</b> projektov</a> · <a href="#agenti"><b>36</b> agentov</a> · <a href="#skilli"><b>90</b> skillov</a> · <span>projekti: 25 javnih, 20 zaklenjenih, 1 lokalno</span></p>
+        <p class="stats" id="stats"><a href="#nevron"><b>37</b> Nevron</a> · <a href="#agenti"><b>36</b> agentov</a> · <a href="#skilli"><b>90</b> skillov</a> · <a href="#osebno"><b>10</b> osebnih</a> · <span>projekti: 25 javnih, 21 zaklenjenih, 1 lokalno</span></p>
       </div>
     </div>
     <label class="search">
@@ -281,32 +271,42 @@
     Razdelka Agenti in Skilli (med oznakama AGENTI-SKILLI) generira Projects/kazalo-agenti-skilli/zgradi.py.
   -->
 
-  <div class="split" id="projekti">
 
-  <section class="sec nev" aria-labelledby="h-nev">
+  <section class="sec nev proj" id="nevron" aria-labelledby="h-nev">
     <div class="sec-head">
       <h2 id="h-nev">Nevron</h2>
-      <span class="sec-count">36</span>
+      <span class="sec-count">37</span>
       <span class="sec-rule"></span>
       <span class="sec-note">dokumentacija, raziskave, orodja</span>
     </div>
-    <div class="cats">
+    <div class="cats" data-vrstni="da">
 
-      <div class="cat" style="--h: 250">
-        <div class="cat-head"><h3>GTM</h3><span class="cat-count">05</span><span class="cat-rule"></span></div>
+      <div class="cat" style="--h: 30">
+        <div class="cat-head"><h3>SDR</h3><span class="cat-count">02</span><span class="cat-rule"></span></div>
+        <div class="cat-list">
+          <article class="tile locked">
+            <div class="t-head"><h4>Nevron AI SDR</h4><span class="lock"><svg aria-hidden="true"><use href="#i-lock"/></svg>prijava</span></div>
+            <p class="desc">Dokumentacija sistema za hladno pridobivanje strank</p>
+            <p class="meta"><span>HTML</span><span>zasebni repo</span><span class="end">2026-04</span></p>
+          </article>
+          <article class="tile locked">
+            <div class="t-head"><h4><a class="tile-link" href="https://matjazvolkar.github.io/zaprto/sdr-blueprint/">SDR Blueprint</a></h4><span class="lock"><svg aria-hidden="true"><use href="#i-lock"/></svg>geslo</span></div>
+            <p class="desc">Strategija in arhitektura, iz katere je nastal AI SDR</p>
+            <p class="meta"><span>HTML</span><span>github.io · geslo</span><span class="end">2026-03</span></p>
+          </article>
+        </div>
+      </div>
+
+      <div class="cat" style="--h: 220">
+        <div class="cat-head"><h3>Cold outreach</h3><span class="cat-count">05</span><span class="cat-rule"></span></div>
         <div class="cat-list">
           <article class="tile">
-            <div class="t-head"><h4><a class="tile-link" href="https://matjazvolkar.github.io/GTM-kapacitete-2026-2027/">GTM kapacitete 2026-2027</a></h4><svg class="go" aria-hidden="true"><use href="#i-go"/></svg></div>
+            <div class="t-head"><h4><a class="tile-link" href="https://matjazvolkar.github.io/GTM-kapacitete-2026-2027/">Cold outreach kapacitete 2026-2027</a></h4><svg class="go" aria-hidden="true"><use href="#i-go"/></svg></div>
             <p class="desc">Sedem trgov, trije kanali: kontakti, kapaciteta, scenariji</p>
             <p class="meta"><span>HTML</span><span>github.io</span><span class="end">2026-08</span></p>
           </article>
           <article class="tile">
-            <div class="t-head"><h4><a class="tile-link" href="https://matjazvolkar.github.io/GTM-aktivnosti-v2-2026-2027/">GTM aktivnosti v2</a></h4><svg class="go" aria-hidden="true"><use href="#i-go"/></svg></div>
-            <p class="desc">Prenovljena točka 2: aktivnosti, cilji, scenariji</p>
-            <p class="meta"><span>HTML</span><span>github.io</span><span class="end">2026-10</span></p>
-          </article>
-          <article class="tile">
-            <div class="t-head"><h4><a class="tile-link" href="https://matjazvolkar.github.io/GTM-copy-2026-2027/">GTM copy 2026/2027</a></h4><svg class="go" aria-hidden="true"><use href="#i-go"/></svg></div>
+            <div class="t-head"><h4><a class="tile-link" href="https://matjazvolkar.github.io/GTM-copy-2026-2027/">Cold outreach copy 2026/2027</a></h4><svg class="go" aria-hidden="true"><use href="#i-go"/></svg></div>
             <p class="desc">Copy po trgih in krogih, variable, sporočilni korpus</p>
             <p class="meta"><span>HTML</span><span>SL · HR · IT · EN</span><span class="end">2026-09</span></p>
           </article>
@@ -320,37 +320,46 @@
             <p class="desc">A4 pisma s QR kodo za direktno pošto</p>
             <p class="meta"><span>Nevron Hub</span><span class="end"></span></p>
           </article>
-        </div>
-      </div>
-
-      <div class="cat" style="--h: 100">
-        <div class="cat-head"><h3>Prodaja</h3><span class="cat-count">01</span><span class="cat-rule"></span></div>
-        <div class="cat-list">
-          <article class="tile locked">
-            <div class="t-head"><h4><a class="tile-link" href="https://clients.nevron.co/Prodajnik-Plan/plan-prodajnika">Plan prodajnika</a></h4><span class="lock"><svg aria-hidden="true"><use href="#i-lock"/></svg>prijava</span></div>
-            <p class="desc">Načrt dela in ciljev prodajnika</p>
-            <p class="meta"><span>Nevron Hub</span><span class="end"></span></p>
-          </article>
-        </div>
-      </div>
-
-      <div class="cat" style="--h: 30">
-        <div class="cat-head"><h3>SDR in outreach</h3><span class="cat-count">03</span><span class="cat-rule"></span></div>
-        <div class="cat-list">
-          <article class="tile locked">
-            <div class="t-head"><h4>Nevron AI SDR</h4><span class="lock"><svg aria-hidden="true"><use href="#i-lock"/></svg>prijava</span></div>
-            <p class="desc">Dokumentacija sistema za hladno pridobivanje strank</p>
-            <p class="meta"><span>HTML</span><span>zasebni repo</span><span class="end">2026-04</span></p>
-          </article>
-          <article class="tile locked">
-            <div class="t-head"><h4><a class="tile-link" href="https://matjazvolkar.github.io/zaprto/sdr-blueprint/">SDR Blueprint</a></h4><span class="lock"><svg aria-hidden="true"><use href="#i-lock"/></svg>geslo</span></div>
-            <p class="desc">Strategija in arhitektura, iz katere je nastal AI SDR</p>
-            <p class="meta"><span>HTML</span><span>github.io · geslo</span><span class="end">2026-03</span></p>
-          </article>
           <article class="tile">
             <div class="t-head"><h4><a class="tile-link" href="https://matjazvolkar.github.io/cold-outreach-domene/">Cold outreach: domene in dostavljivost</a></h4><svg class="go" aria-hidden="true"><use href="#i-go"/></svg></div>
             <p class="desc">Domene, dostavljivost, skaliranje in Instantly</p>
             <p class="meta"><span>HTML</span><span>4 dok. · EN</span><span class="end">2026-04</span></p>
+          </article>
+        </div>
+      </div>
+
+      <div class="cat" style="--h: 345">
+        <div class="cat-head"><h3>Marketing</h3><span class="cat-count">06</span><span class="cat-rule"></span></div>
+        <div class="cat-list">
+          <article class="tile">
+            <div class="t-head"><h4><a class="tile-link" href="https://matjazvolkar.github.io/hostfulness/promocijski-nacrt.html">Hostfulness</a></h4><svg class="go" aria-hidden="true"><use href="#i-go"/></svg></div>
+            <p class="desc">Promocijski načrt za podcast Hostfulness</p>
+            <p class="meta"><span>HTML</span><span>github.io</span><span class="end">2026-08 <a href="https://github.com/matjazvolkar/hostfulness">koda</a></span></p>
+          </article>
+          <article class="tile local">
+            <div class="t-head"><h4><a class="tile-link" href="http://localhost:8765/">Urejevalnik shortov</a></h4><span class="lock loc"><svg aria-hidden="true"><use href="#i-local"/></svg>lokalno</span></div>
+            <p class="desc">Besedila shortov za pet kanalov pred objavo</p>
+            <p class="meta"><span>Python · HTML</span><span>localhost · VPN</span><span class="end">2026-10</span></p>
+          </article>
+          <article class="tile locked">
+            <div class="t-head"><h4><a class="tile-link" href="https://nevroncore-objava.pages.dev/">nevroncore.com: objava in dostopi</a></h4><span class="lock"><svg aria-hidden="true"><use href="#i-lock"/></svg>prijava</span></div>
+            <p class="desc">Kako se objavlja na nevroncore.com, kje je domena in gostovanje, kdo ima dostope</p>
+            <p class="meta"><span>HTML</span><span>pages.dev · GitHub org</span><span class="end">2026-10</span></p>
+          </article>
+          <article class="tile">
+            <div class="t-head"><h4><a class="tile-link" href="https://matjazvolkar.github.io/marketing-porocila/">Poročila in analize</a></h4><svg class="go" aria-hidden="true"><use href="#i-go"/></svg></div>
+            <p class="desc">Marketinška poročila: Nevron, Hostfulness, Rok</p>
+            <p class="meta"><span>HTML</span><span>github.io</span><span class="end">2026-10</span></p>
+          </article>
+          <article class="tile">
+            <div class="t-head"><h4><a class="tile-link" href="https://matjazvolkar.github.io/demo-cta/">Demo CTA</a></h4><svg class="go" aria-hidden="true"><use href="#i-go"/></svg></div>
+            <p class="desc">Start, trak, pavza in konec avtomatskega dema</p>
+            <p class="meta"><span>HTML</span><span>github.io</span><span class="end">2026-10</span></p>
+          </article>
+          <article class="tile">
+            <div class="t-head"><h4><a class="tile-link" href="https://clients.nevron.co/Hero-Awareness/hero-awareness">Awareness landing pages</a></h4><svg class="go" aria-hidden="true"><use href="#i-go"/></svg></div>
+            <p class="desc">Hero koncepti za awareness pristajalne strani</p>
+            <p class="meta"><span>Nevron Hub</span><span class="end"></span></p>
           </article>
         </div>
       </div>
@@ -396,37 +405,28 @@
         </div>
       </div>
 
-      <div class="cat" style="--h: 345">
-        <div class="cat-head"><h3>Marketing</h3><span class="cat-count">06</span><span class="cat-rule"></span></div>
+      <div class="cat" style="--h: 250">
+        <div class="cat-head"><h3>GTM</h3><span class="cat-count">02</span><span class="cat-rule"></span></div>
         <div class="cat-list">
-          <article class="tile">
-            <div class="t-head"><h4><a class="tile-link" href="https://matjazvolkar.github.io/hostfulness/promocijski-nacrt.html">Hostfulness</a></h4><svg class="go" aria-hidden="true"><use href="#i-go"/></svg></div>
-            <p class="desc">Promocijski načrt za podcast Hostfulness</p>
-            <p class="meta"><span>HTML</span><span>github.io</span><span class="end">2026-08 <a href="https://github.com/matjazvolkar/hostfulness">koda</a></span></p>
-          </article>
-          <article class="tile local">
-            <div class="t-head"><h4><a class="tile-link" href="http://localhost:8765/">Urejevalnik shortov</a></h4><span class="lock loc"><svg aria-hidden="true"><use href="#i-local"/></svg>lokalno</span></div>
-            <p class="desc">Besedila shortov za pet kanalov pred objavo</p>
-            <p class="meta"><span>Python · HTML</span><span>localhost · VPN</span><span class="end">2026-10</span></p>
-          </article>
           <article class="tile locked">
-            <div class="t-head"><h4><a class="tile-link" href="https://nevroncore-objava.pages.dev/">nevroncore.com: objava in dostopi</a></h4><span class="lock"><svg aria-hidden="true"><use href="#i-lock"/></svg>prijava</span></div>
-            <p class="desc">Kako se objavlja na nevroncore.com, kje je domena in gostovanje, kdo ima dostope</p>
-            <p class="meta"><span>HTML</span><span>pages.dev · GitHub org</span><span class="end">2026-10</span></p>
+            <div class="t-head"><h4><a class="tile-link" href="https://matjazvolkar.github.io/zaprto/gtm-strategija/">GTM strategija 2026-27</a></h4><span class="lock"><svg aria-hidden="true"><use href="#i-lock"/></svg>geslo</span></div>
+            <p class="desc">Nevron Hospitality GTM: trgi, ICP, ponudba, kanali, številke</p>
+            <p class="meta"><span>HTML</span><span>github.io · geslo</span><span class="end">2026-08</span></p>
           </article>
           <article class="tile">
-            <div class="t-head"><h4><a class="tile-link" href="https://matjazvolkar.github.io/marketing-porocila/">Poročila in analize</a></h4><svg class="go" aria-hidden="true"><use href="#i-go"/></svg></div>
-            <p class="desc">Marketinška poročila: Nevron, Hostfulness, Rok</p>
+            <div class="t-head"><h4><a class="tile-link" href="https://matjazvolkar.github.io/GTM-aktivnosti-v2-2026-2027/">GTM aktivnosti v2</a></h4><svg class="go" aria-hidden="true"><use href="#i-go"/></svg></div>
+            <p class="desc">Prenovljena točka 2: aktivnosti, cilji, scenariji</p>
             <p class="meta"><span>HTML</span><span>github.io</span><span class="end">2026-10</span></p>
           </article>
-          <article class="tile">
-            <div class="t-head"><h4><a class="tile-link" href="https://matjazvolkar.github.io/demo-cta/">Demo CTA</a></h4><svg class="go" aria-hidden="true"><use href="#i-go"/></svg></div>
-            <p class="desc">Start, trak, pavza in konec avtomatskega dema</p>
-            <p class="meta"><span>HTML</span><span>github.io</span><span class="end">2026-10</span></p>
-          </article>
-          <article class="tile">
-            <div class="t-head"><h4><a class="tile-link" href="https://clients.nevron.co/Hero-Awareness/hero-awareness">Awareness landing pages</a></h4><svg class="go" aria-hidden="true"><use href="#i-go"/></svg></div>
-            <p class="desc">Hero koncepti za awareness pristajalne strani</p>
+        </div>
+      </div>
+
+      <div class="cat" style="--h: 100">
+        <div class="cat-head"><h3>Prodaja</h3><span class="cat-count">01</span><span class="cat-rule"></span></div>
+        <div class="cat-list">
+          <article class="tile locked">
+            <div class="t-head"><h4><a class="tile-link" href="https://clients.nevron.co/Prodajnik-Plan/plan-prodajnika">Plan prodajnika</a></h4><span class="lock"><svg aria-hidden="true"><use href="#i-lock"/></svg>prijava</span></div>
+            <p class="desc">Načrt dela in ciljev prodajnika</p>
             <p class="meta"><span>Nevron Hub</span><span class="end"></span></p>
           </article>
         </div>
@@ -535,93 +535,6 @@
     </div>
   </section>
 
-  <section class="sec own" aria-labelledby="h-own">
-    <div class="sec-head">
-      <h2 id="h-own">Osebni projekti</h2>
-      <span class="sec-count">10</span>
-      <span class="sec-rule"></span>
-      <span class="sec-note">orodja, pregledi in rast</span>
-    </div>
-    <div class="cats">
-
-      <div class="cat" style="--h: 150">
-        <div class="cat-head"><h3>Orodja in vodniki</h3><span class="cat-count">03</span><span class="cat-rule"></span></div>
-        <div class="cat-list">
-          <article class="tile">
-            <div class="t-head"><h4><a class="tile-link" href="https://matjazvolkar.github.io/hormozi-focus/">Hormozi Focus</a></h4><svg class="go" aria-hidden="true"><use href="#i-go"/></svg></div>
-            <p class="desc">Dan v 15-minutnih blokih, koledar in statistika</p>
-            <p class="meta"><span>HTML · JS</span><span>github.io</span><span class="end">2026-09 <a href="https://github.com/matjazvolkar/matjazvolkar.github.io/tree/main/hormozi-focus">koda</a></span></p>
-          </article>
-          <article class="tile">
-            <div class="t-head"><h4><a class="tile-link" href="https://matjazvolkar.github.io/vodnik-po-nakupih/">Vodnik po nakupih</a></h4><svg class="go" aria-hidden="true"><use href="#i-go"/></svg></div>
-            <p class="desc">Nakupne raziskave z živimi cenami in pravim stroškom</p>
-            <p class="meta"><span>HTML · JS</span><span>github.io</span><span class="end">2026-10 <a href="https://github.com/matjazvolkar/vodnik-po-nakupih">koda</a></span></p>
-          </article>
-          <article class="tile">
-            <div class="t-head"><h4><a class="tile-link" href="https://matjazvolkar.github.io/spektralni-rob/">Spektralni rob</a></h4><svg class="go" aria-hidden="true"><use href="#i-go"/></svg></div>
-            <p class="desc">Ali je zvočna datoteka res lossless ali prekodiran mp3</p>
-            <p class="meta"><span>HTML · JS · Python</span><span>github.io</span><span class="end">2026-08 <a href="https://github.com/matjazvolkar/spektralni-rob">koda</a></span></p>
-          </article>
-        </div>
-      </div>
-
-      <div class="cat" style="--h: 85">
-        <div class="cat-head"><h3>Improve &amp; Upgrade</h3><span class="cat-count">02</span><span class="cat-rule"></span></div>
-        <div class="cat-list">
-          <article class="tile locked">
-            <div class="t-head"><h4><a class="tile-link" href="https://my-longevity.pages.dev/">Moja dolgoživost</a></h4><span class="lock"><svg aria-hidden="true"><use href="#i-lock"/></svg>prijava</span></div>
-            <p class="desc">Lastne meritve skozi čas</p>
-            <p class="meta"><span>HTML</span><span>pages.dev · Access</span><span class="end">2026-08</span></p>
-          </article>
-          <article class="tile locked">
-            <div class="t-head"><h4><a class="tile-link" href="https://matjazvolkar.github.io/zasebno/psihologija/">Psihologija Brin</a></h4><span class="lock"><svg aria-hidden="true"><use href="#i-lock"/></svg>geslo</span></div>
-            <p class="desc">Raziskave in kartica za krizo</p>
-            <p class="meta"><span>HTML</span><span>github.io · geslo</span><span class="end">2026-08</span></p>
-          </article>
-        </div>
-      </div>
-
-      <div class="cat" style="--h: 295">
-        <div class="cat-head"><h3>Zasebno</h3><span class="cat-count">02</span><span class="cat-rule"></span></div>
-        <div class="cat-list">
-          <article class="tile locked">
-            <div class="t-head"><h4><a class="tile-link" href="https://cashflow-matjaz.vercel.app/">Cashflow</a></h4><span class="lock"><svg aria-hidden="true"><use href="#i-lock"/></svg>prijava</span></div>
-            <p class="desc">Osebni pregled denarnega toka</p>
-            <p class="meta"><span>HTML · Python</span><span>vercel.app</span><span class="end">2026-10</span></p>
-          </article>
-          <article class="tile locked">
-            <div class="t-head"><h4><a class="tile-link" href="https://delovne-ure.pages.dev/">Delovne ure v Nevronu</a></h4><span class="lock"><svg aria-hidden="true"><use href="#i-lock"/></svg>prijava</span></div>
-            <p class="desc">Analiza delovnih ur po mesecih, z grafi</p>
-            <p class="meta"><span>HTML · Python</span><span>pages.dev · GitHub</span><span class="end">2026-10</span></p>
-          </article>
-        </div>
-      </div>
-
-
-      <div class="cat" style="--h: 230">
-        <div class="cat-head"><h3>Knowledge</h3><span class="cat-count">03</span><span class="cat-rule"></span></div>
-        <div class="cat-list">
-          <article class="tile">
-            <div class="t-head"><h4><a class="tile-link" href="https://matjazvolkar.github.io/knowledge/">Knowledge</a></h4><svg class="go" aria-hidden="true"><use href="#i-go"/></svg></div>
-            <p class="desc">Povezave po vsebini: AI, marketing, zdravje, finance</p>
-            <p class="meta"><span>HTML</span><span>github.io</span><span class="end">2026-10</span></p>
-          </article>
-          <article class="tile locked">
-            <div class="t-head"><h4><a class="tile-link" href="https://hub.nevron.co/hub/library">Nevron Library</a></h4><span class="lock"><svg aria-hidden="true"><use href="#i-lock"/></svg>prijava</span></div>
-            <p class="desc">Knjižnica gradiv na Nevron Hubu</p>
-            <p class="meta"><span>Nevron Hub</span><span class="end"></span></p>
-          </article>
-          <article class="tile">
-            <div class="t-head"><h4><a class="tile-link" href="https://matjazvolkar.github.io/orodja/">Uporabna orodja</a></h4><svg class="go" aria-hidden="true"><use href="#i-go"/></svg></div>
-            <p class="desc">Orodja za prodajo, podatke, AI in prevajanje</p>
-            <p class="meta"><span>HTML</span><span>github.io</span><span class="end">2026-10</span></p>
-          </article>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  </div>
 
   <!-- AGENTI-SKILLI:ZACETEK (generira Projects/kazalo-agenti-skilli/zgradi.py, ne urejaj rocno) -->
   <section class="sec band agt" id="agenti" aria-labelledby="h-agt">
@@ -1381,6 +1294,92 @@
   </section>
 <!-- AGENTI-SKILLI:KONEC -->
 
+  <section class="sec own proj" id="osebno" aria-labelledby="h-own">
+    <div class="sec-head">
+      <h2 id="h-own">Osebni projekti</h2>
+      <span class="sec-count">10</span>
+      <span class="sec-rule"></span>
+      <span class="sec-note">orodja, pregledi in rast</span>
+    </div>
+    <div class="cats" data-vrstni="da">
+
+      <div class="cat" style="--h: 150">
+        <div class="cat-head"><h3>Orodja in vodniki</h3><span class="cat-count">03</span><span class="cat-rule"></span></div>
+        <div class="cat-list">
+          <article class="tile">
+            <div class="t-head"><h4><a class="tile-link" href="https://matjazvolkar.github.io/hormozi-focus/">Hormozi Focus</a></h4><svg class="go" aria-hidden="true"><use href="#i-go"/></svg></div>
+            <p class="desc">Dan v 15-minutnih blokih, koledar in statistika</p>
+            <p class="meta"><span>HTML · JS</span><span>github.io</span><span class="end">2026-09 <a href="https://github.com/matjazvolkar/matjazvolkar.github.io/tree/main/hormozi-focus">koda</a></span></p>
+          </article>
+          <article class="tile">
+            <div class="t-head"><h4><a class="tile-link" href="https://matjazvolkar.github.io/vodnik-po-nakupih/">Vodnik po nakupih</a></h4><svg class="go" aria-hidden="true"><use href="#i-go"/></svg></div>
+            <p class="desc">Nakupne raziskave z živimi cenami in pravim stroškom</p>
+            <p class="meta"><span>HTML · JS</span><span>github.io</span><span class="end">2026-10 <a href="https://github.com/matjazvolkar/vodnik-po-nakupih">koda</a></span></p>
+          </article>
+          <article class="tile">
+            <div class="t-head"><h4><a class="tile-link" href="https://matjazvolkar.github.io/spektralni-rob/">Spektralni rob</a></h4><svg class="go" aria-hidden="true"><use href="#i-go"/></svg></div>
+            <p class="desc">Ali je zvočna datoteka res lossless ali prekodiran mp3</p>
+            <p class="meta"><span>HTML · JS · Python</span><span>github.io</span><span class="end">2026-08 <a href="https://github.com/matjazvolkar/spektralni-rob">koda</a></span></p>
+          </article>
+        </div>
+      </div>
+
+      <div class="cat" style="--h: 85">
+        <div class="cat-head"><h3>Improve &amp; Upgrade</h3><span class="cat-count">02</span><span class="cat-rule"></span></div>
+        <div class="cat-list">
+          <article class="tile locked">
+            <div class="t-head"><h4><a class="tile-link" href="https://my-longevity.pages.dev/">Moja dolgoživost</a></h4><span class="lock"><svg aria-hidden="true"><use href="#i-lock"/></svg>prijava</span></div>
+            <p class="desc">Lastne meritve skozi čas</p>
+            <p class="meta"><span>HTML</span><span>pages.dev · Access</span><span class="end">2026-08</span></p>
+          </article>
+          <article class="tile locked">
+            <div class="t-head"><h4><a class="tile-link" href="https://matjazvolkar.github.io/zasebno/psihologija/">Psihologija Brin</a></h4><span class="lock"><svg aria-hidden="true"><use href="#i-lock"/></svg>geslo</span></div>
+            <p class="desc">Raziskave in kartica za krizo</p>
+            <p class="meta"><span>HTML</span><span>github.io · geslo</span><span class="end">2026-08</span></p>
+          </article>
+        </div>
+      </div>
+
+      <div class="cat" style="--h: 295">
+        <div class="cat-head"><h3>Zasebno</h3><span class="cat-count">02</span><span class="cat-rule"></span></div>
+        <div class="cat-list">
+          <article class="tile locked">
+            <div class="t-head"><h4><a class="tile-link" href="https://cashflow-matjaz.vercel.app/">Cashflow</a></h4><span class="lock"><svg aria-hidden="true"><use href="#i-lock"/></svg>prijava</span></div>
+            <p class="desc">Osebni pregled denarnega toka</p>
+            <p class="meta"><span>HTML · Python</span><span>vercel.app</span><span class="end">2026-10</span></p>
+          </article>
+          <article class="tile locked">
+            <div class="t-head"><h4><a class="tile-link" href="https://delovne-ure.pages.dev/">Delovne ure v Nevronu</a></h4><span class="lock"><svg aria-hidden="true"><use href="#i-lock"/></svg>prijava</span></div>
+            <p class="desc">Analiza delovnih ur po mesecih, z grafi</p>
+            <p class="meta"><span>HTML · Python</span><span>pages.dev · GitHub</span><span class="end">2026-10</span></p>
+          </article>
+        </div>
+      </div>
+
+
+      <div class="cat" style="--h: 230">
+        <div class="cat-head"><h3>Knowledge</h3><span class="cat-count">03</span><span class="cat-rule"></span></div>
+        <div class="cat-list">
+          <article class="tile">
+            <div class="t-head"><h4><a class="tile-link" href="https://matjazvolkar.github.io/knowledge/">Knowledge</a></h4><svg class="go" aria-hidden="true"><use href="#i-go"/></svg></div>
+            <p class="desc">Povezave po vsebini: AI, marketing, zdravje, finance</p>
+            <p class="meta"><span>HTML</span><span>github.io</span><span class="end">2026-10</span></p>
+          </article>
+          <article class="tile locked">
+            <div class="t-head"><h4><a class="tile-link" href="https://hub.nevron.co/hub/library">Nevron Library</a></h4><span class="lock"><svg aria-hidden="true"><use href="#i-lock"/></svg>prijava</span></div>
+            <p class="desc">Knjižnica gradiv na Nevron Hubu</p>
+            <p class="meta"><span>Nevron Hub</span><span class="end"></span></p>
+          </article>
+          <article class="tile">
+            <div class="t-head"><h4><a class="tile-link" href="https://matjazvolkar.github.io/orodja/">Uporabna orodja</a></h4><svg class="go" aria-hidden="true"><use href="#i-go"/></svg></div>
+            <p class="desc">Orodja za prodajo, podatke, AI in prevajanje</p>
+            <p class="meta"><span>HTML</span><span>github.io</span><span class="end">2026-10</span></p>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <p class="empty" id="empty" hidden>Ni zadetkov. Esc počisti iskanje.</p>
 
   <footer>
@@ -1406,13 +1405,13 @@
   });
   document.querySelectorAll('.tile h4, .desc').forEach(el => { el.title = el.textContent.trim(); });
 
-  const proj = [...document.querySelectorAll('.split .tile')];
+  const proj = [...document.querySelectorAll('.proj .tile')];
   const locked = proj.filter(t => t.classList.contains('locked')).length;
   const local = proj.filter(t => t.classList.contains('local')).length;
   const n = sel => document.querySelectorAll(sel).length;
   document.getElementById('stats').innerHTML =
-    `<a href="#projekti"><b>${proj.length}</b> projektov</a> · <a href="#agenti"><b>${n('#agenti .tile')}</b> agentov</a> · ` +
-    `<a href="#skilli"><b>${n('#skilli .tile')}</b> skillov</a> · <span>projekti: ${proj.length - locked - local} javnih, ${locked} zaklenjenih${local ? `, ${local} lokalno` : ''}</span>`;
+    `<a href="#nevron"><b>${n('#nevron .tile')}</b> Nevron</a> · <a href="#agenti"><b>${n('#agenti .tile')}</b> agentov</a> · ` +
+    `<a href="#skilli"><b>${n('#skilli .tile')}</b> skillov</a> · <a href="#osebno"><b>${n('#osebno .tile')}</b> osebnih</a> · <span>projekti: ${proj.length - locked - local} javnih, ${locked} zaklenjenih${local ? `, ${local} lokalno` : ''}</span>`;
 
   function apply() {
     const terms = norm(q.value).trim().split(/\s+/).filter(Boolean);
@@ -1448,8 +1447,10 @@
       // first category stays top left, the rest go largest first; each column keeps the original order
       const items = cats.map((c, idx) => ({ c, idx, w: c.hidden ? 0 : c.querySelectorAll('.tile:not([hidden])').length * 3 + 1 }));
       const first = items.find(o => o.w > 0) || items[0];
+      // projekti (data-vrstni): kategorije po vrsti v najkrajsi stolpec, da se prva vrstica bere v dolocenem vrstnem redu
+      const zaporedje = box.dataset.vrstni === 'da' ? items : [first, ...items.filter(o => o !== first).sort((x, y) => y.w - x.w)];
       const h = new Array(n).fill(0), put = cols.map(() => []);
-      [first, ...items.filter(o => o !== first).sort((x, y) => y.w - x.w)].forEach(o => {
+      zaporedje.forEach(o => {
         const i = h.indexOf(Math.min(...h));
         put[i].push(o);
         h[i] += o.w;

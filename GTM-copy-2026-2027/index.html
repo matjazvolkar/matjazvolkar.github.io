@@ -5,7 +5,7 @@
 <meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✉️</text></svg>">
-<title>GTM copy 2026/2027 · pregled</title>
+<title>Cold outreach copy 2026/2027 · pregled</title>
 <style>
 :root{--bg:#f7f6f3;--pl:#fff;--txt:#1c1c1e;--mut:#6b6b70;--rob:#e3e1db;--pou:#0a5c46;--tok:#8a4f00;--tokbg:#fff3e0;--ok:#0a7a4b;--no:#c03018}
 @media (prefers-color-scheme: dark){:root{--bg:#141416;--pl:#1e1e21;--txt:#e8e8ea;--mut:#9a9aa0;--rob:#2c2c30;--pou:#5fd3ad;--tok:#ffb45e;--tokbg:#3a2c17;--ok:#4cc38a;--no:#ff7a5c}}
@@ -91,7 +91,7 @@ footer{color:var(--mut);font-size:12.5px;text-align:center;padding:20px}
 <body>
 <header>
 <button id="preklop" onclick="document.querySelector('aside').classList.toggle('odprt')">☰ Kazalo</button>
-<h1>GTM cold outreach copy 2026/2027 · osnutek za pregled</h1>
+<h1>Cold outreach copy 2026/2027 · osnutek za pregled</h1>
 <button onclick="izvoz()">Izvozi feedback</button>
 <span class="stat" id="stat"></span>
 </header>
@@ -709,7 +709,7 @@ footer{color:var(--mut);font-size:12.5px;text-align:center;padding:20px}
 <main>
 <p class="trg-intro">Vsak blok ima gumba <b>V redu</b> / <b>Popravi</b> in polje za komentar. V kazalu levo je potrjen copy <b style="color:var(--ok)">zelen</b>, nepregledan ali za popravit <b style="color:var(--no)">rdeč</b> (klicaj = Popravi). Ocene se shranjujejo v tem brskalniku; ko končaš, klikni <b>Izvozi feedback</b> in mi besedilo prilepi v sejo (ali prenesi .txt). Variable v copyju so označene <span class="tok">{takole}</span>.</p>
 <section class='trg' id='trg-sistem'>
-<h2>Sistem personalizacije in variabel · GTM cold outreach 2026/2027</h2>
+<h2>Sistem personalizacije in variabel · Cold outreach 2026/2027</h2>
 <div class='trg-intro'><p>Datum: 2. 9. 2026. Vir mehanizma: živa kampanja Omnichannel | Italy / Lazio | Bespoke (Instantly 2c21a83b, HeyReach 444153), preverjeno 2. 9. 2026.<br>Opomba 8. 9. 2026: imena variabel poenotena po kanonicnem slovarju (00-uskladitev-variabel.md): hotel_name, firstName, lastName, city, review_count, booking_rating, demo_url, index_url. Ziva italijanska kampanja (opis mehanizma spodaj) se vedno tece s starimi imeni leadovih polj (hotel, scrape_link, index_link); nova nalaganja uporabljajo kanonicna.</p></div>
 <h3 id='sistem--1-mehanizem-kot-pri-italijanski-omnichannel-kampanji'>1. Mehanizem (kot pri italijanski omnichannel kampanji)</h3>
 
@@ -7638,7 +7638,7 @@ footer{color:var(--mut);font-size:12.5px;text-align:center;padding:20px}
 <button onclick="document.getElementById('izvoz-okno').style.display='none'">Zapri</button>
 </div>
 </div>
-<footer>Nevron GTM 2026/2027 · interni osnutek · stran je zunaj iskalnikov (noindex) · zgrajeno 7. 10. 2026</footer>
+<footer>Nevron Cold outreach 2026/2027 · interni osnutek · stran je zunaj iskalnikov (noindex) · zgrajeno 7. 10. 2026</footer>
 <script>
 const KLJUC='gtmcopy_feedback_v1';
 let FB={};
@@ -7706,7 +7706,7 @@ function osveziVse(){
   document.querySelectorAll('.blok').forEach(b=>{const f=FB[b.id];if(!f)return;if(f.v==='ok')ok++;if(f.v==='popravi')no++;if(f.v==='popravljeno')fix++;if(f.k)kom++});
   document.getElementById('stat').textContent='potrjeno '+ok+' / '+vsi+(fix?' · popravljenih '+fix:'')+(no?' · za popravit '+no:'')+(kom?' · komentarjev '+kom:'')}
 function izvoz(){
-  let t='FEEDBACK · GTM copy 2026/2027 · '+new Date().toLocaleDateString('sl-SI')+'\n\n';
+  let t='FEEDBACK · Cold outreach copy 2026/2027 · '+new Date().toLocaleDateString('sl-SI')+'\n\n';
   let n=0;
   document.querySelectorAll('.blok').forEach(b=>{const id=b.id;const f=FB[id];if(!f)return;n++;
     t+='['+id+'] '+(f.v?f.v.toUpperCase():'')+(f.k?(f.v?' : ':'')+f.k:'')+'\n'});
