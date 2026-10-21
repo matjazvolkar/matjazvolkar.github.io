@@ -1,12 +1,15 @@
 <!doctype html>
-<html lang="sl">
+<html lang="sl" data-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>Raziskave orodij</title>
 <meta name="description" content="Dvanajst raziskav orodij, kanalov in trgov za Nevronovo prodajo, s stopnjami zaupanja in viri.">
-<meta name="color-scheme" content="light dark">
+<meta name="color-scheme" content="dark">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@400;600&display=swap">
 <link rel="icon" href="../ikona.ico" sizes="16x16 32x32 48x48">
 <link rel="icon" type="image/png" sizes="32x32" href="../ikona-32.png">
 <link rel="apple-touch-icon" href="../ikona-180.png">
@@ -123,6 +126,22 @@
     .wrap { padding: 32px 16px 64px; }
     nav.toc { padding: 14px 16px; }
   }
+  /* kazalo kartic na vrhu, v slogu matjazvolkar.github.io */
+  .idx { margin: 28px 0 40px; columns: 300px; column-gap: 14px; font-family: "IBM Plex Sans Condensed", var(--sans); }
+  .icat { break-inside: avoid; padding-bottom: 16px; }
+  .ihead { display: flex; align-items: center; gap: 8px; margin: 0 0 7px; font-family: "IBM Plex Mono", var(--mono);
+    font-size: 11.5px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: oklch(0.84 0.1 var(--h)); }
+  .ihead::before { content: ""; width: 3px; height: 11px; border-radius: 1px; background: oklch(0.78 0.12 var(--h)); }
+  .ihead span { color: oklch(0.66 0.05 var(--h)); }
+  .itile { position: relative; margin: 0 0 6px; padding: 10px 12px 9px; border: 1px solid oklch(0.3 0.04 var(--h));
+    border-radius: 8px; background: oklch(0.215 0.03 var(--h)); transition: border-color .12s, background-color .12s; }
+  .itile:hover { background: oklch(0.245 0.038 var(--h)); border-color: oklch(0.74 0.11 var(--h)); }
+  .ilink { display: block; color: #E6EAF0; text-decoration: none; font-weight: 600; font-size: 15px; line-height: 1.25; }
+  .ilink::after { content: ""; position: absolute; inset: 0; border-radius: 8px; }
+  .in { font-family: "IBM Plex Mono", monospace; font-size: 11.5px; font-weight: 500; color: oklch(0.78 0.1 var(--h)); margin-right: 8px; }
+  .idesc { margin: 3px 0 0; font-size: 13px; color: #A3ADBB; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .imeta { margin: 2px 0 0; font-family: "IBM Plex Mono", monospace; font-size: 11.5px; color: #7F8A99; }
+  article[id^="r"] { scroll-margin-top: 16px; }
 </style>
 </head>
 <body>
@@ -143,26 +162,31 @@
     </p>
   </header>
 
-  <nav class="toc" aria-label="Vsebina">
-    <h2>Vsebina</h2>
-    <ol>
-      <li class="g">Klici in snemanje</li>
-      <li><a href="#r1">Snemanje zaslona za support</a></li>
-      <li><a href="#r2">Dialer za prodajne klice iz Attia</a></li>
-      <li><a href="#r3">Snemanje mobilnih klicev v slovenščini</a></li>
-      <li><a href="#r4">Attio, Gong, Fathom in Fireflies za snemanje klicev</a></li>
-      <li class="g">CRM in orodja</li>
-      <li><a href="#r5">Attio: e-pošta adminu ob novem zapisu</a></li>
-      <li><a href="#r6">LinkedIn video: specifikacije, pregled, doseg</a></li>
-      <li><a href="#r7">Warp: obnova Claude sej po ponovnem zagonu</a></li>
-      <li class="g">Trgi in konkurenca</li>
-      <li><a href="#r8">Koliko hotelov ima Slovenija zares</a></li>
-      <li><a href="#r9">Phobs workshops: kdo stoji zadaj</a></li>
-      <li><a href="#r10">Avstrija: hladni e-mail, klici in LinkedIn</a></li>
-      <li class="g">Vloge in infrastruktura</li>
-      <li><a href="#r11">GTM engineer, ki polno uporablja AI</a></li>
-      <li><a href="#r12">Domena hostfulness.com in prenos na SiteGround</a></li>
-    </ol>
+  <nav class="idx" aria-label="Vsebina">
+    <div class="icat" style="--h: 250">
+      <h2 class="ihead">Klici in snemanje<span>04</span></h2>
+      <div class="itile"><a class="ilink" href="#r1"><span class="in">01</span>Snemanje zaslona za support</a><p class="idesc" title="Orodja za posnetek postopka za support HeyReacha">Orodja za posnetek postopka za support HeyReacha</p><p class="imeta">2026-10-20</p></div>
+      <div class="itile"><a class="ilink" href="#r2"><span class="in">02</span>Dialer za prodajne klice iz Attia</a><p class="idesc" title="Klici iz kadence s snemanjem in prepisom v Attio">Klici iz kadence s snemanjem in prepisom v Attio</p><p class="imeta">2026-09-06</p></div>
+      <div class="itile"><a class="ilink" href="#r3"><span class="in">03</span>Snemanje mobilnih klicev v slovenščini</a><p class="idesc" title="Android snemanje klicev s slovenskim prepisom">Android snemanje klicev s slovenskim prepisom</p><p class="imeta">2026-10-07</p></div>
+      <div class="itile"><a class="ilink" href="#r4"><span class="in">04</span>Attio, Gong, Fathom in Fireflies</a><p class="idesc" title="Samodejni posnetek, prepis in povzetek v Attio">Samodejni posnetek, prepis in povzetek v Attio</p><p class="imeta">2026-10-12</p></div>
+    </div>
+    <div class="icat" style="--h: 195">
+      <h2 class="ihead">CRM in orodja<span>03</span></h2>
+      <div class="itile"><a class="ilink" href="#r5"><span class="in">05</span>Attio: e-pošta adminu ob novem zapisu</a><p class="idesc" title="Takojšnje obvestilo ob novem zapisu v pipelineu">Takojšnje obvestilo ob novem zapisu v pipelineu</p><p class="imeta">2026-09-15</p></div>
+      <div class="itile"><a class="ilink" href="#r6"><span class="in">06</span>LinkedIn video: specifikacije in doseg</a><p class="idesc" title="Zahteve za video, pregled oglasov in doseg">Zahteve za video, pregled oglasov in doseg</p><p class="imeta">2026-10-01</p></div>
+      <div class="itile"><a class="ilink" href="#r7"><span class="in">07</span>Warp: obnova Claude sej</a><p class="idesc" title="Obnova Claude Code sej po ponovnem zagonu">Obnova Claude Code sej po ponovnem zagonu</p><p class="imeta">2026-09-30</p></div>
+    </div>
+    <div class="icat" style="--h: 30">
+      <h2 class="ihead">Trgi in konkurenca<span>03</span></h2>
+      <div class="itile"><a class="ilink" href="#r8"><span class="in">08</span>Koliko hotelov ima Slovenija zares</a><p class="idesc" title="AJPES proti Bookingu: koliko hotelov zares">AJPES proti Bookingu: koliko hotelov zares</p><p class="imeta">2026-08-25</p></div>
+      <div class="itile"><a class="ilink" href="#r9"><span class="in">09</span>Phobs workshops: kdo stoji zadaj</a><p class="idesc" title="Kdo organizira delavnice in ali so za Nevron">Kdo organizira delavnice in ali so za Nevron</p><p class="imeta">2026-09-12</p></div>
+      <div class="itile"><a class="ilink" href="#r10"><span class="in">10</span>Avstrija: hladni e-mail, klici in LinkedIn</a><p class="idesc" title="Ali je hladni outreach v Avstriji dovoljen">Ali je hladni outreach v Avstriji dovoljen</p><p class="imeta">2026-09-11</p></div>
+    </div>
+    <div class="icat" style="--h: 300">
+      <h2 class="ihead">Vloge in infrastruktura<span>02</span></h2>
+      <div class="itile"><a class="ilink" href="#r11"><span class="in">11</span>GTM engineer, ki polno uporablja AI</a><p class="idesc" title="Vloge in delo GTM engineerja z AI">Vloge in delo GTM engineerja z AI</p><p class="imeta">2026-09-04</p></div>
+      <div class="itile"><a class="ilink" href="#r12"><span class="in">12</span>Domena hostfulness.com in SiteGround</a><p class="idesc" title="Registracija, DNS in prenos na SiteGround">Registracija, DNS in prenos na SiteGround</p><p class="imeta">2026-10-07</p></div>
+    </div>
   </nav>
 
   <!-- ===================== KLICI IN SNEMANJE ===================== -->
