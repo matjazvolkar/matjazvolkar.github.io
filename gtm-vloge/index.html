@@ -1,0 +1,838 @@
+<!doctype html>
+<html lang="sl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>GTM vloge 2026</title>
+<meta name="description" content="Kaj zares delajo GTM engineer, RevOps engineer in GTM vodja: definicije, oglasi za delo, plače, AI v outboundu in preverba odgovorov iz klepetov, s stopnjami zaupanja in viri.">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="../ikona.ico" sizes="16x16 32x32 48x48">
+<link rel="icon" type="image/png" sizes="32x32" href="../ikona-32.png">
+<link rel="apple-touch-icon" href="../ikona-180.png">
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+
+  :root {
+    --bg:      #FAF8F4;
+    --panel:   #F2EFE8;
+    --line:    #E4E0D7;
+    --line-2:  #EFECE4;
+    --ink:     #16191C;
+    --ink-2:   #4E5458;
+    --ink-3:   #7C817E;
+    --accent:  #2F7D6E;
+    --hi-fg:   #2F7D6E;  --hi-bg: #E4F0EC;
+    --mid-fg:  #7A6320;  --mid-bg: #F5EFDC;
+    --lo-fg:   #9A3D2E;  --lo-bg: #F6E4DF;
+    --mono: ui-monospace, "Cascadia Mono", "SF Mono", Menlo, Consolas, monospace;
+    --sans: ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #10141A; --panel: #161B23; --line: #262D38; --line-2: #1E242D;
+      --ink: #E9E7E2; --ink-2: #A9AFAD; --ink-3: #7D8385; --accent: #5FB3A1;
+      --hi-fg: #5FB3A1; --hi-bg: #12211E;
+      --mid-fg: #D9BC6A; --mid-bg: #241F12;
+      --lo-fg: #E08B78; --lo-bg: #2A1714;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #10141A; --panel: #161B23; --line: #262D38; --line-2: #1E242D;
+    --ink: #E9E7E2; --ink-2: #A9AFAD; --ink-3: #7D8385; --accent: #5FB3A1;
+    --hi-fg: #5FB3A1; --hi-bg: #12211E;
+    --mid-fg: #D9BC6A; --mid-bg: #241F12;
+    --lo-fg: #E08B78; --lo-bg: #2A1714;
+  }
+
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--sans); font-size: 16px; line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 900px; margin: 0 auto; padding: 48px 28px 88px; }
+  a { color: var(--accent); }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+
+  .back { font-family: var(--mono); font-size: 12.5px; letter-spacing: .02em; }
+  .back a { text-decoration: none; }
+  header.top { border-bottom: 2px solid var(--ink); padding: 18px 0 22px; }
+  h1 {
+    margin: 0; font-family: var(--serif); font-weight: 600;
+    font-size: clamp(32px, 5vw, 48px); line-height: 1.08; letter-spacing: -.015em;
+  }
+  .lead { margin: 12px 0 0; color: var(--ink-2); font-size: 17px; max-width: 66ch; }
+  .legend { margin: 14px 0 0; display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; font-size: 13px; color: var(--ink-3); }
+
+  .z {
+    display: inline-block; font-family: var(--mono); font-size: 10.5px; font-weight: 700;
+    letter-spacing: .08em; text-transform: uppercase; padding: 1.5px 7px; border-radius: 999px;
+    vertical-align: 1px; white-space: nowrap; max-width: 100%; box-shadow: inset 0 0 0 1px currentColor;
+  }
+  .z-v { color: var(--hi-fg); background: var(--hi-bg); }
+  .z-z { color: var(--mid-fg); background: var(--mid-bg); }
+  .z-n { color: var(--lo-fg); background: var(--lo-bg); }
+
+  nav.toc { margin: 28px 0 0; padding: 18px 20px; background: var(--panel); border-radius: 10px; }
+  nav.toc h2 { margin: 0 0 6px; }
+  nav.toc ol { margin: 0; padding-left: 22px; columns: 2 300px; column-gap: 32px; }
+  nav.toc li { margin: 3px 0; break-inside: avoid; font-size: 15px; }
+
+  h2 {
+    margin: 0; font-family: var(--mono); font-size: 11.5px; font-weight: 700;
+    letter-spacing: .17em; text-transform: uppercase; color: var(--accent);
+  }
+  section.s { padding: 40px 0 34px; border-bottom: 1px solid var(--line-2); scroll-margin-top: 16px; }
+  section.s h3 {
+    margin: 8px 0 0; font-family: var(--serif); font-size: clamp(24px, 3.2vw, 30px); line-height: 1.2;
+    font-weight: 600; letter-spacing: -.01em;
+  }
+  h4 { margin: 24px 0 6px; font-size: 16.5px; font-weight: 650; letter-spacing: -.005em; }
+  p { margin: 10px 0 0; }
+  .answer { margin: 18px 0 0; padding: 14px 18px; border-left: 3px solid var(--accent); background: var(--panel); border-radius: 0 8px 8px 0; }
+  .answer p:first-child, .answer ol:first-child { margin-top: 0; }
+  .counter { margin: 18px 0 0; padding: 14px 18px; border-left: 3px solid var(--lo-fg); background: var(--lo-bg); border-radius: 0 8px 8px 0; }
+  .counter p:first-child { margin-top: 0; }
+  ul, ol { margin: 8px 0 0; padding-left: 22px; }
+  li { margin: 6px 0; }
+  .note { font-size: 14px; color: var(--ink-2); }
+  .warn { margin: 14px 0 0; padding: 12px 16px; border: 1px solid var(--mid-fg); border-radius: 8px; background: var(--mid-bg); font-size: 14.5px; }
+  .tbl { margin: 14px 0 0; overflow-x: auto; -webkit-overflow-scrolling: touch; border: 1px solid var(--line); border-radius: 8px; }
+  table { border-collapse: collapse; width: 100%; font-size: 14px; min-width: 640px; }
+  th, td { text-align: left; vertical-align: top; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+  tr:last-child td { border-bottom: 0; }
+  th { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); font-weight: 700; background: var(--panel); }
+  td:first-child { font-weight: 600; }
+  .tbl.fit table { min-width: 0; }
+  code { font-family: var(--mono); font-size: .88em; background: var(--panel); padding: 1px 5px; border-radius: 4px; overflow-wrap: anywhere; }
+
+  .roles { margin: 16px 0 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px; }
+  .role { padding: 14px 16px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); }
+  .role .k { font-family: var(--mono); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
+  .role h5 { margin: 4px 0 0; font-size: 16px; font-weight: 650; }
+  .role p { margin: 6px 0 0; font-size: 14px; color: var(--ink-2); }
+  .role p b { color: var(--ink); font-weight: 600; }
+
+  .v { display: inline-block; font-family: var(--mono); font-size: 10.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+       padding: 2px 8px; border-radius: 4px; white-space: nowrap; }
+  .v-ok   { color: var(--hi-fg); background: var(--hi-bg); }
+  .v-part { color: var(--mid-fg); background: var(--mid-bg); }
+  .v-no   { color: var(--lo-fg); background: var(--lo-bg); }
+
+  .check { margin: 18px 0 0; padding: 16px 18px; border: 1px solid var(--line); border-radius: 10px; }
+  .check .h { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: baseline; }
+  .check .h b { font-size: 16px; }
+  .check .claim { margin: 8px 0 0; color: var(--ink-2); font-style: italic; font-size: 14.5px; }
+  .check ul { font-size: 15px; }
+
+  details.viri { margin: 18px 0 0; font-size: 14px; }
+  details.viri summary { cursor: pointer; font-family: var(--mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); }
+  details.viri ol { margin-top: 8px; }
+  details.viri li { overflow-wrap: anywhere; }
+  .src { margin: 6px 0 0; font-size: 13px; color: var(--ink-3); }
+  .src a { color: var(--ink-3); }
+  footer { margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--line); color: var(--ink-3); font-size: 13.5px; }
+  footer p { margin: 0 0 8px; }
+
+  @media (max-width: 640px) {
+    .wrap { padding: 32px 16px 64px; }
+    nav.toc { padding: 14px 16px; }
+    .check { padding: 14px 14px; }
+    .tbl.fit th, .tbl.fit td { padding: 7px 7px; }
+    .tbl.fit td { font-size: 13.5px; }
+    .tbl.fit td .v { white-space: normal; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="back"><a href="../">← Kazalo projektov</a></p>
+
+  <header class="top">
+    <h1>GTM engineer, RevOps engineer in GTM vodja: kdo kaj dela</h1>
+    <p class="lead">
+      Kaj ti ljudje zares delajo, kje se vloge prekrivajo, koliko zaslužijo in kaj od odgovorov iz klepetov z AI drži.
+      Raziskava 21. 10. 2026 iz oglasov za delo, raziskav plač, intervjujev s praktiki in primarnih virov.
+    </p>
+    <p class="legend">
+      Zaupanje: <span class="z z-v">visoko</span> <span class="z z-z">zmerno</span> <span class="z z-n">nizko</span>
+      · Verdikt: <span class="v v-ok">drži</span> <span class="v v-part">delno</span> <span class="v v-no">ne drži</span>
+      · "vendor" pomeni, da je vir objavil ponudnik orodja, ki od trditve živi.
+    </p>
+  </header>
+
+  <nav class="toc" aria-label="Vsebina">
+    <h2>Vsebina</h2>
+    <ol>
+      <li><a href="#kratko">Na kratko</a></li>
+      <li><a href="#zemljevid">Zemljevid vlog</a></li>
+      <li><a href="#gtme">GTM engineer</a></li>
+      <li><a href="#revops">RevOps engineer in GTM systems</a></li>
+      <li><a href="#vodja">GTM manager, director, head of GTM</a></li>
+      <li><a href="#trg">Trg in plače</a></li>
+      <li><a href="#ai">AI v outboundu</a></li>
+      <li><a href="#pravila">Dostavljivost, LinkedIn, pravo v EU</a></li>
+      <li><a href="#preverba">Preverba odgovorov iz klepetov</a></li>
+      <li><a href="#agenti">AI harness in osem agentov</a></li>
+      <li><a href="#hoteli">B2B prodaja hotelom</a></li>
+      <li><a href="#verdikt">Verdikt</a></li>
+      <li><a href="#viri">Metoda in viri</a></li>
+    </ol>
+  </nav>
+
+  <!-- 1. NA KRATKO -->
+  <section class="s" id="kratko">
+    <h2>01 · Na kratko</h2>
+    <h3>Vloga je resnična, naziv je večinoma marketing</h3>
+    <div class="counter">
+      <p><strong>Protiargument najprej.</strong> Naziv "GTM engineer" je skoval in ga od leta 2023 potiska Clay, podjetje, ki prodaja orodje prav za to vlogo. Velik del spletne vsebine
+        o njej, tudi odgovori iz klepetov, je vendor marketing ali njegov odmev. Vloga je ozka: po podatkih Kyla Poyarja (september 2025) pride en oglas za GTM engineerja na 92 oglasov za SDR. Od takrat raste
+        (julij 2026: 781 odprtih oglasov v bazi Upside), a ostaja majhna in pod istim nazivom skriva dve različni službi.
+        V Evropi je junija 2026 ta naziv nosilo okoli 500 ljudi; v Sloveniji, na Hrvaškem in v Avstriji nismo našli nikogar. <span class="z z-z">zmerno</span></p>
+    </div>
+    <ol>
+      <li><strong>GTM engineer gradi sisteme, ki ustvarjajo pipeline:</strong> signali, waterfall obogatitev, ocenjevanje, personalizacija v obsegu, sekvence, zapis v CRM, interna orodja.
+        Izhod je delujoč sistem. Pet od šestih prebranih oglasov vlogo umesti v RevOps. Večina jih pride iz prodaje ali growtha; v ZDA je bivših razvijalcev 9 %, mediana izkušenj pred nazivom je 7,4 leta. <span class="z z-z">zmerno</span></li>
+      <li><strong>RevOps engineer ni "prihodkovni analitik".</strong> Oglasi zanj zahtevajo arhitekturo CRM, integracije, API-je, SQL in Python. Prava ločnica je gradnja novega
+        (GTM engineer) proti vodenju obstoječega (RevOps). Oba sta tehnična. Odgovor iz klepeta je za ta naziv obrnjen. <span class="z z-v">visoko</span></li>
+      <li><strong>"GTM manager" so tri različne službe:</strong> koordinator lansiranja ali partnerske prodaje v korporaciji, GTM Strategy &amp; Operations v scaleupu in prvi
+        komercialni vodja v startupu. Klepet je opisal samo prvo. <span class="z z-z">zmerno</span></li>
+      <li><strong>Plače:</strong> v ZDA mediana osnove 130.000 do 160.000 USD (pet virov se razlikuje), v Nemčiji 50.000 do 70.000 EUR (dva oglasa). 91 % podjetij ima enega samega GTM engineerja. <span class="z z-z">zmerno</span></li>
+      <li><strong>AI SDR kot nadomestek ljudi se ni obnesel</strong> (11x: po TechCrunchu 70 do 80 % odhoda strank in logotipi brez dovoljenja). Deluje AI kot pomočnik: raziskava,
+        obogatitev, osnutki, povzetki, razvrščanje jasnih odgovorov. <span class="z z-v">visoko</span></li>
+      <li><strong>Od desetih odgovorov iz klepetov</strong> eden ne drži, devet jih drži delno. Najhujše napake: obrnjena definicija RevOps engineerja, open rate kot merilo,
+        samodejna menjava domen, samodejno pošiljanje Calendly povezave, "študenta sploh ne potrebujete". <span class="z z-v">visoko</span></li>
+    </ol>
+  </section>
+
+  <!-- 2. ZEMLJEVID -->
+  <section class="s" id="zemljevid">
+    <h2>02 · Zemljevid vlog</h2>
+    <h3>Kdo kaj gradi, komu poroča in po čem ga merijo</h3>
+    <div class="tbl"><table>
+      <thead><tr><th>Vloga</th><th>Glavni cilj</th><th>Kaj dela</th><th>Komu poroča</th><th>Merilo</th></tr></thead>
+      <tbody>
+        <tr><td>GTM engineer</td><td>Sistemi, ki ustvarjajo pipeline</td><td>Signali, obogatitev, ocenjevanje, sekvence, AI agenti, interna orodja</td>
+          <td>Ustanovitelju (1 do 50 zaposlenih), growth ali RevOps (51 do 200), RevOps ali GTM systems (201 do 1.000)</td><td>Pipeline, sestanki, pokritost podatkov, hitrost do leada</td></tr>
+        <tr><td>RevOps / GTM systems engineer</td><td>Stabilen in pravilen sistem prihodkov</td><td>Arhitektura CRM, usmerjanje, integracije, avtomatizacije, kakovost podatkov</td>
+          <td>Vodji RevOps ali revenue systems</td><td>Zanesljivost, kakovost podatkov, podpora napovedi</td></tr>
+        <tr><td>RevOps analyst, manager</td><td>Razumeti in načrtovati prihodke</td><td>Poročila, napovedi, kvote, teritoriji, CAC, LTV, enotne definicije</td>
+          <td>Vodji RevOps, CRO ali CFO</td><td>Točnost napovedi, konverzije, CAC payback</td></tr>
+        <tr><td>GTM manager (korporacija)</td><td>Izvesti lansiranje ali partnersko prodajo</td><td>Usklajuje trženje, prodajo, partnerje za en produkt ali regijo</td>
+          <td>Regionalnemu ali produktnemu vodji</td><td>Prihodek od porabe, scorecard</td></tr>
+        <tr><td>GTM Strategy &amp; Ops</td><td>Načrt in podatki za GTM</td><td>Segmentacija, kapacitete, analize, procesi</td><td>CRO, COO ali revenue leaderju</td><td>Pokritost pipelinea, win rate, CAC, NRR</td></tr>
+        <tr><td>Head of GTM (startup)</td><td>Prvi ponovljiv vir prihodka</td><td>Sam prodaja, gradi playbook in prve sisteme</td><td>CEO</td><td>Pipeline in podpisani posli</td></tr>
+        <tr><td>CRO</td><td>Lastnik prihodka</td><td>Vodi prodajo, pogosto tudi marketing in CS</td><td>CEO</td><td>Prihodek, NRR</td></tr>
+        <tr><td>CMO</td><td>Povpraševanje in znamka</td><td>Marketing, vsebina, oglasi, PR</td><td>CEO</td><td>Pipeline iz marketinga, prepoznavnost</td></tr>
+        <tr><td>Product marketing</td><td>Pozicioniranje in lansiranja</td><td>Sporočila, battlecardi, pogosto cene in paketi, enablement</td><td>CMO ali CPO</td><td>Win rate, uspeh lansiranj</td></tr>
+        <tr><td>SDR / BDR</td><td>Odpirati vrata</td><td>Hladni klici, e-pošta, LinkedIn, kvalifikacija</td><td>Vodji prodaje</td><td>Sestanki, SQL</td></tr>
+        <tr><td>Sales / solutions engineer</td><td>Tehnična podpora pri prodaji</td><td>Demo, tehnična vprašanja, POC</td><td>Vodji prodaje</td><td>Win rate tehničnih poslov</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">Sales engineer in solutions engineer sta stari predprodajni vlogi pri posameznem poslu in v principu nista isto kot GTM engineer. Zmeda je kljub temu resnična:
+      Apollo in Attio uporabljata naziv GTM engineer za vlogo ob strankah (razdelek 03). Vrstice za CRO, CMO in product marketing
+      so splošno znanje, preverjeno v manjšem številu virov. <span class="z z-z">zmerno</span></p>
+  </section>
+  <!-- 3. GTM ENGINEER -->
+  <section class="s" id="gtme">
+    <h2>03 · GTM engineer</h2>
+    <h3>Komercialni operater, ki gradi sisteme za pipeline</h3>
+
+    <h4>Izvor naziva</h4>
+    <p>Naziv je nastal v Clayu leta 2023. Soustanovitelj Varun Anand je opazil, da zaposleni Yash Tekriwal vodi več kot 30 prodajnih klicev na teden in hkrati gradi sisteme za ocenjevanje,
+      čisti podatke in postavlja GTM infrastrukturo, za kar ni bilo naziva. Tekriwal v podkastu Gainsight: "Varun reče, mislim, da bomo temu rekli GTM engineer. Ostalo je zgodovina."
+      Uporabe izraza pred letom 2023 nismo našli; vsi sekundarni viri (Genesys Growth, 7. 3. 2025; GTM Council, 2026) vodijo nazaj v Clay. <span class="z z-v">visoko, da je Clay skoval naziv</span>
+      <span class="z z-z">zmerno za mesec avgust 2023</span></p>
+    <p>Clayeva definicija: "tehnični prodajni strokovnjak, ki načrtuje, gradi in upravlja avtomatizirane sisteme, ki GTM strategijo spremenijo v merljivo izvedbo"; "vaš GTM ni podkadrovan,
+      ampak premalo inženirsko zgrajen". Kyle Poyar: "v bistvu growth zaposlitev, a za funnel, ki ga vodi prodaja, ne produkt". Norwest (15. 6. 2026) loči tri profile: graditelj, operater, strateg.</p>
+    <div class="warn"><strong>Isti naziv, dve službi.</strong> V Clayevem, Norwestovem in Poyarjevem pomenu je GTM engineer notranji graditelj sistemov pred prodajo. Apollo pa svojega
+      "Go-To-Market Engineerja" opisuje kot "Apollov odgovor na CSM-ja": odgovoren je za zadrževanje obstoječih strank (GRR nad 95 %). Attio išče "Forward Deployed GTM Engineerja" v GTM
+      oddelku ob solutions engineerjih. Stereotip "Clay operater" ustreza enemu arhetipu (outbound, 34 % oglasov), ne nazivu kot celoti. <span class="z z-z">zmerno do visoko</span></div>
+
+    <h4>Kaj dejansko dela</h4>
+    <p>Arhitektura, ki jo opisujejo praktiki, ima tri sloje <span class="z z-z">zmerno</span>:</p>
+    <ol>
+      <li><strong>Signali in viri:</strong> sprožilci (zaposlovanje, investicija, nov direktor, obisk spletne strani) in baze podatkov (Apollo, ZoomInfo, Lusha) za obseg.</li>
+      <li><strong>Obogatitev in orkestracija:</strong> waterfall obogatitev (več ponudnikov po vrsti, dokler eden ne najde), deduplikacija, ocenjevanje, usmerjanje. Tu so Clay, n8n, Make in vse pogosteje Python s Claude Code.</li>
+      <li><strong>Izvedba:</strong> sekvencer (e-pošta, LinkedIn), zapis nazaj v CRM, predaja prodajalcu.</li>
+    </ol>
+    <p>Everett Berry (Head of GTM Engineering, Clay) opisuje stalen vrstni red: najprej kakovost podatkov, nato avtomatizacija obstoječih procesov, ki ne delujejo, šele nato nove taktike.
+      Večina ekip po njegovem preskoči na tretji korak in pade. Njegov primer: v Canvi so prodajalci ročno pregledovali družbena omrežja ciljnih podjetij in iskali slab dizajn; Clay je to
+      avtomatiziral za več sto prodajalcev. <span class="z z-v">visoko za vsebino</span></p>
+    <p>Natančne delitve tedna (koliko gradnje, vzdrževanja, analize in sestankov) ni objavil noben praktik, ki smo ga našli. Najbližje je opis Steva Ruiza (6. 4. 2025):
+      "dan gre od gradnje obogatitvenih tokov zjutraj do discovery klicev popoldne in analize konverzij zvečer". GTM engineer ima po njem cilj pipelinea, ne vrste zahtevkov. <span class="z z-z">zmerno</span></p>
+
+    <h4>Šest prebranih oglasov</h4>
+    <div class="tbl"><table>
+      <thead><tr><th>Podjetje in naziv</th><th>Komu poroča</th><th>Jedro dela</th><th>Zahteve</th><th>Plača</th></tr></thead>
+      <tbody>
+        <tr><td>Vanta: Sr. AI GTM Engineer (odprto)</td><td>Oddelek Revenue, tesno s CRO</td><td>Notranji AI produkti in agenti za prodajo in CS</td><td>Python, TypeScript, React, SQL, LLM API-ji; Claya ne omenja</td><td>195.000 do 229.000 USD</td></tr>
+        <tr><td>1Password: Staff GTM Engineer (odprto, ~16. 10. 2026)</td><td>VP Revenue Operations</td><td>AI tokovi za obogatitev, ocenjevanje, usmerjanje; skripte in notranji API-ji</td><td>Python, SQL, Clay, Apollo, ZoomInfo, Salesforce, Retool</td><td>139.000 do 166.000 USD</td></tr>
+        <tr><td>Webflow: GTM Engineer, AI Platforms (umaknjen 8/2025)</td><td>Sr. Manager, GTM Strategy Operations</td><td>LLM aplikacije, povezava Salesforce, Clay, Gong, Outreach z OpenAI</td><td>TypeScript ali Python, 3 do 5 let</td><td>101.700 do 143.000 USD</td></tr>
+        <tr><td>Clearco: GTM Engineer (umaknjen 2/2026)</td><td>RevOps</td><td>Clay tabele, obogatitev in ocenjevanje računov, povezava s CRM</td><td>Clay, SQL, REST in webhooki, 3 do 6 let</td><td>ni navedeno</td></tr>
+        <tr><td>Apollo: GTM Engineer II, EMEA (umaknjen 5/2026)</td><td>ob CSM funkciji</td><td>Zadrževanje strank, signal-based sekvence pri strankah</td><td>6+ let v SE, CS, RevOps, growthu ali SDR</td><td>ni navedeno</td></tr>
+        <tr><td>Unify: GTM Engineering Intern (8/2026)</td><td>GTM ekipa</td><td>Notranja orodja, ocenjevanje signalov, poskusi</td><td>API-ji, AI modeli</td><td>ni navedeno</td></tr>
+      </tbody>
+    </table></div>
+    <p>Vzorec (n = 6, majhen): Python ali SQL v 4 od 6, Clay poimensko v 3 od 6, AI in LLM v 5 od 6, prejšnje SDR izkušnje kot pogoj v nobenem. Pet od šestih vlogo umesti v RevOps ali
+      oddelek Revenue. <span class="z z-v">visoko za vzorec</span> Večji vzorec (Upside, 1.394 oglasov, 11. 7. 2026, vendor z razkrito metodo): outbound GTM engineering 34,3 % odprtih mest,
+      vodja ali center odličnosti 11,8 %, RevOps sistemi 10,6 %, AI enablement 6,0 %. Clay omenja 53 % outbound oglasov; Claude 31 % oglasov za AI pospeševanje in 20 % outbound oglasov. <span class="z z-z">zmerno</span></p>
+    <p class="note">Orodja, ki se ponavljajo: Clay; Apollo, ZoomInfo, Clearbit, 6sense, LeadIQ; Salesforce, HubSpot; Gong, Outreach, Salesloft, Instantly, Smartlead; n8n, Zapier, Make, Workato,
+      Retool; Python, TypeScript, SQL; OpenAI, Claude; Snowflake in dbt.</p>
+
+    <h4>Primeri z rezultati</h4>
+    <p>Vse številke spodaj je objavil Clay na svoji strani s primeri strank, brez metode in brez revizije. <span class="z z-n">nizko do zmerno</span></p>
+    <ul>
+      <li>Anthropic: 3-krat večja pokritost obogatitve, 4 ure na teden manj ročnega nalaganja v Salesforce.</li>
+      <li>Verkada: 3-krat več odgovorov z nurture usmerjanjem glede na odgovor. Intercom: +140 % pipelinea iz outbounda.</li>
+      <li>Mistral AI: zemljevid TAM v 10 dneh namesto dveh mesecev. OpenAI: samodejni zapiski pred klici.</li>
+    </ul>
+    <p>Edini podrobnejši primer izven vendorja je objava v skupnosti RevGenius (12. 3. 2026): po odhodu treh SDR-jev je ena oseba s Clayem, Apollom, OpenAI, HubSpotom, Instantlyjem
+      in HeyReachem razširila TAM s 3.000 na več kot 30.000 računov in poroča o 650 demo klicih ter 10 milijonih USD pipelinea. Samoporočilo, brez podatkov o podpisanih poslih. <span class="z z-n">nizko</span>
+      Agencijsko izhodišče za primerjavo: 4 do 8 % odgovorov in 1 do 2 % sestankov pri dobrem ICP. <span class="z z-n">nizko</span></p>
+
+    <h4>Kaj loči dobrega od slabega</h4>
+    <ul>
+      <li>Najprej ročno potrdi taktiko, poišči, kje se zlomi, šele nato jo avtomatiziraj. To se neodvisno ponovi pri Berryju, v podkastu The GTM Engineer (Fahad Ali Khan) in na Redditu. <span class="z z-z">zmerno</span></li>
+      <li>Zaposlovalci dajejo prednost prodajnemu ali operativnemu ozadju pred čistim programiranjem in sposobnosti, da se novega orodja nauči v enem popoldnevu, pred certifikatom za eno orodje. <span class="z z-z">zmerno</span></li>
+      <li>Clayev vodnik za zaposlovanje: radovednost pred formalno izobrazbo; vloga sedi ob RevOps (Intercom, Canva) ali ob growthu (Ramp, Verkada). <span class="z z-z">zmerno, vendor</span></li>
+    </ul>
+
+    <h4>Kje se zalomi</h4>
+    <ul>
+      <li>Avtomatizacija pomnoži slabe podatke: napaka v obogatitvi gre v vse sekvence hkrati. <span class="z z-z">zmerno</span></li>
+      <li>Preveč ponudnikov podatkov: delo postane šivanje in čiščenje namesto odločanja, koga ciljati (Deepline, 3. 6. 2026). <span class="z z-z">zmerno</span></li>
+      <li>Generična AI personalizacija prinaša vse manj; praktiki pozivajo k bolj pristnim sporočilom. <span class="z z-z">zmerno</span></li>
+      <li>Model zastane, kjer je prodaja počasna, regulirana ali zgrajena na zaupanju; nad približno 50 prodajalci se vrne specializacija (Ruiz). <span class="z z-z">zmerno</span></li>
+    </ul>
+
+    <h4>Claude Code in agenti za kodiranje</h4>
+    <p>Del praktikov gradi Clay tokove in celotne pipeline iz ukazne vrstice s Claude Code; trdijo, da so tabele, n8n in Python vozlišča iz leta 2025 zdaj en strukturiran ukaz. Clay gradi
+      MCP konektorje, da se do njegovih podatkov pride iz Clauda ali ChatGPT-ja. Tri tabori trdijo nasprotne stvari (Clay: agenti razširijo Clay; neodvisni blogerji: Claude Code nadomesti
+      tabele v Clayu; svetovalec s konkurenčnim izdelkom: nadomesti celo vlogo). Nobena trditev ni neodvisno preverjena. <span class="z z-n">nizko do zmerno</span></p>
+
+    <h4>Kritike</h4>
+    <ul>
+      <li>Diginomica: Simon Daniels (prej Forrester) primerja naziv z "data scientist", nov izraz za obstoječo vlogo z globljimi veščinami, in opozarja, da nov naziv ob obstoječem RevOps ustvari silos. <span class="z z-v">visoko, da je stališče resnično</span></li>
+      <li>r/revops: "GTM engineer kot naziv je večinoma hype, ki ga poganja Clay. Vrzel v zmožnostih, na katero kaže, pa je resnična." Najjasnejše organsko mnenje, ki smo ga našli. <span class="z z-z">zmerno</span></li>
+      <li>Richard Purcell (MoxieGTM) opisuje gradnjo, ki je trajala več kot tri mesece namesto dveh ur, in obtožuje platforme, da imajo interes za zapletenost. Prodaja konkurenčen pristop. <span class="z z-n">nizko</span></li>
+    </ul>
+    <p class="note">Ta raziskava potrjuje prejšnjo analizo brez spletnih virov (<a href="../raziskave-orodij/#r11">Raziskave orodij, 11</a>, 4. 9. 2026): večina dela je "vodovodarstvo" (podatki, dostavljivost, CRM), AI je komponenta.</p>
+  </section>
+  <!-- 4. REVOPS -->
+  <section class="s" id="revops">
+    <h2>04 · RevOps engineer in GTM systems</h2>
+    <h3>RevOps ni analitika brez kode. Ločnica je gradnja proti vodenju.</h3>
+
+    <h4>Kaj je RevOps kot funkcija</h4>
+    <p>RevOps združi sales ops, marketing ops in CS ops (pogosto še deal desk) pod enega vodjo, z enim podatkovnim modelom in enimi definicijami.
+      Gartner je previdnejši: oddelki lahko ostanejo ločeni, povezani morajo biti podatki, procesi in KPI-ji. Izraz kroži od približno 2014 do 2016,
+      skupaj z rastjo naziva CRO in naročniških poslovnih modelov. <span class="z z-z">zmerno</span></p>
+    <p>Po Forresterjevih anketah (povzetih prek drugih virov) je centraliziran RevOps imelo okoli 15 % B2B podjetij leta 2019 in okoli 40 % leta 2021.
+      Izvirnega poročila nismo dobili. <span class="z z-n">nizko za številke</span></p>
+
+    <h4>Kaj dela RevOps engineer, GTM systems engineer, revenue systems engineer</h4>
+    <ul>
+      <li>Arhitektura in administracija CRM: objekti, polja, pravila za dvojnike, validacije, faze življenjskega cikla, dovoljenja (Salesforce, HubSpot, Attio). <span class="z z-v">visoko</span></li>
+      <li>Usmerjanje leadov in teritoriji, hitrost do leada (orodja kot LeanData in Chili Piper). <span class="z z-z">zmerno</span></li>
+      <li>Integracije prek API-jev v Pythonu ali Node.js med CRM, podatkovnim skladiščem in GTM orodji. <span class="z z-v">visoko</span></li>
+      <li>Upravljanje podatkov in zanesljivost poročil: oglas podjetja Sent za "Revenue Operations Engineer" našteje arhitekturo CRM, usmerjanje leadov,
+        integracije, avtomatizacije in SQL ter Python ali TypeScript. <span class="z z-v">visoko</span></li>
+      <li>CPQ, quote-to-cash in orodja za napovedi (Clari) se v literaturi pogosto omenjajo, v oglasih, ki smo jih prebrali, pa jih nismo našli poimensko. <span class="z z-n">nizko</span></li>
+    </ul>
+    <p>Analiza 1.350 oglasov za "GTM Systems Engineer" (sekundarni vir, metode nismo mogli preveriti): API-ji v 59 %, CRM v 57 %, orodja za obogatitev in orkestracijo
+      v več kot 50 %, Python v 40 %, SQL v 38 % oglasov. Samo 210 oglasov je navedlo, komu vloga poroča; med njimi najpogosteje vodji RevOps ali revenue systems. <span class="z z-n">nizko do zmerno</span></p>
+
+    <h4>Primerjava: gradnja proti vodenju</h4>
+    <p>Šest primerjav, ki jih je napisala industrija (Apollo, Landbase, Salesforge, RevPartners, Databar, Bitscale; vse so vendor ali svetovalci), se ujema v eni stvari:
+      GTM engineer gradi nove sisteme in eksperimente, RevOps upravlja, vzdržuje in optimizira obstoječe. Oba sta tehnična. <span class="z z-z">zmerno do visoko za vzorec</span></p>
+    <div class="tbl fit"><table>
+      <thead><tr><th>Os</th><th>RevOps / GTM systems engineer</th><th>GTM engineer</th></tr></thead>
+      <tbody>
+        <tr><td>Cilj</td><td>Stabilen, pravilen sistem prihodkov, predvidljivost</td><td>Nov pipeline iz novih sistemov; "R&amp;D oddelek" za GTM</td></tr>
+        <tr><td>Kaj ima v lasti</td><td>CRM, pravila, SLA-ji, hierarhija metrik, upravljanje podatkov</td><td>Signali, obogatitev, ocenjevanje, avtomatizirani outbound, AI agenti</td></tr>
+        <tr><td>Izhod</td><td>Dokumentacija, procesi, nadzorne plošče, točnost napovedi</td><td>Delujoči sistemi in poskusi</td></tr>
+        <tr><td>Veščine</td><td>Administracija CRM, oblikovanje procesov, upravljanje sprememb, SQL</td><td>SQL, Python, API-ji, podatkovni modeli, LLM-ji, prodajna presoja</td></tr>
+        <tr><td>Merilo</td><td>Točnost napovedi, spoštovanje procesov, konverzije</td><td>Pipeline, sestanki, pokritost podatkov, čas do uvedbe</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">Nasprotno stališče: Bloomberry je v analizi približno 1.000 oglasov našel, da se 9 od 10 odgovornosti GTM engineerja pojavi tudi v oglasih za RevOps;
+      razlika je predvsem poudarek na outboundu proti točnosti napovedi. Spor med "ločeni vlogi" (Clay, RevPartners) in "skoraj ista vloga" (Bloomberry) ostaja nerazrešen.
+      <span class="z z-z">zmerno</span></p>
+
+    <h4>Analitik in manager proti engineerju</h4>
+    <p>RevOps analitik in RevOps manager odločata, kaj meriti in kaj številke pomenijo (CAC, LTV, napoved, kvote). RevOps engineer zgradi cevi, po katerih te številke tečejo.
+      Napoved, ki gre upravi, je odločitev prodajnega vodstva ali RevOps managerja, ne engineerja. <span class="z z-z">zmerno</span></p>
+    <div class="tbl fit"><table>
+      <thead><tr><th>Vloga (ZDA)</th><th>Osnovna plača</th></tr></thead>
+      <tbody>
+        <tr><td>RevOps analyst</td><td>65.000 do 95.000 USD</td></tr>
+        <tr><td>RevOps engineer / GTM operations engineer</td><td>110.000 do 150.000 USD</td></tr>
+        <tr><td>RevOps manager</td><td>100.000 do 140.000 USD</td></tr>
+        <tr><td>Director of RevOps</td><td>160.000 do 210.000 USD</td></tr>
+        <tr><td>VP of RevOps</td><td>200.000 do 260.000 USD</td></tr>
+      </tbody>
+    </table></div>
+    <p class="src">Vir: SyncGTM, RevOps Salary Guide 2026 (11. 3. 2026), en sam vendor vir. <span class="z z-z">zmerno</span> Za Evropo je podatkov malo: en oglas za RevOps Lead v Londonu
+      70.000 do 90.000 GBP <span class="z z-n">nizko</span>.</p>
+  </section>
+
+  <!-- 5. GTM VODJA -->
+  <section class="s" id="vodja">
+    <h2>05 · GTM manager, director, head of GTM</h2>
+    <h3>Isti naziv, tri različne službe</h3>
+    <p>Naziv z besedo GTM nima standardne linije poročanja, kot jo ima na primer VP Sales (skoraj vedno CRO ali CEO). V vzorcu oglasov so ti ljudje poročali CRO-ju,
+      CIO-ju, "revenue leaderju", regionalnemu VP ali nikomur navedenemu. <span class="z z-z">zmerno</span></p>
+    <div class="roles">
+      <div class="role"><div class="k">Velike korporacije</div><h5>GTM manager</h5>
+        <p>Izvajalec lansiranja ali partnerske prodaje za en produkt, segment ali regijo. Microsoftov "Activation GTM Manager, Cloud &amp; AI Platforms" (Švica, 31. 10. 2025)
+          usklajuje trženje, prodajo, svetovanje, CS in partnerje, nima pa v lasti nobenega od njih. Merilo: prihodek od porabe Azure in scorecard. <span class="z z-v">visoko</span></p></div>
+      <div class="role"><div class="k">SaaS scaleup</div><h5>GTM Strategy &amp; Operations</h5>
+        <p>BizOps za GTM: segmentacija, načrt kapacitet, analize, procesi. Harvey (New York, 8. 8. 2026): 105.400 do 158.000 USD. Klaviyo išče "VP GTM Systems",
+          ki poroča CIO-ju. <span class="z z-z">zmerno</span></p></div>
+      <div class="role"><div class="k">Zgodnji startup</div><h5>Head of GTM</h5>
+        <p>Prvi komercialni vodja pred CRO ali VP Sales: sam polni pipeline in gradi playbook. Mutiny je 11. 8. 2026 objavil "Head of GTM (Path to COO)".
+          Trend naziva v letih 2025 in 2026 je viden. <span class="z z-z">zmerno do visoko</span></p></div>
+    </div>
+
+    <h4>Mejne vloge</h4>
+    <ul>
+      <li><strong>CRO</strong> ima v lasti prodajo in prihodkovni cilj. Med podjetji serije B in naprej je CRO po sekundarnih virih leta 2018 imelo 19 %, leta 2024 pa 64 %. <span class="z z-n">nizko za številke</span></li>
+      <li><strong>CMO</strong> ima povpraševanje in znamko. Ločnica "CMO gradi znamko, GTM vodja prinese prihodek" je poenostavitev; prihodek ima CRO. <span class="z z-z">zmerno</span></li>
+      <li><strong>Head of Product Marketing</strong> ima pozicioniranje, sporočila in pogosto cene in pakete. V delu podjetij je širši od GTM managerja, v delu ožji. <span class="z z-z">zmerno</span></li>
+      <li><strong>VP Sales</strong> ima kvoto in ekipo. Vodilo za čas zaposlitve: ko sta v podjetju dva prodajalca, ki ponovljivo dosegata kvoto. Številka "70 % prvih VP Sales propade" je mnenje enega bloga. <span class="z z-n">nizko</span></li>
+    </ul>
+
+    <h4>Po čem jih merijo</h4>
+    <ul>
+      <li>Velika korporacija: prihodek od porabe, tržni delež, scorecard. <span class="z z-v">visoko</span></li>
+      <li>GTM S&amp;O: pokritost pipelinea, win rate, dolžina cikla, CAC, LTV, NRR, točnost napovedi. <span class="z z-z">zmerno</span></li>
+      <li>Head of GTM v startupu: pipeline in podpisani posli, brez formalnega seznama KPI-jev. <span class="z z-z">zmerno</span></li>
+      <li>"Lansiranje v roku" kot KPI naziva z besedo GTM v oglasih nismo našli. Verjetno velja za lansirne vloge ob produktnem marketingu. <span class="z z-n">brez dokaza</span></li>
+    </ul>
+    <p>Zahtevane izkušnje v oglasih: od približno 3 let (nižji GTM manager) do 8 let in več (GTM manager v korporaciji) in 12 do 15 let (head of v scaleupu).
+      Pravilo "manager 3 do 5 let, direktor 7 let in več" je preozko. <span class="z z-z">zmerno do visoko</span></p>
+  </section>
+  <!-- 6. TRG IN PLACE -->
+  <section class="s" id="trg">
+    <h2>06 · Trg in plače</h2>
+    <h3>Majhen trg, ki hitro raste, in plače, ki se med viri ne ujemajo</h3>
+
+    <h4>Povpraševanje</h4>
+    <ul>
+      <li>Kyle Poyar (Growth Unhinged, 10. 9. 2025, podatki Sumble za junij do avgust 2025): 45 oglasov v zadnjem mesecu, 128 v treh mesecih. En oglas za GTM engineerja na 5 oglasov
+        za RevTech in MarTech, na 14 za RevOps, na 35 za sales ops in na 92 za SDR. Okoli 45 % ljudi s tem nazivom dela v agencijah; v Clayevem imeniku partnerjev je več kot 120 agencij,
+        torej tri agencije na en mesečni oglas. Podjetja vlogo pogosto najprej preizkusijo prek agencije, ker donos ni znan. Prispevek je sponzoriral ZoomInfo. <span class="z z-v">visoko</span></li>
+      <li>Upside (11. 7. 2026, vendor z razkrito metodo): 1.394 oglasov, od tega 781 odprtih. Po njihovi oceni ponudba ljudi presega vidno povpraševanje; Poyar nasprotno trdi, da je
+        najboljše GTM engineerje zelo težko zaposliti. Trditev "primanjkuje GTM engineerjev" je sporna. <span class="z z-z">zmerno</span></li>
+      <li>Onfire (31. 8. 2026): okoli 3.000 odprtih mest v začetku 2026, približno dvakrat več kot sredi 2025. Metoda le delno razkrita in številka močno odstopa od ostalih. <span class="z z-n">nizko do zmerno</span></li>
+      <li>Cargo (vendor): 1.784 oglasov v ZDA, od tega 1.181 še odprtih 28. 9. 2026. Manj kot 3 % oglasov je za juniorje, 75 % za srednji nivo, 20 % za seniorje. <span class="z z-z">zmerno</span></li>
+      <li>Nepreverjeno in izpuščeno: "54 % najhitreje rastočih B2B SaaS podjetij ima GTM engineerja" (samo odlomek s strani za zaposlovanje, brez vira). <span class="z z-v">visoko, da vira ni</span></li>
+      <li>Pogosto citirana rast "205 % na leto" po metodi Bloomberryja velja za GTM engineerja in RevOps skupaj. Onfire in TechTree jo navajata, kot da velja samo za GTM engineerja: veriga napačnih citatov, ne neodvisna potrditev. <span class="z z-v">visoko</span></li>
+      <li>91 % podjetij, ki imajo GTM engineerja, ima samo enega (pregled 1.000 profilov). <span class="z z-z">zmerno</span></li>
+    </ul>
+
+    <h4>Plače v ZDA: pet virov, pet številk</h4>
+    <div class="tbl"><table>
+      <thead><tr><th>Vir</th><th>Mediana osnove</th><th>Vzorec</th><th>Obdobje</th></tr></thead>
+      <tbody>
+        <tr><td>Bloomberry</td><td>127.500 USD</td><td>oglasi z razkrito plačo iz ~1.000</td><td>do 10/2025</td></tr>
+        <tr><td>StateofGTME (anketa)</td><td>135.000 USD (ZDA, in-house)</td><td>61</td><td>Q4 2025 do Q1 2026</td></tr>
+        <tr><td>RevGuild / Glozo</td><td>150.000 USD</td><td>71 od 190 oglasov</td><td>6/2025 do 6/2026</td></tr>
+        <tr><td>Cargo</td><td>159.000 USD (P25 135.000, P75 190.000)</td><td>509</td><td>4 do 7/2026</td></tr>
+        <tr><td>Onfire</td><td>160.000 USD (izven ZDA ~75.000)</td><td>209</td><td>do 8/2026</td></tr>
+      </tbody>
+    </table></div>
+    <p>Da se mediana osnove v ZDA giblje med 130.000 in 160.000 USD, je <span class="z z-v">visoko</span>; katerakoli bolj natančna številka je <span class="z z-n">nizko</span>.
+      Po senioriteti (RevGuild, n = 71): vstopni nivo 113.000, srednji 150.000, senior 188.000, vodja 225.000 USD. 68 % zaposlenih GTM engineerjev nima omembe vrednega deleža
+      v podjetju; najpogostejši bonus je 10 do 25 % osnove (StateofGTME).</p>
+
+    <h4>Evropa in naša regija</h4>
+    <ul>
+      <li>TechTree (junij 2026): v Evropi okoli 492 ljudi s tem nazivom, leta 2023 okoli 33 novih, leta 2025 okoli 446. 57 % jih dela v podjetjih z manj kot 50 zaposlenimi, samo 4 % v podjetjih s 1.000 in več.
+        Največ v Berlinu (24) in Münchnu (17). <span class="z z-z">zmerno</span></li>
+      <li>Slovenija, Hrvaška, Avstrija: v TechTreejevem razrezu se ne pojavijo, iskanje po nacionalnih LinkedIn domenah 21. 10. 2026 ni vrnilo nikogar. MojeDelo nismo uspeli preiskati.
+        To je "nismo našli", ne "jih ni". <span class="z z-z">zmerno</span></li>
+      <li>Nemčija: Trusted Shops in Clera (Berlin) objavljata 50.000 do 70.000 EUR na leto. <span class="z z-z">zmerno, dva oglasa</span></li>
+      <li>Velika Britanija: oglasi od 70.000 do 110.000 GBP (London). <span class="z z-n">nizko do zmerno</span></li>
+      <li>Srbija: frontBrick.io (Beograd), senior, Clay, Instantly in HubSpot, 100.000 do 120.000 RSD neto na mesec (okoli 850 do 1.025 EUR). Oglas je potekel. <span class="z z-n">nizko, en oglas</span></li>
+    </ul>
+
+    <h4>Od kod prihajajo</h4>
+    <p>ZDA (RevGuild, 44 profilov): prodaja (SDR, BDR, AE) 20,5 %, growth in GTM 20,5 %, ustanovitelji 11,4 %, razvijalci samo 9,1 %. Mediana izkušenj pred nazivom je 7,4 leta,
+      pod dvema letoma jih je 4,5 %. Avtorji: "komercialni operater, ki se je naučil graditi, ne razvijalec, ki je šel v prodajo". Evropa (TechTree, 437 vlog) je drugačna:
+      inženirji in podatkovniki so z 17 % največji posamezni vir. <span class="z z-z">zmerno</span></p>
+
+    <h4>Agencije in izobraževanje</h4>
+    <ul>
+      <li>Agencije (StateofGTME, 58 do 64 odgovorov): mediana najnižjega mesečnega honorarja 5.000 USD (razpon 1.000 do 16.000), najvišjega 8.000 USD. Clay uporablja 96,6 % agencij in 77,4 % in-house ekip. <span class="z z-z">zmerno</span></li>
+      <li>Urnih postavk za samostojne GTM engineerje nismo našli nikjer, tudi v StateofGTME ne. <span class="z z-z">zmerno</span></li>
+      <li>Clay University je brezplačen. Clayev certifikat ima samo 2,7 % profilov v vzorcu RevGuilda: "lepo imeti, ni pogoj". a16z je aprila 2026 objavil 8-tedensko štipendijo "Growth Engineer". <span class="z z-z">zmerno</span></li>
+      <li>StateofGTME ni Clayevo poročilo, kot ga včasih opisujejo: avtorja sta Garrett Wolfe (agencija OneGTM) in Alex Lindahl (Clay). Praktična anketa z avtorjema iz ekosistema. <span class="z z-v">visoko</span></li>
+    </ul>
+  </section>
+
+  <!-- 7. AI V OUTBOUNDU -->
+  <section class="s" id="ai">
+    <h2>07 · AI v outboundu</h2>
+    <h3>AI SDR kot nadomestek ljudi se ni obnesel. AI kot pomočnik se je.</h3>
+    <ul>
+      <li><strong>11x:</strong> TechCrunch (24. 3. 2025) je poročal, da je podjetje izgubilo 70 do 80 % strank, ki so prišle skozi vrata, da so pogodbe po 90-dnevni izstopni klavzuli
+        znašale okoli 3 milijone USD proti navedenim 14 milijonom ARR in da sta ZoomInfo in Airtable zanikala, da sta stranki. Ustanovitelj je odstopil približno šest tednov pozneje. <span class="z z-v">visoko</span></li>
+      <li><strong>Artisan</strong> ("Stop Hiring Humans"): ocene so polarizirane, od tisoč poslanih mailov brez odgovora do dobrih rezultatov pri širokem ICP in velikem obsegu. Večina ocen je na straneh tekmecev. <span class="z z-z">zmerno</span></li>
+      <li><strong>Qualified Piper</strong> je agent za klepet na spletni strani (inbound), ne hladni outbound. Primerjave z 11x in Artisanom niso poštene. <span class="z z-v">visoko</span></li>
+      <li>Številke tipa "50 do 70 % odhoda v kategoriji AI SDR" ali "88 % pilotov zastane" smo našli samo na blogih ponudnikov brez vira, zato jih ne navajamo. <span class="z z-v">visoko</span></li>
+    </ul>
+
+    <h4>Kje AI nosi in kje pade</h4>
+    <ul>
+      <li>Nosi: raziskava in obogatitev iz javnih virov, prvi osnutki personalizacije, povzetki klicev, razvrščanje jasnih odgovorov (bounce, odjava, jasen "da"). <span class="z z-z">zmerno do visoko</span></li>
+      <li>Šibko: razvrščanje dvoumnih odgovorov. Neodvisne meritve točnosti LLM-jev na prodajnih odgovorih nismo našli. Tipične napake: odsotnost z napotitvijo na novo osebo
+        obravnavana kot premor, "to ni moje področje, pišite RevOps" kot zavrnitev, "proračun je zamrznjen, pošljite povzetek" kot mrtev lead, sarkazem kot pozitiven odgovor. <span class="z z-z">zmerno za vzorec</span></li>
+      <li>Večjezični odgovori (DE, AT, SI, HR, IT) so priznana vrzel brez meritev. <span class="z z-n">nizko</span></li>
+      <li>Pade: vse, kar zahteva osnovno resnico (imena odločevalcev, telefoni, število sob). Prepričljivo napačna vrednost gre naravnost v CRM. <span class="z z-v">visoko</span></li>
+    </ul>
+
+    <h4>Varnost agentov</h4>
+    <p>Anthropic ("Building Effective Agents", december 2024): agenti naj se ustavijo za človeško povratno informacijo na kontrolnih točkah in imajo pogoje za ustavitev.
+      Simon Willison ("The Lethal Trifecta", 16. 6. 2025): agent, ki ima hkrati dostop do zasebnih podatkov, bere nezaupljivo vsebino in lahko komunicira navzven, je ranljiv za
+      vbrizgana navodila. Agent, ki bere odgovore potencialnih strank ali strgane spletne strani in lahko sam pošlje mail, je točno ta vzorec. <span class="z z-v">visoko</span></p>
+  </section>
+
+  <!-- 8. PRAVILA -->
+  <section class="s" id="pravila">
+    <h2>08 · Pravila, ki omejujejo vse skupaj</h2>
+    <h3>Dostavljivost, LinkedIn in pravo v EU</h3>
+
+    <h4>Ponudniki e-pošte</h4>
+    <div class="tbl"><table>
+      <thead><tr><th>Ponudnik</th><th>Kdaj velja</th><th>Zahteve</th><th>Posledice</th></tr></thead>
+      <tbody>
+        <tr><td>Google (Gmail)</td><td>Od februarja 2024; 5.000+ sporočil na dan na osebne Gmail naslove, šteto po primarni domeni; status je trajen</td>
+          <td>SPF in DKIM, DMARC vsaj p=none s poravnavo, DNS, TLS, odjava z enim klikom (RFC 8058) v 48 urah</td>
+          <td>Pod 0,1 % pritožb, nikoli 0,3 %. Od novembra 2025 začasne in trajne zavrnitve</td></tr>
+        <tr><td>Yahoo</td><td>Od februarja 2024; brez javnega praga obsega</td><td>SPF, DKIM, DMARC, odjava z enim klikom, odjava v 2 dneh</td><td>Pod 0,3 % pritožb</td></tr>
+        <tr><td>Microsoft (Outlook.com)</td><td>Od 5. 5. 2025; 5.000+ na dan na potrošniške nabiralnike</td><td>SPF, DKIM, DMARC</td><td>Zavrnitev (550 5.7.515), ne Junk</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">Pravila veljajo za osebne nabiralnike, ne za Google Workspace ali Microsoft 365. Manjši neodvisni hoteli pa pogosto uporabljajo gmail.com ali hotmail.com za recepcijo in direktorja,
+      zato je izpostavljenost resnična. Vir za Google in Yahoo: njune dokumentacije 21. 10. 2026 <span class="z z-v">visoko</span>; za Microsoftovo spremembo v zavrnitev sekundarni viri <span class="z z-z">zmerno</span>.</p>
+
+    <h4>Open rate ni merilo</h4>
+    <p>Apple Mail Privacy Protection (od iOS 15, 2021) prenese sledilne piksle na Applove strežnike ne glede na to, ali človek mail odpre. Apple Mail ima po pogostih ocenah okoli polovico odpiranj.
+      Sledilni piksel doda domeno tretje osebe, kar filtri lahko kaznujejo; Lemlist v pomoči priporoča izklop sledenja odpiranj. Merila namesto tega: bounce po domeni, delež pritožb
+      v Postmaster Tools, delež odgovorov, delež pozitivnih odgovorov. <span class="z z-z">zmerno</span></p>
+
+    <h4>Menjava domen</h4>
+    <p>Razprševanje pošiljanja čez veliko domen, ki se pogosto menjajo, da se ugled razredči, ima pri prejemnikih ime "snowshoe spam" (Cisco, 2014). Spamhaus ima zanj poseben seznam CSS.
+      Agent, ki ob slabšanju ugleda sam zamenja domeno, se obnaša enako, ne glede na namen. Bounce v sekvencerju meri kakovost seznama, ne ugleda domene: nova domena s starim slabim seznamom
+      problema ne reši. <span class="z z-v">visoko za definicijo</span> <span class="z z-z">zmerno za tveganje pri majhnem obsegu</span></p>
+
+    <h4>LinkedIn</h4>
+    <p>Uporabniška pogodba LinkedIna prepoveduje neodobrene avtomatizirane načine dostopa, dodajanja stikov, pošiljanja sporočil in strganja podatkov. 25. 3. 2026 je LinkedIn odstranil
+      stran podjetja HeyReach in omejil profile vodstva; HeyReach (7. 8. 2026) trdi, da računi strank niso bili prizadeti. "Varne meje" (25 na dan, 100 na teden) so izkušnja praktikov,
+      ne objavljena pravila. <span class="z z-z">zmerno do visoko za dogodek</span> <span class="z z-n">nizko za prihodnost</span></p>
+
+    <h4>Hladni B2B e-mail v EU</h4>
+    <div class="warn"><strong>Ni pravni nasvet.</strong> GDPR (zakonit interes) ureja, ali smeš podatke hraniti in obogatiti. Ali smeš poslati, ureja nacionalni zakon o elektronskih
+      komunikacijah ali nelojalni konkurenci. Direktiva o zasebnosti (2002/58/ES, člen 13(5)) državam prepušča, kako obravnavajo pravne osebe. Komisija je predlog uredbe o e-zasebnosti
+      umaknila 11. 2. 2025, zato mozaik nacionalnih pravil ostaja. <span class="z z-v">visoko</span></div>
+    <div class="tbl fit"><table>
+      <thead><tr><th>Država</th><th>Pravilo</th><th>Zaupanje</th></tr></thead>
+      <tbody>
+        <tr><td>Nemčija</td><td>UWG § 7 (2) št. 2: oglaševanje po e-pošti brez predhodne izrecne privolitve je nadlegovanje, tudi B2B. Izjema § 7 (3) za obstoječe stranke. Tožijo konkurenti in združenja, ne samo regulator.</td><td><span class="z z-v">visoko</span></td></tr>
+        <tr><td>Avstrija</td><td>TKG 2021 § 174 (3): e-pošta za neposredno oglaševanje samo s predhodno privolitvijo; izjeme za B2B v besedilu ni.</td><td><span class="z z-z">zmerno</span></td></tr>
+        <tr><td>Slovenija</td><td>ZEKom-2: privolitev za neposredno trženje po e-pošti, izjema za obstoječe stranke. Ali in kako velja za naslove pravnih oseb, nismo preverili v besedilu zakona.</td><td><span class="z z-n">nizko</span></td></tr>
+        <tr><td>Hrvaška</td><td>HAKOM je 7. 7. 2020 kaznoval neželeno trženje po e-pošti brez privolitve. Člena v novem ZEK (NN 76/22) nismo potrdili.</td><td><span class="z z-n">nizko do zmerno</span></td></tr>
+      </tbody>
+    </table></div>
+  </section>
+  <!-- 9. PREVERBA KLEPETOV -->
+  <section class="s" id="preverba">
+    <h2>09 · Preverba odgovorov iz klepetov</h2>
+    <h3>Deset odgovorov, trditev za trditvijo</h3>
+    <p class="note">Merilo, določeno vnaprej. <span class="v v-ok">drži</span>: potrjujeta vsaj dva neodvisna vira (oglas za delo, raziskava, primarni dokument).
+      <span class="v v-part">delno</span>: drži za en tip podjetja ali en del trditve. <span class="v v-no">ne drži</span>: viri trdijo nasprotno.
+      <span class="v v-part">brez dokaza</span>: nismo našli vira ne za ne proti. Kjer podatkov ni (na primer plače v Sloveniji), nismo sklepali iz ZDA ali Nemčije.</p>
+
+    <div class="check">
+      <div class="h"><b>1. GTM engineer proti RevOps engineerju</b> <span class="v v-no">ne drži</span></div>
+      <p class="claim">"GTM inženir je tehničen (integracije, API, čistoča podatkov, hrošči), RevOps inženir pa skrbi za rast prihodkov, nadzorne plošče, CAC, LTV in poravnavo oddelkov."</p>
+      <ul>
+        <li><span class="v v-no">ne drži</span> za naziv RevOps engineer: vsi prebrani oglasi zahtevajo arhitekturo CRM, integracije, API-je, SQL in Python. To je opis, ki ga je klepet pripisal GTM engineerju.</li>
+        <li><span class="v v-part">delno</span> za RevOps kot funkcijo: analitiki in managerji RevOps res skrbijo za CAC, LTV in poravnavo definicij.</li>
+        <li><span class="v v-no">ne drži</span> za GTM engineerja v Clayevem pomenu: njegovo delo ni vzdrževanje integracij, ampak gradnja sistemov, ki ustvarjajo pipeline (signali, obogatitev, outbound).</li>
+        <li>Prava os je gradnja proti vodenju, ne tehnično proti poslovnemu. <span class="z z-v">visoko</span></li>
+      </ul>
+    </div>
+
+    <div class="check">
+      <div class="h"><b>2. Katere oddelke povezuje GTM manager ali direktor</b> <span class="v v-part">delno</span></div>
+      <p class="claim">"Marketing, prodaja, produkt, customer success, finance in cene, RevOps."</p>
+      <ul>
+        <li><span class="v v-ok">drži</span> za GTM managerja v veliki korporaciji (lansiranje, aktivacija) in delno za GTM S&amp;O v scaleupu.</li>
+        <li><span class="v v-no">ne drži</span> kot splošen opis: v zgodnjih podjetjih je head of GTM lastnik pipelinea, ne koordinator lansiranj.</li>
+        <li>Skupno vsem oglasom: trženje in prodaja ter eden ali več od partnerjev, CS, RevOps, produkta, financ. Koordinira brez formalne oblasti. <span class="z z-z">zmerno</span></li>
+      </ul>
+    </div>
+
+    <div class="check">
+      <div class="h"><b>3. Kratek opis delovnega mesta</b> <span class="v v-part">delno</span></div>
+      <p class="claim">"Strategija lansiranja, povezovanje oddelkov, pozicioniranje, sales enablement, cene, KPI-ji."</p>
+      <ul>
+        <li><span class="v v-part">delno</span>: to je opis lansirnega GTM managerja ali produktnega marketinga. Pozicioniranje, enablement ter cene in paketi so v večini podjetij naloge PMM
+          (Canary Technologies ima na primer posebej "Pricing &amp; Packaging Manager" v produktnem marketingu).</li>
+        <li>Ne ustreza vlogi, kjer ena oseba vodi outbound in sisteme. Tam je opis bližje head of GTM v startupu.</li>
+      </ul>
+    </div>
+
+    <div class="check">
+      <div class="h"><b>4. KPI-ji in leta izkušenj</b> <span class="v v-part">delno</span></div>
+      <p class="claim">"Time-to-market, pipeline, prihodek, win rate, CAC, hitrost posvojitve; manager 3 do 5 let, direktor 7 let in več."</p>
+      <ul>
+        <li><span class="v v-ok">drži</span> za pipeline, win rate in CAC.</li>
+        <li><span class="v v-part">brez dokaza</span> za odstotek pravočasnih lansiranj kot KPI naziva GTM.</li>
+        <li><span class="v v-no">ne drži</span> za leta: oglasi segajo od 3 do 8 let in več za managerja in od 8 do 15 let in več za head of.</li>
+      </ul>
+    </div>
+
+    <div class="check">
+      <div class="h"><b>5. CMO proti GTM direktorju</b> <span class="v v-part">delno</span></div>
+      <p class="claim">"CMO skrbi, da trg podjetje pozna, GTM pa, da produkt dobičkonosno proda. GTM direktor nikoli ne nadomešča CMO-ja."</p>
+      <ul>
+        <li><span class="v v-part">delno</span>: en sekundarni vir (ZoomInfo) uporablja podobno ločnico, a prihodek ima v večini podjetij CRO, ne GTM direktor.</li>
+        <li><span class="v v-no">ne drži</span> "nikoli ne nadomešča": v zgodnjih podjetjih je head of GTM pogosto pred CMO-jem in pokriva tudi marketing.</li>
+        <li><span class="v v-part">brez dokaza</span> za "sodeluje pri razvoju in določanju cen" kot značilnost naziva.</li>
+      </ul>
+    </div>
+
+    <div class="check">
+      <div class="h"><b>6. GTM direktor, direktor prodaje, account manager</b> <span class="v v-part">delno</span></div>
+      <p class="claim">"GTM direktor gradi sistem in strategijo, direktor prodaje vodi ekipo, ki ga izvaja, account manager skrbi za obstoječe stranke."</p>
+      <ul>
+        <li><span class="v v-no">ne drži</span> kot uveljavljena delitev: "GTM direktor gradi sistem, direktor prodaje izvaja" ni v nobenem od približno dvanajstih virov. Videti je kot izmišljena poenostavitev.</li>
+        <li><span class="v v-ok">drži</span> opis account managerja (zadrževanje, NPS, dodatna prodaja); to je standardna definicija.</li>
+      </ul>
+    </div>
+
+    <div class="check">
+      <div class="h"><b>7. Ena oseba kot CMO, GTM in SDR</b> <span class="v v-part">delno</span></div>
+      <p class="claim">"Nevarnosti: izgorelost, zanemarjen dolgoročni marketing, slabo zapiranje. Rešitev: blokade dni, avtomatizacija, prva zaposlitev čisti prodajalec."</p>
+      <ul>
+        <li><span class="v v-ok">drži</span>, da je ena oseba za vse faza, ne struktura: First Round in SaaStr postavljata prag (približno 10 do 20 strank, ponovljiv proces), ko ena oseba ne zmore več.</li>
+        <li><span class="v v-part">delno</span> "slabo zapiranje": velja, če ista oseba tudi zapira. Če zapira nekdo drug, tveganje odpade.</li>
+        <li><span class="v v-part">brez dokaza</span> za blokade dni (ponedeljek strategija, sreda prodaja): za GTM vloge nismo našli nobenega vira, ki bi to podprl s podatki. Je mnenje.</li>
+        <li><span class="v v-part">delno</span> "prva zaposlitev SDR ali AE": SaaStr priporoča prodajalca, ki dela cel cikel (išče in zapira), ne čistega SDR-ja, ker sam SDR brez zapiralca ustvari ozko grlo.</li>
+        <li>Vir o izgorelosti (Pavilion, 76 % vodij se počuti osamljenih) je marketing plačljive skupnosti. <span class="z z-n">nizko</span></li>
+      </ul>
+    </div>
+
+    <div class="check">
+      <div class="h"><b>8. Prioritete ter delitev med AI in študenta</b> <span class="v v-part">delno</span></div>
+      <p class="claim">"Najprej odgovori in sestanki, nato outreach sistem, nato temeljni marketing. AI piše A/B variante in analizira ICP; študent čisti podatke, vodi CRM, spremlja tople signale."</p>
+      <ul>
+        <li><span class="v v-ok">drži</span> vrstni red: toplih odgovorov ne pusti čakati; sistem pred vsebino. Skladno s prakso.</li>
+        <li><span class="v v-no">ne drži</span> "spremljanje odstotka odprtih mailov": open rate je zaradi Apple MPP napihnjen, sledilni piksel škodi dostavljivosti (razdelek 08).</li>
+        <li><span class="v v-ok">drži</span> delitev, da človek preverja dejstva: LLM-ji padejo pri osnovni resnici (imena, telefoni). Študent je tu smiseln.</li>
+        <li><span class="v v-part">delno</span> spremljanje, kdo si je ogledal profil: ročno da, avtomatizirano strganje krši LinkedInovo pogodbo.</li>
+      </ul>
+    </div>
+
+    <div class="check">
+      <div class="h"><b>9. AI harness</b> <span class="v v-part">delno</span></div>
+      <p class="claim">"Semafor odobritev, kanal v Slacku, nadzorna plošča z open rate in reply rate, kill switch. Manjka: samodejno upravljanje domen, triaža, CRM. Študenta sploh ne potrebujete."</p>
+      <ul>
+        <li><span class="v v-ok">drži</span> kontrolne točke pred pošiljanjem, kill switch in CRM kot vir resnice: to priporoča tudi Anthropic.</li>
+        <li><span class="v v-no">ne drži</span> open rate na nadzorni plošči.</li>
+        <li><span class="v v-no">ne drži</span> "samodejno izklopi domene in jih nadomesti z novimi": vzorec snowshoe (razdelek 08).</li>
+        <li><span class="v v-no">ne drži</span> "študenta sploh ne potrebujete": AI ne zna preveriti osnovne resnice, ki jo nato pošlje v CRM.</li>
+        <li><span class="v v-part">delno</span> odobritev samo za Tier 1: odobritev na ravni predloge je minimum, personalizirane vrstice brez pregleda so vir halucinacij.</li>
+      </ul>
+    </div>
+
+    <div class="check">
+      <div class="h"><b>10. Osem agentov na CRM in Slacku</b> <span class="v v-part">delno</span></div>
+      <p class="claim">"Content, repurposing, signali, obogatitev, multikanalni agent, varuh infrastrukture, triaža, priprava na sestanek, ki stranki sam pošlje Calendly."</p>
+      <ul>
+        <li>Štirje agenti zdržijo, štirje potrebujejo spremembo ali odstranitev dela. Podrobno v razdelku 10.</li>
+        <li>Manjka varnost: agent, ki bere odgovore, ne sme imeti pravice pošiljanja (lethal trifecta).</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 10. HARNESS IN 8 AGENTOV -->
+  <section class="s" id="agenti">
+    <h2>10 · AI harness in osem agentov</h2>
+    <h3>Kaj obdržati, kaj spremeniti, kaj opustiti</h3>
+    <div class="tbl fit"><table>
+      <thead><tr><th>Element</th><th>Ocena</th><th>Zakaj</th></tr></thead>
+      <tbody>
+        <tr><td>Semafor odobritev</td><td><span class="v v-ok">obdrži</span></td><td>Sinhrona odobritev za vse nepovratno (pošiljanje), asinhrona za vse, kar se da popraviti pozneje.</td></tr>
+        <tr><td>Kanal za obvestila</td><td><span class="v v-ok">obdrži</span></td><td>Standarden vzorec. Kanal ni pomemben (Slack, Teams, e-pošta), pomembno je, da je en in da ima vsako obvestilo povezavo do dejanja.</td></tr>
+        <tr><td>Nadzorna plošča</td><td><span class="v v-part">spremeni</span></td><td>Brez open rate. Bounce po domeni, pritožbe v Postmaster Tools, delež odgovorov, delež pozitivnih odgovorov, sestanki.</td></tr>
+        <tr><td>Kill switch</td><td><span class="v v-ok">obdrži</span></td><td>En gumb za vse kanale, ne samo po kampanji ali po hotelu.</td></tr>
+        <tr><td>1. Content</td><td><span class="v v-ok">obdrži</span></td><td>Brez pravice pošiljanja, človek pregleda pred objavo.</td></tr>
+        <tr><td>2. Repurposing</td><td><span class="v v-ok">obdrži</span></td><td>Enako kot 1.</td></tr>
+        <tr><td>3. Signali</td><td><span class="v v-ok">obdrži</span> pasivno</td><td>Najbolj izpostavljen nezaupljivi vsebini (strgane strani), zato sme samo zapisati opombo in obvestiti, ne sprožiti dotika.</td></tr>
+        <tr><td>4. Obogatitev</td><td><span class="v v-ok">obdrži</span></td><td>Najbolje podprta raba AI. Pogoj: vsako polje ima vir in zaupanje, "ni najdeno" je veljaven izid.</td></tr>
+        <tr><td>5. Multikanalni agent</td><td><span class="v v-part">spremeni</span></td><td>"Brez odgovora na LinkedIn v 3 dneh, začni e-mail" meri zamik sprejema povabila, ne molk: sprejemi pridejo tudi po več tednih. Sprožilec naj bo sprejem, ne povabilo.
+          Neodgovor na LinkedInu ni privolitev za e-pošto v DE in AT.</td></tr>
+        <tr><td>6. Varuh infrastrukture</td><td><span class="v v-no">opusti</span> samodejno menjavo</td><td>Zaznava in opozorilo da, menjava domene samo po človeški odločitvi. Samodejna rotacija je vzorec snowshoe in ne popravi slabega seznama.</td></tr>
+        <tr><td>7. Triaža</td><td><span class="v v-part">spremeni</span></td><td>Samodejna odjava samo ob izrecni zahtevi ("ne pišite mi več"): to je ugovor po členu 21 GDPR in blocklist je tu pravilen mehanizem.
+          Vse ostalo, kar model označi kot negativno ("ne zdaj", "pišite kolegu"), gre v čakalnico za človeka. "Ne zdaj" ni trajna zapora.</td></tr>
+        <tr><td>8. Priprava na sestanek</td><td><span class="v v-part">spremeni</span></td><td>Povzetek za zapiralca obdrži: najcenejša dodana vrednost, ker ničesar ne pošlje navzven. Samodejno pošiljanje Calendly povezave opusti: zunanji dotik
+          na podlagi klasifikacije, ki lahko sarkazem ali "pošljite povzetek" prebere kot "da".</td></tr>
+      </tbody>
+    </table></div>
+    <div class="counter">
+      <p><strong>Štirje trki s pravili, ki jih ima Nevronov sistem že zapisana.</strong> (1) Open rate na nadzorni plošči: sledenje odpiranj in klikov je izklopljeno povsod.
+        (2) Samodejna menjava domen in (3) samodejno pošiljanje Calendly povezave: vsak odhodni dotik gre skozi človeško odobritev, odobritev dejanja pa ni odobritev besedila.
+        (4) "Negativno = opt-out": ne zdaj ni trajna zapora, topel odgovor se ne zapre samodejno. Ti štirje predlogi pri nas ne pridejo v poštev.</p>
+    </div>
+  </section>
+
+  <!-- 11. HOTELI -->
+  <section class="s" id="hoteli">
+    <h2>11 · B2B prodaja hotelom</h2>
+    <h3>Kako to delajo ponudniki hotelske tehnologije</h3>
+    <ul>
+      <li><strong>Canary Technologies</strong> (21. 10. 2026, njihova stran z oglasi): klasičen model po jezikih. Pet oglasov za SDR (ZDA, francosko in grško govoreči v Barceloni, dva na Filipinih za časovna pasova),
+        AE po segmentih (DACH, Francija, Bližnji vzhod, SMB, mid-market, enterprise), sales engineerji, enablement, produktni marketing s posebnim managerjem za cene in pakete.
+        Nobenega GTM engineerja ali RevOps naziva. <span class="z z-v">visoko</span></li>
+      <li><strong>Mews</strong>: odprta mesta "GTM Systems Engineer" (administracija CRM, podatki, avtomatizacija) in "Senior GTM Strategy and Operations Specialist"; odprtega SDR oglasa nismo našli.
+        <span class="z z-z">zmerno, iz povzetka iskanja</span></li>
+      <li><strong>Cloudbeds</strong> in <strong>Duve</strong> imata SDR ali BDR vloge za prospecting hotelov. <span class="z z-z">zmerno do nizko, prek agregatorjev</span></li>
+      <li><strong>Partnerstva kot GTM vzvod:</strong> SiteMinder je 28. 5. 2026 (borzno obvestilo ASX) predstavil "SiteMinder Powered" z Mewsom kot prvim partnerjem in dostopom do okoli 15.000 hotelov. <span class="z z-v">visoko</span></li>
+      <li><strong>Sejmi in integracije:</strong> HITEC je osrednji sejem, integracija s PMS je stalna tema; ponudniki gradijo partnerske programe. HotelTechReport izdaja vodnike za sezono proračunov,
+        nakupi so vezani na proračunski cikel. <span class="z z-z">zmerno</span></li>
+      <li>Statistike o "7,2 deležnika v nakupni skupini" in "9 do 14 mesecev cikla" smo našli samo na viru brez metode in jih ne navajamo. <span class="z z-n">nizko</span></li>
+    </ul>
+    <p>Skupni imenovalec praktikov: avtomatizacija nadomesti seznam, obogatitev, ocenjevanje in triažo; pogovora, presoje sporočila in odnosa na večjih računih ne.
+      Pri prodaji z več odločevalci in dolgim ciklom, kar prodaja hotelom je, trditev "en GTM engineer nadomesti N SDR-jev" ne velja. <span class="z z-z">zmerno</span></p>
+  </section>
+
+  <!-- 12. VERDIKT -->
+  <section class="s" id="verdikt">
+    <h2>12 · Verdikt</h2>
+    <h3>Za B2B ponudnika z eno GTM osebo in SDR sistemom</h3>
+    <div class="answer">
+      <ol>
+        <li><strong>Katero vlogo nosi ta oseba.</strong> Head of GTM v zgodnjem pomenu (lastnik pipelinea) in hkrati GTM engineer (gradi sistem). Ni lansirni GTM manager iz klepetov
+          in ni RevOps analitik. <span class="z z-z">zmerno</span></li>
+        <li><strong>Največje tveganje ni izgorelost, ampak vzdrževalni dolg.</strong> Sistem, ki ga zgradi in razume ena oseba, je ena točka odpovedi. Dokumentacija, invariante in
+          dnevni pregledi so vredni več kot nov agent. <span class="z z-z">zmerno</span></li>
+        <li><strong>Graditi v naslednjih 90 dneh:</strong> pripravo na sestanek (brez pošiljanja), čakalnico za dvoumne odgovore, pasivne signale, nadzorno ploščo brez open rate,
+          en globalni kill switch. Vse to dodaja vrednost brez novih zunanjih dotikov. <span class="z z-z">zmerno</span></li>
+        <li><strong>Ne graditi:</strong> samodejne menjave domen, samodejnih povezav za sestanke, samodejne odjave na podlagi sentimenta, samostojnega AI SDR-ja. <span class="z z-v">visoko</span></li>
+        <li><strong>Naslednja zaposlitev, če pride:</strong> človek, ki vodi pogovore, ne "junior GTM engineer". Mediana izkušenj pred nazivom je 7,4 leta, juniorskih oglasov je manj kot 3 %:
+          junior GTM engineer je skoraj protislovje. Za preverjanje dejstev (imena, telefoni, odločevalci) je študent smiseln. <span class="z z-z">zmerno</span></li>
+        <li><strong>Naziv sam ni cilj.</strong> V Sloveniji, na Hrvaškem in v Avstriji ga skoraj nihče ne nosi. Pri kupcih in kandidatih bo "vodja prodajnih sistemov" ali "GTM manager"
+          razumljivejši od "GTM engineer". <span class="z z-n">nizko, mnenje</span></li>
+      </ol>
+    </div>
+  </section>
+  <!-- 13. METODA IN VIRI -->
+  <section class="s" id="viri">
+    <h2>13 · Metoda in viri</h2>
+    <h3>Kako je raziskava nastala</h3>
+    <p>21. 10. 2026 je sedem raziskovalnih agentov (Claude Code) vzporedno preiskalo sedem tem: izvor in oglasi za GTM engineerja, trg in plače, RevOps engineer, GTM vodstvene vloge,
+      AI v outboundu in pravila, majhne ekipe in hotelska tehnologija, praktiki in primeri. Vsak je moral vsako trditev opremiti z virom in datumom, ločiti dejstva od mnenj in vendor
+      vsebino od neodvisne ter priznati, kje podatkov ni. Neodvisni pregledovalec je pred sintezo pregledal načrt. Številke, ki jih ni bilo mogoče izslediti do strani, so izpuščene.</p>
+    <p class="note"><strong>Omejitve:</strong> del oglasov na Greenhouse, Lever in iCIMS je ob neposrednem branju vrnil 404 ali 410, zato nekateri podatki slonijo na predpomnilniku iskalnika
+      (označeno kot nizko ali zmerno). Reddit ni dovolil branja celih niti. Za Slovenijo, Hrvaško in Avstrijo ni bilo mogoče preiskati nacionalnih portalov z oglasi.</p>
+
+    <details class="viri"><summary>Viri: GTM engineer, izvor in oglasi</summary><ol>
+      <li><a href="https://www.clay.com/blog/gtm-engineering">Clay: The rise of the GTM engineer</a> · vendor</li>
+      <li><a href="https://www.gainsight.com/episode/he-created-a-job-title-1000-people-now-have-ft-yash-tekriwal-clay">Gainsight podkast: He Created a Job Title 1,000+ People Now Have, Yash Tekriwal (Clay)</a></li>
+      <li><a href="https://newsletter.genesysgrowth.com/p/how-gtm-engineering-came-to-be">Genesys Growth: How GTM Engineering came to be (7. 3. 2025)</a></li>
+      <li><a href="https://gtmcouncil.substack.com/p/analysis-of-1394-gtm-engineer-roles">GTM Council in Upside: Analysis of 1,394 GTM Engineer roles (11. 7. 2026)</a> · vendor</li>
+      <li><a href="https://kylepoyar.substack.com/p/do-you-need-a-gtm-engineer">Kyle Poyar: Do You Need a GTM Engineer? (10. 9. 2025)</a> · neodvisna analiza, sponzor ZoomInfo</li>
+      <li><a href="https://www.norwest.com/blog/what-is-a-gtm-engineer">Norwest: What is a GTM engineer (15. 6. 2026)</a></li>
+      <li><a href="https://diginomica.com/what-if-gtm-engineers-are-simply-marketing-operations-people-disguise-heres-why-matters">Diginomica: GTM engineers as marketing ops in disguise? (18. 8. 2025)</a> · neodvisno</li>
+      <li><a href="https://jobs.ashbyhq.com/vanta/91c73485-5d0c-4272-9643-401ebcfff9d1">Vanta: Sr. AI GTM Engineer</a></li>
+      <li><a href="https://builtin.com/job/staff-gtm-engineer/11730389">1Password: Staff GTM Engineer</a></li>
+      <li><a href="https://builtin.com/job/gtm-engineer-ai-platforms/6481369">Webflow: GTM Engineer, AI Platforms (umaknjen 5. 8. 2025)</a></li>
+      <li><a href="https://builtin.com/job/gtm-engineer/7710731">Clearco: GTM Engineer (umaknjen 3. 2. 2026)</a></li>
+      <li><a href="https://builtindublin.ie/job/go-market-engineer-success-architect-named-emea/8298927">Apollo: Go-To-Market Engineer II, EMEA (umaknjen 13. 5. 2026)</a></li>
+      <li><a href="https://startup.jobs/gtm-engineering-intern-unify-9005317">Unify: GTM Engineering Intern (14. 8. 2026)</a></li>
+    </ol></details>
+
+
+    <details class="viri"><summary>Viri: trg in plače</summary><ol>
+      <li><a href="https://bloomberry.com/blog/i-analyzed-1000-gtm-engineering-jobs-here-is-what-i-learned/">Bloomberry: I analyzed 1000 GTM Engineering jobs (posodobljeno 25. 1. 2026)</a></li>
+      <li><a href="https://revguild.org/blog/gtm-engineer-salary-market-report-2026/">RevGuild in Glozo: GTM Engineer Salary &amp; Market Report 2026</a></li>
+      <li><a href="https://www.onfire.ai/blog/gtm-engineering-data">Onfire: The Rise of GTM Engineering, in 3 Charts (31. 8. 2026)</a> · vendor</li>
+      <li><a href="https://reports.techtree.dev/europe-gtm-engineer-report.html">TechTree: The rise of the GTM Engineer in Europe (junij 2026)</a></li>
+      <li><a href="https://stateofgtme.com/">State of GTM Engineering 2026</a> · praktična anketa</li>
+      <li><a href="https://www.getcargo.ai/blog/what-is-a-gtm-engineer">Cargo: What Is a GTM Engineer? (28. 9. 2026)</a> · vendor</li>
+      <li><a href="https://poslovi.infostud.com/posao/Go-to-Market-GTM-Engineer/frontBrickio/668264">frontBrick.io, Beograd (Infostud, potekel)</a></li>
+      <li><a href="https://www.a16z.news/p/introducing-the-a16z-growth-engineer">a16z: Growth Engineer fellowship (april 2026)</a></li>
+      <li><a href="https://www.clay.com/en/experts">Clay: Solution Partners</a> · vendor</li>
+    </ol></details>
+
+    <details class="viri"><summary>Viri: RevOps</summary><ol>
+      <li><a href="https://www.gartner.com/en/sales/topics/revenue-operations">Gartner: Revenue Operations</a></li>
+      <li><a href="https://www.outreach.ai/resources/blog/revops-maturity-model">Outreach: RevOps maturity model</a> · vendor</li>
+      <li><a href="https://www.builtinnyc.com/job/revops-engineer/9099563">Sent: Revenue Operations Engineer (Built In NYC, umaknjen 26. 6. 2026)</a></li>
+      <li><a href="https://jobs.techstars.com/companies/openloop/jobs/88812419-revenue-systems-analyst">OpenLoop: Revenue Systems Analyst (5. 8. 2026)</a></li>
+      <li><a href="https://builtin.com/job/revenue-systems-administrator/7891212">HammerTech: Revenue Systems Administrator</a></li>
+      <li><a href="https://www.apollo.io/insights/gtm-engineer-vs-revops">Apollo: GTM Engineer vs RevOps</a> · vendor</li>
+      <li><a href="https://landbase.com/blog/revops-vs-gtm-engineering">Landbase: RevOps vs GTM Engineering (17. 3. 2026)</a> · vendor</li>
+      <li><a href="https://blog.revpartners.io/en/revops-articles/gtm-engineering-vs-revops">RevPartners: GTM Engineering vs RevOps</a> · agencija</li>
+      <li><a href="https://syncgtm.com/blog/revops-salary-guide-2026">SyncGTM: RevOps Salary Guide 2026 (11. 3. 2026)</a> · vendor</li>
+    </ol></details>
+
+    <details class="viri"><summary>Viri: GTM vodstvene vloge</summary><ol>
+      <li><a href="https://jobs.anitab.org/companies/microsoft/jobs/61474423-activation-gtm-manager-cloud-ai-platforms">Microsoft: Activation GTM Manager, Cloud &amp; AI Platforms (31. 10. 2025)</a></li>
+      <li><a href="https://jobs.lever.co/mendix/179a537f-7977-4e70-9f97-c9ec9af4bbf5">Mendix: Head of Marketing Operations</a></li>
+      <li><a href="https://seedtable.com/jobs/60312">Atlantic: GTM Manager / Head of GTM</a></li>
+      <li><a href="https://pipeline.zoominfo.com/sales/gtm-leader-guide">ZoomInfo: GTM leader guide</a> · vendor</li>
+      <li><a href="https://www.saastr.com/the-cro-of-2027-the-last-human-standing-in-gtm">SaaStr: The CRO of 2027</a></li>
+      <li><a href="https://waynemorris.substack.com/p/when-to-hire-a-vp-of-sales">Wayne Morris: When to hire a VP of Sales</a> · mnenje</li>
+    </ol></details>
+
+    <details class="viri"><summary>Viri: AI, dostavljivost, LinkedIn, pravo</summary><ol>
+      <li><a href="https://techcrunch.com/2025/03/24/a16z-and-benchmark-backed-11x-has-been-claiming-customers-it-doesnt-have">TechCrunch: 11x has been claiming customers it doesn't have (24. 3. 2025)</a></li>
+      <li><a href="https://support.google.com/a/answer/14229414?hl=en">Google: Email sender guidelines FAQ</a></li>
+      <li><a href="https://senders.yahooinc.com/best-practices">Yahoo: Sender best practices</a></li>
+      <li><a href="https://techcommunity.microsoft.com/blog/outlook/strengthening-email-ecosystem-outlook%E2%80%99s-new-requirements-for-high%E2%80%90volume-senders/4399730">Microsoft: Outlook's new requirements for high-volume senders (2. 4. 2025)</a></li>
+      <li><a href="https://www.litmus.com/blog/apple-mail-privacy-protection-for-marketers">Litmus: Apple Mail Privacy Protection</a></li>
+      <li><a href="https://blogs.cisco.com/security/walking-in-a-winter-wonderland">Cisco: snowshoe spam (2014)</a></li>
+      <li><a href="https://www.heyreach.io/blog/heyreach-ban">HeyReach: izjava o ukrepu LinkedIna (7. 8. 2026)</a> · vendor</li>
+      <li><a href="https://lexmea.de/de/gesetz/uwg/7">UWG § 7</a></li>
+      <li><a href="https://www.ris.bka.gv.at/eli/bgbl/i/2021/190/P174/NOR40238632">TKG 2021 § 174</a></li>
+      <li><a href="https://www.lewissilkin.com/en/insights/2025/02/19/long-awaited-eprivacy-regulation-is-finally-dead-102k0fn">Lewis Silkin: ePrivacy Regulation is finally dead (19. 2. 2025)</a></li>
+      <li><a href="https://www.anthropic.com/research/building-effective-agents">Anthropic: Building Effective Agents (december 2024)</a></li>
+      <li><a href="https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/">Simon Willison: The Lethal Trifecta (16. 6. 2025)</a></li>
+    </ol></details>
+
+    <details class="viri"><summary>Viri: praktiki, majhne ekipe, hotelska tehnologija</summary><ol>
+      <li><a href="https://gtmcouncil.substack.com/p/everett-berry-head-of-gtm-eng-clay">GTM Council: intervju z Everettom Berryjem (Clay)</a></li>
+      <li><a href="https://steveruiz.substack.com/p/wtf-is-a-gtm-engineer">Steve Ruiz: WTF is a GTM Engineer (6. 4. 2025)</a></li>
+      <li><a href="https://share.transistor.fm/s/07a39593">The GTM Engineer Podcast: Fahad Ali Khan</a></li>
+      <li><a href="https://clay.com/customers">Clay: primeri strank</a> · vendor</li>
+      <li><a href="https://community.clay.com/x/announcements/ptu3y4lvqkq5/the-rise-of-the-gtm-engineer-a-guide-to-hiring-and">Clay: vodnik za zaposlovanje GTM engineerjev</a> · vendor</li>
+      <li><a href="https://diginomica.com/what-if-gtm-engineers-are-simply-marketing-operations-people-disguise-heres-why-matters">Diginomica: What if GTM engineers are simply marketing operations people in disguise?</a></li>
+      <li><a href="https://moxiegtm.substack.com/p/how-to-save-200k-and-2-months-without">MoxieGTM: How to Save $200K and 2 Months Without a GTM Engineer</a> · mnenje</li>
+      <li><a href="https://deepline.com/blog/provider-sprawl-gtm-workflows">Deepline: Provider Sprawl in GTM Workflows (3. 6. 2026)</a></li>
+      <li><a href="https://www.reddit.com/r/revops/comments/1rqzqna/what_do_you_think_of_the_growing_gtm_engineer_role/">r/revops: What do you think of the growing GTM engineer role?</a></li>
+      <li><a href="https://community.revgenius.com/x/chat-sales/m4xjt9vg2nu9/how-i-replaced-3-sdrs-with-1-gtm-operator-using-ai">RevGenius: How I Replaced 3 SDRs with 1 GTM Operator (12. 3. 2026)</a> · samoporočilo</li>
+      <li><a href="https://www.saastr.com/dear-saastr-when-should-i-hire-my-first-ae">SaaStr: When should I hire my first AE?</a></li>
+      <li><a href="https://jobs.lever.co/canarytechnologies">Canary Technologies: odprta mesta (21. 10. 2026)</a></li>
+      <li><a href="https://announcements.asx.com.au/asxpdf/20260528/pdf/0701cfxypgp05p.pdf">SiteMinder: borzno obvestilo ASX (28. 5. 2026)</a></li>
+      <li><a href="https://www.hospitalitynet.org/news/4129098.html">Hospitalitynet: HotelTechReport 2026 Budget Season Buyers Guides</a></li>
+    </ol></details>
+  </section>
+
+  <footer>
+    <p>Javna različica. Na strani ni imen sodelavcev, številk iz CRM, domen, stroškov orodij ali opisa notranjih skript; primerjava z Nevronovim sistemom je zasebna.</p>
+    <p>Raziskava je nastala s Claude Code 21. 10. 2026. Plače, oglasi in pravila ponudnikov se spreminjajo; pred odločitvijo preveri vir. Pravni del ni pravni nasvet.</p>
+    <p><a href="../">← Kazalo projektov</a> · <a href="../raziskave-orodij/">Raziskave orodij</a> · <a href="../cold-outreach-domene/">Cold outreach: domene in dostavljivost</a></p>
+  </footer>
+
+</div>
+</body>
+</html>
