@@ -1,0 +1,727 @@
+<!doctype html><html><head><meta charset=utf8><meta name="robots" content="noindex, nofollow"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Demo CTA Ribbon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Open+Sans:wght@400;600;700&display=swap">
+<style>
+:root{
+  color-scheme:dark;
+  --bg:#0c1220;
+  --panel:#141c2e;
+  --panel-2:#1b2439;
+  --line:#2a3550;
+  --ink:#e9edf5;
+  --muted:#97a2ba;
+  --gold:#e3b665;
+  --gold-ink:#1d1607;
+  --steel:#8796ad;
+  --ok:#5fc59a;
+  --ph:#f0c987;
+}
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink)}
+body{font-family:Manrope,"Segoe UI",system-ui,sans-serif;font-size:15px;line-height:1.55;padding-inline:16px;padding-block:32px 64px}
+.wrap{max-width:1180px;margin:0 auto;display:grid;gap:56px}
+header{display:grid;gap:12px;max-width:760px}
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:700}
+h1{font-size:clamp(28px,4vw,40px);line-height:1.15;margin:0;font-weight:800;text-wrap:balance}
+h2{font-size:24px;margin:0;font-weight:800;text-wrap:balance}
+h3{font-size:16px;margin:0;font-weight:700}
+p{margin:0}
+.lead{color:var(--muted);max-width:68ch}
+.legend{display:flex;flex-wrap:wrap;gap:10px 22px;color:var(--muted);font-size:13px}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+.ph{color:var(--ph);border-bottom:1px dashed var(--ph)}
+
+.tier{display:grid;gap:24px}
+.tier-head{display:grid;gap:6px;max-width:760px}
+.tier-head .lead{font-size:14px}
+.tier-body{display:grid;grid-template-columns:340px 1fr;gap:40px;align-items:start}
+@media (max-width:860px){.tier-body{grid-template-columns:1fr}.stage{justify-self:center}}
+.stage{position:sticky;top:20px;display:grid;gap:12px;justify-items:center}
+.stage-hint{font-size:12.5px;color:var(--muted);text-align:center;max-width:300px}
+
+/* phone */
+.phone{width:300px;max-width:100%;height:610px;border-radius:44px;padding:9px;background:linear-gradient(160deg,#3a4458,#1a2030);box-shadow:0 30px 60px -20px rgba(0,0,0,.6),inset 0 0 0 1px rgba(255,255,255,.08)}
+.screen{position:relative;height:100%;border-radius:36px;overflow:hidden;background:#151a26;font-family:"Open Sans",system-ui,sans-serif;color:#e8ebf2}
+.tourbar{position:absolute;top:0;left:0;right:0;z-index:3;padding:14px 46px 8px 16px;background:linear-gradient(#0f1420ee,#0f142000)}
+.segs{display:grid;grid-template-columns:repeat(5,1fr);gap:4px}
+.seg{height:3px;border-radius:2px;background:rgba(255,255,255,.22);overflow:hidden}
+.seg i{display:block;height:100%;width:0;background:#fff;transition:width .3s}
+.seg.done i{width:100%}
+.seglabels{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin-top:5px;font-size:8.5px;color:rgba(255,255,255,.6)}
+.seglabels .on{color:#fff;font-weight:700}
+.playbtn{position:absolute;right:12px;top:12px;width:26px;height:26px;border-radius:50%;border:1.5px solid rgba(255,255,255,.7);display:grid;place-items:center}
+.playbtn svg{width:10px;height:10px;fill:#fff}
+.hero{height:200px;background:
+  linear-gradient(180deg,rgba(15,20,32,0) 55%,#151a26 100%),
+  linear-gradient(160deg,transparent 40%,#3d6b48 41%,#2f5a3b 60%,#4d7a52 100%),
+  linear-gradient(200deg,#5d7286 0%,#7f93a6 35%,#a9b6c2 36%,#6d8296 55%,#38506a 100%)}
+.logo{position:absolute;top:56px;left:16px;width:96px;height:52px;border-radius:8px;background:rgba(235,238,243,.88);color:#2c3442;display:grid;place-items:center;font-size:9.5px;font-weight:700;letter-spacing:.12em;text-align:center;line-height:1.25}
+.body{padding:12px 16px;display:grid;gap:12px}
+.welcome{font-size:17px;font-weight:600}
+.welcome small{display:block;font-size:11px;font-weight:400;color:rgba(255,255,255,.6);margin-top:2px}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.tile{height:50px;border-radius:9px;background:#222a3b;display:grid;align-content:end;padding:5px;font-size:8px;color:rgba(255,255,255,.65)}
+.sect{font-size:13px;font-weight:700}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.card{height:92px;border-radius:9px}
+.card:nth-child(1){background:linear-gradient(135deg,#c79a5a,#6e4a2c)}
+.card:nth-child(2){background:linear-gradient(135deg,#7c4c3a,#3a2a2a)}
+.nav{position:absolute;bottom:10px;left:10px;right:10px;height:58px;border-radius:22px;background:rgba(40,46,62,.92);display:grid;grid-template-columns:repeat(5,1fr);align-items:center;font-size:8px;color:rgba(255,255,255,.8);text-align:center}
+.orb{width:46px;height:46px;border-radius:50%;margin:0 auto;background:radial-gradient(circle at 50% 45%,#fff 0 6%,#9fb0c8 18%,#2c3548 60%,#121826 100%);box-shadow:0 0 18px rgba(170,190,220,.35)}
+
+/* ribbon */
+.ribbon{position:absolute;right:0;top:34%;z-index:5;width:32px;padding:12px 0;border:0;border-radius:12px 0 0 12px;background:var(--gold);color:var(--gold-ink);font:700 12.5px/1 Manrope,system-ui,sans-serif;letter-spacing:.02em;display:flex;flex-direction:column;align-items:center;gap:9px;cursor:pointer;box-shadow:-6px 6px 18px rgba(0,0,0,.35);transition:transform .2s,padding .2s}
+.ribbon:hover{transform:translateX(-3px)}
+.ribbon:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.ribbon .txt{writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap}
+.ribbon svg{width:15px;height:15px;flex:none}
+.ribbon.pulse::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:0 0 0 0 rgba(227,182,101,.7);animation:pulse 2.4s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(227,182,101,.55)}70%{box-shadow:0 0 0 12px rgba(227,182,101,0)}100%{box-shadow:0 0 0 0 rgba(227,182,101,0)}}
+.paused-chip{position:absolute;top:46px;left:50%;transform:translateX(-50%);z-index:4;background:#fff;color:#111;font:700 9px/1 Manrope,sans-serif;letter-spacing:.12em;padding:5px 8px;border-radius:4px}
+
+/* overlay sheet */
+.overlay{position:absolute;inset:0;z-index:8;background:rgba(10,14,24,.62);backdrop-filter:blur(4px);display:flex;align-items:flex-end}
+.sheet{width:100%;background:#1c2232;border-top:1px solid rgba(255,255,255,.1);border-radius:24px 24px 0 0;padding:20px 18px 24px;display:grid;gap:12px;animation:up .28s ease-out}
+@keyframes up{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+.badge{justify-self:start;background:#fff;color:#111;font:700 9px/1 Manrope,sans-serif;letter-spacing:.12em;padding:4px 7px;border-radius:4px}
+.sheet h4{margin:0;font-size:17px;line-height:1.25;font-weight:700}
+.sheet p{font-size:12.5px;color:rgba(255,255,255,.75);line-height:1.5}
+.field{display:grid;gap:4px}
+.field label{font-size:10.5px;color:rgba(255,255,255,.6);letter-spacing:.04em}
+.field input{width:100%;background:#121725;border:1px solid rgba(255,255,255,.14);border-radius:10px;padding:9px 11px;color:#fff;font:600 13px "Open Sans",sans-serif}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chips button{background:transparent;border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:999px;padding:6px 10px;font:600 11px "Open Sans",sans-serif;cursor:pointer}
+.chips button.on{background:#fff;color:#111;border-color:#fff}
+.btn{border:0;border-radius:999px;padding:12px;font:700 14px "Open Sans",sans-serif;cursor:pointer;width:100%}
+.btn.primary{background:var(--gold);color:var(--gold-ink)}
+.btn.ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.35)}
+.fine{font-size:10.5px!important;color:rgba(255,255,255,.55)!important;text-align:center}
+.site{border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,.14)}
+.site .bar{display:flex;align-items:center;gap:6px;padding:6px 8px;background:#121725;font-size:10.5px;color:rgba(255,255,255,.7)}
+.site .bar i{width:7px;height:7px;border-radius:50%;background:#5fc59a}
+.site .shot{height:86px;background:linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.45)),linear-gradient(200deg,#7f93a6,#3d6b48);display:grid;align-content:end;padding:8px;font-size:12px;font-weight:700}
+.site .shot small{font-weight:400;font-size:9.5px;opacity:.85}
+.center{display:grid;justify-items:center;text-align:center;gap:12px;padding:26px 6px 10px}
+.spinner{width:44px;height:44px;border-radius:50%;border:3px solid rgba(255,255,255,.15);border-top-color:var(--gold);animation:spin .9s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.check{width:50px;height:50px;border-radius:50%;background:var(--ok);display:grid;place-items:center;animation:pop .35s ease-out}
+.check svg{width:24px;height:24px;stroke:#0d2a1d;stroke-width:3;fill:none}
+@keyframes pop{from{transform:scale(.4);opacity:0}to{transform:none;opacity:1}}
+
+/* option list */
+.opts{display:grid;gap:12px}
+.opt{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;padding:16px 18px;border-radius:14px;background:var(--panel);border:1px solid var(--line);cursor:pointer;text-align:left;color:inherit;font:inherit;width:100%}
+.opt:hover{border-color:#3a4767}
+.opt:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.opt[aria-pressed="true"]{border-color:var(--gold);background:var(--panel-2)}
+.num{grid-row:span 2;width:28px;height:28px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;font-weight:800;font-size:13px;color:var(--muted)}
+.opt[aria-pressed="true"] .num{background:var(--gold);border-color:var(--gold);color:var(--gold-ink)}
+.opt-top{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px}
+.pill{display:inline-flex;align-items:center;gap:6px;background:var(--gold);color:var(--gold-ink);font-weight:800;font-size:13px;padding:4px 10px;border-radius:6px}
+.rec{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ok)}
+.chars{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.opt-detail{display:grid;gap:8px;grid-column:2}
+.pro,.con{font-size:13.5px;color:var(--muted)}
+.pro b{color:var(--ok);font-weight:700}
+.con b{color:#f08f7a;font-weight:700}
+.copy{display:none;gap:6px;margin-top:4px;padding:12px 14px;border-radius:10px;background:#0f1626;border:1px solid var(--line);font-size:13px}
+.opt[aria-pressed="true"] .copy{display:grid}
+.copy div{display:grid;grid-template-columns:110px 1fr;gap:10px}
+.copy dt{color:var(--muted);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;padding-top:2px}
+@media (max-width:520px){.copy div{grid-template-columns:1fr;gap:0}}
+
+.col{display:grid;gap:16px}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;padding:4px;background:var(--panel);border:1px solid var(--line);border-radius:12px;justify-self:start}
+.tabs button{border:0;background:transparent;color:var(--muted);font:700 13px Manrope,sans-serif;padding:8px 14px;border-radius:8px;cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--ink);color:var(--bg)}
+.tabs button:focus-visible{outline:2px solid var(--gold)}
+.moment-note{font-size:13.5px;color:var(--muted);max-width:68ch}
+.moment-note b{color:var(--ink)}
+
+/* demo modal, matches the live demo popups */
+.modal-wrap{position:absolute;inset:0;z-index:7;background:rgba(10,14,24,.55);backdrop-filter:blur(3px);display:grid;place-items:center;padding:16px}
+.modal-wrap.full{background:rgba(14,18,28,.88)}
+.modal{width:100%;background:#1b2030;border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:18px 16px;display:grid;gap:10px;text-align:center;justify-items:center;animation:pop .3s ease-out}
+.modal-wrap.full .modal{background:transparent;border:0}
+.modal h4{margin:0;font-size:17px;line-height:1.25;font-weight:700;text-wrap:balance}
+.modal p{font-size:12.5px;color:rgba(255,255,255,.78);line-height:1.5}
+.modal .hint{font-size:11px;color:rgba(255,255,255,.6)}
+.modal .hint b{color:var(--gold)}
+.modal .btn{padding:11px;font-size:13.5px}
+.btn.steel{background:linear-gradient(90deg,#4a5368,#9aa8bb);color:#fff}
+.btn.link{background:transparent;color:#fff;padding:4px;font-weight:600;font-size:12.5px}
+.btn.link.gold{color:var(--gold)}
+.modal .field{width:100%;text-align:left}
+.modal .chips{justify-content:center}
+.modal .list{list-style:none;margin:0;padding:0;display:grid;gap:4px;font-size:11.5px;text-align:left;width:100%}
+.modal .list li{display:flex;gap:8px;align-items:center;color:rgba(255,255,255,.8)}
+.modal .list li::before{content:"";width:14px;height:14px;border-radius:50%;background:var(--ok) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4L18 8' stroke='%230d2a1d' stroke-width='3.5' fill='none'/%3E%3C/svg%3E") center/10px no-repeat;flex:none}
+.avatar{width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,#e3b665,#8a6a3a);display:grid;place-items:center;font:800 18px Manrope,sans-serif;color:var(--gold-ink)}
+.qr{display:flex;gap:10px;align-items:center;text-align:left;font-size:11px;color:rgba(255,255,255,.75);width:100%}
+.qr i{width:52px;height:52px;flex:none;background:repeating-conic-gradient(#fff 0 25%,#111 0 50%) 0 0/10px 10px;border:3px solid #fff}
+.swap{display:flex;align-items:center;gap:8px;font-size:10px;font-weight:700;letter-spacing:.1em}
+.swap span{width:70px;height:38px;border-radius:7px;display:grid;place-items:center;background:rgba(235,238,243,.88);color:#2c3442;line-height:1.2}
+.swap span.you{background:transparent;border:1.5px dashed var(--gold);color:var(--gold)}
+.thanks{font-size:12px;color:var(--ok)!important;font-weight:700}
+
+.rules{display:grid;gap:16px;max-width:860px}
+.rules ol{margin:0;padding-left:20px;display:grid;gap:10px;color:var(--muted)}
+.rules li b{color:var(--ink)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Nevron guest app · automated demo</div>
+    <h1>Demo CTA: start, ribbon, pause and end</h1>
+    <p class="lead">Four moments per tier: the start popup, the side ribbon, the pause popup and the end screen. Pick a moment and an option on the right, then use the phone. Every gold button runs the real flow: sheet, spinner, confirmation and thank-you.</p>
+    <div class="legend"><span><span class="ph">dotted gold</span> = value you still need to set (name, time promise)</span></div>
+  </header>
+
+  <section class="tier" id="tier1">
+    <div class="tier-head">
+      <div class="eyebrow">Tier 1 · custom demo</div>
+      <h2>Their own hotel, scraped from their website</h2>
+      <p class="lead">Goal: a yes to launching this app. The ribbon books a call with the guest experience expert, who finishes the content with them and sets the launch date.</p>
+    </div>
+    <div class="tier-body">
+      <div class="stage"><div class="phone"><div class="screen" data-screen="t1"></div></div><p class="stage-hint" data-hint="t1"></p></div>
+      <div class="col"><div class="tabs" role="tablist" data-tabs="t1"></div><p class="moment-note" data-note="t1"></p><div class="opts" data-opts="t1"></div></div>
+    </div>
+  </section>
+
+  <section class="tier" id="tier2">
+    <div class="tier-head">
+      <div class="eyebrow">Tier 2 · general demo</div>
+      <h2>Fictional hotel, sent to lower-priority leads</h2>
+      <p class="lead">Goal: they ask us to build the app for their hotel. The ribbon collects the website, shows it back for confirmation, and says plainly that it is free and without obligation.</p>
+    </div>
+    <div class="tier-body">
+      <div class="stage"><div class="phone"><div class="screen" data-screen="t2"></div></div><p class="stage-hint" data-hint="t2"></p></div>
+      <div class="col"><div class="tabs" role="tablist" data-tabs="t2"></div><p class="moment-note" data-note="t2"></p><div class="opts" data-opts="t2"></div></div>
+    </div>
+  </section>
+
+  <section class="rules">
+    <h2>Rules that apply to every option</h2>
+    <ol>
+      <li><b>The spinner waits for the real server reply.</b> The confirmation appears only after the request is saved. On failure, show “We couldn't send this. Call us on <span class="ph">+386 …</span>” instead of a thank-you.</li>
+      <li><b>A tap pauses the tour.</b> Closing the sheet without sending offers the existing “Take control / Continue tour” choice.</li>
+      <li><b>On desktop, put the ribbon outside the phone frame.</b> On the right edge of the bezel it costs no screen width and never covers app content. Inside the screen only on a real phone.</li>
+      <li><b>Keep the label to 18 characters or fewer.</b> Vertical text is read slowly; the icon (phone for Tier 1, spark for Tier 2) tells half the story before the words do.</li>
+      <li><b>Prefill what you already know.</b> Tier 1 has the phone number from the dossier, Tier 2 can prefill the email from the outreach link. Every empty field costs submissions.</li>
+      <li><b>Gold means “talk to Nevron”.</b> Tour buttons stay steel grey. Every sales action, ribbon included, is gold, so the eye learns one color for one meaning.</li>
+      <li><b>Never call the app itself free.</b> In Tier 2 the build of the demo is free. “Free app” creates a price shock on the first call.</li>
+    </ol>
+  </section>
+</div>
+
+<script>
+const ICON = {
+  phone:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>',
+  spark:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.2 6.3L20.5 10l-6.3 2.2L12 18.5l-2.2-6.3L3.5 10l6.3-1.7z"/><path d="M19 15l.9 2.1L22 18l-2.1.9L19 21l-.9-2.1L16 18l2.1-.9z"/></svg>',
+  play:'<svg viewBox="0 0 10 10"><path d="M2 1l7 4-7 4z"/></svg>',
+  check:'<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>'
+};
+const PH = s => `<span class="ph">${s}</span>`;
+const HOTEL = 'Hotel Alpina', EXPERT = PH('Ana'), WHEN1 = PH('within one working hour'), WHEN2 = PH('within 2 working days');
+
+const T1 = [
+  {label:'Launch my app', rec:true,
+   pro:'Ownership: it is already “my app”. Names the outcome they want, not the step in between.',
+   con:'Does not say a call follows. The sheet title has to say it in the first line.',
+   title:`Launch this app for ${HOTEL}?`,
+   body:`Our guest experience expert calls you, goes through the content with you and sets the launch date. Anything you want changed, we fix before launch.`,
+   cta:'Call me', spin:'Booking your call…', doneTitle:'Your call is booked'},
+  {label:'I want this app',
+   pro:'Mirrors the exact thought a GM has after a good demo. Lowest effort to click.',
+   con:'Reads like a purchase. Some GMs hold back until they know the price.',
+   title:'Good. Let’s get it ready for your guests',
+   body:`We call you to go through the content together and agree on the launch date. No commitment on this call.`,
+   cta:'Call me', spin:'Booking your call…', doneTitle:'We’ll be in touch'},
+  {label:'Call me to launch',
+   pro:'The clearest about what happens next: a call, about launching.',
+   con:'“Call” can feel like sales pressure to people who prefer email. Offer email as a fallback in the sheet.',
+   title:'When should we call you?',
+   body:`Our guest experience expert finishes the content with you and sets the launch date. One call, about 15 minutes.`,
+   cta:'Call me', spin:'Booking your call…', doneTitle:'Your call is booked'},
+  {label:'Make it live',
+   pro:'Short, strong verb. The best fit for a narrow vertical strip.',
+   con:'Abstract. Some will think it goes live immediately, unchecked. The sheet must say nothing goes live without their OK.',
+   title:'Ready to make it live?',
+   body:`Nothing goes live without your OK. Our expert calls you, you agree the final changes together, and you pick the launch date.`,
+   cta:'Call me', spin:'Booking your call…', doneTitle:'You’re on the launch list'},
+  {label:'Talk to an expert',
+   pro:'The lowest commitment. Works for hesitant viewers early in the tour.',
+   con:'The weakest buying signal. Attracts “how does X work” questions instead of launch decisions.',
+   title:'Talk to our guest app expert',
+   body:`Ask anything about the app, your content or the launch. We call you at the time that suits you.`,
+   cta:'Call me', spin:'Booking your call…', doneTitle:'Your call is booked'},
+  {label:'Questions? Call me', label2:'Launch my app', progressive:true,
+   pro:'Matches the label to the moment: help during the tour, the launch decision after Departure.',
+   con:'Two labels to build and to measure. Count both as one funnel or the numbers will mislead.',
+   title:`Launch this app for ${HOTEL}?`,
+   body:`Our guest experience expert calls you, answers your questions and sets the launch date with you.`,
+   cta:'Call me', spin:'Booking your call…', doneTitle:'Your call is booked'}
+];
+
+const T2 = [
+  {label:'Build mine · free', rec:true,
+   pro:'Action, object and price in three words. Answers “what does it cost me” before it is asked.',
+   con:'“Free” alone on a strip can look like a trial trap. The sheet says “no commitment” right under the title.',
+   title:'Get this app with your hotel inside',
+   body:'Enter your website. We fill the app with your rooms, restaurants and services and send you the link. Free, no commitment.',
+   cta:'Find my hotel', confirm:'Yes, build my app', spin:'Sending to our build team…', doneTitle:'Your app is on its way'},
+  {label:'Try it with my hotel',
+   pro:'Feels like the next step of the demo, not a sign-up. Low threshold.',
+   con:'“Try” suggests instant. It is not, so the sheet has to state the delivery time.',
+   title:'Try this app with your own hotel',
+   body:'Tell us your website and we build a version with your hotel’s content. Free, no commitment.',
+   cta:'Find my hotel', confirm:'Yes, that’s my hotel', spin:'Sending your request…', doneTitle:'Request received'},
+  {label:'See my hotel in it',
+   pro:'Curiosity and a little vanity: everyone wants to see their own hotel on a guest’s phone.',
+   con:'Says neither that it is free nor what they will receive.',
+   title:'See your hotel in this app',
+   body:'We build this exact demo with your photos, rooms and services, taken from your website. Free, no commitment.',
+   cta:'Find my hotel', confirm:'Yes, build it', spin:'Sending your request…', doneTitle:'We’re building it'},
+  {label:'Generate my app',
+   pro:'Your own wording. A clear verb, and “my app” carries ownership.',
+   con:'“Generate” sounds automatic and instant. GMs may expect it on screen in seconds, or assume low quality.',
+   title:'Generate the app for your hotel',
+   body:'We generate it from your website, then our team checks it before you get the link. Free, no commitment.',
+   cta:'Find my hotel', confirm:'Yes, generate it', spin:'Starting your build…', doneTitle:'Your build has started'},
+  {label:'Get my free demo',
+   pro:'Honest: what they get is a demo. “Free” is accurate here, unlike “free app”.',
+   con:'“Demo” has less pull than “app”. They are already watching one.',
+   title:'Your own demo, with your hotel',
+   body:'The same tour you just saw, built with your hotel’s content. Free, no commitment.',
+   cta:'Find my hotel', confirm:'Yes, build my demo', spin:'Sending your request…', doneTitle:'Your demo is on its way'},
+  {label:'Your hotel here',
+   pro:'Playful and visual. It points at the empty slot the fictional hotel is taking.',
+   con:'The least clear about what a tap does. Use it only as an A/B challenger.',
+   title:'Put your hotel in this app',
+   body:'Replace the demo hotel with yours. We take the content from your website. Free, no commitment.',
+   cta:'Find my hotel', confirm:'Yes, put it in', spin:'Sending your request…', doneTitle:'Your hotel is next'}
+];
+
+const B = (label, kind, act, v) => ({label, kind, act, v});
+const PLAY = B('Play the tour · 2 min','steel','resume');
+const EXPLORE = B('Explore on my own','link','dismiss');
+const KIND = {steel:'btn steel', ghost:'btn ghost', gold:'btn primary', link:'btn link', glink:'btn link gold'};
+
+const MOM = {
+ t1:{
+  start:[
+   {name:'Your app is ready', rec:true,
+    pro:'States the surprise in one line: this is already theirs. The hint teaches the ribbon before the tour starts.',
+    con:'One more line to read before Play. On small screens drop the hint first.',
+    m:{badge:'DEMO', title:`${HOTEL}’s guest app is ready`, text:`We built it from ${PH('{website}')}. See it the way your guests will.`,
+       buttons:[PLAY, EXPLORE], hint:'Like it? Tap <b>Launch my app</b> on the right, any time.'}},
+   {name:'Personal greeting',
+    pro:'First name plus “your” gets the most attention from a Dream 100 lead.',
+    con:'Needs a correct first name in every link. A wrong name hurts more than none, so fall back to option 1.',
+    m:{badge:'DEMO', title:`Hi ${PH('{first name}')}, this is your guest app`, text:`A 2-minute tour of a guest’s stay at ${HOTEL}, from arrival to departure.`,
+       buttons:[PLAY, EXPLORE]}},
+   {name:'Through a guest’s eyes',
+    pro:'Frames the value in guest experience, the language a GM already uses.',
+    con:'Does not say it was built from their content. The “it’s mine” moment comes later.',
+    m:{badge:'DEMO', title:'See your hotel through a guest’s phone', text:'Five moments of a stay: arrival, assistant, room, the day, departure. 2 minutes.',
+       buttons:[PLAY, EXPLORE]}},
+   {name:'Fast lane',
+    pro:'A GM who already decided (after a call, say) converts in one tap.',
+    con:'Three choices at the start. A few will skip and never see the value.',
+    m:{badge:'DEMO', title:`${HOTEL}’s guest app is ready`, text:'Take the tour, or skip it if you already know you want it.',
+       buttons:[PLAY, EXPLORE, B('Skip the tour, I want to launch it','glink','open')]}},
+   {name:'Minimal',
+    pro:'Closest to today’s popup. The fastest path to Play.',
+    con:'No ownership signal and no preview of the CTA.',
+    m:{badge:'DEMO', title:'Your guest app · 2-minute tour', buttons:[PLAY, EXPLORE]}}
+  ],
+  pause:[
+   {name:'Quiet third option', rec:true,
+    pro:'Keeps today’s two choices intact and adds the CTA as a quiet third line.',
+    con:'A link is easy to miss. That is intended: the pause is not the main conversion moment.',
+    m:{badge:'DEMO', title:'Paused', text:'Take over from here?',
+       buttons:[B('Take control','steel','dismiss'), B('Continue tour','ghost','resume'), B('Launch my app · we call you','glink','open')]}},
+   {name:'Pull to the finish',
+    pro:'Pulls them toward the end screen, where the strongest ask lives.',
+    con:'The text changes with each step, so five versions to maintain.',
+    m:{badge:'DEMO', title:'Paused at Your day', text:'One step left: Departure, with the bill and check-out.',
+       buttons:[B('Finish the tour','steel','resume'), B('Take control','ghost','dismiss'), B('Launch my app','glink','open')]}},
+   {name:'Ask for changes',
+    pro:'A change request is a soft yes: they are already shaping their own app. It also gives the expert a reason to call.',
+    con:'We must actually make those changes before the call, or trust breaks.',
+    m:{badge:'DEMO', title:'Paused. Anything to change?', text:'Tell us what you would change. We fix it before launch.',
+       buttons:[B('Take control','steel','dismiss'), B('Continue tour','ghost','resume'), B('Note a change','glink','note')]}},
+   {name:'Seen enough?',
+    pro:'The strongest ask. Fits if analytics show many pauses late in the tour.',
+    con:'A pause usually means “let me look closer”, not “I’m done”. Can feel pushy.',
+    m:{badge:'DEMO', title:'Seen enough?', text:'If you like what you see, we call you and set the launch date.',
+       buttons:[B('Launch my app','gold','open'), B('Continue tour','ghost','resume'), B('Take control','link','dismiss')]}},
+   {name:'Expert on call',
+    pro:'A human face at the moment of curiosity.',
+    con:'Needs a real person with a photo, and someone free to call back fast.',
+    m:{avatar:'A', title:'Paused', text:`${EXPERT}, our guest app expert, can walk you through it live.`,
+       buttons:[B('Take control','steel','dismiss'), B('Continue tour','ghost','resume'), B('Call me now','glink','open')]}}
+  ],
+  end:[
+   {name:'Launch first', rec:true,
+    pro:'Puts the decision at the peak of the tour. Exploring stays as a no-pressure exit.',
+    con:'If the scraped content has visible errors, the ask lands before trust. Then option 3 is safer.',
+    m:{full:true, title:'Like it? Let’s launch it', text:'Our expert calls you, finishes the content with you and sets the launch date.',
+       buttons:[B('Launch my app','gold','open'), B('Explore on my own','steel','dismiss'), B('Replay the tour','link','replay')], qr:true}},
+   {name:'Launch date',
+    pro:'A concrete date makes it real and moves the talk from “if” to “when”.',
+    con:'We commit to a date we might not hold. Calculate it from real onboarding capacity.',
+    m:{full:true, title:`Your guests could use it from ${PH('{date}')}`, text:'We call you to set the date and finish the content together.',
+       buttons:[B('Set my launch date','gold','open'), B('Explore on my own','steel','dismiss'), B('Replay the tour','link','replay')], qr:true}},
+   {name:'Yes or not yet',
+    pro:'One tap on a reason gives the SDR a follow-up angle for everyone who does not convert.',
+    con:'Makes “no” an explicit choice. Some say “not yet” who would have tapped later.',
+    m:{full:true, title:'Ready to launch it?', text:'Yes, and our expert calls you. Not yet, and you keep exploring.',
+       buttons:[B('Yes, call me','gold','open'), B('Not yet, I’ll explore','ghost','dismiss')],
+       chipsLabel:'What’s missing?', chips:['Content','Price','Timing','Something else']}},
+   {name:'Recap, then ask',
+    pro:'Reminds them of the value right before the ask.',
+    con:'Long: on a small phone the button drops below the fold. The list must match what the tour actually showed.',
+    m:{full:true, title:'Your guests just got', list:['Check-in before they arrive','An assistant in their own language','Orders and services from the room','Ideas for their day','The bill without queuing at the desk'],
+       buttons:[B('Launch my app','gold','open'), B('Explore on my own','steel','dismiss')]}},
+   {name:'Meet the expert',
+    pro:'For a high-trust B2B ask, a person usually beats a button (moderate confidence, not measured).',
+    con:'Needs a real person, photo and calendar. “15 minutes” has to be true.',
+    m:{full:true, avatar:'A', title:`I’m ${EXPERT}. Shall I call you?`, text:'I set up guest apps for hotels. In 15 minutes we agree what to fix and when to launch.',
+       buttons:[B('Yes, call me','gold','open'), B('Explore on my own','steel','dismiss'), B('Replay the tour','link','replay')]}}
+  ]
+ },
+ t2:{
+  start:[
+   {name:'Set the expectation', rec:true,
+    pro:'Says up front why to watch to the end, and explains the fictional hotel.',
+    con:'Mentions “free” before any value. A few will read the tour as a sales funnel.',
+    m:{badge:'DEMO', title:'Take a quick tour of a guest app', text:'This is a demo hotel. At the end you can get the same app with your hotel inside, built free.',
+       buttons:[PLAY, EXPLORE]}},
+   {name:'Picture your hotel',
+    pro:'The swap graphic primes exactly what the CTA will offer.',
+    con:'The graphic has to be designed and built.',
+    m:{badge:'DEMO', swap:true, title:'Picture your hotel here', text:'A 2-minute tour of a guest’s stay. Afterwards we can build it with your content, free.',
+       buttons:[PLAY, EXPLORE]}},
+   {name:'Skip lane',
+    pro:'Catches people who have already seen a demo like this.',
+    con:'Skippers have seen nothing, so their requests are weaker.',
+    m:{badge:'DEMO', title:'Guest app demo · 2 minutes', text:'Watch the tour, or skip it and have one built for your hotel.',
+       buttons:[PLAY, EXPLORE, B('Skip, build mine · free','glink','open')]}},
+   {name:'Website up front',
+    pro:'Captures the lead before any drop-off during the tour.',
+    con:'Friction before value. Run it only as a test against option 1.',
+    m:{badge:'DEMO', title:'Want to see it with your hotel later?', text:'Leave your website now (optional) and you won’t have to type it at the end.',
+       field:'Your hotel’s website', buttons:[B('Save and play the tour','steel','resume'), B('Just play the tour','link','resume')]}},
+   {name:'Minimal',
+    pro:'Closest to today’s popup. The fastest path to Play.',
+    con:'Does not explain the fictional hotel or what comes at the end.',
+    m:{badge:'DEMO', title:'Guest app demo · 2 min', buttons:[PLAY, EXPLORE]}}
+  ],
+  pause:[
+   {name:'Quiet third option', rec:true,
+    pro:'Today’s two choices stay. The CTA sits underneath as a link.',
+    con:'Easy to miss, by design.',
+    m:{badge:'DEMO', title:'Paused', text:'Take over from here?',
+       buttons:[B('Take control','steel','dismiss'), B('Continue tour','ghost','resume'), B('Build mine · free','glink','open')]}},
+   {name:'Pull to the finish',
+    pro:'Pulls them to the end screen with the strongest ask.',
+    con:'Five step-specific texts to maintain.',
+    m:{badge:'DEMO', title:'Paused at Your day', text:'One step left: Departure, with the bill and check-out.',
+       buttons:[B('Finish the tour','steel','resume'), B('Take control','ghost','dismiss'), B('Build mine · free','glink','open')]}},
+   {name:'Picture yours',
+    pro:'Turns the pause into a reminder that this can be their hotel.',
+    con:'A sales line during a pause can feel like an interruption.',
+    m:{badge:'DEMO', title:'Paused', text:'Like what you see? We build it with your hotel’s content, free.',
+       buttons:[B('Take control','steel','dismiss'), B('Continue tour','ghost','resume'), B('Build mine · free','glink','open')]}},
+   {name:'Seen enough?',
+    pro:'The strongest ask. Fits a low-priority list where many never reach the end.',
+    con:'Pushes before they have seen Departure.',
+    m:{badge:'DEMO', title:'Seen enough?', text:'We build this app with your hotel inside. Free, no commitment.',
+       buttons:[B('Build mine · free','gold','open'), B('Continue tour','ghost','resume'), B('Take control','link','dismiss')]}},
+   {name:'Ask a question',
+    pro:'Gives the hesitant a low step: a question instead of a request.',
+    con:'Questions need a human to answer them, which Tier 2 was meant to save.',
+    m:{badge:'DEMO', title:'Paused', text:'Not sure it fits your hotel? Ask us anything.',
+       buttons:[B('Take control','steel','dismiss'), B('Continue tour','ghost','resume'), B('Ask a question','glink','note')]}}
+  ],
+  end:[
+   {name:'Build first', rec:true,
+    pro:'The ask comes at the peak, with “free, no commitment” right in the text.',
+    con:'One more step (the website) after the tap.',
+    m:{full:true, title:'Now with your hotel inside', text:'We build this app with your rooms, restaurants and services, taken from your website. Free, no commitment.',
+       buttons:[B('Build mine · free','gold','open'), B('Explore on my own','steel','dismiss'), B('Replay the tour','link','replay')], qr:true}},
+   {name:'Website right here',
+    pro:'One step less: the website goes in on this screen, the next one is the confirmation.',
+    con:'A form on the end screen feels heavier than a button.',
+    m:{full:true, title:'Get this app with your hotel', text:'Free, no commitment. We send the link to your email.',
+       field:'Your hotel’s website', buttons:[B('Build mine · free','gold','next'), B('Explore on my own','link','dismiss')]}},
+   {name:'Swap the hotel',
+    pro:'Shows the swap visually: demo logo out, theirs in.',
+    con:'The graphic has to be designed. Without it the line is weaker.',
+    m:{full:true, swap:true, title:'That was Demo Hotel. Next: yours.', text:'We build it from your website. Free, no commitment.',
+       buttons:[B('Build mine · free','gold','open'), B('Explore on my own','steel','dismiss')]}},
+   {name:'Yes or not now',
+    pro:'Reasons from non-converters. “Not the decision-maker” is gold for the SDR.',
+    con:'Makes “no” an explicit choice.',
+    m:{full:true, title:'Want it for your hotel?', text:'Free, no commitment.',
+       buttons:[B('Yes, build mine','gold','open'), B('Not now','ghost','dismiss')],
+       chipsLabel:'What’s stopping you?', chips:['Content','Price','Timing','I don’t decide this']}},
+   {name:'Pass it on',
+    pro:'Tier 2 often reaches people who do not decide. Forwarding turns them into a referral.',
+    con:'Two CTAs split attention.',
+    m:{full:true, title:'Show it to your team', text:'Have one built with your hotel, free, or send this demo to whoever decides.',
+       buttons:[B('Build mine · free','gold','open'), B('Send to a colleague','ghost','share'), B('Explore on my own','link','dismiss')]}}
+  ]
+ }
+};
+
+const SEGS = ['Arrival','Assistant','My room','Your day','Departure'];
+const MOMENTS = [['start','Start'],['ribbon','Ribbon'],['pause','Pause'],['end','End']];
+const NOTES = {
+  start:'<b>Start popup.</b> The first screen after the link opens. Job: get Play pressed and plant the idea that this can be theirs.',
+  ribbon:'<b>Side ribbon.</b> Visible from the first second of the tour. Tap it on the phone: the tour pauses and the sheet opens.',
+  pause:'<b>Pause popup.</b> Appears when they tap the screen during the tour. Job: keep them in the demo, offer the CTA quietly.',
+  end:'<b>End screen.</b> After Departure. The strongest ask of the whole demo goes here.'
+};
+const HINTS = {
+  t1:{ribbon:'Tap the ribbon. Option 6 changes its label when the tour reaches Departure.'},
+  t2:{ribbon:'Tap the ribbon. Three steps: website, confirm the page, sent.'}
+};
+const fresh = () => ({start:0, pause:0, end:0});
+const state = {
+  t1:{moment:'start', opt:0, mopt:fresh(), step:'idle', tour:0, paused:true, when:'Today', hidden:false, variant:'', reason:'', shared:false},
+  t2:{moment:'start', opt:0, mopt:fresh(), step:'idle', tour:0, paused:true, hidden:false, variant:'', reason:'', shared:false}
+};
+const DATA = {t1:T1, t2:T2};
+
+function labelFor(t){
+  const s = state[t], o = DATA[t][s.opt];
+  return o.progressive && s.tour >= 4 ? o.label2 : o.label;
+}
+
+function setMoment(t, m){
+  const s = state[t];
+  Object.assign(s, {moment:m, step:'idle', hidden:false, variant:'', reason:'', shared:false});
+  s.tour = {start:0, ribbon:0, pause:3, end:5}[m];
+  s.paused = m !== 'ribbon';
+}
+
+function appShell(t){
+  const s = state[t];
+  const hotel = t==='t1' ? 'ALPINA<br>HOTEL' : 'DEMO<br>HOTEL';
+  const on = Math.min(s.tour, 4);
+  return `
+  <div class="tourbar">
+    <div class="segs">${SEGS.map((_,i)=>`<div class="seg ${i<s.tour?'done':''}"><i style="${i===s.tour?'width:60%':''}"></i></div>`).join('')}</div>
+    <div class="seglabels">${SEGS.map((n,i)=>`<span class="${i===on?'on':''}">${n}</span>`).join('')}</div>
+  </div>
+  <div class="playbtn">${ICON.play}</div>
+  ${s.paused && s.moment!=='start' && s.tour<5 ?'<div class="paused-chip">PAUSED</div>':''}
+  <div class="hero"></div>
+  <div class="logo">${hotel}</div>
+  <div class="body">
+    <div class="welcome">Welcome, Demo Guest<small>Your stay: 01/10/2026 to 03/10/2026</small></div>
+    <div class="tiles"><div class="tile">Check-in</div><div class="tile">Interests</div><div class="tile">Services</div><div class="tile">Rating</div></div>
+    <div class="sect">Culinary</div>
+    <div class="cards"><div class="card"></div><div class="card"></div></div>
+  </div>
+  <div class="nav"><span>My stay</span><span>Alerts</span><div class="orb"></div><span>Explore</span><span>Info</span></div>
+  <button class="ribbon ${s.step==='idle'?'pulse':''}" data-act="open" data-t="${t}" aria-label="${labelFor(t)}">${t==='t1'?ICON.phone:ICON.spark}<span class="txt">${labelFor(t)}</span></button>`;
+}
+
+function modalBody(t, m, interactive){
+  const s = state[t];
+  const parts = [];
+  if (m.avatar) parts.push(`<div class="avatar">${m.avatar}</div>`);
+  if (m.badge) parts.push(`<span class="badge" style="justify-self:center">${m.badge}</span>`);
+  if (m.swap) parts.push(`<div class="swap"><span>DEMO<br>HOTEL</span>→<span class="you">YOUR<br>HOTEL</span></div>`);
+  parts.push(`<h4>${m.title}</h4>`);
+  if (m.text) parts.push(`<p>${m.text}</p>`);
+  if (m.list) parts.push(`<ul class="list">${m.list.map(x=>`<li>${x}</li>`).join('')}</ul>`);
+  if (m.field) parts.push(`<div class="field"><label for="${t}-mfield">${m.field}</label><input id="${t}-mfield" placeholder="www.yourhotel.com"></div>`);
+  m.buttons.forEach(b=>{
+    if (b.act==='share' && s.shared) { parts.push(`<p class="thanks">Link copied. Send it to whoever decides.</p>`); return; }
+    parts.push(`<button class="${KIND[b.kind]}" data-act="${interactive?b.act:''}" data-t="${t}">${b.label}</button>`);
+  });
+  if (m.chips){
+    if (s.reason) parts.push(`<p class="thanks">Thanks. Noted: ${s.reason}.</p>`);
+    else parts.push(`<p class="hint">${m.chipsLabel}</p><div class="chips">${m.chips.map(c=>`<button data-act="reason" data-v="${c}" data-t="${t}">${c}</button>`).join('')}</div>`);
+  }
+  if (m.hint) parts.push(`<p class="hint">${m.hint}</p>`);
+  if (m.qr) parts.push(`<div class="qr"><i></i><span>On a computer? Scan to open it on your phone.</span></div>`);
+  return parts.join('');
+}
+
+function modal(t){
+  const s = state[t];
+  if (s.moment==='ribbon' || s.step!=='idle' || s.hidden) return '';
+  const m = MOM[t][s.moment][s.mopt[s.moment]].m;
+  return `<div class="modal-wrap ${m.full?'full':''}"><div class="modal">${modalBody(t, m, true)}</div></div>`;
+}
+
+function sheet(t){
+  const s = state[t], o = DATA[t][s.opt];
+  if (s.step==='idle') return '';
+  const note = s.variant==='note';
+  let inner = '';
+  if (t==='t1'){
+    if (s.step==='form') inner = note ? `
+      <span class="badge">DEMO PAUSED</span>
+      <h4>What should we change?</h4><p>A text, a photo, a missing service. We fix it before launch and go through it with you on a short call.</p>
+      <div class="field"><label for="t1-note">Your note</label><input id="t1-note" value="Breakfast is 7:00 to 10:30, not 11:00"></div>
+      <div class="field"><label for="t1-phone">Your phone</label><input id="t1-phone" value="+386 41 555 012"></div>
+      <button class="btn primary" data-act="send" data-t="t1">Send my note</button>
+      <button class="btn ghost" data-act="close" data-t="t1">Back to the tour</button>` : `
+      <span class="badge">DEMO PAUSED</span>
+      <h4>${o.title}</h4><p>${o.body}</p>
+      <div class="field"><label for="t1-phone">Your phone</label><input id="t1-phone" value="+386 41 555 012"></div>
+      <div class="chips">${['Today','Tomorrow','Pick a time'].map(w=>`<button class="${s.when===w?'on':''}" data-act="when" data-v="${w}">${w}</button>`).join('')}</div>
+      <button class="btn primary" data-act="send" data-t="t1">${o.cta}</button>
+      <button class="btn ghost" data-act="close" data-t="t1">Back to the tour</button>`;
+    if (s.step==='spin') inner = `<div class="center"><div class="spinner"></div><p>${note?'Sending your note…':o.spin}</p></div>`;
+    if (s.step==='done') inner = note ? `<div class="center"><div class="check">${ICON.check}</div>
+      <h4>Got it</h4>
+      <p>We fix this before launch. ${EXPERT} calls you on +386 41 555 012 ${WHEN1} to go through it with you.</p>
+      <p><b>Thank you, this helps us make it yours.</b></p></div>
+      <button class="btn ghost" data-act="close" data-t="t1">Keep exploring</button>` : `<div class="center"><div class="check">${ICON.check}</div>
+      <h4>${o.doneTitle}</h4>
+      <p>${EXPERT} from Nevron will call you on +386 41 555 012 ${s.when==='Tomorrow'?'tomorrow':WHEN1}. Your app stays exactly as you see it, so keep exploring.</p>
+      <p><b>Thank you, we look forward to launching it with you.</b></p></div>
+      <button class="btn ghost" data-act="close" data-t="t1">Keep exploring</button>`;
+  } else {
+    if (s.step==='form') inner = note ? `
+      <span class="badge">DEMO PAUSED</span>
+      <h4>Ask us anything</h4><p>We answer by email, usually the same working day.</p>
+      <div class="field"><label for="t2-q">Your question</label><input id="t2-q" value="Does it work with our PMS?"></div>
+      <div class="field"><label for="t2-mail">Your email</label><input id="t2-mail" value="gm@yourhotel.com"></div>
+      <button class="btn primary" data-act="send" data-t="t2">Send question</button>
+      <button class="btn ghost" data-act="close" data-t="t2">Back to the tour</button>` : `
+      <span class="badge">DEMO PAUSED</span>
+      <h4>${o.title}</h4><p>${o.body}</p>
+      <div class="field"><label for="t2-site">Your hotel's website</label><input id="t2-site" value="www.yourhotel.com"></div>
+      <div class="field"><label for="t2-mail">Where we send the link</label><input id="t2-mail" value="gm@yourhotel.com"></div>
+      <button class="btn primary" data-act="next" data-t="t2">${o.cta}</button>
+      <button class="btn ghost" data-act="close" data-t="t2">Back to the tour</button>`;
+    if (s.step==='confirm') inner = `
+      <span class="badge">STEP 2 OF 2</span>
+      <h4>Is this your hotel?</h4>
+      <div class="site"><div class="bar"><i></i>www.yourhotel.com</div><div class="shot">Your Hotel<small>Rooms · Restaurant · Wellness · Contact</small></div></div>
+      <p class="fine">We build your app from this page. Free, no commitment.</p>
+      <button class="btn primary" data-act="send" data-t="t2">${o.confirm}</button>
+      <button class="btn ghost" data-act="back" data-t="t2">No, change the address</button>`;
+    if (s.step==='spin') inner = `<div class="center"><div class="spinner"></div><p>${note?'Sending your question…':o.spin}</p></div>`;
+    if (s.step==='done') inner = note ? `<div class="center"><div class="check">${ICON.check}</div>
+      <h4>Question sent</h4>
+      <p>We reply to gm@yourhotel.com ${PH('within one working day')}.</p>
+      <p><b>Thank you for asking.</b></p></div>
+      <button class="btn ghost" data-act="close" data-t="t2">Back to the demo</button>` : `<div class="center"><div class="check">${ICON.check}</div>
+      <h4>${o.doneTitle}</h4>
+      <p>We are building your hotel's app from www.yourhotel.com. The link arrives at gm@yourhotel.com ${WHEN2}.</p>
+      <p>It is free and you are not committing to anything.</p>
+      <p><b>Thank you for trying Nevron.</b></p></div>
+      <button class="btn ghost" data-act="close" data-t="t2">Back to the demo</button>`;
+  }
+  return `<div class="overlay"><div class="sheet">${inner}</div></div>`;
+}
+
+function renderScreen(t){
+  document.querySelector(`[data-screen="${t}"]`).innerHTML = appShell(t) + modal(t) + sheet(t);
+}
+
+function renderTabs(t){
+  const s = state[t];
+  document.querySelector(`[data-tabs="${t}"]`).innerHTML = MOMENTS.map(([k,n])=>
+    `<button role="tab" aria-selected="${s.moment===k}" data-act="moment" data-v="${k}" data-t="${t}">${n}</button>`).join('');
+  document.querySelector(`[data-note="${t}"]`).innerHTML = NOTES[s.moment];
+  document.querySelector(`[data-hint="${t}"]`).textContent = HINTS[t][s.moment] || 'The gold button runs the send flow. The others close the popup or restart the tour. Pick the option again to bring the popup back.';
+}
+
+const btnText = b => `${b.label} <span class="chars">(${{steel:'grey',ghost:'outline',gold:'gold',link:'text link',glink:'gold link'}[b.kind]})</span>`;
+
+function renderOpts(t){
+  const s = state[t];
+  const box = document.querySelector(`[data-opts="${t}"]`);
+  if (s.moment==='ribbon'){
+    box.innerHTML = DATA[t].map((o,i)=>{
+      const labels = o.progressive ? `${o.label} → ${o.label2}` : o.label;
+      const chars = o.progressive ? `${o.label.length} / ${o.label2.length} chars` : `${o.label.length} chars`;
+      const flow = t==='t1'
+        ? `<div><dt>Sheet title</dt><dd>${o.title}</dd></div><div><dt>Sheet text</dt><dd>${o.body}</dd></div><div><dt>Button</dt><dd>${o.cta}</dd></div><div><dt>Spinner</dt><dd>${o.spin}</dd></div><div><dt>Confirmation</dt><dd>${o.doneTitle}. ${EXPERT} from Nevron will call you on {phone} ${WHEN1}. Thank you, we look forward to launching it with you.</dd></div>`
+        : `<div><dt>Sheet title</dt><dd>${o.title}</dd></div><div><dt>Sheet text</dt><dd>${o.body}</dd></div><div><dt>Button 1</dt><dd>${o.cta}</dd></div><div><dt>Confirm page</dt><dd>Is this your hotel? → ${o.confirm}</dd></div><div><dt>Spinner</dt><dd>${o.spin}</dd></div><div><dt>Confirmation</dt><dd>${o.doneTitle}. The link arrives at {email} ${WHEN2}. Free, no commitment. Thank you for trying Nevron.</dd></div>`;
+      return optCard(t, i, s.opt===i, `<span class="pill">${labels}</span>`, o.rec, chars, o.pro, o.con, flow);
+    }).join('');
+    return;
+  }
+  box.innerHTML = MOM[t][s.moment].map((o,i)=>{
+    const m = o.m, rows = [];
+    if (m.badge || m.avatar) rows.push(['Top', m.avatar ? 'Expert photo' : `“${m.badge}” badge`]);
+    if (m.swap) rows.push(['Graphic','Demo Hotel logo → empty “Your hotel” slot']);
+    rows.push(['Title', m.title]);
+    if (m.text) rows.push(['Text', m.text]);
+    if (m.list) rows.push(['List', m.list.join(' · ')]);
+    if (m.field) rows.push(['Field', m.field]);
+    rows.push(['Buttons', m.buttons.map(btnText).join('<br>')]);
+    if (m.chips) rows.push([m.chipsLabel, m.chips.join(' · ')]);
+    if (m.hint) rows.push(['Hint', m.hint]);
+    if (m.qr) rows.push(['Extra','QR code for desktop viewers']);
+    const flow = rows.map(([k,v])=>`<div><dt>${k}</dt><dd>${v}</dd></div>`).join('');
+    return optCard(t, i, s.mopt[s.moment]===i, `<span class="pill">${o.name}</span>`, o.rec, '', o.pro, o.con, flow);
+  }).join('');
+}
+
+function optCard(t, i, on, pill, rec, chars, pro, con, flow){
+  return `<div class="opt" role="button" tabindex="0" aria-pressed="${on}" data-act="pick" data-t="${t}" data-i="${i}">
+    <span class="num">${i+1}</span>
+    <span class="opt-top">${pill}${rec?'<span class="rec">Recommended</span>':''}${chars?`<span class="chars">${chars}</span>`:''}</span>
+    <span class="opt-detail">
+      <span class="pro"><b>Why it works.</b> ${pro}</span>
+      <span class="con"><b>Risk.</b> ${con}</span>
+      <dl class="copy">${flow}</dl>
+    </span></div>`;
+}
+
+function renderAll(t){ renderTabs(t); renderOpts(t); renderScreen(t); }
+
+document.addEventListener("keydown", e=>{ if((e.key==="Enter"||e.key===" ") && e.target.classList.contains("opt")){ e.preventDefault(); e.target.click(); } });
+document.addEventListener('click', e=>{
+  const el = e.target.closest('[data-act]'); if(!el || !el.dataset.act) return;
+  const act = el.dataset.act, t = el.dataset.t || el.closest('[data-screen]')?.dataset.screen;
+  const s = state[t]; if (!s) return;
+  if (act==='moment'){ setMoment(t, el.dataset.v); renderAll(t); return; }
+  if (act==='pick'){
+    if (s.moment==='ribbon'){ s.opt=+el.dataset.i; setMoment(t,'ribbon'); }
+    else { s.mopt[s.moment]=+el.dataset.i; setMoment(t, s.moment); }
+    renderOpts(t); renderScreen(t); return;
+  }
+  if (act==='open'){ s.step='form'; s.variant=''; s.paused=true; }
+  if (act==='note'){ s.step='form'; s.variant='note'; s.paused=true; }
+  if (act==='dismiss'){ s.hidden=true; s.paused=true; }
+  if (act==='resume'){ s.hidden=true; s.paused=false; if (s.tour>4) s.tour=0; }
+  if (act==='replay'){ s.hidden=true; s.paused=false; s.tour=0; }
+  if (act==='reason'){ s.reason=el.dataset.v; }
+  if (act==='share'){ s.shared=true; }
+  if (act==='close'){ s.step='idle'; s.hidden=true; s.paused = s.moment==='end'; }
+  if (act==='when'){ s.when=el.dataset.v; }
+  if (act==='next'){ s.step='confirm'; s.paused=true; }
+  if (act==='back'){ s.step='form'; s.variant=''; }
+  if (act==='send'){ s.step='spin'; renderScreen(t); setTimeout(()=>{ s.step='done'; renderScreen(t); }, 1800); return; }
+  renderScreen(t);
+});
+
+setInterval(()=>{
+  ['t1','t2'].forEach(t=>{
+    const s = state[t];
+    if (s.paused || s.step!=='idle') return;
+    s.tour = (s.tour+1) % SEGS.length;
+    renderScreen(t);
+  });
+}, 2600);
+
+['t1','t2'].forEach(renderAll);
+</script>
+
+</body></html>

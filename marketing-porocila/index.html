@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="sl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marketing poročila in analize</title>
+<meta name="description" content="Marketinška poročila in analize: Nevron, Hostfulness, Rok Kokalj.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0A0D12">
+<link rel="icon" href="../ikona.ico" sizes="16x16 32x32 48x48">
+<link rel="icon" type="image/png" sizes="32x32" href="../ikona-32.png">
+<link rel="apple-touch-icon" href="../ikona-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@400;500;600&display=swap">
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+
+  :root {
+    color-scheme: dark;
+    --bg:      #0A0D12;
+    --panel:   #10151C;
+    --panel-2: #151C26;
+    --line:    #1D2530;
+    --line-2:  #2B3644;
+    --ink:     #E6EAF0;
+    --ink-2:   #A3ADBB;
+    --ink-3:   #7F8A99;
+    --nev:     #7FD1FF;
+    --own:     #C3ABFF;
+    --lock:    #E6BF66;
+    --mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+    --sans: "IBM Plex Sans Condensed", "Arial Narrow", ui-sans-serif, system-ui, "Segoe UI", sans-serif;
+  }
+
+  body {
+    margin: 0; min-height: 100vh;
+    background: var(--bg); color: var(--ink);
+    font-family: var(--sans); font-size: 14px; line-height: 1.4;
+    -webkit-font-smoothing: antialiased;
+  }
+  body::before {
+    content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background-image:
+      linear-gradient(to right, rgba(127,209,255,.035) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(127,209,255,.035) 1px, transparent 1px);
+    background-size: 32px 32px;
+    -webkit-mask-image: linear-gradient(to bottom, #000 0, transparent 420px);
+            mask-image: linear-gradient(to bottom, #000 0, transparent 420px);
+  }
+  .wrap { position: relative; z-index: 1; max-width: 1600px; margin: 0 auto; padding: 0 32px 40px; }
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--nev); outline-offset: 2px; border-radius: 3px; }
+
+  /* top bar */
+  .top {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 14px 24px;
+    padding: 22px 0 18px; border-bottom: 1px solid var(--line);
+  }
+  .id { display: flex; align-items: center; gap: 12px; min-width: 0; margin-right: auto; }
+  .mono-mark {
+    flex: none; width: 34px; height: 34px; display: grid; place-items: center;
+    border: 1px solid var(--line-2); border-radius: 7px; background: var(--panel);
+    font-family: var(--mono); font-size: 12.5px; font-weight: 500; letter-spacing: .04em; color: var(--nev);
+  }
+  .name { margin: 0; font-size: 19px; font-weight: 600; line-height: 1.1; letter-spacing: -.005em; }
+  .stats {
+    margin: 4px 0 0; font-family: var(--mono); font-size: 11.5px; color: var(--ink-3);
+    font-variant-numeric: tabular-nums;
+  }
+  .stats b { color: var(--ink-2); font-weight: 500; }
+  .stats span, .stats a { white-space: nowrap; }
+  .stats a { color: inherit; text-decoration: none; border-bottom: 1px dotted var(--line-2); }
+  .stats a:hover { color: var(--ink); border-bottom-color: var(--ink-3); }
+
+  .search { position: relative; width: min(340px, 100%); }
+  .search input {
+    width: 100%; height: 34px; padding: 0 34px 0 32px;
+    background: var(--panel); color: var(--ink);
+    border: 1px solid var(--line-2); border-radius: 7px;
+    font-family: var(--mono); font-size: 12.5px;
+  }
+  .search input::placeholder { color: var(--ink-3); }
+  .search input:focus { outline: none; border-color: var(--nev); }
+  .search input::-webkit-search-cancel-button { display: none; }
+  .search svg { position: absolute; left: 10px; top: 10px; width: 14px; height: 14px; color: var(--ink-3); }
+  .search kbd {
+    position: absolute; right: 8px; top: 8px; height: 18px; min-width: 18px; padding: 0 5px;
+    display: grid; place-items: center; border: 1px solid var(--line-2); border-radius: 4px;
+    font-family: var(--mono); font-size: 11px; color: var(--ink-3); background: var(--bg);
+  }
+  .search input:focus + kbd { display: none; }
+
+  .ext {
+    display: inline-flex; align-items: center; gap: 7px; height: 34px; padding: 0 12px;
+    border: 1px solid var(--line-2); border-radius: 7px; text-decoration: none;
+    font-family: var(--mono); font-size: 12px; color: var(--ink-2);
+  }
+  .ext:hover { color: var(--ink); border-color: var(--ink-3); }
+  .ext svg { width: 14px; height: 14px; }
+
+  /* sections */
+  .sec { margin-top: 26px; }
+  .split { display: grid; grid-template-columns: 1fr 1fr; margin-top: 26px; }
+  .split > .sec { margin-top: 0; min-width: 0; }
+  .split > .sec:first-child { padding-right: 24px; }
+  .split > .sec + .sec { padding-left: 24px; border-left: 1px solid var(--line); }
+  .split:has(> .sec[hidden]) { grid-template-columns: 1fr; }
+  .split:has(> .sec[hidden]) > .sec { padding: 0; border-left: 0; }
+  .sec-head { display: flex; align-items: center; gap: 12px; margin: 0 0 10px; }
+  .sec-head h2 {
+    margin: 0; display: flex; align-items: center; gap: 9px;
+    font-family: var(--mono); font-size: 12px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase;
+    color: var(--acc);
+  }
+  .sec-head h2::before { content: ""; width: 8px; height: 8px; border-radius: 2px; background: var(--acc); }
+  .sec-count { font-family: var(--mono); font-size: 11.5px; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+  .sec-rule { flex: 1; height: 1px; background: var(--line); }
+  .sec-note { font-family: var(--mono); font-size: 11.5px; color: var(--ink-3); }
+  .nev { --acc: var(--nev); }
+  .own { --acc: var(--own); }
+
+  /* categories: masonry columns, short categories stack under each other */
+  .cats { --colw: 290px; columns: var(--colw); column-gap: 12px; }
+  .cats.mas { columns: auto; display: grid; grid-template-columns: repeat(var(--n, 1), minmax(0, 1fr)); gap: 0 12px; align-items: start; }
+  .mcol { min-width: 0; }
+  .cat { min-width: 0; break-inside: avoid; padding-bottom: 18px; }
+  .cat[hidden] { display: none; }
+  .cat-head { display: flex; align-items: center; gap: 8px; margin: 0 0 7px; padding-left: 1px; }
+  .cat-head::before { content: ""; flex: none; width: 3px; height: 11px; border-radius: 1px; background: var(--acc); background: oklch(0.78 0.12 var(--h)); }
+  .cat-head h3 {
+    margin: 0; font-family: var(--mono); font-size: 11.5px; font-weight: 500; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--ink-2); white-space: nowrap; min-width: 0; overflow: hidden; text-overflow: ellipsis;
+  }
+  .cat-count { font-family: var(--mono); font-size: 11.5px; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+  .cat-rule { flex: 1; height: 1px; background: linear-gradient(to right, var(--line-2), transparent); }
+  .cat-list { display: flex; flex-direction: column; gap: 6px; }
+
+  /* tile */
+  .tile {
+    position: relative; display: flex; flex-direction: column; gap: 3px; min-width: 0;
+    padding: 10px 12px 9px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel);
+    transition: border-color .12s, background-color .12s;
+  }
+  .tile[hidden] { display: none; }
+  .tile:hover { background: var(--panel-2); border-color: var(--line-2); }
+
+  /* tint: each category sets --h (oklch hue), tiles shift it slightly so no two look the same */
+  .cat { --h: 250; }
+  .tile { --dh: 0; --th: calc(var(--h) + var(--dh)); }
+  .cat-list > .tile:nth-child(5n+2) { --dh: 14; }
+  .cat-list > .tile:nth-child(5n+3) { --dh: 28; }
+  .cat-list > .tile:nth-child(5n+4) { --dh: -14; }
+  .cat-list > .tile:nth-child(5n+5) { --dh: -28; }
+  .cat .tile { background: oklch(0.215 0.03 var(--th)); border-color: oklch(0.3 0.04 var(--th)); }
+  .cat .tile:hover { background: oklch(0.245 0.038 var(--th)); border-color: oklch(0.38 0.05 var(--th)); }
+  .cat .tile:has(.tile-link:hover),
+  .cat .tile:has(.tile-link:focus-visible) { border-color: oklch(0.74 0.11 var(--th)); }
+  .cat .tile:hover .go { color: oklch(0.82 0.11 var(--th)); }
+  .cat .meta a:hover { color: oklch(0.84 0.1 var(--th)); border-bottom-color: currentColor; }
+  .cat .locked { background: oklch(0.185 0.024 var(--th)); }
+  .cat .locked:hover { background: oklch(0.215 0.03 var(--th)); }
+  .cat .cat-head h3 { color: oklch(0.84 0.1 var(--h)); }
+  .cat .cat-count { color: oklch(0.66 0.05 var(--h)); }
+  .cat .cat-rule { background: linear-gradient(to right, oklch(0.36 0.06 var(--h)), transparent); }
+
+  .t-head { display: flex; align-items: center; gap: 8px; min-width: 0; }
+  .tile h4 {
+    margin: 0; flex: 1; min-width: 0; font-size: 15px; font-weight: 600; line-height: 1.25;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .tile-link { text-decoration: none; }
+  .tile-link::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }
+  .tile-link:focus-visible { outline: none; }
+  .go { flex: none; width: 13px; height: 13px; color: var(--ink-3); transition: color .12s, transform .12s; }
+  .tile:hover .go { color: var(--acc); transform: translate(1px, -1px); }
+
+  .lock {
+    flex: none; display: inline-flex; align-items: center; gap: 4px;
+    font-family: var(--mono); font-size: 11px; color: var(--lock); white-space: nowrap;
+  }
+  .lock svg { width: 11px; height: 11px; }
+  .locked { background: transparent; border-style: dashed; }
+  .local { border-style: dotted; }
+  .lock.loc { color: oklch(0.82 0.09 200); }
+  .locked:not(:has(.tile-link)) h4 { color: var(--ink-2); }
+
+  .desc {
+    margin: 0; font-size: 13px; color: var(--ink-2);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .meta {
+    margin: 2px 0 0; display: flex; flex-wrap: wrap; align-items: center; gap: 2px 10px;
+    font-family: var(--mono); font-size: 11.5px; color: var(--ink-3); font-variant-numeric: tabular-nums;
+  }
+  .meta a { position: relative; z-index: 1; color: var(--ink-2); text-decoration: none; border-bottom: 1px solid var(--line-2); }
+  .meta a:hover { color: var(--acc); border-bottom-color: var(--acc); }
+  .meta .end { margin-left: auto; display: inline-flex; gap: 8px; }
+
+  .empty { margin: 30px 0 0; font-family: var(--mono); font-size: 12.5px; color: var(--ink-3); }
+
+  footer {
+    margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--line);
+    display: flex; flex-wrap: wrap; gap: 4px 18px;
+    font-family: var(--mono); font-size: 11.5px; color: var(--ink-3);
+  }
+
+  /* agents and skills: framed full-width bands, mono identifiers, two-line descriptions */
+  .split, .band { scroll-margin-top: 14px; }
+  .band {
+    margin-top: 30px; padding: 16px 18px 0; border: 1px solid var(--line); border-radius: 12px;
+    background: var(--bg);
+    background: linear-gradient(180deg, color-mix(in oklch, var(--acc) 7%, var(--bg)) 0, var(--bg) 260px);
+  }
+  .agt { --acc: #7FE0B8; }
+  .skl { --acc: #FFB98A; }
+  .band .cats { --colw: 300px; }
+  .kit h4 { font-family: var(--mono); font-size: 13px; font-weight: 500; letter-spacing: -.01em; }
+  .kit .desc {
+    white-space: normal; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2;
+    font-size: 12.5px; line-height: 1.38; min-height: 2.76em;
+  }
+
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+  @media (max-width: 980px) {
+    .split { grid-template-columns: 1fr; }
+    .split > .sec:first-child { padding-right: 0; }
+    .split > .sec + .sec { padding-left: 0; border-left: 0; margin-top: 8px; }
+  }
+  @media (max-width: 720px) {
+    .wrap { padding: 0 16px 32px; }
+    .top { padding-top: 16px; }
+    .search { width: 100%; order: 3; }
+    .band { padding: 12px 12px 0; margin-top: 24px; }
+    .cats { columns: 1; }
+    .sec-note { display: none; }
+    .id { flex: 1 1 0; }
+    .ext { width: 34px; padding: 0; justify-content: center; }
+    .ext-txt { display: none; }
+  }
+  .mono-mark { text-decoration: none; }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-go" viewBox="0 0 16 16"><path d="M5 11 11 5M6 5h5v5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-local" viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="8" rx="1.2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M6 14h4M8 11v3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 16 16"><rect x="3" y="7" width="10" height="7" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+</svg>
+<div class="wrap">
+
+  <header class="top">
+    <div class="id">
+      <a class="mono-mark" href="../" title="Nazaj na kazalo" aria-label="Nazaj na kazalo">MV</a>
+      <div>
+        <h1 class="name">Marketing poročila in analize</h1>
+        <p class="stats" id="stats"><a href="../">kazalo</a> · <span><b>4</b> povezav</span> · <span><b>3</b> kategorij</span></p>
+      </div>
+    </div>
+    <label class="search">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="m10.5 10.5 3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <input type="search" id="q" placeholder="išči" aria-label="Išči po povezavah" autocomplete="off" spellcheck="false">
+      <kbd aria-hidden="true">/</kbd>
+    </label>
+    <a class="ext" href="../">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="ext-txt">nazaj na kazalo</span>
+    </a>
+  </header>
+
+  <!-- Generira Projects/kazalo-strani/zgradi_strani.py iz podatki_strani.py; ne urejaj rocno. -->
+
+  <section class="sec" style="--acc: #7FD1FF" aria-labelledby="h-0">
+    <div class="sec-head">
+      <h2 id="h-0">Nevron</h2>
+      <span class="sec-count">02</span>
+      <span class="sec-rule"></span>
+      <span class="sec-note">outreach in kampanje</span>
+    </div>
+    <div class="cats">
+
+      <div class="cat" style="--h: 345">
+        <div class="cat-head"><h3>Marketing</h3><span class="cat-count">02</span><span class="cat-rule"></span></div>
+        <div class="cat-list">
+          <article class="tile locked">
+            <div class="t-head"><h4><a class="tile-link" href="https://nevron-zaprto.pages.dev/marketing/maritime-odzivi/">Maritime odzivi</a></h4><span class="lock"><svg aria-hidden="true"><use href="#i-lock"/></svg>prijava</span></div>
+            <p class="desc">Odzivi na maritime outreach po prospektih</p>
+            <p class="meta"><span>HTML</span><span>pages.dev · GitHub</span><span class="end">2026-10</span></p>
+          </article>
+          <article class="tile locked">
+            <div class="t-head"><h4><a class="tile-link" href="https://nevron-zaprto.pages.dev/marketing/hotelski-odzivi/">Hotelski odzivi</a></h4><span class="lock"><svg aria-hidden="true"><use href="#i-lock"/></svg>prijava</span></div>
+            <p class="desc">Odzivi hotelirjev na outreach po trgih</p>
+            <p class="meta"><span>HTML</span><span>pages.dev · GitHub</span><span class="end">2026-10</span></p>
+          </article>
+        </div>
+      </div>
+
+    </div>
+  </section>
+  <section class="sec" style="--acc: #DEBA92" aria-labelledby="h-1">
+    <div class="sec-head">
+      <h2 id="h-1">Hostfulness</h2>
+      <span class="sec-count">01</span>
+      <span class="sec-rule"></span>
+      <span class="sec-note">podcast</span>
+    </div>
+    <div class="cats">
+
+      <div class="cat" style="--h: 60">
+        <div class="cat-head"><h3>Promocija</h3><span class="cat-count">01</span><span class="cat-rule"></span></div>
+        <div class="cat-list">
+          <article class="tile">
+            <div class="t-head"><h4><a class="tile-link" href="https://matjazvolkar.github.io/hostfulness/promocijski-nacrt.html">Promocijski načrt</a></h4><svg class="go" aria-hidden="true"><use href="#i-go"/></svg></div>
+            <p class="desc">Načrt promocije podcasta s štirimi poročili</p>
+            <p class="meta"><span>HTML</span><span>github.io</span><span class="end">2026-08</span></p>
+          </article>
+        </div>
+      </div>
+
+    </div>
+  </section>
+  <section class="sec" style="--acc: #7FE0B8" aria-labelledby="h-2">
+    <div class="sec-head">
+      <h2 id="h-2">Rok Kokalj</h2>
+      <span class="sec-count">01</span>
+      <span class="sec-rule"></span>
+      <span class="sec-note">LinkedIn</span>
+    </div>
+    <div class="cats">
+
+      <div class="cat" style="--h: 170">
+        <div class="cat-head"><h3>LinkedIn</h3><span class="cat-count">01</span><span class="cat-rule"></span></div>
+        <div class="cat-list">
+          <article class="tile">
+            <div class="t-head"><h4><a class="tile-link" href="https://matjazvolkar.github.io/hospitality-abundance-linkedin/">Hospitality Abundance Linkedin</a></h4><svg class="go" aria-hidden="true"><use href="#i-go"/></svg></div>
+            <p class="desc">Napoved LinkedIn oglasov za pet člankov</p>
+            <p class="meta"><span>HTML</span><span>github.io</span><span class="end">2026-10</span></p>
+          </article>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <p class="empty" id="empty" hidden>Ni zadetkov. Esc počisti iskanje.</p>
+
+  <footer>
+    <span>del kazala matjazvolkar.github.io</span>
+    <span>zaklenjene povezave brez prijave niso dosegljive</span>
+  </footer>
+
+</div>
+<script>
+(() => {
+  const q = document.getElementById('q');
+  const sections = [...document.querySelectorAll('.sec')];
+  const tiles = [...document.querySelectorAll('.tile')];
+  const empty = document.getElementById('empty');
+  const norm = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+  const pad = n => String(n).padStart(2, '0');
+
+  document.querySelectorAll('.cat').forEach(c => {
+    const label = c.querySelector('.cat-head h3').textContent;
+    c.querySelectorAll('.tile').forEach(t => { t.dataset.text = norm(label + ' ' + t.textContent.replace(/\s+/g, ' ')); });
+  });
+  document.querySelectorAll('.tile h4, .desc').forEach(el => { el.title = el.textContent.trim(); });
+
+  document.getElementById('stats').innerHTML =
+    `<a href="../">kazalo</a> · <span><b>${tiles.length}</b> povezav</span> · <span><b>${document.querySelectorAll('.cat').length}</b> kategorij</span>`;
+
+  function apply() {
+    const terms = norm(q.value).trim().split(/\s+/).filter(Boolean);
+    const frac = (n, all) => terms.length ? `${pad(n)}/${pad(all)}` : pad(all);
+    let shown = 0;
+    sections.forEach(sec => {
+      let secShown = 0, secAll = 0;
+      sec.querySelectorAll('.cat').forEach(c => {
+        const own = [...c.querySelectorAll('.tile')];
+        let n = 0;
+        own.forEach(t => {
+          const hit = terms.every(w => (t.dataset.text || '').includes(w));
+          t.hidden = !hit;
+          if (hit) n++;
+        });
+        c.querySelector('.cat-count').textContent = frac(n, own.length);
+        c.hidden = n === 0;
+        secShown += n; secAll += own.length;
+      });
+      sec.querySelector('.sec-count').textContent = frac(secShown, secAll);
+      sec.hidden = secShown === 0;
+      shown += secShown;
+    });
+    empty.hidden = shown > 0;
+  }
+  // masonry: categories are dealt into the shortest column, so short ones fill the gaps
+  const boxes = [...document.querySelectorAll('.cats')].map(box => ({ box, cats: [...box.querySelectorAll('.cat')] }));
+  function masonry() {
+    boxes.forEach(({ box, cats }) => {
+      const colw = parseFloat(getComputedStyle(box).getPropertyValue('--colw')) || 290;
+      const n = Math.max(1, Math.floor((box.clientWidth + 12) / (colw + 12)));
+      const cols = Array.from({ length: n }, () => Object.assign(document.createElement('div'), { className: 'mcol' }));
+      // first category stays top left, the rest go largest first; each column keeps the original order
+      const items = cats.map((c, idx) => ({ c, idx, w: c.hidden ? 0 : c.querySelectorAll('.tile:not([hidden])').length * 3 + 1 }));
+      const first = items.find(o => o.w > 0) || items[0];
+      const h = new Array(n).fill(0), put = cols.map(() => []);
+      [first, ...items.filter(o => o !== first).sort((x, y) => y.w - x.w)].forEach(o => {
+        const i = h.indexOf(Math.min(...h));
+        put[i].push(o);
+        h[i] += o.w;
+      });
+      put.forEach((list, i) => list.sort((x, y) => x.idx - y.idx).forEach(o => cols[i].appendChild(o.c)));
+      box.replaceChildren(...cols);
+      box.style.setProperty('--n', n);
+      box.classList.add('mas');
+    });
+  }
+  let raf = 0;
+  addEventListener('resize', () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(masonry); });
+
+  apply();
+  masonry();
+
+  q.addEventListener('input', () => { apply(); masonry(); });
+  q.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { q.value = ''; apply(); masonry(); q.blur(); }
+    if (e.key === 'Enter') {
+      const first = document.querySelector('.tile:not([hidden]) .tile-link');
+      if (first) first.click();
+    }
+  });
+  document.addEventListener('keydown', e => {
+    const typing = /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName);
+    if (e.key === '/' && !typing && !e.ctrlKey && !e.metaKey && !e.altKey) { e.preventDefault(); q.focus(); }
+  });
+})();
+</script>
+</body>
+</html>
