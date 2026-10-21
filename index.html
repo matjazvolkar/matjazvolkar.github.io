@@ -70,7 +70,9 @@
     font-variant-numeric: tabular-nums;
   }
   .stats b { color: var(--ink-2); font-weight: 500; }
-  .stats span { white-space: nowrap; }
+  .stats span, .stats a { white-space: nowrap; }
+  .stats a { color: inherit; text-decoration: none; border-bottom: 1px dotted var(--line-2); }
+  .stats a:hover { color: var(--ink); border-bottom-color: var(--ink-3); }
 
   .search { position: relative; width: min(340px, 100%); }
   .search input {
@@ -120,14 +122,16 @@
   .own { --acc: var(--own); }
 
   /* categories: masonry columns, short categories stack under each other */
-  .cats { columns: 290px; column-gap: 12px; }
+  .cats { --colw: 290px; columns: var(--colw); column-gap: 12px; }
+  .cats.mas { columns: auto; display: grid; grid-template-columns: repeat(var(--n, 1), minmax(0, 1fr)); gap: 0 12px; align-items: start; }
+  .mcol { min-width: 0; }
   .cat { min-width: 0; break-inside: avoid; padding-bottom: 18px; }
   .cat[hidden] { display: none; }
   .cat-head { display: flex; align-items: center; gap: 8px; margin: 0 0 7px; padding-left: 1px; }
   .cat-head::before { content: ""; flex: none; width: 3px; height: 11px; border-radius: 1px; background: var(--acc); background: oklch(0.78 0.12 var(--h)); }
   .cat-head h3 {
     margin: 0; font-family: var(--mono); font-size: 11.5px; font-weight: 500; letter-spacing: .1em;
-    text-transform: uppercase; color: var(--ink-2); white-space: nowrap;
+    text-transform: uppercase; color: var(--ink-2); white-space: nowrap; min-width: 0; overflow: hidden; text-overflow: ellipsis;
   }
   .cat-count { font-family: var(--mono); font-size: 11.5px; color: var(--ink-3); font-variant-numeric: tabular-nums; }
   .cat-rule { flex: 1; height: 1px; background: linear-gradient(to right, var(--line-2), transparent); }
@@ -200,6 +204,22 @@
     font-family: var(--mono); font-size: 11.5px; color: var(--ink-3);
   }
 
+  /* agents and skills: framed full-width bands, mono identifiers, two-line descriptions */
+  .split, .band { scroll-margin-top: 14px; }
+  .band {
+    margin-top: 30px; padding: 16px 18px 0; border: 1px solid var(--line); border-radius: 12px;
+    background: var(--bg);
+    background: linear-gradient(180deg, color-mix(in oklch, var(--acc) 7%, var(--bg)) 0, var(--bg) 260px);
+  }
+  .agt { --acc: #7FE0B8; }
+  .skl { --acc: #FFB98A; }
+  .band .cats { --colw: 300px; }
+  .kit h4 { font-family: var(--mono); font-size: 13px; font-weight: 500; letter-spacing: -.01em; }
+  .kit .desc {
+    white-space: normal; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2;
+    font-size: 12.5px; line-height: 1.38; min-height: 2.76em;
+  }
+
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
   @media (max-width: 980px) {
     .split { grid-template-columns: 1fr; }
@@ -210,6 +230,7 @@
     .wrap { padding: 0 16px 32px; }
     .top { padding-top: 16px; }
     .search { width: 100%; order: 3; }
+    .band { padding: 12px 12px 0; margin-top: 24px; }
     .cats { columns: 1; }
     .sec-note { display: none; }
     .id { flex: 1 1 0; }
@@ -230,12 +251,12 @@
       <div class="mono-mark" aria-hidden="true">MV</div>
       <div>
         <h1 class="name">Matjaž Volkar</h1>
-        <p class="stats" id="stats"><span>kazalo projektov</span> · <span><b>16</b> skupaj</span> · <span><b>11</b> javnih</span> · <span><b>5</b> s prijavo</span></p>
+        <p class="stats" id="stats"><a href="#projekti"><b>16</b> projektov</a> · <a href="#agenti"><b>36</b> agentov</a> · <a href="#skilli"><b>90</b> skillov</a> · <span>11 javnih, 5 s prijavo</span></p>
       </div>
     </div>
     <label class="search">
       <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="m10.5 10.5 3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-      <input type="search" id="q" placeholder="išči projekt, orodje, leto" aria-label="Išči po projektih" autocomplete="off" spellcheck="false">
+      <input type="search" id="q" placeholder="išči projekt, agenta, skill" aria-label="Išči po projektih, agentih in skillih" autocomplete="off" spellcheck="false">
       <kbd aria-hidden="true">/</kbd>
     </label>
     <a class="ext" href="https://github.com/matjazvolkar" aria-label="GitHub: matjazvolkar">
@@ -253,9 +274,10 @@
     Nova kategorija: kopiraj cel <div class="cat" style="--h: ..."> z glavo in ji daj svoj odtenek
     (--h, 0 do 360, oklch), ki ga se nima nobena kategorija. Stevci v glavi, razdelkih in kategorijah
     se izracunajo sami, iskanje uposteva tudi ime kategorije.
+    Razdelka Agenti in Skilli (med oznakama AGENTI-SKILLI) generira Projects/kazalo-agenti-skilli/zgradi.py.
   -->
 
-  <div class="split">
+  <div class="split" id="projekti">
 
   <section class="sec nev" aria-labelledby="h-nev">
     <div class="sec-head">
@@ -405,11 +427,770 @@
 
   </div>
 
+  <!-- AGENTI-SKILLI:ZACETEK (generira Projects/kazalo-agenti-skilli/zgradi.py, ne urejaj rocno) -->
+  <section class="sec band agt" id="agenti" aria-labelledby="h-agt">
+    <div class="sec-head">
+      <h2 id="h-agt">Agenti</h2>
+      <span class="sec-count">36</span>
+      <span class="sec-rule"></span>
+      <span class="sec-note">podagenti, ki jih Claude pokliče za posamezno nalogo</span>
+    </div>
+    <div class="cats">
+
+      <div class="cat" style="--h: 30">
+        <div class="cat-head"><h3>SDR sistem</h3><span class="cat-count">07</span><span class="cat-rule"></span></div>
+        <div class="cat-list">
+          <article class="tile kit">
+            <div class="t-head"><h4>sdr-orchestrator</h4></div>
+            <p class="desc">Vodi večkoračne SDR postopke: naloži kontekst kampanje in razdeli delo specialistom, s potrditvami.</p>
+            <p class="meta"><span>Matjaž Volkar</span><span class="end">2026-05-26</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>sdr-apollo-prospector</h4></div>
+            <p class="desc">Iz Apolla poišče in obogati kontakte za kampanjo; pred porabo kreditov preveri dvojnike v Attiu.</p>
+            <p class="meta"><span>Matjaž Volkar</span><span class="end">2026-05-22</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>sdr-attio-librarian</h4></div>
+            <p class="desc">Vodi CRM v Attiu: vpis tarč, odgovorov in sestankov ter premiki po fazah pipelinea.</p>
+            <p class="meta"><span>Matjaž Volkar</span><span class="end">2026-05-26</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>sdr-email-writer</h4></div>
+            <p class="desc">Napiše hladno e-poštno sekvenco s petimi dotiki iz ICP, produkta in trga kampanje.</p>
+            <p class="meta"><span>Matjaž Volkar</span><span class="end">2026-05-22</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>sdr-linkedin-writer</h4></div>
+            <p class="desc">Napiše LinkedIn povabilo in dve sporočili, prilagojena ICP in trgu kampanje.</p>
+            <p class="meta"><span>Matjaž Volkar</span><span class="end">2026-05-22</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>sdr-instantly-operator</h4></div>
+            <p class="desc">E-poštne kampanje v Instantlyju: kloniranje, nalaganje leadov, odgovori in dostavljivost.</p>
+            <p class="meta"><span>Matjaž Volkar</span><span class="end">2026-05-22</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>sdr-heyreach-operator</h4></div>
+            <p class="desc">LinkedIn outreach prek HeyReacha: kampanje kot osnutki, dodajanje leadov, inbox, omejitve.</p>
+            <p class="meta"><span>Matjaž Volkar</span><span class="end">2026-09-30</span></p>
+          </article>
+        </div>
+      </div>
+
+      <div class="cat" style="--h: 250">
+        <div class="cat-head"><h3>Dream 100 in hoteli</h3><span class="cat-count">04</span><span class="cat-rule"></span></div>
+        <div class="cat-list">
+          <article class="tile kit">
+            <div class="t-head"><h4>drago</h4></div>
+            <p class="desc">Raziskovalec Dream 100: za skupino hotelov poišče odločevalca, kontakte in posebnosti; ne ugiba.</p>
+            <p class="meta"><span>Matjaž Volkar</span><span class="end">2026-09-10</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>rajc</h4></div>
+            <p class="desc">Razsodnik pri obogatitvi hotelov: sporna identiteta, skupina proti objektu in konflikti virov.</p>
+            <p class="meta"><span>Matjaž Volkar</span><span class="end">2026-09-03</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>tereza</h4></div>
+            <p class="desc">Vratarka za nove povezave: preveri vsebino, izpelje variable in testira, preden je lead pripravljen.</p>
+            <p class="meta"><span>Matjaž Volkar</span><span class="end">2026-09-11</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>zarja</h4></div>
+            <p class="desc">Zamenjava odločevalca med kampanjo: ustavi staro osebo povsod, najde novo in pripravi vstavitev.</p>
+            <p class="meta"><span>Matjaž Volkar</span><span class="end">2026-09-30</span></p>
+          </article>
+        </div>
+      </div>
+
+      <div class="cat" style="--h: 345">
+        <div class="cat-head"><h3>Roast Room svet</h3><span class="cat-count">07</span><span class="cat-rule"></span></div>
+        <div class="cat-list">
+          <article class="tile kit">
+            <div class="t-head"><h4>council-bezos</h4></div>
+            <p class="desc">Sedež za strategijo: odločitve po reverzibilnosti in kupcu, kot Jeff Bezos, iz 68 javnih virov.</p>
+            <p class="meta"><span>Matjaž Volkar</span><span class="end">2026-10-13</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>council-buffett</h4></div>
+            <p class="desc">Sedež za denar in kapital: tveganje, denarni tok in alokacija, kot Warren Buffett, iz 103 virov.</p>
+            <p class="meta"><span>Matjaž Volkar</span><span class="end">2026-10-13</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>council-garyvee</h4></div>
+            <p class="desc">Sedež za marketing in pozornost: kje je pozornost podcenjena, kot Gary Vaynerchuk, iz 153 virov.</p>
+            <p class="meta"><span>Matjaž Volkar</span><span class="end">2026-10-13</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>council-graham</h4></div>
+            <p class="desc">Sedež za produkt in startupe: ali si ljudje to res želijo, kot Paul Graham, iz 246 virov.</p>
+            <p class="meta"><span>Matjaž Volkar</span><span class="end">2026-10-13</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>council-hormozi</h4></div>
+            <p class="desc">Sedež za ponudbe, cene in prodajo: ekonomika enote in leadi, kot Alex Hormozi, iz 124 virov.</p>
+            <p class="meta"><span>Matjaž Volkar</span><span class="end">2026-10-13</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>council-martell</h4></div>
+            <p class="desc">Sedež za ljudi in čas ustanovitelja: zaposlovanje in delegiranje, kot Dan Martell, iz 128 virov.</p>
+            <p class="meta"><span>Matjaž Volkar</span><span class="end">2026-10-13</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>council-wickman</h4></div>
+            <p class="desc">Sedež za operativo: struktura, odgovornost in fokus po EOS, kot Gino Wickman, iz 132 virov.</p>
+            <p class="meta"><span>Matjaž Volkar</span><span class="end">2026-10-13</span></p>
+          </article>
+        </div>
+      </div>
+
+      <div class="cat" style="--h: 150">
+        <div class="cat-head"><h3>Vsebina in znamka</h3><span class="cat-count">06</span><span class="cat-rule"></span></div>
+        <div class="cat-list">
+          <article class="tile kit">
+            <div class="t-head"><h4>copywriting-storytelling</h4></div>
+            <p class="desc">Izpili osnutke objav, video scenarijev, e-pošte in oglasov po ogrodjih znanih copywriterjev.</p>
+            <p class="meta"><span>ni zabeleženo</span><span class="end">2026-04-15</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>email-marketing-strategist</h4></div>
+            <p class="desc">E-poštni marketing od enega maila do sekvenc: zadeve, nurture, lansiranja, B2B in hotelirstvo.</p>
+            <p class="meta"><span>ni zabeleženo</span><span class="end">2026-04-15</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>carousel-generator</h4></div>
+            <p class="desc">Iz teme naredi celoten LinkedIn carousel: HTML, izvoz v PNG in PDF, pripravljen za objavo.</p>
+            <p class="meta"><span>ni zabeleženo</span><span class="end">2026-03-23</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>nevron-brand</h4></div>
+            <p class="desc">Skrbi za skladnost z Nevron znamko na spletu, v predstavitvah, dokumentih in tisku.</p>
+            <p class="meta"><span>Matjaž Volkar</span><span class="end">2026-07-24</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>native-transcreator</h4></div>
+            <p class="desc">Transkreacija na ravni naravnega govorca: pomen in register namesto dobesednega prevoda.</p>
+            <p class="meta"><span>Matjaž Volkar</span><span class="end">2026-09-04</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>excalidraw-artist</h4></div>
+            <p class="desc">Riše in ureja diagrame na Excalidraw platnu: arhitektura, poteki, wireframi, miselni vzorci.</p>
+            <p class="meta"><span>ni zabeleženo</span><span class="end">2026-04-15</span></p>
+          </article>
+        </div>
+      </div>
+
+      <div class="cat" style="--h: 195">
+        <div class="cat-head"><h3>Pomočniki</h3><span class="cat-count">06</span><span class="cat-rule"></span></div>
+        <div class="cat-list">
+          <article class="tile kit">
+            <div class="t-head"><h4>advisor</h4></div>
+            <p class="desc">Kritični pregledovalec: pred velikim načrtom, ob ponovljeni napaki in pred zaključkom vrne tveganja.</p>
+            <p class="meta"><span>Matjaž Volkar</span><span class="end">2026-09-30</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>researcher</h4></div>
+            <p class="desc">Raziskovalec spleta in dokumentov: odgovor z viri in stopnjami zaupanja, brez urejanja datotek.</p>
+            <p class="meta"><span>Matjaž Volkar</span><span class="end">2026-09-30</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>explorer</h4></div>
+            <p class="desc">Pregleda veliko datotek in map naenkrat ter vrne poti, vrstice in kratek povzetek; ne ureja.</p>
+            <p class="meta"><span>Matjaž Volkar</span><span class="end">2026-09-30</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>worker</h4></div>
+            <p class="desc">Izvede jasno določeno nalogo: urejanje datotek, zagon skript, dogovorjena sprememba.</p>
+            <p class="meta"><span>Matjaž Volkar</span><span class="end">2026-09-30</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>hrabroslav</h4></div>
+            <p class="desc">Pomočnik za študentske prijave: nove pošlje ekipi v Teams, statuse in sporočila ureja po potrditvi.</p>
+            <p class="meta"><span>Matjaž Volkar</span><span class="end">2026-10-16</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>claude-code-advisor</h4></div>
+            <p class="desc">Svetuje pri nastavitvi Claude Code: CLAUDE.md, skilli, hooki, MCP strežniki in kontekst.</p>
+            <p class="meta"><span><a href="https://github.com/amadejdemsar-create/claude-code-knowledge">amadejdemsar-create</a></span><span class="end">2026-02-13</span></p>
+          </article>
+        </div>
+      </div>
+
+      <div class="cat" style="--h: 275">
+        <div class="cat-head"><h3>Vgrajeni v Claude Code</h3><span class="cat-count">06</span><span class="cat-rule"></span></div>
+        <div class="cat-list">
+          <article class="tile kit">
+            <div class="t-head"><h4>general-purpose</h4></div>
+            <p class="desc">Splošni agent za raziskovanje, iskanje po kodi in večkoračne naloge.</p>
+            <p class="meta"><span>Anthropic</span><span class="end">vgrajeno</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>Explore</h4></div>
+            <p class="desc">Hitro iskanje po veliko datotekah, ko je potreben samo zaključek, ne vsebina.</p>
+            <p class="meta"><span>Anthropic</span><span class="end">vgrajeno</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>Plan</h4></div>
+            <p class="desc">Arhitekt: pripravi načrt implementacije, ključne datoteke in kompromise.</p>
+            <p class="meta"><span>Anthropic</span><span class="end">vgrajeno</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>claude</h4></div>
+            <p class="desc">Privzeti agent za vse, kar ne ustreza bolj specifičnemu.</p>
+            <p class="meta"><span>Anthropic</span><span class="end">vgrajeno</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>claude-code-guide</h4></div>
+            <p class="desc">Odgovarja na vprašanja o Claude Code, Agent SDK in Claude API.</p>
+            <p class="meta"><span>Anthropic</span><span class="end">vgrajeno</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>statusline-setup</h4></div>
+            <p class="desc">Nastavi statusno vrstico v Claude Code.</p>
+            <p class="meta"><span>Anthropic</span><span class="end">vgrajeno</span></p>
+          </article>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="sec band skl" id="skilli" aria-labelledby="h-skl">
+    <div class="sec-head">
+      <h2 id="h-skl">Skilli</h2>
+      <span class="sec-count">90</span>
+      <span class="sec-rule"></span>
+      <span class="sec-note">navodila za vrsto nalog, ki se naložijo po potrebi · datum: dodano oziroma zadnja sinhronizacija</span>
+    </div>
+    <div class="cats">
+
+      <div class="cat" style="--h: 30">
+        <div class="cat-head"><h3>SDR in prodaja</h3><span class="cat-count">12</span><span class="cat-rule"></span></div>
+        <div class="cat-list">
+          <article class="tile kit">
+            <div class="t-head"><h4>sdr-add-target</h4></div>
+            <p class="desc">Doda eno ročno najdeno tarčo v kampanjo: preveri ICP in dvojnike, vpiše v Attio, po potrditvi v outreach.</p>
+            <p class="meta"><span>Matjaž Volkar</span><span class="end">2026-05-20</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>sdr-daily-ops</h4></div>
+            <p class="desc">Dnevna ura dela za kampanjo: triaža odgovorov, pregled LinkedIna, higiena Attia, dostavljivost.</p>
+            <p class="meta"><span>Matjaž Volkar</span><span class="end">2026-05-22</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>sdr-launch-check</h4></div>
+            <p class="desc">Pred prvim pošiljanjem preveri vsako točko kontrolnega seznama na živih podatkih; samo bere.</p>
+            <p class="meta"><span>Matjaž Volkar</span><span class="end">2026-09-30</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>sdr-new-campaign</h4></div>
+            <p class="desc">Vodena postavitev nove SDR kampanje: osi, ID-ji orodij, registracija in prvi osnutki copyja.</p>
+            <p class="meta"><span>Matjaž Volkar</span><span class="end">2026-09-30</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>sdr-new-outreach-domain</h4></div>
+            <p class="desc">Nova domena za hladno pošto od nakupa do prvega pošiljanja: Workspace, DNS, nabiralniki, ogrevanje.</p>
+            <p class="meta"><span>Matjaž Volkar</span><span class="end">2026-05-24</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>sdr-pipeline-review</h4></div>
+            <p class="desc">Tedenski pregled pipelinea: posli po fazah, KPI proti spodnjim mejam, zastali posli, en ukrep.</p>
+            <p class="meta"><span>Matjaž Volkar</span><span class="end">2026-05-20</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>sdr-promote-prospecting-list</h4></div>
+            <p class="desc">Pregledan seznam prospektov prenese v produkcijo: Attio, Instantly in LinkedIn seznami.</p>
+            <p class="meta"><span>Matjaž Volkar</span><span class="end">2026-05-26</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>sdr-prospect-market</h4></div>
+            <p class="desc">Celoten seznam prospektov za en trg iz Apolla in Firecrawla, s čiščenjem po ICP in odločevalci.</p>
+            <p class="meta"><span>Matjaž Volkar</span><span class="end">2026-05-22</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>sdr-reply-triage</h4></div>
+            <p class="desc">Počisti inbox Instantlyja in HeyReacha: razvrsti odgovore, pripravi osnutke, po potrditvi pošlje.</p>
+            <p class="meta"><span>Matjaž Volkar</span><span class="end">2026-05-20</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>sdr-suppress-contact</h4></div>
+            <p class="desc">Odjava osebe na vseh površinah: Attio, Instantly, HeyReach in lokalni predpomnilnik.</p>
+            <p class="meta"><span>Matjaž Volkar</span><span class="end">2026-06-05</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>sdr-weekly-batch</h4></div>
+            <p class="desc">Tedenski batch od začetka do konca: Apollo, dvojniki, obogatitev, Attio, Instantly in HeyReach.</p>
+            <p class="meta"><span>Matjaž Volkar</span><span class="end">2026-05-22</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>sdr-write-copy</h4></div>
+            <p class="desc">E-poštna sekvenca in LinkedIn copy kampanje iz ICP, produkta in trga, kot osnutki.</p>
+            <p class="meta"><span>Matjaž Volkar</span><span class="end">2026-05-22</span></p>
+          </article>
+        </div>
+      </div>
+
+      <div class="cat" style="--h: 250">
+        <div class="cat-head"><h3>Dream 100 in hoteli</h3><span class="cat-count">03</span><span class="cat-rule"></span></div>
+        <div class="cat-list">
+          <article class="tile kit">
+            <div class="t-head"><h4>dream100</h4></div>
+            <p class="desc">Dream 100 dosje za trg: register, izbor hotelov, odločevalci, kontakti, Attio in HTML pregled.</p>
+            <p class="meta"><span>Matjaž Volkar</span><span class="end">2026-09-30</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>hotel-obogatitev</h4></div>
+            <p class="desc">Obogatitev seznama hotelov iz sedmih virov: zvezdice, sobe, ocene, tip in identiteta, z ICP verdiktom.</p>
+            <p class="meta"><span>Matjaž Volkar</span><span class="end">2026-09-03</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>kiosk-expert</h4></div>
+            <p class="desc">Baza znanja o hotelskih samopostrežnih kioskih iz podcasta Mews Matt Talks in gradiva Mews.</p>
+            <p class="meta"><span>ni zabeleženo</span><span class="end">2026-02-13</span></p>
+          </article>
+        </div>
+      </div>
+
+      <div class="cat" style="--h: 150">
+        <div class="cat-head"><h3>Hostfulness in vsebina</h3><span class="cat-count">08</span><span class="cat-rule"></span></div>
+        <div class="cat-list">
+          <article class="tile kit">
+            <div class="t-head"><h4>hostfulness</h4></div>
+            <p class="desc">Znamka podcasta Hostfulness: besedila, opisi, design brief in objave v tonu in pravilih znamke.</p>
+            <p class="meta"><span>Matjaž Volkar</span><span class="end">2026-04-15</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>hostfulness-shorts</h4></div>
+            <p class="desc">Prepiše Hostfulness short in pripravi naslove, opise in ključnike v slovenščini in angleščini.</p>
+            <p class="meta"><span>Matjaž Volkar</span><span class="end">2026-06-04</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>postiz</h4></div>
+            <p class="desc">Razporejanje objav na 28+ kanalov prek Postiza: X, LinkedIn, Instagram, YouTube, TikTok in drugi.</p>
+            <p class="meta"><span><a href="https://docs.postiz.com/public-api/introduction">Nevo David (Postiz)</a></span><span class="end">2026-10-16</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>prepis-govora</h4></div>
+            <p class="desc">Lokalni prepis govora iz video ali avdio datoteke ali YouTube povezave v .txt dokument.</p>
+            <p class="meta"><span>Matjaž Volkar</span><span class="end">2026-10-14</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>transcreate</h4></div>
+            <p class="desc">Prevod v dveh prehodih: transkreacija in neodvisen pregled naravnega govorca, s slovarjem izrazov.</p>
+            <p class="meta"><span>Matjaž Volkar</span><span class="end">2026-09-04</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>rok-voice</h4></div>
+            <p class="desc">Pisanje in presoja besedil, ki gredo ven pod Rokovim imenom: komentarji, objave, sporočila.</p>
+            <p class="meta"><span>Matjaž Volkar</span><span class="end">2026-10-20</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>nevron-html-to-pdf</h4></div>
+            <p class="desc">Pretvori HTML ali njegov del v urejen PDF v temni Nevron predlogi, pripravljen za e-pošto.</p>
+            <p class="meta"><span>Matjaž Volkar</span><span class="end">2026-05-07</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>visualize</h4></div>
+            <p class="desc">Iz kateregakoli besedila naredi premium HTML stran: povzetek knjige, eseja ali dokumenta.</p>
+            <p class="meta"><span>ni zabeleženo</span><span class="end">2026-07-07</span></p>
+          </article>
+        </div>
+      </div>
+
+      <div class="cat" style="--h: 195">
+        <div class="cat-head"><h3>Odločanje in orodja</h3><span class="cat-count">04</span><span class="cat-rule"></span></div>
+        <div class="cat-list">
+          <article class="tile kit">
+            <div class="t-head"><h4>roast-room</h4></div>
+            <p class="desc">Svet sedmih simuliranih svetovalcev v treh krogih razpravlja o eni odločitvi in vrne verdikt.</p>
+            <p class="meta"><span>Matjaž Volkar</span><span class="end">2026-10-13</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>grill-me</h4></div>
+            <p class="desc">Neusmiljeno izprašuje o načrtu, veja za vejo, dokler ni skupnega razumevanja.</p>
+            <p class="meta"><span><a href="https://github.com/mattpocock/skills">Matt Pocock</a></span><span class="end">2026-07-07</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>continue</h4></div>
+            <p class="desc">Shrani stanje seje v datoteko, da se delo nadaljuje v novi seji, ko zmanjkuje konteksta.</p>
+            <p class="meta"><span>Matjaž Volkar</span><span class="end">2026-03-16</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>windows-update</h4></div>
+            <p class="desc">Ročna posodobitev Windows, kjer so samodejne izklopljene: odkleni, namesti, znova zakleni.</p>
+            <p class="meta"><span>Matjaž Volkar</span><span class="end">2026-07-31</span></p>
+          </article>
+        </div>
+      </div>
+
+      <div class="cat" style="--h: 345">
+        <div class="cat-head"><h3>Marketing: CRO</h3><span class="cat-count">07</span><span class="cat-rule"></span></div>
+        <div class="cat-list">
+          <article class="tile kit">
+            <div class="t-head"><h4>ab-test-setup</h4></div>
+            <p class="desc">Načrt A/B testov in eksperimentov: hipoteza, variante, statistična značilnost, trajanje.</p>
+            <p class="meta"><span><a href="https://github.com/coreyhaines31/marketingskills">Corey Haines</a></span><span class="end">2026-04-23</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>page-cro</h4></div>
+            <p class="desc">Več konverzij na marketinških straneh: domača, pristajalne, cenik, funkcije.</p>
+            <p class="meta"><span><a href="https://github.com/coreyhaines31/marketingskills">Corey Haines</a></span><span class="end">2026-04-23</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>form-cro</h4></div>
+            <p class="desc">Obrazci za leade, kontakt in demo z manj trenja in manj polj.</p>
+            <p class="meta"><span><a href="https://github.com/coreyhaines31/marketingskills">Corey Haines</a></span><span class="end">2026-04-23</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>popup-cro</h4></div>
+            <p class="desc">Pop-upi, modalna okna in pasice za konverzijo, tudi exit intent.</p>
+            <p class="meta"><span><a href="https://github.com/coreyhaines31/marketingskills">Corey Haines</a></span><span class="end">2026-04-23</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>signup-flow-cro</h4></div>
+            <p class="desc">Manj trenja pri registraciji, ustvarjanju računa in začetku preizkusa.</p>
+            <p class="meta"><span><a href="https://github.com/coreyhaines31/marketingskills">Corey Haines</a></span><span class="end">2026-04-23</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>onboarding-cro</h4></div>
+            <p class="desc">Onboarding po registraciji: aktivacija, prva izkušnja in čas do vrednosti.</p>
+            <p class="meta"><span><a href="https://github.com/coreyhaines31/marketingskills">Corey Haines</a></span><span class="end">2026-04-23</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>paywall-upgrade-cro</h4></div>
+            <p class="desc">Paywalli, zasloni za nadgradnjo in upsell v aplikaciji.</p>
+            <p class="meta"><span><a href="https://github.com/coreyhaines31/marketingskills">Corey Haines</a></span><span class="end">2026-04-23</span></p>
+          </article>
+        </div>
+      </div>
+
+      <div class="cat" style="--h: 120">
+        <div class="cat-head"><h3>Marketing: SEO</h3><span class="cat-count">07</span><span class="cat-rule"></span></div>
+        <div class="cat-list">
+          <article class="tile kit">
+            <div class="t-head"><h4>seo-audit</h4></div>
+            <p class="desc">Pregled tehničnega in on-page SEO: indeksiranje, hitrost, meta oznake, padci prometa.</p>
+            <p class="meta"><span><a href="https://github.com/coreyhaines31/marketingskills">Corey Haines</a></span><span class="end">2026-04-23</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>ai-seo</h4></div>
+            <p class="desc">Vsebina za AI iskalnike in citiranje v odgovorih jezikovnih modelov (AEO, GEO).</p>
+            <p class="meta"><span><a href="https://github.com/coreyhaines31/marketingskills">Corey Haines</a></span><span class="end">2026-04-23</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>programmatic-seo</h4></div>
+            <p class="desc">SEO strani v velikem številu iz predlog in podatkov: lokacije, imeniki, primerjave.</p>
+            <p class="meta"><span><a href="https://github.com/coreyhaines31/marketingskills">Corey Haines</a></span><span class="end">2026-04-23</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>schema-markup</h4></div>
+            <p class="desc">Strukturirani podatki schema.org za bogate rezultate v iskalnikih.</p>
+            <p class="meta"><span><a href="https://github.com/coreyhaines31/marketingskills">Corey Haines</a></span><span class="end">2026-04-23</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>site-architecture</h4></div>
+            <p class="desc">Hierarhija strani, navigacija, URL struktura in notranje povezovanje.</p>
+            <p class="meta"><span><a href="https://github.com/coreyhaines31/marketingskills">Corey Haines</a></span><span class="end">2026-04-23</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>directory-submissions</h4></div>
+            <p class="desc">Prijave v imenike startupov, SaaS in AI orodij za povratne povezave.</p>
+            <p class="meta"><span><a href="https://github.com/coreyhaines31/marketingskills">Corey Haines</a></span><span class="end">2026-04-23</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>aso-audit</h4></div>
+            <p class="desc">Pregled in optimizacija vnosa v App Store ali Google Play.</p>
+            <p class="meta"><span><a href="https://github.com/coreyhaines31/marketingskills">Corey Haines</a></span><span class="end">2026-04-23</span></p>
+          </article>
+        </div>
+      </div>
+
+      <div class="cat" style="--h: 60">
+        <div class="cat-head"><h3>Marketing: copy in vsebina</h3><span class="cat-count">08</span><span class="cat-rule"></span></div>
+        <div class="cat-list">
+          <article class="tile kit">
+            <div class="t-head"><h4>copywriting</h4></div>
+            <p class="desc">Marketinški copy za strani: domača, pristajalne, cenik, naslovi in CTA.</p>
+            <p class="meta"><span><a href="https://github.com/coreyhaines31/marketingskills">Corey Haines</a></span><span class="end">2026-04-23</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>copy-editing</h4></div>
+            <p class="desc">Urejanje in izboljšava obstoječega copyja ter osvežitev zastarele vsebine.</p>
+            <p class="meta"><span><a href="https://github.com/coreyhaines31/marketingskills">Corey Haines</a></span><span class="end">2026-04-23</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>content-strategy</h4></div>
+            <p class="desc">Strategija vsebin: o čem pisati, tematski grozdi, uredniški koledar.</p>
+            <p class="meta"><span><a href="https://github.com/coreyhaines31/marketingskills">Corey Haines</a></span><span class="end">2026-04-23</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>social-content</h4></div>
+            <p class="desc">Objave za LinkedIn, X, Instagram in druga omrežja, ideje in razpored.</p>
+            <p class="meta"><span><a href="https://github.com/coreyhaines31/marketingskills">Corey Haines</a></span><span class="end">2026-04-23</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>email-sequence</h4></div>
+            <p class="desc">Avtomatizirane e-poštne sekvence: dobrodošlica, nurture, ponovna aktivacija.</p>
+            <p class="meta"><span><a href="https://github.com/coreyhaines31/marketingskills">Corey Haines</a></span><span class="end">2026-04-23</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>cold-email</h4></div>
+            <p class="desc">B2B hladna e-pošta in zaporedja, ki dobijo odgovor: zadeve, uvod, CTA.</p>
+            <p class="meta"><span><a href="https://github.com/coreyhaines31/marketingskills">Corey Haines</a></span><span class="end">2026-04-23</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>ad-creative</h4></div>
+            <p class="desc">Oglasni naslovi in besedila v veliko variantah za plačljive platforme.</p>
+            <p class="meta"><span><a href="https://github.com/coreyhaines31/marketingskills">Corey Haines</a></span><span class="end">2026-04-23</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>lead-magnets</h4></div>
+            <p class="desc">Lead magneti za zajem e-pošte: e-knjige, kontrolni seznami, predloge.</p>
+            <p class="meta"><span><a href="https://github.com/coreyhaines31/marketingskills">Corey Haines</a></span><span class="end">2026-04-23</span></p>
+          </article>
+        </div>
+      </div>
+
+      <div class="cat" style="--h: 300">
+        <div class="cat-head"><h3>Marketing: rast</h3><span class="cat-count">09</span><span class="cat-rule"></span></div>
+        <div class="cat-list">
+          <article class="tile kit">
+            <div class="t-head"><h4>launch-strategy</h4></div>
+            <p class="desc">Lansiranje produkta ali funkcije: Product Hunt, beta, napovedi, go-to-market.</p>
+            <p class="meta"><span><a href="https://github.com/coreyhaines31/marketingskills">Corey Haines</a></span><span class="end">2026-04-23</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>pricing-strategy</h4></div>
+            <p class="desc">Cene, paketi in monetizacija: nivoji, freemium, dvig cen.</p>
+            <p class="meta"><span><a href="https://github.com/coreyhaines31/marketingskills">Corey Haines</a></span><span class="end">2026-04-23</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>referral-program</h4></div>
+            <p class="desc">Programi priporočil, affiliate in ustna promocija.</p>
+            <p class="meta"><span><a href="https://github.com/coreyhaines31/marketingskills">Corey Haines</a></span><span class="end">2026-04-23</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>marketing-ideas</h4></div>
+            <p class="desc">Ideje in taktike za marketing SaaS produkta.</p>
+            <p class="meta"><span><a href="https://github.com/coreyhaines31/marketingskills">Corey Haines</a></span><span class="end">2026-04-23</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>marketing-psychology</h4></div>
+            <p class="desc">Psihološka načela, miselni modeli in vedenjska znanost v marketingu.</p>
+            <p class="meta"><span><a href="https://github.com/coreyhaines31/marketingskills">Corey Haines</a></span><span class="end">2026-04-23</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>free-tool-strategy</h4></div>
+            <p class="desc">Brezplačno orodje kot marketing: leadi, SEO vrednost, prepoznavnost.</p>
+            <p class="meta"><span><a href="https://github.com/coreyhaines31/marketingskills">Corey Haines</a></span><span class="end">2026-04-23</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>community-marketing</h4></div>
+            <p class="desc">Gradnja skupnosti za rast produkta: Discord, Slack, ambasadorji.</p>
+            <p class="meta"><span><a href="https://github.com/coreyhaines31/marketingskills">Corey Haines</a></span><span class="end">2026-04-23</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>churn-prevention</h4></div>
+            <p class="desc">Manj odhodov: tokovi odpovedi, ponudbe za zadržanje, neuspela plačila.</p>
+            <p class="meta"><span><a href="https://github.com/coreyhaines31/marketingskills">Corey Haines</a></span><span class="end">2026-04-23</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>paid-ads</h4></div>
+            <p class="desc">Plačljive kampanje na Googlu, Meti, LinkedInu in X: ciljanje, proračun, ROAS.</p>
+            <p class="meta"><span><a href="https://github.com/coreyhaines31/marketingskills">Corey Haines</a></span><span class="end">2026-04-23</span></p>
+          </article>
+        </div>
+      </div>
+
+      <div class="cat" style="--h: 85">
+        <div class="cat-head"><h3>Marketing: analitika in prodaja</h3><span class="cat-count">07</span><span class="cat-rule"></span></div>
+        <div class="cat-list">
+          <article class="tile kit">
+            <div class="t-head"><h4>analytics-tracking</h4></div>
+            <p class="desc">Postavitev in pregled merjenja: GA4, dogodki, konverzije, UTM, atribucija.</p>
+            <p class="meta"><span><a href="https://github.com/coreyhaines31/marketingskills">Corey Haines</a></span><span class="end">2026-04-23</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>revops</h4></div>
+            <p class="desc">Revenue operations: življenjski cikel leada, točkovanje, predaja iz marketinga v prodajo.</p>
+            <p class="meta"><span><a href="https://github.com/coreyhaines31/marketingskills">Corey Haines</a></span><span class="end">2026-04-23</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>sales-enablement</h4></div>
+            <p class="desc">Prodajno gradivo: pitch deck, one-pager, odgovori na ugovore, demo scenariji.</p>
+            <p class="meta"><span><a href="https://github.com/coreyhaines31/marketingskills">Corey Haines</a></span><span class="end">2026-04-23</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>competitor-alternatives</h4></div>
+            <p class="desc">Primerjalne strani in strani z alternativami za SEO in prodajo.</p>
+            <p class="meta"><span><a href="https://github.com/coreyhaines31/marketingskills">Corey Haines</a></span><span class="end">2026-04-23</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>competitor-profiling</h4></div>
+            <p class="desc">Profili konkurentov iz njihovih spletnih strani, kot strukturirani dosjeji.</p>
+            <p class="meta"><span><a href="https://github.com/coreyhaines31/marketingskills">Corey Haines</a></span><span class="end">2026-04-23</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>customer-research</h4></div>
+            <p class="desc">Raziskava kupcev: intervjuji, ankete, ocene, glas kupca, persone.</p>
+            <p class="meta"><span><a href="https://github.com/coreyhaines31/marketingskills">Corey Haines</a></span><span class="end">2026-04-23</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>product-marketing-context</h4></div>
+            <p class="desc">Dokument s kontekstom produkta: pozicioniranje, ciljna publika, ponudba.</p>
+            <p class="meta"><span><a href="https://github.com/coreyhaines31/marketingskills">Corey Haines</a></span><span class="end">2026-04-23</span></p>
+          </article>
+        </div>
+      </div>
+
+      <div class="cat" style="--h: 220">
+        <div class="cat-head"><h3>Dokumenti</h3><span class="cat-count">09</span><span class="cat-rule"></span></div>
+        <div class="cat-list">
+          <article class="tile kit">
+            <div class="t-head"><h4>docs</h4></div>
+            <p class="desc">Urejevalni dokumenti v Claude Docs, ki jih ljudje delijo in komentirajo.</p>
+            <p class="meta"><span>Anthropic</span><span class="end">2026-09-30</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>docx</h4></div>
+            <p class="desc">Ustvarjanje, branje in urejanje Word dokumentov.</p>
+            <p class="meta"><span>Anthropic</span><span class="end">2026-09-30</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>pdf</h4></div>
+            <p class="desc">Vse s PDF: branje, združevanje, deljenje, obrazci, OCR in ustvarjanje.</p>
+            <p class="meta"><span>Anthropic</span><span class="end">2026-07-10</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>pptx</h4></div>
+            <p class="desc">Ustvarjanje, branje in urejanje PowerPoint predstavitev.</p>
+            <p class="meta"><span>Anthropic</span><span class="end">2026-10-02</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>xlsx</h4></div>
+            <p class="desc">Preglednice: čiščenje, formule, grafi in pretvorbe formatov.</p>
+            <p class="meta"><span>Anthropic</span><span class="end">2026-09-14</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>google-workspace</h4></div>
+            <p class="desc">Ustvarjanje in urejanje Google Docs, Sheets in Slides v Drive.</p>
+            <p class="meta"><span>Anthropic</span><span class="end">2026-10-14</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>skill-creator</h4></div>
+            <p class="desc">Ustvarjanje, izboljšava in merjenje skillov, z evalvacijami.</p>
+            <p class="meta"><span>Anthropic</span><span class="end">2026-09-14</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>import-memory</h4></div>
+            <p class="desc">Uvoz spomina iz drugega AI asistenta v Claudov spomin.</p>
+            <p class="meta"><span>Anthropic</span><span class="end">2026-09-14</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>morning</h4></div>
+            <p class="desc">Jutranji pregled kot HTML stran ali ponavljajoče se opravilo ob delavnikih.</p>
+            <p class="meta"><span>Anthropic</span><span class="end">2026-09-14</span></p>
+          </article>
+        </div>
+      </div>
+
+      <div class="cat" style="--h: 275">
+        <div class="cat-head"><h3>Vgrajeni v Claude Code</h3><span class="cat-count">16</span><span class="cat-rule"></span></div>
+        <div class="cat-list">
+          <article class="tile kit">
+            <div class="t-head"><h4>artifact-design</h4></div>
+            <p class="desc">Oblikovalska pravila za Artifacte, preden se stran napiše.</p>
+            <p class="meta"><span>Anthropic</span><span class="end">vgrajeno</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>artifact-diagramming</h4></div>
+            <p class="desc">Diagrami v Artifactih: kdaj pomagajo in kako jih narisati čitljivo.</p>
+            <p class="meta"><span>Anthropic</span><span class="end">vgrajeno</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>artifact-capabilities</h4></div>
+            <p class="desc">Zmožnosti objavljene strani: deljeno stanje, podatki, datoteke, vprašanja Claudu.</p>
+            <p class="meta"><span>Anthropic</span><span class="end">vgrajeno</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>dataviz</h4></div>
+            <p class="desc">Pravila za grafe in vizualizacije podatkov v kateremkoli mediju.</p>
+            <p class="meta"><span>Anthropic</span><span class="end">vgrajeno</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>code-review</h4></div>
+            <p class="desc">Pregled sprememb ali PR-ja na napake, z nastavljivo temeljitostjo.</p>
+            <p class="meta"><span>Anthropic</span><span class="end">vgrajeno</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>simplify</h4></div>
+            <p class="desc">Pregled spremenjene kode za poenostavitve, ponovno rabo in učinkovitost.</p>
+            <p class="meta"><span>Anthropic</span><span class="end">vgrajeno</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>security-review</h4></div>
+            <p class="desc">Varnostni pregled sprememb na trenutni veji.</p>
+            <p class="meta"><span>Anthropic</span><span class="end">vgrajeno</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>init</h4></div>
+            <p class="desc">Ustvari datoteko CLAUDE.md z dokumentacijo projekta.</p>
+            <p class="meta"><span>Anthropic</span><span class="end">vgrajeno</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>run</h4></div>
+            <p class="desc">Zažene aplikacijo projekta, da se sprememba vidi v delovanju.</p>
+            <p class="meta"><span>Anthropic</span><span class="end">vgrajeno</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>loop</h4></div>
+            <p class="desc">Ponavlja ukaz v intervalu ali v lastnem ritmu.</p>
+            <p class="meta"><span>Anthropic</span><span class="end">vgrajeno</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>schedule</h4></div>
+            <p class="desc">Časovno načrtovani agenti v oblaku: ustvarjanje in upravljanje.</p>
+            <p class="meta"><span>Anthropic</span><span class="end">vgrajeno</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>claude-api</h4></div>
+            <p class="desc">Referenca za Claude API in Anthropic SDK: modeli, cene, orodja, predpomnjenje.</p>
+            <p class="meta"><span>Anthropic</span><span class="end">vgrajeno</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>workflow-authoring</h4></div>
+            <p class="desc">Referenca za pisanje skript, ki usklajujejo več agentov.</p>
+            <p class="meta"><span>Anthropic</span><span class="end">vgrajeno</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>update-config</h4></div>
+            <p class="desc">Nastavitve Claude Code v settings.json: dovoljenja, hooki, spremenljivke.</p>
+            <p class="meta"><span>Anthropic</span><span class="end">vgrajeno</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>keybindings-help</h4></div>
+            <p class="desc">Prilagoditev bližnjic na tipkovnici v Claude Code.</p>
+            <p class="meta"><span>Anthropic</span><span class="end">vgrajeno</span></p>
+          </article>
+          <article class="tile kit">
+            <div class="t-head"><h4>fewer-permission-prompts</h4></div>
+            <p class="desc">Iz zgodovine sestavi seznam dovoljenj, da je manj vprašanj za potrditev.</p>
+            <p class="meta"><span>Anthropic</span><span class="end">vgrajeno</span></p>
+          </article>
+        </div>
+      </div>
+
+    </div>
+  </section>
+<!-- AGENTI-SKILLI:KONEC -->
+
   <p class="empty" id="empty" hidden>Ni zadetkov. Esc počisti iskanje.</p>
 
   <footer>
     <span>statična stran · GitHub Pages</span>
-    <span>seznam se dopolni ročno</span>
+    <span>projekti se dopolnijo ročno</span>
+    <span>agenti in skilli: lokalna postavitev Claude Code</span>
     <span>zaklenjeni projekti brez prijave niso dosegljivi</span>
   </footer>
 
@@ -429,9 +1210,12 @@
   });
   document.querySelectorAll('.tile h4, .desc').forEach(el => { el.title = el.textContent.trim(); });
 
-  const locked = tiles.filter(t => t.classList.contains('locked')).length;
+  const proj = [...document.querySelectorAll('.split .tile')];
+  const locked = proj.filter(t => t.classList.contains('locked')).length;
+  const n = sel => document.querySelectorAll(sel).length;
   document.getElementById('stats').innerHTML =
-    `<span>kazalo projektov</span> · <span><b>${tiles.length}</b> skupaj</span> · <span><b>${tiles.length - locked}</b> javnih</span> · <span><b>${locked}</b> s prijavo</span>`;
+    `<a href="#projekti"><b>${proj.length}</b> projektov</a> · <a href="#agenti"><b>${n('#agenti .tile')}</b> agentov</a> · ` +
+    `<a href="#skilli"><b>${n('#skilli .tile')}</b> skillov</a> · <span>${proj.length - locked} javnih, ${locked} s prijavo</span>`;
 
   function apply() {
     const terms = norm(q.value).trim().split(/\s+/).filter(Boolean);
@@ -457,11 +1241,37 @@
     });
     empty.hidden = shown > 0;
   }
-  apply();
+  // masonry: categories are dealt into the shortest column, so short ones fill the gaps
+  const boxes = [...document.querySelectorAll('.cats')].map(box => ({ box, cats: [...box.querySelectorAll('.cat')] }));
+  function masonry() {
+    boxes.forEach(({ box, cats }) => {
+      const colw = parseFloat(getComputedStyle(box).getPropertyValue('--colw')) || 290;
+      const n = Math.max(1, Math.floor((box.clientWidth + 12) / (colw + 12)));
+      const cols = Array.from({ length: n }, () => Object.assign(document.createElement('div'), { className: 'mcol' }));
+      // first category stays top left, the rest go largest first; each column keeps the original order
+      const items = cats.map((c, idx) => ({ c, idx, w: c.hidden ? 0 : c.querySelectorAll('.tile:not([hidden])').length * 3 + 1 }));
+      const first = items.find(o => o.w > 0) || items[0];
+      const h = new Array(n).fill(0), put = cols.map(() => []);
+      [first, ...items.filter(o => o !== first).sort((x, y) => y.w - x.w)].forEach(o => {
+        const i = h.indexOf(Math.min(...h));
+        put[i].push(o);
+        h[i] += o.w;
+      });
+      put.forEach((list, i) => list.sort((x, y) => x.idx - y.idx).forEach(o => cols[i].appendChild(o.c)));
+      box.replaceChildren(...cols);
+      box.style.setProperty('--n', n);
+      box.classList.add('mas');
+    });
+  }
+  let raf = 0;
+  addEventListener('resize', () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(masonry); });
 
-  q.addEventListener('input', apply);
+  apply();
+  masonry();
+
+  q.addEventListener('input', () => { apply(); masonry(); });
   q.addEventListener('keydown', e => {
-    if (e.key === 'Escape') { q.value = ''; apply(); q.blur(); }
+    if (e.key === 'Escape') { q.value = ''; apply(); masonry(); q.blur(); }
     if (e.key === 'Enter') {
       const first = document.querySelector('.tile:not([hidden]) .tile-link');
       if (first) first.click();
