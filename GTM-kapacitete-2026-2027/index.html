@@ -520,8 +520,191 @@
 <p class="kicker">Interna analiza</p>
 <h1 style="margin-bottom:2px">Nevron GTM aktivnosti</h1>
 <p class="subtitle">Kapacitete prodajne sezone 2026-2027</p>
-<div class="tiles hero" id="hero"></div>
-<p class="sub small">Vse številke so preštete (stanje 31. 8. 2026): Dream 100 iz dosjejev vseh sedmih trgov, sloj "ostali" iz dosjejev ostalih (Slovenija, Hrvaška), iz Attia (podjetja in osebe na trgu) in iz registrov (hoteli s telefonom centrale, brez oseb). Ocen iz vzorcev ni več; kjer piše 0, tega podatka nimamo.</p>
+<style>
+  /* ---------- razdelek 0: kapacitete kanalov na dan in izracun kampanj (22. 10. 2026) ---------- */
+  .kap0 { display: grid; gap: 18px; margin: 14px 0 6px; }
+  .kap0 .kh { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; margin: 0 0 8px; }
+  .kap0 .kh b { font-size: 1.15rem; color: var(--ink); }
+  .kap0 .kh span { font-size: 0.8rem; color: var(--ink-3); }
+  .kapg { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 0.75rem; }
+  @media (max-width: 1100px) { .kapg { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  @media (max-width: 560px) { .kapg { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .kapc { background: var(--surface); border: 2px solid var(--n-yellow); border-radius: var(--r-lg); padding: 0.875rem 1rem; min-width: 0; }
+  .kapc.g { border-color: var(--n-green); }
+  .kapc .v { font-weight: 700; font-size: 2.2rem; line-height: 1.1; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; color: var(--ink); white-space: nowrap; }
+  .kapc .l { font-size: 0.92rem; font-weight: 700; color: var(--accent); margin-top: 4px; line-height: 1.3; }
+  .kapc .have { font-size: 0.74rem; color: var(--ink-3); margin-top: 6px; line-height: 1.45; }
+  .kapleg { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 0.78rem; color: var(--ink-2); }
+  .kapleg i { display: inline-block; width: 14px; height: 14px; border-radius: 4px; vertical-align: -2px; margin-right: 6px; border: 2px solid; }
+  .izr .kapc { border-color: var(--line); }
+  .izr .kapc.res { border-color: var(--accent); background: var(--accent-soft); }
+  .izr .k { font-size: 0.7rem; font-weight: 700; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+  .izr .kapg input[type=number] { font-size: 1.5rem; font-weight: 700; min-height: 48px; }
+  .izr .seg { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin-bottom: 8px; }
+  .izr .seg button { border: 1px solid var(--line); background: var(--surface-2); color: var(--ink-2); border-radius: 8px; padding: 6px 4px; font: inherit; font-size: 0.8rem; font-weight: 700; cursor: pointer; }
+  .izr .seg button.on { background: var(--accent); border-color: var(--accent); color: #04102e; }
+  .izr .ch0 { display: flex; flex-wrap: wrap; gap: 4px 10px; margin-top: 8px; font-size: 0.72rem; color: var(--ink-2); }
+  .izr .ch0 label { display: inline-flex; align-items: center; cursor: pointer; white-space: nowrap; }
+  .izr .ch0 input[type=checkbox] { transform: none; width: 13px; height: 13px; margin: 0 4px 0 0; }
+  .izr .go { width: 100%; background: var(--accent); color: #04102e; border: 0; border-radius: 10px; padding: 12px; font: inherit; font-weight: 800; font-size: 1.05rem; cursor: pointer; }
+  .izr .go:hover { filter: brightness(1.08); }
+  .izr .chk { display: flex; gap: 8px; align-items: flex-start; font-size: 0.8rem; color: var(--ink-2); margin-top: 12px; cursor: pointer; line-height: 1.35; }
+  .izr .chk input[type=checkbox] { transform: none; width: 16px; height: 16px; margin: 1px 0 0; flex: none; }
+  .izr .rows { font-size: 0.74rem; color: var(--ink-2); margin-top: 8px; display: grid; gap: 2px; }
+  .izr .rows div { display: flex; justify-content: space-between; gap: 6px; }
+  .izr .rows b { color: var(--ink); font-variant-numeric: tabular-nums; }
+  .izr .rows .bn, .izr .rows .bn b { color: var(--n-yellow); }
+  .izr details.cost0 { margin-top: 0; }
+  .izr .cl { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 10px 18px; margin-top: 10px; }
+  .izr .cl label { display: grid; grid-template-columns: 1fr 110px; gap: 8px; align-items: center; font-size: 0.85rem; color: var(--ink); }
+  .izr .cl small { display: block; font-size: 0.68rem; color: var(--ink-3); line-height: 1.35; }
+  .izr .cl input[type=number] { min-height: 36px; padding: 4px 8px; text-align: right; }
+  .izr .formula { font-size: 0.78rem; color: var(--ink-3); margin: 0; line-height: 1.55; max-width: none; }
+</style>
+<h2>0. Kapacitete kanalov na dan in izračun kampanj</h2>
+<p>Koliko dotikov na dan zmoremo z računi, ki jih imamo, ločeno za hotele in ladje. Zelene kartice so izračunane iz živih računov v Instantlyju in HeyReachu (stanje 22. 10. 2026), rumene so zaenkrat ocena po občutku.</p>
+<div id="kap0" class="kap0"></div>
+<h3 style="margin:30px 0 4px">Izračun</h3>
+<p class="small muted" style="margin:0 0 10px">Trg je 300 kontaktov: 100 iz Dream 100 in 200 ostalih hotelov ali kontaktov. Vnesi vrednosti in klikni Izračunaj.</p>
+<div id="izr0" class="kap0 izr"></div>
+<script>
+(function () {
+  const STANJE = "22. 10. 2026";
+  // Zelene kvote so zive (22. 10. 2026): Instantly daily_limit 33 na nabiralnik, HeyReach connectionRequestLimit na sedez.
+  // HeyReach dovoli 40 sporocil na sedez na dan; LinkedIn koraki po povabilu gredo samo tistim, ki sprejmejo (predpostavka 30 %).
+  const SPREJEM = 0.30, MSG_NA_SEDEZ = 40;
+  const KAN = [
+    { id: "email", ime: "emailov na dan", kratko: "email", zel: true },
+    { id: "li", ime: "LinkedIn cold povabil na dan", kratko: "LinkedIn", zel: true },
+    { id: "lm", ime: "lead magnet sporočil na dan", kratko: "lead magnet" },
+    { id: "wa", ime: "WhatsApp sporočil na dan", kratko: "WhatsApp" },
+    { id: "klic", ime: "cold klicev na dan", kratko: "klici" },
+    { id: "posta", ime: "pošiljk direktne pošte na dan", kratko: "pošta" },
+  ];
+  const SEG = {
+    hoteli: {
+      ime: "Hoteli", kdo: "maili: Amadej, Gregor, Matjaž, Nina, Alex · LinkedIn: Matjaž in Amadej", liSedezev: 2,
+      kap: { email: 429, li: 50, lm: 40, wa: 20, klic: 30, posta: 5 },
+      have: {
+        email: "13 nabiralnikov × 33 · Amadej, Gregor, Matjaž, Nina po 3, Alex 1",
+        li: "Amadej 25 + Matjaž 25 · Matjaževega profila ni v HeyReachu (rabi 4. sedež), brez njega 25",
+        lm: "2 sedeža × 20 · HeyReach dovoli 40 sporočil na sedež, polovica ostane follow-upom",
+        wa: "ročno z ene številke, pri več novih pogovorih na dan WhatsApp omeji številko",
+        klic: "1 klicatelj, 30 klicev na dan kot v razdelku 3",
+        posta: "ročna priprava in pošiljanje",
+      },
+    },
+    ladje: {
+      ime: "Ladje", kdo: "maili in LinkedIn: Rok in Simon", liSedezev: 2,
+      kap: { email: 264, li: 58, lm: 40, wa: 10, klic: 15, posta: 3 },
+      have: {
+        email: "8 nabiralnikov × 33 · Rok 4, Simon 4",
+        li: "Rok 25 + Simon 33, kvoti v HeyReachu",
+        lm: "2 sedeža × 20 · HeyReach dovoli 40 sporočil na sedež, polovica ostane follow-upom",
+        wa: "ročno, pol hotelske ocene",
+        klic: "Simon ob drugem delu",
+        posta: "ročna priprava in pošiljanje",
+      },
+    },
+  };
+  // Mesecni strosek posiljanja po segmentu (predizpolnjeno iz razdelka 8, urejljivo na strani).
+  const STR = [
+    ["heyreach", "HeyReach", "2 sedeža × 45,77 € (4 sedeži, 597 $ na četrtletje)", 91.54, 91.54],
+    ["instantly", "Instantly", "Hyper Growth 87,60 €, delež po nabiralnikih: hoteli 13 od 21, ladje 8 od 21", 54.23, 33.37],
+    ["google", "Google računi", "Workspace Starter 6,80 € na nabiralnik, nevron.net Standard 13,60 € (hoteli 12 + 1, ladje 6 + 2)", 95.20, 68.00],
+    ["domene", "Domene", "getnevron.com, nevroncore.com, trynevron.com, okoli 1 € na mesec vsaka, delež po nabiralnikih", 2.00, 1.00],
+    ["salesnav", "Sales Navigator", "2 sedeža × 82,64 €", 165.28, 165.28],
+    ["apollo", "Apollo", "50 % skupne cene 91,08 €", 45.54, 45.54],
+    ["lusha", "Lusha", "50 % skupne cene 29,90 €", 14.95, 14.95],
+    ["skrapp", "Skrapp", "50 % skupne cene 45 €", 22.50, 22.50],
+  ];
+  const q = (s) => document.querySelector(s);
+  const n0 = (n) => String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  const eur = (n, d) => n.toLocaleString("de-DE", { minimumFractionDigits: d || 0, maximumFractionDigits: d || 0 }) + " €";
+  const tednov = (n) => { const m = n % 100; return m === 1 ? "teden" : m === 2 ? "tedna" : (m === 3 || m === 4) ? "tedne" : "tednov"; };
+  const dni = (n) => { const m = n % 100; return m === 1 ? "delovni dan" : m === 2 ? "delovna dneva" : (m === 3 || m === 4) ? "delovni dnevi" : "delovnih dni"; };
+  const st = { seg: "hoteli", cost: { hoteli: {}, ladje: {} } };
+  STR.forEach(r => { st.cost.hoteli[r[0]] = r[3]; st.cost.ladje[r[0]] = r[4]; });
+
+  q("#kap0").innerHTML = ["hoteli", "ladje"].map(k => {
+    const s = SEG[k];
+    return `<div><div class="kh"><b>${s.ime}</b><span>${s.kdo}</span></div><div class="kapg">` +
+      KAN.map(c => `<div class="kapc${c.zel ? " g" : ""}"><div class="v">${n0(s.kap[c.id])}</div><div class="l">${c.ime}</div><div class="have">${s.have[c.id]}</div></div>`).join("") + `</div></div>`;
+  }).join("") + `<div class="kapleg"><span><i style="border-color:var(--n-green)"></i>izračunano iz živih računov (${STANJE})</span><span><i style="border-color:var(--n-yellow)"></i>ocena po občutku, za popravek</span></div>`;
+
+  q("#izr0").innerHTML = `<div class="kapg">
+    <div class="kapc"><div class="k">1 · Trg</div>
+      <div class="seg"><button type="button" data-seg="hoteli" class="on">Hoteli</button><button type="button" data-seg="ladje">Ladje</button></div>
+      <input type="number" id="i0_trgov" min="0" step="1" value="1" aria-label="Število trgov">
+      <div class="have" id="o0_kontakti"></div></div>
+    <div class="kapc"><div class="k">2 · Sekvence na kanal</div>
+      <input type="number" id="i0_s" min="1" max="20" step="1" value="5" aria-label="Koraki na kanal">
+      <div class="have">korakov na kontakt na vsakem vklopljenem kanalu</div>
+      <div class="ch0">${KAN.map(c => `<label><input type="checkbox" data-ch="${c.id}"${c.zel ? " checked" : ""}>${c.kratko}</label>`).join("")}</div></div>
+    <div class="kapc"><div class="k">3 · Kampanje na trg</div>
+      <input type="number" id="i0_k" min="1" max="20" step="1" value="1" aria-label="Kampanje na trg">
+      <div class="have">vsaka kampanja je nova sekvenca istim kontaktom</div></div>
+    <div class="kapc"><div class="k">4 · Izračun</div>
+      <button type="button" class="go" id="b0_go">Izračunaj</button>
+      <label class="chk"><input type="checkbox" id="i0_kratke"><span>Kratke sekvence: isti kanal vsaka 2 dni (sicer vsak 3. dan)</span></label></div>
+    <div class="kapc res"><div class="k">5 · Trajanje kampanj</div><div class="v" id="o0_tedni"></div><div class="have" id="o0_dni"></div><div class="rows" id="o0_kanali"></div></div>
+    <div class="kapc res"><div class="k">6 · Strošek pošiljanja</div><div class="v" id="o0_eur"></div><div class="have" id="o0_eur_sub"></div><div class="rows" id="o0_postavke"></div></div>
+  </div>
+  <details class="cost0"><summary id="o0_cost_sum"></summary><div class="cl" id="o0_cost"></div></details>
+  <p class="formula">Kako se računa: kontaktov = trgi × 300. Za mail, lead magnet, WhatsApp, klice in pošto je trajanje v delovnih dneh = kontaktov × koraki × kampanje / kapaciteta na dan + rep, kjer je rep (koraki - 1) × razmik med koraki istega kanala (3 dni, pri kratkih sekvencah 2). LinkedIn povabilo dobi vsak kontakt samo enkrat, ponovnih povabil ni; ostali koraki in nadaljnje kampanje so sporočila tistim, ki povabilo sprejmejo (predpostavka ${Math.round(SPREJEM * 100)} %), največ ${MSG_NA_SEDEZ} sporočil na sedež na dan, zato LinkedIn traja toliko kot počasnejše od obojega + rep. Vklopljeni kanali tečejo vzporedno, zato kampanja traja toliko kot najpočasnejši kanal (ozko grlo). Tedni = delovni dnevi / 5, zaokroženo navzgor. Kratke sekvence skrajšajo samo rep, ker dnevne kvote ostanejo enake. Premori med kampanjami istim kontaktom niso upoštevani. Strošek = vsota mesečnih postavk × trajanje v mesecih (delovni dnevi / 5 / 4,33).</p>`;
+
+  function narisiStroske() {
+    const c = st.cost[st.seg];
+    q("#o0_cost_sum").textContent = `Spremenljivke stroška za segment ${SEG[st.seg].ime} (mesečno, uredi)`;
+    q("#o0_cost").innerHTML = STR.map(r => `<label><span>${r[1]}<small>${r[2]}</small></span><input type="number" min="0" step="0.01" data-cost="${r[0]}" value="${c[r[0]].toFixed(2)}"></label>`).join("");
+    q("#o0_cost").querySelectorAll("[data-cost]").forEach(inp => inp.addEventListener("change", () => { c[inp.dataset.cost] = Math.max(0, parseFloat(inp.value) || 0); izracun(); }));
+  }
+
+  function izracun() {
+    const s = SEG[st.seg];
+    const trgov = Math.max(0, Math.round(+q("#i0_trgov").value || 0));
+    const S = Math.max(1, Math.round(+q("#i0_s").value || 1));
+    const K = Math.max(1, Math.round(+q("#i0_k").value || 1));
+    const razmik = q("#i0_kratke").checked ? 2 : 3;
+    const C = trgov * 300, rep = (S - 1) * razmik;
+    q("#o0_kontakti").textContent = `${trgov} × 300 = ${n0(C)} kontaktov (${n0(trgov * 100)} Dream 100 + ${n0(trgov * 200)} ostalih)`;
+    const vkl = KAN.filter(c => q(`#izr0 [data-ch="${c.id}"]`).checked);
+    if (!vkl.length) {
+      q("#o0_tedni").textContent = "0"; q("#o0_dni").textContent = "vklopi vsaj en kanal v kartici 2";
+      q("#o0_kanali").innerHTML = ""; q("#o0_eur").textContent = eur(0); q("#o0_eur_sub").textContent = ""; q("#o0_postavke").innerHTML = "";
+      return;
+    }
+    const rez = vkl.map(c => {
+      const cap = s.kap[c.id];
+      const d = c.id === "li"
+        ? Math.max(C / cap, C * SPREJEM * ((S - 1) + S * (K - 1)) / (MSG_NA_SEDEZ * s.liSedezev)) + rep
+        : C * S * K / cap + rep;
+      return { c, d: Math.ceil(d) };
+    });
+    const max = rez.reduce((a, b) => (b.d > a.d ? b : a));
+    const D = max.d, T = Math.ceil(D / 5);
+    q("#o0_tedni").textContent = `${T} ${tednov(T)}`;
+    q("#o0_dni").textContent = `${D} ${dni(D)} · ozko grlo: ${max.c.kratko}`;
+    q("#o0_kanali").innerHTML = rez.map(r => `<div class="${r === max ? "bn" : ""}"><span>${r.c.kratko}</span><b>${r.d} dni</b></div>`).join("");
+    const c = st.cost[st.seg];
+    const mesecno = STR.reduce((a, r) => a + (c[r[0]] || 0), 0);
+    const meseci = D / 5 / 4.33;
+    const skupaj = mesecno * meseci;
+    q("#o0_eur").textContent = eur(skupaj);
+    q("#o0_eur_sub").textContent = `${eur(mesecno, 2)} na mesec × ${meseci.toLocaleString("de-DE", { maximumFractionDigits: 1 })} mes.` + (C ? ` · ${eur(skupaj / C, 2)} na kontakt` : "");
+    q("#o0_postavke").innerHTML = STR.filter(r => c[r[0]]).map(r => `<div><span>${r[1]}</span><b>${eur(c[r[0]] * meseci)}</b></div>`).join("");
+  }
+
+  q("#izr0").querySelectorAll("[data-seg]").forEach(b => b.addEventListener("click", () => {
+    st.seg = b.dataset.seg;
+    q("#izr0").querySelectorAll("[data-seg]").forEach(x => x.classList.toggle("on", x === b));
+    narisiStroske(); izracun();
+  }));
+  q("#b0_go").addEventListener("click", izracun);
+  ["#i0_trgov", "#i0_s", "#i0_k"].forEach(id => q(id).addEventListener("keydown", e => { if (e.key === "Enter") izracun(); }));
+  narisiStroske(); izracun();
+})();
+</script>
 
 <h2>1. GTM mrzli outreach: Dream 100 proti ostalim - kontakti po kanalih</h2>
 <p>ICP: hoteli s 4 in 5 zvezdicami, 30 do 200 sob, neodvisni ali v lokalni verigi, Booking ocena nad 8,0. Odločevalec je lastnik, direktor, GM, vodja hotela, vodja operative, vodja nabave ali vodja odnosov z gosti. Kontakt na kanalu je poslovni mail, LinkedIn profil ali telefon (direktna mobilna ali office številka hotela).</p>
@@ -921,14 +1104,6 @@ function renderMirror(P) {
   rows.forEach(r => { h += `<div class="mrow">${side(r, "O", "left")}${mid(r.m.ime.replace("Združeni arabski emirati", "UAE"), chan(r.m), r.m.id)}${side(r, "D", "right")}</div>`; });
   h += `<div class="mrow total">${side({ D: tot.D, O: tot.O }, "O", "left")}${mid("Vsi trgi", rows.length + " trgov skupaj · brez avstrijskih mailov in telefonov (§ 174 TKG)")}${side({ D: tot.D, O: tot.O }, "D", "right")}</div>`;
   $("#mirror").innerHTML = h + "</div>";
-  const T7 = trgi(); const nT = T7.length; const kontaktov = tot.D.mail + tot.O.mail + tot.D.li + tot.O.li + tot.D.tel + tot.O.tel;
-  $("#hero").innerHTML = [
-    ["", nT, "trgov", T7.map(x => x.ime.replace("Združeni arabski emirati", "UAE").replace(" (ZDA)", "")).join(", ")],
-    ["", 3, "outreach kanali", "mail, LinkedIn, telefon"],
-    ["", weeksBetween(new Date(2026, 7, 31), new Date(2027, 3, 30)) + " tednov", "trajanje aktivnosti", "31. 8. 2026 do 30. 4. 2027"],
-    ["hot", fmt(kontaktov), "kontaktov vse skupaj", fmt(tot.D.hot + tot.O.hot) + " hotelov · " + fmt(tot.D.mail + tot.O.mail) + " mailov · " + fmt(tot.D.li + tot.O.li) + " LinkedIn · " + fmt(tot.D.tel + tot.O.tel) + " telefonov"],
-    ["", fmt(tot.D.mail + tot.D.li + tot.D.tel), "kontaktov v Dream 100", fmt(tot.D.hot) + " hotelov · " + fmt(tot.D.mail) + " mailov · " + fmt(tot.D.li) + " LinkedIn · " + fmt(tot.D.tel) + " telefonov"],
-  ].map(t => `<div class="tile ${t[0]}"><div class="v">${t[1]}</div><div class="l">${t[2]}</div><div class="have">${t[3]}</div></div>`).join("");
 }
 
 function renderKontakti(P) {
