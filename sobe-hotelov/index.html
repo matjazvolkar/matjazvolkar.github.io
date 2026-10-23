@@ -1,0 +1,703 @@
+<!doctype html>
+<html lang="sl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Sobe v hotelih</title>
+<meta name="description" content="Koliko sob ima povprečen hotel v Sloveniji in na svetu: povprečje, mediana in porazdelitev iz uradnih registrov, statistik 170 držav, kitajskega popisa in popisa STR, s stopnjami zaupanja in viri.">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="../ikona.ico" sizes="16x16 32x32 48x48">
+<link rel="icon" type="image/png" sizes="32x32" href="../ikona-32.png">
+<link rel="apple-touch-icon" href="../ikona-180.png">
+<style>
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+
+  :root {
+    --bg:      #FAF8F4;
+    --panel:   #F2EFE8;
+    --line:    #E4E0D7;
+    --line-2:  #EFECE4;
+    --ink:     #16191C;
+    --ink-2:   #4E5458;
+    --ink-3:   #7C817E;
+    --accent:  #2F7D6E;
+    --hi-fg:   #2F7D6E;  --hi-bg: #E4F0EC;
+    --mid-fg:  #7A6320;  --mid-bg: #F5EFDC;
+    --lo-fg:   #9A3D2E;  --lo-bg: #F6E4DF;
+    --mono: ui-monospace, "Cascadia Mono", "SF Mono", Menlo, Consolas, monospace;
+    --sans: ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #10141A; --panel: #161B23; --line: #262D38; --line-2: #1E242D;
+      --ink: #E9E7E2; --ink-2: #A9AFAD; --ink-3: #7D8385; --accent: #5FB3A1;
+      --hi-fg: #5FB3A1; --hi-bg: #12211E;
+      --mid-fg: #D9BC6A; --mid-bg: #241F12;
+      --lo-fg: #E08B78; --lo-bg: #2A1714;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #10141A; --panel: #161B23; --line: #262D38; --line-2: #1E242D;
+    --ink: #E9E7E2; --ink-2: #A9AFAD; --ink-3: #7D8385; --accent: #5FB3A1;
+    --hi-fg: #5FB3A1; --hi-bg: #12211E;
+    --mid-fg: #D9BC6A; --mid-bg: #241F12;
+    --lo-fg: #E08B78; --lo-bg: #2A1714;
+  }
+
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--sans); font-size: 16px; line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 900px; margin: 0 auto; padding: 48px 28px 88px; }
+  a { color: var(--accent); }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+
+  .back { font-family: var(--mono); font-size: 12.5px; letter-spacing: .02em; }
+  .back a { text-decoration: none; }
+  header.top { border-bottom: 2px solid var(--ink); padding: 18px 0 22px; }
+  h1 {
+    margin: 0; font-family: var(--serif); font-weight: 600;
+    font-size: clamp(32px, 5vw, 48px); line-height: 1.08; letter-spacing: -.015em;
+  }
+  .lead { margin: 12px 0 0; color: var(--ink-2); font-size: 17px; max-width: 66ch; }
+  .legend { margin: 14px 0 0; display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; font-size: 13px; color: var(--ink-3); }
+
+  .z {
+    display: inline-block; font-family: var(--mono); font-size: 10.5px; font-weight: 700;
+    letter-spacing: .08em; text-transform: uppercase; padding: 1.5px 7px; border-radius: 999px;
+    vertical-align: 1px; white-space: nowrap; max-width: 100%; box-shadow: inset 0 0 0 1px currentColor;
+  }
+  .z-v { color: var(--hi-fg); background: var(--hi-bg); }
+  .z-z { color: var(--mid-fg); background: var(--mid-bg); }
+  .z-n { color: var(--lo-fg); background: var(--lo-bg); }
+
+  nav.toc { margin: 28px 0 0; padding: 18px 20px; background: var(--panel); border-radius: 10px; }
+  nav.toc h2 { margin: 0 0 6px; }
+  nav.toc ol { margin: 0; padding-left: 22px; columns: 2 300px; column-gap: 32px; }
+  nav.toc li { margin: 3px 0; break-inside: avoid; font-size: 15px; }
+
+  h2 {
+    margin: 0; font-family: var(--mono); font-size: 11.5px; font-weight: 700;
+    letter-spacing: .17em; text-transform: uppercase; color: var(--accent);
+  }
+  section.s { padding: 40px 0 34px; border-bottom: 1px solid var(--line-2); scroll-margin-top: 16px; }
+  section.s h3 {
+    margin: 8px 0 0; font-family: var(--serif); font-size: clamp(24px, 3.2vw, 30px); line-height: 1.2;
+    font-weight: 600; letter-spacing: -.01em;
+  }
+  h4 { margin: 24px 0 6px; font-size: 16.5px; font-weight: 650; letter-spacing: -.005em; }
+  p { margin: 10px 0 0; }
+  .answer { margin: 18px 0 0; padding: 14px 18px; border-left: 3px solid var(--accent); background: var(--panel); border-radius: 0 8px 8px 0; }
+  .answer p:first-child, .answer ol:first-child { margin-top: 0; }
+  .counter { margin: 18px 0 0; padding: 14px 18px; border-left: 3px solid var(--lo-fg); background: var(--lo-bg); border-radius: 0 8px 8px 0; }
+  .counter p:first-child { margin-top: 0; }
+  ul, ol { margin: 8px 0 0; padding-left: 22px; }
+  li { margin: 6px 0; }
+  .note { font-size: 14px; color: var(--ink-2); }
+  .warn { margin: 14px 0 0; padding: 12px 16px; border: 1px solid var(--mid-fg); border-radius: 8px; background: var(--mid-bg); font-size: 14.5px; }
+  .tbl { margin: 14px 0 0; overflow-x: auto; -webkit-overflow-scrolling: touch; border: 1px solid var(--line); border-radius: 8px; }
+  table { border-collapse: collapse; width: 100%; font-size: 14px; min-width: 640px; }
+  th, td { text-align: left; vertical-align: top; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+  tr:last-child td { border-bottom: 0; }
+  th { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); font-weight: 700; background: var(--panel); }
+  td:first-child { font-weight: 600; }
+  .tbl.fit table { min-width: 0; }
+  code { font-family: var(--mono); font-size: .88em; background: var(--panel); padding: 1px 5px; border-radius: 4px; overflow-wrap: anywhere; }
+
+  details.viri { margin: 18px 0 0; font-size: 14px; }
+  details.viri summary { cursor: pointer; font-family: var(--mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); }
+  details.viri ol { margin-top: 8px; }
+  details.viri li { overflow-wrap: anywhere; }
+  .src { margin: 6px 0 0; font-size: 13px; color: var(--ink-3); }
+  .src a { color: var(--ink-3); }
+  footer { margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--line); color: var(--ink-3); font-size: 13.5px; }
+  footer p { margin: 0 0 8px; }
+
+  @media (max-width: 640px) {
+    .wrap { padding: 32px 16px 64px; }
+    nav.toc { padding: 14px 16px; }
+    .check { padding: 14px 14px; }
+    .tbl.fit th, .tbl.fit td { padding: 7px 7px; }
+    .tbl.fit td { font-size: 13.5px; }
+    .tbl.fit td .v { white-space: normal; }
+  }
+
+  .kpis { margin: 26px 0 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+  .kpi { padding: 14px 16px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); }
+  .kpi .k { margin: 0; min-height: 2.9em; font-family: var(--mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); }
+  .kpi .num { margin: 6px 0 0; font-family: var(--sans); font-size: 48px; font-weight: 650; line-height: 1; letter-spacing: -.02em; color: var(--ink); }
+  .kpi .num span { font-size: 15px; font-weight: 500; color: var(--ink-2); margin-left: 6px; letter-spacing: 0; }
+  .kpi .d { margin: 6px 0 0; font-size: 13.5px; color: var(--ink-2); }
+  td, th { font-variant-numeric: tabular-nums; }
+  figure { margin-left: 0; margin-right: 0; }
+
+  @media (max-width: 640px) { .kpi { padding: 12px 12px 10px; } .kpi .num { font-size: 40px; } .kpi .num span { font-size: 13px; } }
+
+
+  .viz { margin: 18px 0 0; padding: 16px 16px 10px; background: var(--panel); border-radius: 10px;
+         --s1: #2a78d6; --s2: #eb6834; --mute: #8a8f8c; --grid: #E4E0D7; --t1: var(--ink); --t2: var(--ink-2); }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .viz { --s1: #3987e5; --s2: #d95926; --mute: #7d8385; --grid: #262D38; } }
+  :root[data-theme="dark"] .viz { --s1: #3987e5; --s2: #d95926; --mute: #7d8385; --grid: #262D38; }
+  .viz figcaption { font-size: 14.5px; font-weight: 650; color: var(--ink); }
+  .viz .sub { font-size: 13px; color: var(--ink-3); margin: 2px 0 8px; font-weight: 400; }
+  .viz-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .viz-svg { width: 100%; min-width: 540px; height: auto; display: block; overflow: visible; }
+  @media (max-width: 640px) { .viz { padding: 14px 10px 8px; } .viz-scroll::after { content: "povleci vodoravno za cel graf"; display: block; font-size: 11.5px; color: var(--ink-3); margin-top: 4px; } }
+  .viz-svg .grid { stroke: var(--grid); stroke-width: 1; }
+  .viz-svg text { font-family: var(--sans); fill: var(--t2); font-size: 12px; }
+  .viz-svg .ax { font-size: 11px; fill: var(--ink-3); font-variant-numeric: tabular-nums; }
+  .viz-svg .lab { font-size: 12.5px; fill: var(--t1); }
+  .viz-svg .lab.b { font-weight: 700; }
+  .viz-svg .val { font-size: 11.5px; fill: var(--t2); font-variant-numeric: tabular-nums; }
+  .viz-svg .m.s1 { fill: var(--s1); } .viz-svg .m.s2 { fill: var(--s2); }
+  .viz-svg .stem, .viz-svg .rng { stroke-width: 2; stroke-linecap: round; }
+  .viz-svg .stem.s1, .viz-svg .rng.s1 { stroke: var(--s1); } .viz-svg .stem.mute, .viz-svg .rng.mute { stroke: var(--mute); }
+  .viz-svg .rng { stroke-width: 6; opacity: .28; }
+  .viz-svg .dot { stroke: var(--panel); stroke-width: 2; }
+  .viz-svg .dot.s1 { fill: var(--s1); } .viz-svg .dot.mute { fill: var(--mute); }
+  .viz-svg .ring { fill: var(--panel); stroke-width: 2; }
+  .viz-svg .ring.s1 { stroke: var(--s1); } .viz-svg .ring.mute { stroke: var(--mute); }
+  .viz-svg [data-tip] { cursor: default; outline: none; }
+  .viz-svg [data-tip]:hover, .viz-svg [data-tip]:focus { opacity: .82; }
+  .key { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 4px 0 6px; font-size: 13px; color: var(--ink-2); }
+  .key span { display: inline-flex; align-items: center; gap: 6px; }
+  .key i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; }
+  .key i.s1 { background: var(--s1); } .key i.s2 { background: var(--s2); } .key i.mute { background: var(--mute); }
+  .key i.ring { background: transparent; border: 2px solid var(--s1); border-radius: 50%; width: 11px; height: 11px; }
+  .key i.dot { background: var(--s1); border-radius: 50%; }
+  #tip { position: fixed; z-index: 10; pointer-events: none; max-width: 280px; padding: 7px 10px; border-radius: 6px;
+         background: var(--ink); color: var(--bg); font-size: 12.5px; line-height: 1.4; opacity: 0; transition: opacity .12s; }
+  #tip.on { opacity: 1; }
+
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="back"><a href="../">← Kazalo projektov</a></p>
+
+  <header class="top">
+    <h1>Koliko sob ima povprečen hotel</h1>
+    <p class="lead">
+      Slovenija in svet. Raziskava 23. 10. 2026 iz uradnega registra AJPES, statistik SURS, Eurostata in UN Tourism za okoli 170 držav,
+      kitajskega hotelskega popisa, globalnega popisa STR, podatkov hotelskih verig in preverbe 60 slovenskih hotelov.
+      Vsaka številka ima definicijo, vir in stopnjo zaupanja.
+    </p>
+    <p class="legend">Zaupanje: <span class="z z-v">visoko</span> <span class="z z-z">zmerno</span> <span class="z z-n">nizko</span> · "Hotel" pomeni vsakič nekaj drugega, zato ima vsaka številka zraven definicijo.</p>
+  </header>
+
+  <section class="kpis" aria-label="Glavne številke">
+    <div class="kpi">
+      <p class="k">Slovenija · hoteli</p>
+      <p class="num">52<span>sob</span></p>
+      <p class="d">povprečje; <b>mediana 29</b></p>
+      <p class="d"><span class="z z-v">visoko</span></p>
+    </div>
+    <div class="kpi">
+      <p class="k">Svet · hoteli in podobni obrati</p>
+      <p class="num">42<span>sob</span></p>
+      <p class="d">povprečje; <b>mediana okoli 25</b></p>
+      <p class="d"><span class="z z-z">zmerno</span></p>
+    </div>
+    <div class="kpi">
+      <p class="k">Svet · hoteli z vsaj 15 sobami</p>
+      <p class="num">55<span>sob</span></p>
+      <p class="d">povprečje; <b>mediana okoli 36</b></p>
+      <p class="d"><span class="z z-z">zmerno</span></p>
+    </div>
+    <div class="kpi">
+      <p class="k">Slovenija · hoteli z vsaj 15 sobami</p>
+      <p class="num">56<span>sob</span></p>
+      <p class="d">povprečje; <b>mediana 30</b></p>
+      <p class="d"><span class="z z-v">visoko</span></p>
+    </div>
+  </section>
+
+  <nav class="toc" aria-label="Vsebina">
+    <h2>Vsebina</h2>
+    <ol>
+      <li><a href="#kratko">Na kratko</a></li>
+      <li><a href="#definicije">Kaj sploh štejemo</a></li>
+      <li><a href="#slovenija">Slovenija</a></li>
+      <li><a href="#svet">Svet: rezultat</a></li>
+      <li><a href="#metode">Svet: pet metod</a></li>
+      <li><a href="#trgi">Drugi trgi</a></li>
+      <li><a href="#perplexity">Kaj je prejšnja raziskava naredila dobro in kaj slabo</a></li>
+      <li><a href="#uporaba">Kako številke uporabiti</a></li>
+      <li><a href="#viri">Metoda in viri</a></li>
+    </ol>
+  </nav>
+
+  <section class="s" id="kratko">
+    <h2>01 · Na kratko</h2>
+    <h3>Slovenski hotel ima povprečno 52 sob, svetovni okoli 42, tipičen pa precej manj</h3>
+    <div class="counter">
+      <p><strong>Protiargument najprej.</strong> Ena sama svetovna številka je zavajajoča, ker država državi pravi "hotel" drugače.
+      Ista Slovenija ima po eni uradni definiciji 17 sob na obrat, po drugi 52. Razlika med definicijami je večja od razlike med državami.
+      Primerjaj samo številke z isto definicijo; zato ima vsaka spodaj definicijo zraven.</p>
+    </div>
+    <ol>
+      <li><strong>Slovenija:</strong> 419 aktivnih hotelov v registru AJPES ima 21.896 sob, povprečno <b>52</b>.
+        Tipičen hotel (mediana) ima <b>29</b> sob. 70 % hotelov ima manj kot 50 sob, samo 16 % jih ima vsaj 100.
+        Polovica vseh hotelskih sob pa je v hotelih s 102 ali več sobami. <span class="z z-v">visoko</span></li>
+      <li><strong>Svet, vsi hoteli in podobni obrati:</strong> okoli 1,11 milijona obratov s 46,4 milijona sob, povprečje <b>42</b> sob,
+        mediana okoli <b>25</b>. Razpon povprečja je 36 do 42, odvisno predvsem od tega, kako šteješ Indijo. <span class="z z-z">zmerno</span></li>
+      <li><strong>Svet, samo hoteli z vsaj 15 sobami</strong> (prag kitajskega popisa in kitajskih zvezdic; najbližje slovenski kategoriji "hotel"):
+        povprečje okoli <b>55</b> (51 do 58), mediana okoli <b>36</b>.
+        Slovenija pri isti definiciji: 56 (vse vrste obratov) oziroma 62 (samo kategorija hotel).
+        <b>Slovenski hoteli niso manjši od svetovnega povprečja, ko primerjaš enako.</b> <span class="z z-z">zmerno</span></li>
+      <li><strong>Kitajska odloči svetovno številko.</strong> 374.694 hotelov s 15+ sobami in 18,7 milijona sob (konec 2025), povprečje 50.
+        To je 34 % vseh obratov in 40 % vseh sob v modelu. <span class="z z-v">visoko</span></li>
+      <li><strong>Pogosto citirane svetovne številke so zastarele ali brez vira.</strong> "187.000 hotelov in 17,5 milijona sob" je podatek STR iz marca 2012.
+        "700.000 hotelov" nima izvora. STR danes šteje 23,7 milijona sob, a v njegovem popisu manjka večina kitajskih hotelov. <span class="z z-v">visoko</span></li>
+      <li><strong>Za prodajo po sobah je najbolj uporabna sobna mediana:</strong> velikost hotela, v katerem je polovica vseh sob.
+        Slovenija 102, svet okoli 73 (63 do 79). <span class="z z-z">zmerno</span></li>
+    </ol>
+    <div class="answer">
+      <p><strong>Če potrebuješ eno številko za svet:</strong> povprečen hotel na svetu ima okoli <b>42 sob</b>, tipičen (mediana) okoli <b>25</b>,
+      če štejemo vse hotele in podobne obrate. Če štejemo samo prave hotele z vsaj 15 sobami: povprečje okoli <b>55</b>, mediana okoli <b>36</b>.</p>
+    </div>
+  </section>
+
+  <section class="s" id="definicije">
+    <h2>02 · Kaj sploh štejemo</h2>
+    <h3>Tri definicije hotela in tri mere velikosti</h3>
+    <p>Prejšnja raziskava je za svet odnehala, ker ni našla enega para "vse sobe, vsi hoteli" z enako definicijo. Rešitev ni čakanje na tak par,
+    ampak da definicijo izbereš sam in jo uporabiš enako povsod. Tu so tri, z obema številkama ob vsaki:</p>
+    <div class="tbl "><table><thead><tr><th>Definicija</th><th>Kaj vključuje</th><th>Slovenija</th><th>Svet</th></tr></thead><tbody><tr><td>Kategorija hotel v registru</td><td>Samo obrati vrste hotel, 1 do 5 zvezdic</td><td><b>52</b> (mediana 29)</td><td>Ni svetovnega ekvivalenta; vsaka država ima svojo kategorizacijo</td></tr><tr><td>Hoteli in podobni obrati (NACE I55.1, UN Tourism)</td><td>Hoteli, moteli, penzioni, gostišča, prenočišča; brez zasebnih sob in apartmajev</td><td>17 (mediana 6)</td><td><b>42</b> (mediana okoli 25)</td></tr><tr><td>Hoteli z vsaj 15 sobami (usklajeno)</td><td>Vse vrste obratov z vsaj 15 sobami</td><td><b>56</b> (mediana 30)</td><td><b>55</b> (mediana okoli 36)</td></tr><tr><td>Popis STR (industrija)</td><td>Hoteli, običajno 10+ sob; manjka večina Kitajske</td><td>ni objavljeno</td><td>94 (2012), danes verjetno 85 do 95</td></tr><tr><td>Verižni hoteli</td><td>10 največjih hotelskih skupin</td><td>ni</td><td>121</td></tr></tbody></table></div>
+    <h4>Povprečje, mediana, sobna mediana</h4>
+    <ul>
+      <li><b>Povprečje</b> = vse sobe / vsi hoteli. Nekaj velikih hotelov ga potegne navzgor, zato opisuje "povprečno sobo na hotel", ne tipičnega hotela.</li>
+      <li><b>Mediana</b> = polovica hotelov ima manj sob, polovica več. To je tipičen hotel. Povsod, kjer so podatki, je 35 % do 75 % povprečja.</li>
+      <li><b>Sobna mediana</b> = polovica vseh sob je v hotelih te velikosti ali večjih. Uporabna, ko prodajaš ali računaš po sobah.</li>
+    </ul>
+  </section>
+
+  <section class="s" id="slovenija">
+    <h2>03 · Slovenija</h2>
+    <h3>52 sob povprečno, 29 tipično, register drži</h3>
+    <p>Vir je dnevni izvoz Registra nastanitvenih obratov AJPES (stanje 22. 10. 2026, izdelan 23. 10. 2026 ob 3.09). Register je obvezen za vse ponudnike nastanitev.
+    Štejem aktivne obrate vrste <i>Hotel</i>. Enota je soba, apartma ali studio, kot pri Eurostatu (nedeljiva enota). Izračun je ponovljiv s skripto <code>si_izracun.py</code>.</p>
+    <h4>Pet različic, ista slika</h4>
+    <div class="tbl "><table><thead><tr><th></th><th>Različica</th><th>Hotelov</th><th>Sob</th><th>Povprečje</th><th>Mediana</th><th>Srednja polovica</th><th>P90</th><th>Sobna mediana</th></tr></thead><tbody><tr><td>A</td><td>Register surovo: vsi aktivni zapisi vrste Hotel</td><td>423</td><td>22.051</td><td><b>52,1</b></td><td><b>28</b></td><td>16 do 62</td><td>137</td><td>102</td></tr><tr><td>B</td><td>Brez dvojnikov (isti naslov in ime): <b>osnovna različica</b></td><td>419</td><td>21.896</td><td><b>52,3</b></td><td><b>29</b></td><td>16 do 62</td><td>137</td><td>102</td></tr><tr><td>C</td><td>B, dependanse prištete matičnemu hotelu (ena lastnina = en hotel)</td><td>408</td><td>21.896</td><td><b>53,7</b></td><td><b>28</b></td><td>16 do 65</td><td>144</td><td>103</td></tr><tr><td>D</td><td>C, samo hoteli z vsaj 10 sobami</td><td>378</td><td>21.672</td><td><b>57,3</b></td><td><b>30</b></td><td>17 do 72</td><td>149</td><td>108</td></tr><tr><td>E</td><td>B skupaj z moteli</td><td>432</td><td>22.040</td><td><b>51,0</b></td><td><b>28</b></td><td>15 do 61</td><td>136</td><td>101</td></tr></tbody></table></div>
+    <p class="note">Dvojniki: Hotel Habakuk v Mariboru je vpisan dvakrat s po 135 sobami, Alpine Hotel v Bovcu in Rest and ride v Kobaridu prav tako; Hotel Laguna v Piranu je vpisan v dveh delih.
+    Deset dependans je vpisanih kot samostojni hoteli (na primer štiri vile Adria Ankaran). Nobena izbira ne premakne povprečja za več kot 5 sob ali mediane za več kot 2.</p>
+
+    <figure class="viz">
+      <figcaption id="g1t">Večina hotelov je majhnih, večina sob je v velikih hotelih</figcaption>
+      <p class="sub">Delež slovenskih hotelov in delež sob po velikosti hotela (različica B, 419 hotelov)</p>
+      <div class="key"><span><i class="s1"></i>delež hotelov</span><span><i class="s2"></i>delež sob</span></div>
+      <div class="viz-scroll">
+<svg class="viz-svg" viewBox="0 0 640 366" role="img" aria-labelledby="g1t">
+<line class="grid" x1="92.0" y1="22" x2="92.0" y2="340"/>
+<text class="ax" x="92.0" y="356" text-anchor="middle">0 %</text>
+<line class="grid" x1="215.0" y1="22" x2="215.0" y2="340"/>
+<text class="ax" x="215.0" y="356" text-anchor="middle">10 %</text>
+<line class="grid" x1="338.0" y1="22" x2="338.0" y2="340"/>
+<text class="ax" x="338.0" y="356" text-anchor="middle">20 %</text>
+<line class="grid" x1="461.0" y1="22" x2="461.0" y2="340"/>
+<text class="ax" x="461.0" y="356" text-anchor="middle">30 %</text>
+<line class="grid" x1="584.0" y1="22" x2="584.0" y2="340"/>
+<text class="ax" x="584.0" y="356" text-anchor="middle">40 %</text>
+<text class="lab" x="82" y="45" text-anchor="end">1-9</text>
+<path class="m s1" d="M92,30 h87.0 a4,4 0 0 1 4,4 v3 a4,4 0 0 1 -4,4 h-87.0 z" tabindex="0" data-tip="1-9 sob: 7,4 % hotelov (31 hotelov)"/>
+<text class="val" x="188.0" y="39">7 %</text>
+<path class="m s2" d="M92,43 h9.5 a4,4 0 0 1 4,4 v3 a4,4 0 0 1 -4,4 h-9.5 z" tabindex="0" data-tip="1-9 sob: 1,1 % sob (233 sob)"/>
+<text class="val" x="110.5" y="52">1 %</text>
+<text class="lab" x="82" y="79" text-anchor="end">10-19</text>
+<path class="m s1" d="M92,64 h328.1 a4,4 0 0 1 4,4 v3 a4,4 0 0 1 -4,4 h-328.1 z" tabindex="0" data-tip="10-19 sob: 27,0 % hotelov (113 hotelov)"/>
+<text class="val" x="429.1" y="73">27 %</text>
+<path class="m s2" d="M92,77 h87.0 a4,4 0 0 1 4,4 v3 a4,4 0 0 1 -4,4 h-87.0 z" tabindex="0" data-tip="10-19 sob: 7,4 % sob (1.630 sob)"/>
+<text class="val" x="188.0" y="86">7 %</text>
+<text class="lab" x="82" y="113" text-anchor="end">20-29</text>
+<path class="m s1" d="M92,98 h198.9 a4,4 0 0 1 4,4 v3 a4,4 0 0 1 -4,4 h-198.9 z" tabindex="0" data-tip="20-29 sob: 16,5 % hotelov (69 hotelov)"/>
+<text class="val" x="299.9" y="107">16 %</text>
+<path class="m s2" d="M92,111 h89.5 a4,4 0 0 1 4,4 v3 a4,4 0 0 1 -4,4 h-89.5 z" tabindex="0" data-tip="20-29 sob: 7,6 % sob (1.660 sob)"/>
+<text class="val" x="190.5" y="120">8 %</text>
+<text class="lab" x="82" y="147" text-anchor="end">30-49</text>
+<path class="m s1" d="M92,132 h224.8 a4,4 0 0 1 4,4 v3 a4,4 0 0 1 -4,4 h-224.8 z" tabindex="0" data-tip="30-49 sob: 18,6 % hotelov (78 hotelov)"/>
+<text class="val" x="325.8" y="141">19 %</text>
+<path class="m s2" d="M92,145 h158.4 a4,4 0 0 1 4,4 v3 a4,4 0 0 1 -4,4 h-158.4 z" tabindex="0" data-tip="30-49 sob: 13,2 % sob (2.890 sob)"/>
+<text class="val" x="259.4" y="154">13 %</text>
+<text class="lab" x="82" y="181" text-anchor="end">50-99</text>
+<path class="m s1" d="M92,166 h175.6 a4,4 0 0 1 4,4 v3 a4,4 0 0 1 -4,4 h-175.6 z" tabindex="0" data-tip="50-99 sob: 14,6 % hotelov (61 hotelov)"/>
+<text class="val" x="276.6" y="175">15 %</text>
+<path class="m s2" d="M92,179 h237.1 a4,4 0 0 1 4,4 v3 a4,4 0 0 1 -4,4 h-237.1 z" tabindex="0" data-tip="50-99 sob: 19,6 % sob (4.291 sob)"/>
+<text class="val" x="338.1" y="188">20 %</text>
+<text class="lab" x="82" y="215" text-anchor="end">100-149</text>
+<path class="m s1" d="M92,200 h87.0 a4,4 0 0 1 4,4 v3 a4,4 0 0 1 -4,4 h-87.0 z" tabindex="0" data-tip="100-149 sob: 7,4 % hotelov (31 hotelov)"/>
+<text class="val" x="188.0" y="209">7 %</text>
+<path class="m s2" d="M92,213 h206.3 a4,4 0 0 1 4,4 v3 a4,4 0 0 1 -4,4 h-206.3 z" tabindex="0" data-tip="100-149 sob: 17,1 % sob (3.736 sob)"/>
+<text class="val" x="307.3" y="222">17 %</text>
+<text class="lab" x="82" y="249" text-anchor="end">150-199</text>
+<path class="m s1" d="M92,234 h48.9 a4,4 0 0 1 4,4 v3 a4,4 0 0 1 -4,4 h-48.9 z" tabindex="0" data-tip="150-199 sob: 4,3 % hotelov (18 hotelov)"/>
+<text class="val" x="149.9" y="243">4 %</text>
+<path class="m s2" d="M92,247 h171.9 a4,4 0 0 1 4,4 v3 a4,4 0 0 1 -4,4 h-171.9 z" tabindex="0" data-tip="150-199 sob: 14,3 % sob (3.128 sob)"/>
+<text class="val" x="272.9" y="256">14 %</text>
+<text class="lab" x="82" y="283" text-anchor="end">200-299</text>
+<path class="m s1" d="M92,268 h46.4 a4,4 0 0 1 4,4 v3 a4,4 0 0 1 -4,4 h-46.4 z" tabindex="0" data-tip="200-299 sob: 4,1 % hotelov (17 hotelov)"/>
+<text class="val" x="147.4" y="277">4 %</text>
+<path class="m s2" d="M92,281 h218.6 a4,4 0 0 1 4,4 v3 a4,4 0 0 1 -4,4 h-218.6 z" tabindex="0" data-tip="200-299 sob: 18,1 % sob (3.974 sob)"/>
+<text class="val" x="319.6" y="290">18 %</text>
+<text class="lab" x="82" y="317" text-anchor="end">300+</text>
+<path class="m s1" d="M92,302 h1.2 a1.2299999999999969,1.2299999999999969 0 0 1 1.2299999999999969,1.2299999999999969 v8.540000000000006 a1.2299999999999969,1.2299999999999969 0 0 1 -1.2299999999999969,1.2299999999999969 h-1.2 z" tabindex="0" data-tip="300+ sob: 0,2 % hotelov (1 hotelov)"/>
+<text class="val" x="99.5" y="311">0 %</text>
+<path class="m s2" d="M92,315 h15.7 a4,4 0 0 1 4,4 v3 a4,4 0 0 1 -4,4 h-15.7 z" tabindex="0" data-tip="300+ sob: 1,6 % sob (354 sob)"/>
+<text class="val" x="116.7" y="324">2 %</text>
+</svg></div>
+    </figure>
+    <details class="viri"><summary>Tabela k grafu</summary>
+    <div class="tbl fit "><table><thead><tr><th>Sob v hotelu</th><th>Hotelov</th><th>Delež hotelov</th><th>Sob</th><th>Delež sob</th></tr></thead><tbody><tr><td>1-9</td><td>31</td><td>7,4 %</td><td>233</td><td>1,1 %</td></tr><tr><td>10-19</td><td>113</td><td>27,0 %</td><td>1.630</td><td>7,4 %</td></tr><tr><td>20-29</td><td>69</td><td>16,5 %</td><td>1.660</td><td>7,6 %</td></tr><tr><td>30-49</td><td>78</td><td>18,6 %</td><td>2.890</td><td>13,2 %</td></tr><tr><td>50-99</td><td>61</td><td>14,6 %</td><td>4.291</td><td>19,6 %</td></tr><tr><td>100-149</td><td>31</td><td>7,4 %</td><td>3.736</td><td>17,1 %</td></tr><tr><td>150-199</td><td>18</td><td>4,3 %</td><td>3.128</td><td>14,3 %</td></tr><tr><td>200-299</td><td>17</td><td>4,1 %</td><td>3.974</td><td>18,1 %</td></tr><tr><td>300+</td><td>1</td><td>0,2 %</td><td>354</td><td>1,6 %</td></tr></tbody></table></div>
+    </details>
+    <p>34 % hotelov ima manj kot 20 sob in skupaj le 8 % sob.
+    Hoteli s 100 ali več sobami so 16 % hotelov in imajo 51 % vseh sob.</p>
+
+    <h4>Po zvezdicah</h4>
+    <div class="tbl fit "><table><thead><tr><th>Kategorija</th><th>Hotelov</th><th>Sob</th><th>Povprečje</th><th>Mediana</th><th>Sobna mediana</th></tr></thead><tbody><tr><td>1 zvezdica</td><td>3</td><td>40</td><td>13</td><td>14</td><td>14</td></tr><tr><td>2 zvezdici</td><td>10</td><td>227</td><td>23</td><td>20</td><td>35</td></tr><tr><td>3 zvezdice</td><td>222</td><td>7.206</td><td>32</td><td>20</td><td>41</td></tr><tr><td>4 zvezdice</td><td>170</td><td>12.690</td><td>75</td><td>52</td><td>128</td></tr><tr><td>5 zvezdic</td><td>14</td><td>1.733</td><td>124</td><td>112</td><td>182</td></tr></tbody></table></div>
+    <p class="note">Kategorija iz registra; vzorec 60 hotelov je našel tri neskladja med zvezdicami v registru in na spletni strani hotela.</p>
+
+    <h4>Ali register drži</h4>
+    <ul>
+      <li><b>Vsota se ujema s SURS.</b> SURS za leto 2025 navaja 21.283 nedeljivih enot v hotelih, register ima oktobra 2026 21.896 (+2,9 %, skladno z rastjo in nekaj zaprtimi hoteli, ki so še vpisani). <span class="z z-v">visoko</span></li>
+      <li><b>Števila sob so točna.</b> Vzorec 60 hotelov (20 največjih in 40 naključnih), preverjenih na spletni strani hotela, upravljavca ali OTA:
+        70 % se ujema natančno, 91 % je znotraj ±10 %, skupna razlika je −1,3 %. Pri virih s strani hotela ali upravljavca se jih 26 od 31 ujema natančno, vseh 31 je znotraj ±10 %. <span class="z z-v">visoko</span></li>
+      <li><b>Šibkost je status, ne število sob.</b> En hotel iz vzorca je zaprt od leta 2024 in je v registru še aktiven s 108 enotami; še eden verjetno ne obratuje.
+        Iz 2 od 40 naključnih zapisov je ocena za celoten register 5 do 70 neaktivnih zapisov (točkovna ocena 10 do 21). Na povprečje in mediano to skoraj ne vpliva. <span class="z z-z">zmerno</span></li>
+      <li><b>Neodvisna kontrola:</b> vsi slovenski obrati vrste hotel, motel, penzion, gostišče in prenočišče v registru dajo 17,0 sobe na obrat, Eurostat za Slovenijo 2025 pa 16,9. Register in uradna statistika merita isto. <span class="z z-v">visoko</span></li>
+    </ul>
+
+    <h4>Zakaj Eurostat za Slovenijo kaže samo 17</h4>
+    <p>Eurostatova skupina "hoteli in podobni obrati" v Sloveniji vključuje 1.067 prenočišč, ki imajo v registru mediano <b>1 sobo</b>.
+    Do leta 2017 jih statistika ni štela: SURS je imel 698 obratov in 22.908 enot (32,8 na obrat), leta 2019 pa 1.508 obratov in 26.793 enot (17,8).
+    Število obratov se je podvojilo, sob je bilo le 17 % več. To je prelom v metodologiji, ne sprememba hotelov. Kdor iz Eurostata bere "slovenski hotel ima 17 sob", bere napačno. <span class="z z-v">visoko</span></p>
+  </section>
+
+  <section class="s" id="svet">
+    <h2>04 · Svet: rezultat</h2>
+    <h3>Okoli 42 sob povprečno, okoli 25 tipično, 55 pri hotelih s 15+ sobami</h3>
+    <div class="counter">
+      <p><strong>Najmočnejši ugovor.</strong> Svetovni model sešteva nacionalne definicije, ki niso enake: Evropa šteje tudi penzione in gostišča, Kitajska samo obrate s 15+ sobami,
+      Koreja samo registrirane turistične hotele, Vietnam tudi homestaye. Mediana za svet je ocena iz porazdelitev, ne štetje. Zato je zaupanje zmerno za povprečje in nizko za mediano.</p>
+    </div>
+    <h4>Najbolj zanesljivo, kar se da reči</h4>
+    <div class="tbl "><table><thead><tr><th>Definicija</th><th>Obratov</th><th>Sob</th><th>Povprečje</th><th>Mediana</th><th>Sobna mediana</th><th>Zaupanje</th></tr></thead><tbody><tr><td>Hoteli in podobni obrati</td><td>okoli 1,11 mio</td><td>okoli 46,4 mio</td><td><b>42</b> (36 do 42)</td><td><b>25</b> (18 do 26)</td><td>73 (63 do 79)</td><td><span class="z z-z">zmerno</span> povprečje, <span class="z z-n">nizko</span> mediana</td></tr><tr><td>Hoteli z vsaj 15 sobami</td><td>okoli 796 tisoč</td><td>okoli 44,1 mio</td><td><b>55</b> (51 do 58)</td><td><b>36</b> (34 do 37)</td><td>78</td><td><span class="z z-z">zmerno</span></td></tr><tr><td>Popis STR, hoteli 10+ sob (brez večine Kitajske)</td><td>ni objavljeno</td><td>23,7 mio (2025)</td><td>94 (2012); danes verjetno 85 do 95</td><td>ni objavljena</td><td></td><td><span class="z z-z">zmerno</span></td></tr><tr><td>Verižni hoteli</td><td>okoli 112 do 120 tisoč</td><td>13,5 mio (57 % sob)</td><td>116 do 121</td><td></td><td></td><td><span class="z z-v">visoko</span></td></tr></tbody></table></div>
+    <figure class="viz">
+      <figcaption id="g3t">Metode in definicije: definicija premakne številko bolj kot metoda</figcaption>
+      <p class="sub">Povprečno število sob na hotel po metodi in definiciji; črta je razpon občutljivosti</p>
+      <div class="key"><span><i class="dot"></i>rezultat te raziskave</span><span><i class="mute"></i>primerjalni vir</span></div>
+      <div class="viz-scroll">
+<svg class="viz-svg" viewBox="0 0 640 366" role="img" aria-labelledby="g3t">
+<line class="grid" x1="230.0" y1="16" x2="230.0" y2="336"/>
+<text class="ax" x="230.0" y="354" text-anchor="middle">0</text>
+<line class="grid" x1="277.5" y1="16" x2="277.5" y2="336"/>
+<text class="ax" x="277.5" y="354" text-anchor="middle">20</text>
+<line class="grid" x1="325.0" y1="16" x2="325.0" y2="336"/>
+<text class="ax" x="325.0" y="354" text-anchor="middle">40</text>
+<line class="grid" x1="372.5" y1="16" x2="372.5" y2="336"/>
+<text class="ax" x="372.5" y="354" text-anchor="middle">60</text>
+<line class="grid" x1="420.0" y1="16" x2="420.0" y2="336"/>
+<text class="ax" x="420.0" y="354" text-anchor="middle">80</text>
+<line class="grid" x1="467.5" y1="16" x2="467.5" y2="336"/>
+<text class="ax" x="467.5" y="354" text-anchor="middle">100</text>
+<line class="grid" x1="515.0" y1="16" x2="515.0" y2="336"/>
+<text class="ax" x="515.0" y="354" text-anchor="middle">120</text>
+<line class="grid" x1="562.5" y1="16" x2="562.5" y2="336"/>
+<text class="ax" x="562.5" y="354" text-anchor="middle">140</text>
+<line class="grid" x1="610.0" y1="16" x2="610.0" y2="336"/>
+<text class="ax" x="610.0" y="354" text-anchor="middle">160</text>
+<text class="lab b" x="218" y="36" text-anchor="end">Svet, hoteli in podobni (od spodaj)</text>
+<line class="rng s1" x1="315.3" y1="32" x2="329.0" y2="32"/>
+<circle class="dot s1" cx="329.0" cy="32" r="5.5" tabindex="0" data-tip="Svet, hoteli in podobni (od spodaj): 42 sob (razpon 36 do 42). Vsota sob / vsota obratov, 160 držav."/>
+<text class="val" x="338.0" y="36">42</text>
+<text class="lab b" x="218" y="70" text-anchor="end">Svet, hoteli z vsaj 15 sobami</text>
+<line class="rng s1" x1="350.6" y1="66" x2="368.5" y2="66"/>
+<circle class="dot s1" cx="361.3" cy="66" r="5.5" tabindex="0" data-tip="Svet, hoteli z vsaj 15 sobami: 55 sob (razpon 51 do 58). Usklajen prag 15 sob."/>
+<text class="val" x="377.5" y="70">55</text>
+<text class="lab" x="218" y="104" text-anchor="end">Kitajska, hoteli 15+ (popis CHA)</text>
+<line class="rng mute" x1="346.4" y1="100" x2="355.9" y2="100"/>
+<circle class="dot mute" cx="348.8" cy="100" r="5.5" tabindex="0" data-tip="Kitajska, hoteli 15+ (popis CHA): 50 sob (razpon 49 do 53). Povprečje 2016 do 2025 med 49 in 53."/>
+<text class="val" x="364.9" y="104">50</text>
+<text class="lab" x="218" y="138" text-anchor="end">Evropa EU27, hoteli in podobni</text>
+<line class="rng mute" x1="314.1" y1="134" x2="320.2" y2="134"/>
+<circle class="dot mute" cx="320.2" cy="134" r="5.5" tabindex="0" data-tip="Evropa EU27, hoteli in podobni: 38 sob (razpon 35 do 38). Eurostat 2015 do 2025, rast s konsolidacijo."/>
+<text class="val" x="329.2" y="138">38</text>
+<text class="lab" x="218" y="172" text-anchor="end">OpenStreetMap, hoteli z oznako sob</text>
+<line class="rng mute" x1="386.8" y1="168" x2="429.5" y2="168"/>
+<circle class="dot mute" cx="386.8" cy="168" r="5.5" tabindex="0" data-tip="OpenStreetMap, hoteli z oznako sob: 66 sob (razpon 66 do 84). 30.090 hotelov z oznako rooms; pristranski vzorec."/>
+<text class="val" x="438.5" y="172">66</text>
+<text class="lab" x="218" y="206" text-anchor="end">ZDA, popis CoStar/STR (AHLA)</text>
+<circle class="dot mute" cx="439.7" cy="202" r="5.5" tabindex="0" data-tip="ZDA, popis CoStar/STR (AHLA): 88 sob. 2024, hoteli, moteli in B&amp;B."/>
+<text class="val" x="448.7" y="206">88</text>
+<text class="lab" x="218" y="240" text-anchor="end">STR svetovni popis (2012)</text>
+<line class="rng mute" x1="431.9" y1="236" x2="455.6" y2="236"/>
+<circle class="dot mute" cx="452.3" cy="236" r="5.5" tabindex="0" data-tip="STR svetovni popis (2012): 94 sob (razpon 85 do 95). 187.000 hotelov, 17,5 mio sob; danes verjetno 85 do 95."/>
+<text class="val" x="464.6" y="240">94</text>
+<text class="lab" x="218" y="274" text-anchor="end">Verige, 10 največjih skupin</text>
+<line class="rng mute" x1="505.5" y1="270" x2="517.4" y2="270"/>
+<circle class="dot mute" cx="517.4" cy="270" r="5.5" tabindex="0" data-tip="Verige, 10 največjih skupin: 121 sob (razpon 116 do 121). HOTELS The List 2026, vsi vnosi 116."/>
+<text class="val" x="526.4" y="274">121</text>
+<text class="lab" x="218" y="308" text-anchor="end">STR vzorec poročajočih hotelov</text>
+<line class="rng mute" x1="522.1" y1="304" x2="557.8" y2="304"/>
+<circle class="dot mute" cx="533.3" cy="304" r="5.5" tabindex="0" data-tip="STR vzorec poročajočih hotelov: 128 sob (razpon 123 do 138). 94.000 hotelov, 12 mio sob; nagnjen k verigam."/>
+<text class="val" x="566.8" y="308">128</text>
+</svg></div>
+    </figure>
+    <details class="viri"><summary>Tabela k grafu</summary>
+    <div class="tbl fit "><table><thead><tr><th>Metoda</th><th>Povprečje</th><th>Razpon</th><th>Opomba</th></tr></thead><tbody><tr><td>Svet, hoteli in podobni (od spodaj)</td><td>42</td><td>36 do 42</td><td>Vsota sob / vsota obratov, 160 držav.</td></tr><tr><td>Svet, hoteli z vsaj 15 sobami</td><td>55</td><td>51 do 58</td><td>Usklajen prag 15 sob.</td></tr><tr><td>Kitajska, hoteli 15+ (popis CHA)</td><td>50</td><td>49 do 53</td><td>Povprečje 2016 do 2025 med 49 in 53.</td></tr><tr><td>Evropa EU27, hoteli in podobni</td><td>38</td><td>35 do 38</td><td>Eurostat 2015 do 2025, rast s konsolidacijo.</td></tr><tr><td>OpenStreetMap, hoteli z oznako sob</td><td>66</td><td>66 do 84</td><td>30.090 hotelov z oznako rooms; pristranski vzorec.</td></tr><tr><td>ZDA, popis CoStar/STR (AHLA)</td><td>88</td><td></td><td>2024, hoteli, moteli in B&amp;B.</td></tr><tr><td>STR svetovni popis (2012)</td><td>94</td><td>85 do 95</td><td>187.000 hotelov, 17,5 mio sob; danes verjetno 85 do 95.</td></tr><tr><td>Verige, 10 največjih skupin</td><td>121</td><td>116 do 121</td><td>HOTELS The List 2026, vsi vnosi 116.</td></tr><tr><td>STR vzorec poročajočih hotelov</td><td>128</td><td>123 do 138</td><td>94.000 hotelov, 12 mio sob; nagnjen k verigam.</td></tr></tbody></table></div>
+    </details>
+  </section>
+
+  <section class="s" id="metode">
+    <h2>05 · Svet: pet metod</h2>
+    <h3>Od spodaj, od zgoraj, verige, porazdelitve in odprti podatki</h3>
+
+    <h4>Metoda 1: od spodaj navzgor (glavni rezultat)</h4>
+    <p>Osnova je tabela UN Tourism (izdaja 12.2025, hoteli in podobni obrati, ISIC 5510) za 160 držav z obema številoma v istem letu, za 37 evropskih držav pa Eurostat I55.1 do leta 2025.
+    Povprečje je <b>vsota sob deljena z vsoto obratov</b>, ne povprečje državnih povprečij. Nato sem tabelo popravil z nacionalnimi viri, kjer UN Tourism podatek ne drži:</p>
+    <ul>
+      <li><b>Kitajska:</b> UN Tourism ima samo 7.337 hotelov z zvezdicami (152 sob). Zamenjano s popisom China Hotel Association: 374.694 hotelov s 15+ sobami, 18.736.357 sob (konec 2025).</li>
+      <li><b>ZDA:</b> UN Tourism 2020 (pandemija) zamenjan z AHLA/CoStar 2024: 64.165 objektov, 5.663.867 sob.</li>
+      <li><b>Japonska:</b> UN Tourism se ne ujema z nobenim nacionalnim virom; uporabljen MHLW FY2024: 52.946 hotelov in ryokanov, 1.780.679 sob.</li>
+      <li><b>Indonezija:</b> UN Tourism deli sobe vseh nastanitev s številom hotelov z zvezdicami (203 sobe). Zamenjano z BPS 2025: 18.502 hotelov, 801.308 sob.</li>
+      <li><b>Tajska, Tajvan, Malezija, Hongkong, Macao, Singapur, Šrilanka, Kambodža, Nova Zelandija, Maldivi, Nepal, Koreja, Vietnam, Filipini:</b> novejši nacionalni registri.</li>
+      <li><b>Amerika, Bližnji vzhod, Afrika:</b> Mehika (DataTur 2024), Kanada (CoStar prek Horwath HTL 2025), Brazilija (IBGE, zadnji popis 2016), Anglija kot približek za Združeno kraljestvo (VisitEngland 2026),
+        Rusija (Rosstat 2024), Savdska Arabija, ZAE, Kolumbija, Peru, Čile, Kuba, Kostarika, Ekvador, Panama, Bahami, Egipt, Maroko, Izrael, Jordanija, Oman, Kenija.</li>
+      <li><b>Indija:</b> UN Tourism ima modelirano serijo z lomom (od 1.903 obratov leta 2016 do 256.499 leta 2024, 11 sob na obrat). Celotnega para ni nikjer. Izključena iz osnovnega modela, prikazana kot občutljivost.</li>
+      <li><b>Izključeni:</b> stari podatki pred letom 2015 in vrstice z lomom serije (skupaj 16 vrstic, od tega razen Indije le majhni trgi).</li>
+    </ul>
+    <h4>Največji trgi v modelu</h4>
+    <div class="tbl "><table><thead><tr><th>Država</th><th>Leto</th><th>Obratov</th><th>Sob</th><th>Povprečje</th><th>Mediana</th><th>Delež sob</th><th>Vir</th></tr></thead><tbody><tr><td>Kitajska</td><td>2025</td><td>374.694</td><td>18.736.357</td><td>50</td><td>36</td><td>40,4 %</td><td>China Hotel Association, porocilo 2026 (hoteli s 15+ sobami, 31. 12. 2</td></tr><tr><td>ZDA</td><td>2024</td><td>64.165</td><td>5.663.867</td><td>88</td><td>68</td><td>12,2 %</td><td>AHLA/Oxford Economics iz CoStar/STR popisa, 2024</td></tr><tr><td>Japonska</td><td>FY2024</td><td>52.946</td><td>1.780.679</td><td>34</td><td></td><td>3,8 %</td><td>MHLW 衛生行政報告例 FY2024, licence hotel + ryokan</td></tr><tr><td>Italija</td><td>2025</td><td>33.281</td><td>1.098.451</td><td>33</td><td>23</td><td>2,4 %</td><td>Eurostat tour_cap_nat</td></tr><tr><td>Brazilija</td><td>2016</td><td>31.299</td><td>1.011.254</td><td>32</td><td>24</td><td>2,2 %</td><td>IBGE PSH 2016 (zadnji popis nastanitev)</td></tr><tr><td>Nemčija</td><td>2025</td><td>28.789</td><td>994.735</td><td>35</td><td>19</td><td>2,1 %</td><td>Eurostat tour_cap_nat</td></tr><tr><td>Španija</td><td>2025</td><td>20.038</td><td>966.723</td><td>48</td><td>19</td><td>2,1 %</td><td>Eurostat tour_cap_nat</td></tr><tr><td>Mehika</td><td>2024</td><td>28.654</td><td>909.422</td><td>32</td><td></td><td>2,0 %</td><td>DataTur Compendio 2024, tabela 10_1</td></tr><tr><td>Združeno kraljestvo</td><td>2026</td><td>28.778</td><td>884.431</td><td>31</td><td></td><td>1,9 %</td><td>VisitEngland Accommodation Stock Audit 2026, serviced</td></tr><tr><td>Turčija</td><td>2025</td><td>21.088</td><td>877.527</td><td>42</td><td></td><td>1,9 %</td><td>Eurostat tour_cap_nat</td></tr><tr><td>Indonezija</td><td>2025</td><td>18.502</td><td>801.308</td><td>43</td><td></td><td>1,7 %</td><td>BPS Statistik Hotel 2025, hoteli z zvezdicami + Melati</td></tr><tr><td>Vietnam</td><td>2025</td><td>40.000</td><td>800.000</td><td>20</td><td></td><td>1,7 %</td><td>VNAT, vse turisticne nastanitve (zaokrozeno)</td></tr><tr><td>Rusija</td><td>2024</td><td>24.353</td><td>726.803</td><td>30</td><td></td><td>1,6 %</td><td>Rosstat, hoteli in podobni</td></tr><tr><td>Tajska</td><td>H1 2024</td><td>16.312</td><td>688.388</td><td>42</td><td></td><td>1,5 %</td><td>DOPA licence po Hotel Act (REIC)</td></tr><tr><td>Francija</td><td>2025</td><td>17.319</td><td>680.656</td><td>39</td><td>27</td><td>1,5 %</td><td>Eurostat tour_cap_nat</td></tr><tr><td>Savdska Arabija</td><td>2025</td><td>5.937</td><td>597.000</td><td>101</td><td></td><td>1,3 %</td><td>Ministrstvo za turizem + GASTAT Q4 2025 (sobe zaokrozene)</td></tr><tr><td>Kanada</td><td>2025</td><td>7.556</td><td>466.846</td><td>62</td><td></td><td>1,0 %</td><td>Horwath HTL Canada Hotels and Chains 2026 (CoStar)</td></tr><tr><td>Grčija</td><td>2025</td><td>10.396</td><td>459.269</td><td>44</td><td>25</td><td>1,0 %</td><td>Eurostat tour_cap_nat</td></tr><tr><td>Kolumbija</td><td>2026</td><td>19.043</td><td>385.379</td><td>20</td><td>16</td><td>0,8 %</td><td>RNT register avgust 2026 (sirse)</td></tr><tr><td>Malezija</td><td>2024</td><td>5.277</td><td>343.866</td><td>65</td><td>32</td><td>0,7 %</td><td>Tourism Malaysia hotel supply</td></tr></tbody></table></div>
+    <h4>Občutljivost</h4>
+    <div class="tbl "><table><thead><tr><th>Različica</th><th>Obratov</th><th>Sob</th><th>Povprečje</th><th>Mediana</th><th>Povprečje 15+</th><th>Mediana 15+</th></tr></thead><tbody><tr><td>Osnovni model (160 držav, brez Indije in zastavljenih vrstic)</td><td>1.110.597</td><td>46.354.848</td><td><b>41,7</b></td><td>25</td><td>55</td><td>36</td></tr><tr><td>Z vsemi vrsticami, tudi Indija po široki UN definiciji (256.499 obratov po 11 sob)</td><td>1.374.238</td><td>49.352.009</td><td><b>35,9</b></td><td>19</td><td>54</td><td>35</td></tr><tr><td>Osnovni model brez ZDA</td><td>1.046.432</td><td>40.690.981</td><td><b>38,9</b></td><td>23</td><td>52</td><td>35</td></tr><tr><td>Osnovni model brez Kitajske</td><td>735.903</td><td>27.618.491</td><td><b>37,5</b></td><td>19</td><td>60</td><td>37</td></tr></tbody></table></div>
+    <p class="note">Mediana in prag 15 sob: vsaka država je opisana z lognormalno porazdelitvijo iz povprečja in mediane (mediana iz pasov, kjer obstaja; drugje 0,55 × povprečje, razpon 0,4 do 0,7).
+    Svet je mešanica, utežena s številom obratov. Preizkus na Sloveniji: model iz povprečja 17 in mediane 6 napove za obrate s 15+ sobami povprečje 51, register pokaže 56.</p>
+
+    <h4>Metoda 2: od zgoraj navzdol (popis STR)</h4>
+    <ul>
+      <li>STR (CoStar) šteje hotele "običajno z 10 ali več sobami". Globalna ponudba sob po STR: 18,5 milijona (2017), 21,4 (2023), <b>23,7 milijona (2025)</b>, objavljeno v letnem poročilu IHG. <span class="z z-v">visoko</span></li>
+      <li>Edini sledljiv par hoteli in sobe: STR, marec 2012, <b>187.000 hotelov in 17,5 milijona sob, 94 sob na hotel</b> (prag 20 sob v ZDA, 10 drugje). <span class="z z-z">zmerno</span></li>
+      <li>STR-jev vzorec hotelov, ki poročajo poslovanje: 94.000 hotelov in 12 milijonov sob (128 na hotel). To je zgornja meja, ker poročajo predvsem verige. <span class="z z-v">visoko</span></li>
+      <li><b>Zakaj STR ni svet:</b> samo kitajski popis CHA ima 18,7 milijona sob v hotelih s 15+ sobami, STR za ves svet 23,7 milijona. V STR torej manjka večina kitajskih hotelov in skoraj vsi majhni obrati. <span class="z z-v">visoko</span></li>
+    </ul>
+
+    <h4>Metoda 3: verige</h4>
+    <p>HOTELS The List 2026 in letna poročila: 10 največjih skupin ima 84.819 hotelov in 10,26 milijona sob, <b>121 sob na hotel</b>. Marriott 182, Hilton 148, IHG 147, Accor 151, Hyatt 244,
+    Wyndham 104, Choice 87, Jin Jiang 102, H World 98. Po STR je 57 % svetovnih sob v verigah (13,5 milijona); neodvisni hoteli v STR popisu imajo torej okoli 60 do 80 sob, v nacionalnih registrih pa precej manj
+    (Nemčija 21). <span class="z z-z">zmerno</span></p>
+
+    <h4>Metoda 4: porazdelitve in mediane</h4>
+    <p>Mediano sem ocenil iz velikostnih razredov (Eurostat tour_cap_nats za 17 držav, AH&amp;LA za ZDA, CHA za Kitajsko, registri Tajvana, Malezije, Koreje, Singapurja) in jo preveril na desetih
+    popolnih registrih (Slovenija, Hrvaška, sedem italijanskih regij). Metoda z upoštevanim povprečjem v razredu se zmoti povprečno za 1 sobo; navadna linearna interpolacija precenjuje do 15 sob.</p>
+    <figure class="viz">
+      <figcaption id="g2t">Mediana je povsod precej pod povprečjem</figcaption>
+      <p class="sub">Mediana (prazen krog) in povprečje (poln krog) sob na hotel</p>
+      <div class="key"><span><i class="ring"></i>mediana</span><span><i class="dot"></i>povprečje</span><span><i class="mute"></i>primerjalni trgi</span></div>
+      <div class="viz-scroll">
+<svg class="viz-svg" viewBox="0 0 640 480" role="img" aria-labelledby="g2t">
+<line class="grid" x1="188.0" y1="16" x2="188.0" y2="450"/>
+<text class="ax" x="188.0" y="468" text-anchor="middle">0</text>
+<line class="grid" x1="272.4" y1="16" x2="272.4" y2="450"/>
+<text class="ax" x="272.4" y="468" text-anchor="middle">20</text>
+<line class="grid" x1="356.8" y1="16" x2="356.8" y2="450"/>
+<text class="ax" x="356.8" y="468" text-anchor="middle">40</text>
+<line class="grid" x1="441.2" y1="16" x2="441.2" y2="450"/>
+<text class="ax" x="441.2" y="468" text-anchor="middle">60</text>
+<line class="grid" x1="525.6" y1="16" x2="525.6" y2="450"/>
+<text class="ax" x="525.6" y="468" text-anchor="middle">80</text>
+<line class="grid" x1="610.0" y1="16" x2="610.0" y2="450"/>
+<text class="ax" x="610.0" y="468" text-anchor="middle">100</text>
+<text class="lab b" x="176" y="36" text-anchor="end">Slovenija, hoteli</text>
+<line class="stem s1" x1="310.4" y1="32" x2="408.7" y2="32"/>
+<circle class="ring s1" cx="310.4" cy="32" r="5" tabindex="0" data-tip="Slovenija, hoteli: mediana 29, povprečje 52 sob. AJPES RNO 22. 10. 2026, 419 hotelov."/>
+<circle class="dot s1" cx="408.7" cy="32" r="5" tabindex="0" data-tip="Slovenija, hoteli: mediana 29, povprečje 52 sob. AJPES RNO 22. 10. 2026, 419 hotelov."/>
+<text class="val" x="418.7" y="36">52</text>
+<text class="val m2" x="301.4" y="36" text-anchor="end">29</text>
+<text class="lab b" x="176" y="66" text-anchor="end">Slovenija, hoteli in podobni</text>
+<line class="stem s1" x1="213.3" y1="62" x2="259.7" y2="62"/>
+<circle class="ring s1" cx="213.3" cy="62" r="5" tabindex="0" data-tip="Slovenija, hoteli in podobni: mediana 6, povprečje 17 sob. AJPES RNO, hoteli, moteli, penzioni, gostišča, prenočišča (1.725)."/>
+<circle class="dot s1" cx="259.7" cy="62" r="5" tabindex="0" data-tip="Slovenija, hoteli in podobni: mediana 6, povprečje 17 sob. AJPES RNO, hoteli, moteli, penzioni, gostišča, prenočišča (1.725)."/>
+<text class="val" x="269.7" y="66">17</text>
+<text class="val m2" x="204.3" y="66" text-anchor="end">6</text>
+<text class="lab" x="176" y="96" text-anchor="end">Hrvaška, hoteli</text>
+<line class="stem mute" x1="344.1" y1="92" x2="531.5" y2="92"/>
+<circle class="ring mute" cx="344.1" cy="92" r="5" tabindex="0" data-tip="Hrvaška, hoteli: mediana 37, povprečje 81 sob. Register MINT, 761 hotelov."/>
+<circle class="dot mute" cx="531.5" cy="92" r="5" tabindex="0" data-tip="Hrvaška, hoteli: mediana 37, povprečje 81 sob. Register MINT, 761 hotelov."/>
+<text class="val" x="541.5" y="96">81</text>
+<text class="val m2" x="335.1" y="96" text-anchor="end">37</text>
+<text class="lab" x="176" y="126" text-anchor="end">Italija, alberghi</text>
+<line class="stem mute" x1="284.6" y1="122" x2="327.3" y2="122"/>
+<circle class="ring mute" cx="284.6" cy="122" r="5" tabindex="0" data-tip="Italija, alberghi: mediana 23, povprečje 33 sob. Eurostat/ISTAT 2025; mediana ocenjena iz pasov."/>
+<circle class="dot mute" cx="327.3" cy="122" r="5" tabindex="0" data-tip="Italija, alberghi: mediana 23, povprečje 33 sob. Eurostat/ISTAT 2025; mediana ocenjena iz pasov."/>
+<text class="val" x="337.3" y="126">33</text>
+<text class="val m2" x="275.6" y="126" text-anchor="end">23</text>
+<text class="lab" x="176" y="156" text-anchor="end">Nemčija, hoteli in podobni</text>
+<line class="stem mute" x1="267.3" y1="152" x2="334.0" y2="152"/>
+<circle class="ring mute" cx="267.3" cy="152" r="5" tabindex="0" data-tip="Nemčija, hoteli in podobni: mediana 19, povprečje 35 sob. Eurostat 2025; mediana ocenjena iz pasov."/>
+<circle class="dot mute" cx="334.0" cy="152" r="5" tabindex="0" data-tip="Nemčija, hoteli in podobni: mediana 19, povprečje 35 sob. Eurostat 2025; mediana ocenjena iz pasov."/>
+<text class="val" x="344.0" y="156">35</text>
+<text class="val m2" x="258.3" y="156" text-anchor="end">19</text>
+<text class="lab" x="176" y="186" text-anchor="end">Španija, hoteli in podobni</text>
+<line class="stem mute" x1="267.8" y1="182" x2="391.4" y2="182"/>
+<circle class="ring mute" cx="267.8" cy="182" r="5" tabindex="0" data-tip="Španija, hoteli in podobni: mediana 19, povprečje 48 sob. Eurostat 2025; mediana ocenjena iz pasov."/>
+<circle class="dot mute" cx="391.4" cy="182" r="5" tabindex="0" data-tip="Španija, hoteli in podobni: mediana 19, povprečje 48 sob. Eurostat 2025; mediana ocenjena iz pasov."/>
+<text class="val" x="401.4" y="186">48</text>
+<text class="val m2" x="258.8" y="186" text-anchor="end">19</text>
+<text class="lab" x="176" y="216" text-anchor="end">Francija, hoteli in podobni</text>
+<line class="stem mute" x1="303.2" y1="212" x2="353.8" y2="212"/>
+<circle class="ring mute" cx="303.2" cy="212" r="5" tabindex="0" data-tip="Francija, hoteli in podobni: mediana 27, povprečje 39 sob. Eurostat 2025; mediana ocenjena iz pasov."/>
+<circle class="dot mute" cx="353.8" cy="212" r="5" tabindex="0" data-tip="Francija, hoteli in podobni: mediana 27, povprečje 39 sob. Eurostat 2025; mediana ocenjena iz pasov."/>
+<text class="val" x="363.8" y="216">39</text>
+<text class="val m2" x="294.2" y="216" text-anchor="end">27</text>
+<text class="lab" x="176" y="246" text-anchor="end">Evropa, hoteli in podobni</text>
+<line class="stem mute" x1="272.4" y1="242" x2="349.2" y2="242"/>
+<circle class="ring mute" cx="272.4" cy="242" r="5" tabindex="0" data-tip="Evropa, hoteli in podobni: mediana 20, povprečje 38 sob. 17 držav s pasovi, okoli 136.000 obratov."/>
+<circle class="dot mute" cx="349.2" cy="242" r="5" tabindex="0" data-tip="Evropa, hoteli in podobni: mediana 20, povprečje 38 sob. 17 držav s pasovi, okoli 136.000 obratov."/>
+<text class="val" x="359.2" y="246">38</text>
+<text class="val m2" x="263.4" y="246" text-anchor="end">20</text>
+<text class="lab" x="176" y="276" text-anchor="end">Tajvan, hoteli</text>
+<line class="stem mute" x1="335.7" y1="272" x2="434.9" y2="272"/>
+<circle class="ring mute" cx="335.7" cy="272" r="5" tabindex="0" data-tip="Tajvan, hoteli: mediana 35, povprečje 58 sob. Register Tourism Administration 2025."/>
+<circle class="dot mute" cx="434.9" cy="272" r="5" tabindex="0" data-tip="Tajvan, hoteli: mediana 35, povprečje 58 sob. Register Tourism Administration 2025."/>
+<text class="val" x="444.9" y="276">58</text>
+<text class="val m2" x="326.7" y="276" text-anchor="end">35</text>
+<text class="lab" x="176" y="306" text-anchor="end">Malezija, hoteli</text>
+<line class="stem mute" x1="323.0" y1="302" x2="463.1" y2="302"/>
+<circle class="ring mute" cx="323.0" cy="302" r="5" tabindex="0" data-tip="Malezija, hoteli: mediana 32, povprečje 65 sob. Tourism Malaysia 2024, mediana 2023."/>
+<circle class="dot mute" cx="463.1" cy="302" r="5" tabindex="0" data-tip="Malezija, hoteli: mediana 32, povprečje 65 sob. Tourism Malaysia 2024, mediana 2023."/>
+<text class="val" x="473.1" y="306">65</text>
+<text class="val m2" x="314.0" y="306" text-anchor="end">32</text>
+<text class="lab" x="176" y="336" text-anchor="end">Kitajska, hoteli 15+</text>
+<line class="stem mute" x1="337.8" y1="332" x2="399.0" y2="332"/>
+<circle class="ring mute" cx="337.8" cy="332" r="5" tabindex="0" data-tip="Kitajska, hoteli 15+: mediana 36, povprečje 50 sob. China Hotel Association 2025; mediana iz pasov."/>
+<circle class="dot mute" cx="399.0" cy="332" r="5" tabindex="0" data-tip="Kitajska, hoteli 15+: mediana 36, povprečje 50 sob. China Hotel Association 2025; mediana iz pasov."/>
+<text class="val" x="409.0" y="336">50</text>
+<text class="val m2" x="328.8" y="336" text-anchor="end">36</text>
+<text class="lab" x="176" y="366" text-anchor="end">ZDA, hoteli in moteli</text>
+<line class="stem mute" x1="475.0" y1="362" x2="560.6" y2="362"/>
+<circle class="ring mute" cx="475.0" cy="362" r="5" tabindex="0" data-tip="ZDA, hoteli in moteli: mediana 68, povprečje 88 sob. AHLA 2024; mediana iz pasov AH&amp;LA 2014."/>
+<circle class="dot mute" cx="560.6" cy="362" r="5" tabindex="0" data-tip="ZDA, hoteli in moteli: mediana 68, povprečje 88 sob. AHLA 2024; mediana iz pasov AH&amp;LA 2014."/>
+<text class="val" x="570.6" y="366">88</text>
+<text class="val m2" x="466.0" y="366" text-anchor="end">68</text>
+<text class="lab b" x="176" y="396" text-anchor="end">Svet, hoteli in podobni</text>
+<line class="stem s1" x1="291.8" y1="392" x2="364.0" y2="392"/>
+<circle class="ring s1" cx="291.8" cy="392" r="5" tabindex="0" data-tip="Svet, hoteli in podobni: mediana 25, povprečje 42 sob. Model te raziskave, zmerno do nizko zaupanje za mediano."/>
+<circle class="dot s1" cx="364.0" cy="392" r="5" tabindex="0" data-tip="Svet, hoteli in podobni: mediana 25, povprečje 42 sob. Model te raziskave, zmerno do nizko zaupanje za mediano."/>
+<text class="val" x="374.0" y="396">42</text>
+<text class="val m2" x="282.8" y="396" text-anchor="end">25</text>
+<text class="lab b" x="176" y="426" text-anchor="end">Svet, hoteli z vsaj 15 sobami</text>
+<line class="stem s1" x1="342.0" y1="422" x2="421.4" y2="422"/>
+<circle class="ring s1" cx="342.0" cy="422" r="5" tabindex="0" data-tip="Svet, hoteli z vsaj 15 sobami: mediana 36, povprečje 55 sob. Model te raziskave, usklajena definicija."/>
+<circle class="dot s1" cx="421.4" cy="422" r="5" tabindex="0" data-tip="Svet, hoteli z vsaj 15 sobami: mediana 36, povprečje 55 sob. Model te raziskave, usklajena definicija."/>
+<text class="val" x="431.4" y="426">55</text>
+<text class="val m2" x="333.0" y="426" text-anchor="end">36</text>
+</svg></div>
+    </figure>
+    <details class="viri"><summary>Tabela k grafu</summary>
+    <div class="tbl fit "><table><thead><tr><th>Trg</th><th>Mediana</th><th>Povprečje</th><th>Opomba</th></tr></thead><tbody><tr><td>Slovenija, hoteli</td><td>29</td><td>52</td><td>AJPES RNO 22. 10. 2026, 419 hotelov.</td></tr><tr><td>Slovenija, hoteli in podobni</td><td>6</td><td>17</td><td>AJPES RNO, hoteli, moteli, penzioni, gostišča, prenočišča (1.725).</td></tr><tr><td>Hrvaška, hoteli</td><td>37</td><td>81</td><td>Register MINT, 761 hotelov.</td></tr><tr><td>Italija, alberghi</td><td>23</td><td>33</td><td>Eurostat/ISTAT 2025; mediana ocenjena iz pasov.</td></tr><tr><td>Nemčija, hoteli in podobni</td><td>19</td><td>35</td><td>Eurostat 2025; mediana ocenjena iz pasov.</td></tr><tr><td>Španija, hoteli in podobni</td><td>19</td><td>48</td><td>Eurostat 2025; mediana ocenjena iz pasov.</td></tr><tr><td>Francija, hoteli in podobni</td><td>27</td><td>39</td><td>Eurostat 2025; mediana ocenjena iz pasov.</td></tr><tr><td>Evropa, hoteli in podobni</td><td>20</td><td>38</td><td>17 držav s pasovi, okoli 136.000 obratov.</td></tr><tr><td>Tajvan, hoteli</td><td>35</td><td>58</td><td>Register Tourism Administration 2025.</td></tr><tr><td>Malezija, hoteli</td><td>32</td><td>65</td><td>Tourism Malaysia 2024, mediana 2023.</td></tr><tr><td>Kitajska, hoteli 15+</td><td>36</td><td>50</td><td>China Hotel Association 2025; mediana iz pasov.</td></tr><tr><td>ZDA, hoteli in moteli</td><td>68</td><td>88</td><td>AHLA 2024; mediana iz pasov AH&amp;LA 2014.</td></tr><tr><td>Svet, hoteli in podobni</td><td>25</td><td>42</td><td>Model te raziskave, zmerno do nizko zaupanje za mediano.</td></tr><tr><td>Svet, hoteli z vsaj 15 sobami</td><td>36</td><td>55</td><td>Model te raziskave, usklajena definicija.</td></tr></tbody></table></div>
+    </details>
+
+    <h4>Metoda 5: odprti podatki (OpenStreetMap)</h4>
+    <p>OpenStreetMap ima 453.740 objektov z oznako hotel (posnetek 21. 9. 2026); 30.090 jih ima vpisano število sob (6,6 %). Surovi vzorec: povprečje 84, mediana 35.
+Vzorec je pristranski navzgor: med hoteli s številom sob je 30 % verižnih, med vsemi le 13 %, verižni pa imajo mediano 113 sob proti 24 pri neodvisnih.
+Po prevzorčenju na dejanski delež verig in vrst vnosa: <b>mediana 27, povprečje 66</b>. Mediana 86 držav z vsaj 30 vrednostmi: 28.
+Neodvisno od statistik torej pride ista mediana kot v modelu (okoli 25). Povprečje ostane previsoko, ker veliki mestni hoteli dobijo oznako pogosteje. <span class="z z-n">nizko</span> do <span class="z z-z">zmerno</span></p>
+<p>Slovenija v OSM: 525 hotelov, 38 z uporabnim številom sob, povprečje 63, <b>mediana 29,5</b> (register: 29). Ujemanje mediane je lepo, a na 38 vrednostih. <span class="z z-n">nizko</span></p>
+<p class="note">Wikidata (6.386 hotelov s številom sob, mediana 92) je vzorec pretežno indonezijskih, vietnamskih in tajvanskih vnosov, zato ga ne uporabljam.</p>
+  </section>
+
+  <section class="s" id="trgi">
+    <h2>06 · Drugi trgi</h2>
+    <h3>Prejšnji trgi, preverjeni in z mediano, kjer obstaja</h3>
+    <div class="tbl "><table><thead><tr><th>Trg</th><th>Definicija</th><th>Leto</th><th>Obratov</th><th>Povprečje</th><th>Mediana</th><th>Zaupanje</th><th>Opomba</th></tr></thead><tbody><tr><td>Slovenija</td><td>hoteli (register AJPES)</td><td>2026</td><td>419</td><td><b>52</b></td><td>29</td><td><span class="z z-v">visoko</span></td><td>Lastni izračun; vzorec 60 hotelov potrdi števila sob.</td></tr><tr><td>Slovenija</td><td>hoteli in podobni (Eurostat)</td><td>2025</td><td>1.618</td><td>17</td><td>6</td><td><span class="z z-v">visoko</span></td><td>Mediana iz registra (1.725 obratov).</td></tr><tr><td>Hrvaška</td><td>hoteli (register MINT)</td><td>2026</td><td>761</td><td><b>81</b></td><td>37</td><td><span class="z z-v">visoko</span></td><td>Perplexity je navedel 77 za širšo skupino (DZS).</td></tr><tr><td>Hrvaška</td><td>hoteli in podobni (DZS, Eurostat)</td><td>2025</td><td>1.083</td><td>77</td><td>32</td><td><span class="z z-v">visoko</span></td><td>Mediana ocenjena iz Eurostatovih pasov.</td></tr><tr><td>Italija</td><td>alberghi brez RTA</td><td>2025</td><td>30.036</td><td><b>34</b></td><td>23</td><td><span class="z z-v">visoko</span></td><td>55 % hotelov ima manj kot 25 sob.</td></tr><tr><td>Avstrija</td><td>hoteli in podobni</td><td>2025</td><td>10.878</td><td><b>27</b></td><td></td><td><span class="z z-v">visoko</span></td><td>5/4 zvezdice 52, 3 zvezdice 22.</td></tr><tr><td>Grčija</td><td>hoteli (register HCH)</td><td>2025</td><td>10.118</td><td><b>45</b></td><td>25</td><td><span class="z z-v">visoko</span></td><td>5 zvezdic 129, 1 zvezdica 19; mediana iz Eurostata.</td></tr><tr><td>ZDA</td><td>hoteli, moteli, B&B (CoStar/STR)</td><td>2024</td><td>64.165</td><td><b>88</b></td><td>68</td><td><span class="z z-v">visoko</span></td><td>Mediana iz pasov AH&LA 2014.</td></tr><tr><td>Zvezna država New York</td><td>isto</td><td>2024</td><td>2.576</td><td>95</td><td></td><td><span class="z z-v">visoko</span></td><td>Ni mesto New York.</td></tr><tr><td>Mesto New York</td><td>popis STR</td><td>2020</td><td>705</td><td>181</td><td></td><td><span class="z z-n">nizko</span></td><td>Manhattan 228; novejšega para ni.</td></tr><tr><td>Tennessee</td><td>isto kot ZDA</td><td>2024</td><td>1.710</td><td>89</td><td></td><td><span class="z z-v">visoko</span></td><td></td></tr><tr><td>Florida</td><td>isto kot ZDA</td><td>2024</td><td>4.693</td><td>106</td><td></td><td><span class="z z-v">visoko</span></td><td></td></tr><tr><td>ZAE</td><td>hoteli in hotelski apartmaji (MoET)</td><td>2025</td><td>1.260</td><td><b>172</b></td><td></td><td><span class="z z-v">visoko</span></td><td>Perplexity pravilno; jan. do nov. 2025.</td></tr><tr><td>ZAE</td><td>samo hoteli (FCSC)</td><td>2021</td><td>832</td><td>191</td><td></td><td><span class="z z-z">zmerno</span></td><td>Hotelski apartmaji 112.</td></tr><tr><td>Dubaj</td><td>samo hoteli (DET)</td><td>2025</td><td>648</td><td>199</td><td></td><td><span class="z z-z">zmerno</span></td><td>Hotelski apartmaji 141.</td></tr><tr><td>Kitajska</td><td>hoteli s 15+ sobami (CHA)</td><td>2025</td><td>374.694</td><td><b>50</b></td><td>35</td><td><span class="z z-v">visoko</span></td><td>Mediana iz pasov, zmerno.</td></tr><tr><td>Japonska</td><td>hoteli in ryokani (MHLW)</td><td>2024</td><td>52.946</td><td><b>34</b></td><td></td><td><span class="z z-v">visoko</span></td><td>2017 ločeno: hoteli 87, ryokani 18.</td></tr><tr><td>Mehika</td><td>vsi obrati (DataTur)</td><td>2024</td><td>28.654</td><td>32</td><td></td><td><span class="z z-v">visoko</span></td><td>1 do 5 zvezdic 44; 5 zvezdic 138.</td></tr><tr><td>Kanada</td><td>hoteli (CoStar)</td><td>2025</td><td>7.556</td><td>62</td><td></td><td><span class="z z-z">zmerno</span></td><td>Verige 121, neodvisni 38; 47 % pod 30 sob.</td></tr><tr><td>Brazilija</td><td>vse nastanitve (IBGE)</td><td>2016</td><td>31.299</td><td>32</td><td>okoli 24</td><td><span class="z z-z">zmerno</span></td><td>Zadnji popis; Cadastur 2025 hoteli 62, mediana 40.</td></tr><tr><td>Anglija</td><td>serviced (VisitEngland)</td><td>2026</td><td>28.778</td><td>31</td><td></td><td><span class="z z-z">zmerno</span></td><td>Samo hoteli 48; s prijavljenimi sobami mediana 40.</td></tr><tr><td>Turčija</td><td>hoteli in podobni (Eurostat)</td><td>2025</td><td>21.088</td><td>42</td><td></td><td><span class="z z-v">visoko</span></td><td>Ministrsko licencirani hoteli 114.</td></tr><tr><td>Savdska Arabija</td><td>licencirani obrati</td><td>2025</td><td>5.937</td><td>100</td><td></td><td><span class="z z-z">zmerno</span></td><td>Sobe zaokrožene; s servisiranimi apartmaji.</td></tr><tr><td>Nemčija</td><td>hoteli in podobni</td><td>2025</td><td>28.789</td><td>35</td><td>19</td><td><span class="z z-v">visoko</span></td><td>Mediana iz pasov.</td></tr><tr><td>Španija</td><td>hoteli in podobni</td><td>2025</td><td>20.038</td><td>48</td><td>19</td><td><span class="z z-v">visoko</span></td><td>Mediana iz pasov.</td></tr><tr><td>Francija</td><td>hoteli in podobni</td><td>2025</td><td>17.319</td><td>39</td><td>27</td><td><span class="z z-v">visoko</span></td><td>Mediana iz pasov.</td></tr></tbody></table></div>
+    <p class="note">Italija, Avstrija, ZDA, zvezne države, Grčija in ZAE so potrjeni na primarnih virih. Hrvaška je zdaj izračunana iz registra MINT (761 hotelov, prenos avgust 2026), ne iz širše skupine.</p>
+  </section>
+
+  <section class="s" id="perplexity">
+    <h2>07 · Prejšnja raziskava</h2>
+    <h3>Kaj je naredila dobro in kaj slabo</h3>
+    <h4>Dobro, obdržano</h4>
+    <ul>
+      <li>Povprečje kot vsota sob / vsota obratov, ne povprečje povprečij.</li>
+      <li>Stolpec z definicijo pri vsaki številki in opozorilo, da "hotel" ni povsod isto.</li>
+      <li>Slovenija iz registra AJPES s sobami, apartmaji in studii, skladno z Eurostatovo nedeljivo enoto. Njeni 52,1 sta pravilno izračunana.</li>
+      <li>Za Grčijo končni namesto predhodnega podatka; za ZDA vsota zveznih držav.</li>
+      <li>ZAE: par 1.260 hotelov in okoli 216.900 sob je pravilen (ministrstvo MoET, 8. 2. 2026). Eden od agentov te raziskave ga je sprva razglasil za zlepek; preverba pri viru je pokazala, da ni.
+        Pomanjkljivost je le, da ni povedala, da so zraven hotelski apartmaji (samo hoteli: okoli 191 sob, Dubaj 199).</li>
+    </ul>
+    <h4>Slabo, popravljeno</h4>
+    <ol>
+      <li><b>Ni odgovorila na glavno vprašanje.</b> Svetovno število je pustila prazno, ker ni našla enega globalnega para. Pravilno je definicijo izbrati in sešteti države; tabela UN Tourism s 160 državami je javno dostopna.</li>
+      <li><b>Samo povprečje.</b> Brez mediane in porazdelitve. Slovenski "povprečni" hotel z 52 sobami je skoraj dvakrat večji od tipičnega (29).</li>
+      <li><b>Lažna natančnost.</b> 52,1 in 172,1 na desetinko iz posnetka registra oziroma iz zaokroženih vhodov.</li>
+      <li><b>Register ni preverjen z resničnostjo.</b> Ni našla dvojnikov (Habakuk dvakrat po 135 sob), dependans kot samostojnih hotelov in zaprtih hotelov, ki so še aktivni.</li>
+      <li><b>SURS ni uporabljen kot kontrola.</b> Pravilno je zavrnila deljenje 21.283 s 423, ni pa preverila, da se vsota sob ujema (ujema se na 3 %).</li>
+      <li><b>Eurostat za Slovenijo brez razlage preloma.</b> 16,9 je posledica prenočišč z eno sobo, vključenih od leta 2019; leta 2017 je bilo 32,8.</li>
+      <li><b>Hrvaška iz širše skupine</b>, čeprav je register MINT na voljo: klasični hoteli imajo 81 sob povprečno, mediana 37.</li>
+      <li><b>Nesledljivi citati</b> ("europa+1", "moet+1") in mešanje let (2024, 2025, 2026) v isti tabeli brez opozorila pri vsaki vrstici.</li>
+      <li><b>Ena metoda.</b> Brez triangulacije (od spodaj, od zgoraj, verige, porazdelitve, odprti podatki), zato ni mogla oceniti zanesljivosti.</li>
+    </ol>
+  </section>
+
+  <section class="s" id="uporaba">
+    <h2>08 · Kako številke uporabiti</h2>
+    <h3>Pravilni stavki za predstavitve in izračune</h3>
+    <ul>
+      <li>"Registrirani hoteli v Sloveniji imajo povprečno 52 sob, tipičen hotel pa 29 (AJPES, oktober 2026)."</li>
+      <li>"Polovica slovenskih hotelskih sob je v hotelih s 100 ali več sobami."</li>
+      <li>"Na svetu je okoli 1,1 milijona hotelov in podobnih obratov s približno 46 milijoni sob, povprečno okoli 42 sob na obrat (UN Tourism, Eurostat, nacionalni registri, večinoma 2024 do 2025)."</li>
+      <li>"Hoteli z vsaj 15 sobami imajo na svetu povprečno okoli 55 sob, v Sloveniji 56."</li>
+      <li>Ne piši: "slovenski hotel ima 17 sob" (to je Eurostatova širša skupina z enosobnimi prenočišči) ali "na svetu je 187.000 hotelov" (STR 2012).</li>
+      <li>Za izračun trga po sobah uporabi vsoto sob, ne število hotelov × povprečje iz drugega vira; za tipično stranko uporabi mediano.</li>
+    </ul>
+  </section>
+
+  <section class="s" id="viri">
+    <h2>09 · Metoda in viri</h2>
+    <h3>Kako je raziskava nastala</h3>
+    <ul>
+      <li>Slovenija: lasten izračun iz registra AJPES (skripta <code>si_izracun.py</code>), kontrola s SURS in Eurostatom, preverba vzorca 60 hotelov na spletnih straneh hotelov in upravljavcev.</li>
+      <li>Svet: model <code>svet_model.py</code> nad tabelo UN Tourism in Eurostat ter nacionalnimi viri za 18 držav; lognormalna mešanica za mediano in prag 15 sob.</li>
+      <li>Vzporedno je delalo devet raziskovalnih agentov (Kitajska, UN Tourism, globalni popis, Azija, Amerika in Bližnji vzhod, porazdelitve, OpenStreetMap, preverba trgov, preverba Slovenije).
+      Vsaka številka v njihovih poročilih ima vir in citat; nobena ni iz spomina.</li>
+      <li>Ponovljivost: register AJPES, Eurostat in UN Tourism se prenesejo s skripto; izračun traja nekaj sekund.</li>
+    </ul>
+    <details class="viri" open><summary>Primarni viri (38)</summary><ol><li><a href="https://www.ajpes.si/RNO/RNO.zip">AJPES: Register nastanitvenih obratov, dnevni izvoz RNO.zip (stanje 22. 10. 2026)</a></li><li><a href="https://pxweb.stat.si/SiStatData/pxweb/sl/Data/-/2164528S.px/">SURS SiStat 2164528S: prenočitvene zmogljivosti po nastanitvenih obratih, letno</a></li><li><a href="https://pxweb.stat.si/SiStatData/pxweb/sl/Data/-/0380840S.px/">SURS SiStat 0380840S: nedenarni turistični kazalniki (obrati SKD 55.1)</a></li><li><a href="https://ec.europa.eu/eurostat/databrowser/view/tour_cap_nat/default/table">Eurostat tour_cap_nat: obrati, sobe in ležišča (I55.1), posodobljeno 12. 10. 2026</a></li><li><a href="https://ec.europa.eu/eurostat/databrowser/view/tour_cap_nats/default/table">Eurostat tour_cap_nats: obrati po velikostnih razredih</a></li><li><a href="https://pre-webunwto.s3.amazonaws.com/s3fs-public/2025-12/UN_Tourism_accommodation_hotels_12_2025.xlsx">UN Tourism: Key Tourism Statistics, hotel capacity (izdaja 12.2025)</a></li><li><a href="https://www.chinahotel.org.cn/articles/17173">China Hotel Association: poročilo 2025 (stanje 31. 12. 2024, z velikostnimi razredi)</a></li><li><a href="https://culture-travel.cctv.com/2026/04/23/ARTIuffFVE5R8DReWUx3lgM6260423.shtml">CCTV: poročilo CHA 2026, stanje 31. 12. 2025 (374.694 hotelov, 18.736.357 sob)</a></li><li><a href="https://zwgk.mct.gov.cn/zfxxgkml/tjxx/202404/t20240430_952645.html">Ministrstvo za kulturo in turizem LRK: statistika hotelov z zvezdicami</a></li><li><a href="https://www.ihgplc.com/~/media/Files/I/Ihg-Plc/investors/annual-report/2025/ihg-ar25-strategicreport-p3-114.pdf">IHG Annual Report 2025: globalna ponudba sob (vir STR)</a></li><li><a href="https://www.phocuswire.com/How-many-hotels-in-the-world-are-there-anyway-Booking-com-keeps-adding-them">PhocusWire (2012): STR, 187.000 hotelov in 17,5 milijona sob</a></li><li><a href="https://www.costar.com/products/str-benchmark">CoStar: STR Benchmark (velikost vzorca)</a></li><li><a href="https://hotelsmag.com/wp-content/uploads/2026/09/The-List-2026.pdf">HOTELS magazine: The List 2026</a></li><li><a href="https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/mar-20251231.htm">Marriott 10-K 2025</a></li><li><a href="https://www.sec.gov/Archives/edgar/data/1585689/000158568926000007/hlt-20251231.htm">Hilton 10-K 2025</a></li><li><a href="https://economic-impact.ahla.com/components/state_industry_snapshot.csv">AHLA/Oxford Economics: podatki po zveznih državah (CSV)</a></li><li><a href="https://ttu-ir.tdl.org/bitstreams/3428be2d-51a8-4bcf-af51-2439e60cea5a/download">AH&amp;LA Lodging Industry Profile 2014 (porazdelitev po velikosti, preko TTU)</a></li><li><a href="https://www2.census.gov/library/publications/2011/compendia/statab/131ed/tables/12s1281.pdf">US Statistical Abstract 2011, tabela 1281 (AH&amp;LA 2009)</a></li><li><a href="https://www.nyc.gov/assets/planning/download/pdf/applicants/env-review/citywide-hotel/appendb-feis.pdf">NYC: Citywide hotel FEIS, priloga B (STR, januar 2020)</a></li><li><a href="https://mint.gov.hr/pristup-informacijama/kategorizacija-11512/11512">MINT Hrvaška: popis kategoriziranih objektov</a></li><li><a href="https://esploradati.istat.it/SDMXWS/rest/data/IT1,122_54_DF_DCSC_TUR_1,1.0/A.IT.........?startPeriod=2024">ISTAT: capacità degli esercizi ricettivi (SDMX)</a></li><li><a href="https://statcube.at/statcube/opendatabase?id=def1459">Statistik Austria STATcube: Beherbergung, sobe po kategorijah</a></li><li><a href="https://www.grhotels.gr/app/uploads/2026/04/01_Hotels_2025_Total.pdf">Hellenic Chamber of Hotels: hotelska zmogljivost 2025</a></li><li><a href="https://www.wam.ae/en/article/bn9cdvm-uae-hotel-occupancy-rates-among-world%E2%80%99s-highest">WAM: hotelske zmogljivosti ZAE 2025</a></li><li><a href="https://releaseeuaestat.fcsc.gov.ae/rest/data/FCSA,DF_HOT_TYPE,4.0.0/all?dimensionAtObservation=AllDimensions&amp;format=csvfilewithlabels">FCSC ZAE: hoteli in hotelski apartmaji</a></li><li><a href="https://www.dubaidet.gov.ae/en/research-and-insights/tourism-performance-report-december-2025">Dubai DET: Tourism Performance Report, december 2025</a></li><li><a href="https://www.e-stat.go.jp/stat-search/files?page=1&amp;layout=dataset&amp;toukei=00450027&amp;stat_infid=000040359176">Japonska MHLW 衛生行政報告例 FY2024 (e-Stat)</a></li><li><a href="https://www.bps.go.id/en/publication/2025/12/31/cc7df681d36107bb009a1e82/statistik-hotel-dan-akomodasi-lainnya-di-indonesia-2025.html">BPS Indonezija: Statistik Hotel dan Akomodasi Lainnya 2025</a></li><li><a href="https://www.reic.or.th/Research/Index/323">REIC Tajska: licencirani hoteli (DOPA)</a></li><li><a href="https://admin.taiwan.net.tw/BusinessInfo/Articles?a=9248">Tajvan Tourism Administration: register hotelov</a></li><li><a href="https://data.tourism.gov.my/frontend/pdf/Malaysia-Hotel-2023-Supply-Statistics.pdf">Tourism Malaysia: hotel supply 2023</a></li><li><a href="https://www.mcst.go.kr/site/s_policy/dept/deptView.jsp?pSeq=2122&amp;pDataCD=0417000000&amp;pType=05">MCST Koreja: register turističnih hotelov</a></li><li><a href="https://data.tourism.gov.in/mrd/Uploads/tourism_data/India%20Tourism%20Statistics%202023-English%20(1).pdf">India Tourism Statistics 2023</a></li><li><a href="https://www.hotelivate.com/travel-tourism/sizing-up-indian-hospitality/">Hotelivate: Sizing up Indian hospitality</a></li><li><a href="https://images.vietnamtourism.gov.vn/vn//dmdocuments/2025/thong_tin_du_lich_thang_12_2025.pdf">VNAT Vietnam: bilten december 2025</a></li><li><a href="https://www.hotrec.eu/media/static/files/import/all_news_2026_2026_35/full-study_european-hotel-distribution-study-2026_hotrec.pdf">HOTREC: European Hotel Distribution Study 2026</a></li><li><a href="https://horwathhtl.com/publication/dach-hotel-chains-report-2026-market-analysis-pipeline/">Horwath HTL: DACH Hotel Chains Report 2026</a></li><li><a href="https://agenciadenoticias.ibge.gov.br/agencia-sala-de-imprensa/2013-agencia-de-noticias/releases/14786-brasil-tem-2-4-milhoes-de-leitos-em-sua-rede-de-hospedagem">IBGE Brazilija: Pesquisa de Serviços de Hospedagem 2016</a></li></ol></details>
+  </section>
+
+  <footer>
+    <p>Javna različica, brez podatkov o strankah. Raziskava je nastala s Claude Code 23. 10. 2026. Statistike se spreminjajo; pred odločitvijo preveri vir in leto.</p>
+    <p><a href="../">← Kazalo projektov</a> · <a href="../raziskave-orodij/">Raziskave orodij</a> · <a href="../gtm-vloge/">GTM vloge 2026</a></p>
+  </footer>
+
+</div>
+
+<div id="tip" role="status" aria-live="polite"></div>
+<script>
+(function () {
+  var tip = document.getElementById('tip');
+  function show(el, x, y) {
+    tip.textContent = el.getAttribute('data-tip');
+    tip.classList.add('on');
+    var w = tip.offsetWidth, h = tip.offsetHeight;
+    var left = Math.min(window.innerWidth - w - 8, Math.max(8, x + 12));
+    var top = y - h - 12; if (top < 8) top = y + 16;
+    tip.style.left = left + 'px'; tip.style.top = top + 'px';
+  }
+  function hide() { tip.classList.remove('on'); }
+  document.querySelectorAll('[data-tip]').forEach(function (el) {
+    el.addEventListener('mousemove', function (e) { show(el, e.clientX, e.clientY); });
+    el.addEventListener('mouseleave', hide);
+    el.addEventListener('focus', function () { var r = el.getBoundingClientRect(); show(el, r.left + r.width / 2, r.top); });
+    el.addEventListener('blur', hide);
+  });
+  window.addEventListener('scroll', hide, { passive: true });
+})();
+</script>
+
+</body>
+</html>
