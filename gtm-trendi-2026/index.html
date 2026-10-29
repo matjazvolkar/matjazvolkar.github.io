@@ -129,6 +129,23 @@
   .d span br.a { display: inline; }
   .nw { white-space: nowrap; }
 
+  /* ---------- opisi ob prehodu z misko ---------- */
+  [data-tip] { cursor: help; }
+  .d:focus { outline: none; }
+  .d:focus-visible::before { outline: 2px solid var(--n-m4); outline-offset: 2px; }
+  .miss em[data-tip]:focus-visible { outline: 2px solid var(--n-m4); outline-offset: 2px; border-radius: 3px; }
+  .d:hover span, .d:focus span, .miss em[data-tip]:hover { text-decoration: underline; text-decoration-color: var(--n-m4); text-underline-offset: 2px; }
+  .tip {
+    position: fixed; left: 0; top: 0; z-index: 50; max-width: 270px; padding: 0.5rem 0.6875rem 0.5625rem;
+    background: #0C1745; color: var(--ink-2); border: 1px solid var(--n-m3); border-radius: 8px;
+    box-shadow: 0 12px 28px -10px rgba(0, 0, 0, 0.75); font-size: 0.78125rem; line-height: 1.4;
+    pointer-events: none; opacity: 0; transition: opacity 0.12s ease;
+  }
+  .tip.on { opacity: 1; }
+  .tip b { display: block; color: #FFFFFF; font-size: 0.8125rem; font-weight: 600; margin-bottom: 0.125rem; }
+  .tip span { display: block; }
+  .tip span + span { margin-top: 0.3125rem; color: var(--n-m4); font-size: 0.71875rem; }
+
   /* ---------- premiki ---------- */
   .shifts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; }
   .card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 0.625rem 0.875rem 0.75rem; }
@@ -219,7 +236,7 @@
   <section class="charts" aria-label="Primerjava GTM scorecardov 2025 in 2026">
 
     <figure>
-      <figcaption><b>2025</b><span>N=195 · oktober 2025</span><div class="miss">Ni bilo v anketi: <em><i class="new"></i>Cold outreach</em><em><i class="new"></i>Cold calling</em><em><i class="new"></i>Newsletters</em></div></figcaption>
+      <figcaption><b>2025</b><span>N=195 · oktober 2025</span><div class="miss">Ni bilo v anketi: <em tabindex="0" data-name="Cold outreach" data-tip="Hladna e-pošta in sporočila ljudem, ki vas ne poznajo, brez predhodnega stika ali signala. Anketa 2025 tega kanala ni merila, letos je prvič."><i class="new"></i>Cold outreach</em><em tabindex="0" data-name="Cold calling" data-tip="Telefonski klici ljudem, ki vas ne poznajo in klica niso pričakovali. Anketa 2025 tega kanala ni merila, letos je prvič."><i class="new"></i>Cold calling</em><em tabindex="0" data-name="Newsletters" data-tip="Lastni e-novičniki in uredniške vsebine, ki jih bralci redno prejemajo (v poročilu &quot;Newsletters and editorial&quot;). Anketa 2025 tega kanala ni merila, letos je prvič."><i class="new"></i>Newsletters</em></div></figcaption>
       <div class="frame">
         <div class="ylab">Verjetnost velikega vpliva →</div>
         <div class="plot">
@@ -228,24 +245,24 @@
           <div class="q q3"><span class="qn">Figuring it out</span></div>
           <div class="q q4"><span class="qn">Over-saturated</span></div>
           <ul class="dots">
-            <li class="d r tt" style="--x:71.8;--y:3.6"><span>Intimate events</span></li>
-            <li class="d r tt" style="--x:61.1;--y:17.4" title="Najbližji kanal 2026: LinkedIn posting (by founders and employees). Naš sklep, ne trditev avtorjev."><span>Founder brand<b class="pr">B</b></span></li>
-            <li class="d l tt" style="--x:80.2;--y:26.4" title="Najbližji kanal 2026: Network &amp; intros. Naš sklep, ne trditev avtorjev."><span>Warm<br class="m"> outbound<b class="pr">A</b></span></li>
-            <li class="d l tt down" style="--x:78.8;--y:33.0"><span>Large conferences</span></li>
-            <li class="d te tt" style="--x:96.7;--y:37.8"><span>LinkedIn</span></li>
-            <li class="d r n-l tt" style="--x:87.0;--y:39.6"><span>SEO</span></li>
-            <li class="d r tt" style="--x:54.3;--y:43.7"><span>Intent-based<br> outbound</span></li>
-            <li class="d l down" style="--x:36.0;--y:25.3"><span>Big product<br> launches</span></li>
-            <li class="d l" style="--x:42.6;--y:40.7"><span>Ecosystem<br> marketing</span></li>
-            <li class="d r" style="--x:19.5;--y:56.0"><span>B2B<br> influencers</span></li>
-            <li class="d be up" style="--x:45.4;--y:59.1"><span>AI search</span></li>
-            <li class="d ts gone" style="--x:2.4;--y:72.5"><span>TikTok</span></li>
-            <li class="d bs gone" style="--x:7.3;--y:75.2"><span>Instagram</span></li>
-            <li class="d r" style="--x:16.9;--y:75.4"><span>AI SDR</span></li>
-            <li class="d r gone" style="--x:5.8;--y:88.8"><span>Reddit</span></li>
-            <li class="d r gone" style="--x:21.7;--y:85.8"><span>Podcast</span></li>
-            <li class="d r" style="--x:21.7;--y:94.0"><span>PR</span></li>
-            <li class="d r" style="--x:75.8;--y:62.9"><span>Paid ads</span></li>
+            <li class="d r tt" style="--x:71.8;--y:3.6" tabindex="0" data-name="Intimate events" data-tip="Majhni dogodki v živo za ozek krog kupcev, npr. večerje, okrogle mize ali delavnice za nekaj deset ljudi."><span>Intimate events</span></li>
+            <li class="d r tt" style="--x:61.1;--y:17.4" tabindex="0" data-name="Founder brand" data-tip="Osebna blagovna znamka ustanovitelja: objave, nastopi in mnenja, s katerimi gradi zaupanje in pritegne kupce. Par B: v 2026 je najbližji kanal LinkedIn posting (naš sklep)."><span>Founder brand<b class="pr">B</b></span></li>
+            <li class="d l tt" style="--x:80.2;--y:26.4" tabindex="0" data-name="Warm outbound" data-tip="Osebno pisanje ljudem, ki so z vami že bili v stiku ali vas poznajo. Definicija iz poročila 2025. Par A: v 2026 je najbližji kanal Network &amp; intros (naš sklep)."><span>Warm<br class="m"> outbound<b class="pr">A</b></span></li>
+            <li class="d l tt down" style="--x:78.8;--y:33.0" tabindex="0" data-name="Large conferences" data-tip="Velike konference in sejmi: razstavni prostor, sponzorstvo ali predavanje pred stotinami ali tisoči obiskovalcev."><span>Large conferences</span></li>
+            <li class="d te tt" style="--x:96.7;--y:37.8" tabindex="0" data-name="LinkedIn" data-tip="LinkedIn v širšem pomenu: objave, iskanje in raziskovanje kupcev, InMaili in oglasi."><span>LinkedIn</span></li>
+            <li class="d r n-l tt" style="--x:87.0;--y:39.6" tabindex="0" data-name="SEO" data-tip="Optimizacija spletne strani in vsebin, da vas kupci najdejo v Googlovih rezultatih iskanja."><span>SEO</span></li>
+            <li class="d r tt" style="--x:54.3;--y:43.7" tabindex="0" data-name="Intent-based outbound" data-tip="Pisanje podjetjem, ko signal pokaže zanimanje za nakup, npr. nova investicija, zaposlovanje ali menjava orodij. Definicija iz poročila 2025."><span>Intent-based<br> outbound</span></li>
+            <li class="d l down" style="--x:36.0;--y:25.3" tabindex="0" data-name="Big product launches" data-tip="Velike napovedi novih produktov ali funkcij s kampanjo okoli njih, npr. Product Hunt, launch week, PR in e-pošta."><span>Big product<br> launches</span></li>
+            <li class="d l" style="--x:42.6;--y:40.7" tabindex="0" data-name="Ecosystem marketing" data-tip="Skupni marketing s podjetji, ki imajo dopolnilne produkte ali iste stranke, npr. agencije, preprodajalci in drugi ponudniki programske opreme. Definicija iz poročila 2025."><span>Ecosystem<br> marketing</span></li>
+            <li class="d r" style="--x:19.5;--y:56.0" tabindex="0" data-name="B2B influencers" data-tip="Sodelovanje z vplivneži in avtorji, ki jim sledi vaša ciljna skupina, npr. sponzorirane objave."><span>B2B<br> influencers</span></li>
+            <li class="d be up" style="--x:45.4;--y:59.1" tabindex="0" data-name="AI search" data-tip="Prisotnost v odgovorih AI orodij, kot so ChatGPT, Claude, Perplexity in Googlovi AI povzetki (AEO, answer engine optimization)."><span>AI search</span></li>
+            <li class="d ts gone" style="--x:2.4;--y:72.5" tabindex="0" data-name="TikTok" data-tip="Kratki videi na TikToku, namenjeni poslovnemu občinstvu."><span>TikTok</span></li>
+            <li class="d bs gone" style="--x:7.3;--y:75.2" tabindex="0" data-name="Instagram" data-tip="Objave, reels in zgodbe na Instagramu, namenjene poslovnemu občinstvu."><span>Instagram</span></li>
+            <li class="d r" style="--x:16.9;--y:75.4" tabindex="0" data-name="AI SDR" data-tip="AI agent, ki namesto človeškega SDR-ja sam išče potencialne kupce, jim piše, odgovarja in dogovarja sestanke."><span>AI SDR</span></li>
+            <li class="d r gone" style="--x:5.8;--y:88.8" tabindex="0" data-name="Reddit" data-tip="Sodelovanje v Reddit skupnostih, kjer se kupci pogovarjajo o problemih in orodjih, ter oglasi na Redditu."><span>Reddit</span></li>
+            <li class="d r gone" style="--x:21.7;--y:85.8" tabindex="0" data-name="Podcast" data-tip="Lasten B2B podcast ali gostovanje v podcastih, ki jih poslušajo vaši kupci."><span>Podcast</span></li>
+            <li class="d r" style="--x:21.7;--y:94.0" tabindex="0" data-name="PR" data-tip="Odnosi z mediji: članki, intervjuji in sporočila za javnost."><span>PR</span></li>
+            <li class="d r" style="--x:75.8;--y:62.9" tabindex="0" data-name="Paid ads" data-tip="Plačani digitalni oglasi, npr. Google, LinkedIn in Meta."><span>Paid ads</span></li>
           </ul>
         </div>
         <div class="xlab">Priljubljenost v B2B tech →</div>
@@ -253,7 +270,7 @@
     </figure>
 
     <figure>
-      <figcaption><b>2026</b><span>N=300 · oktober 2026</span><div class="miss">Ni bilo v anketi: <em><i class="gone"></i>Podcast</em><em><i class="gone"></i>TikTok</em><em><i class="gone"></i>Instagram</em><em><i class="gone"></i>Reddit</em></div></figcaption>
+      <figcaption><b>2026</b><span>N=300 · oktober 2026</span><div class="miss">Ni bilo v anketi: <em tabindex="0" data-name="Podcast" data-tip="Lasten B2B podcast ali gostovanje v podcastih, ki jih poslušajo vaši kupci. Anketa 2026 tega kanala ni več merila, lani je bil."><i class="gone"></i>Podcast</em><em tabindex="0" data-name="TikTok" data-tip="Kratki videi na TikToku, namenjeni poslovnemu občinstvu. Anketa 2026 tega kanala ni več merila, lani je bil."><i class="gone"></i>TikTok</em><em tabindex="0" data-name="Instagram" data-tip="Objave, reels in zgodbe na Instagramu, namenjene poslovnemu občinstvu. Anketa 2026 tega kanala ni več merila, lani je bil."><i class="gone"></i>Instagram</em><em tabindex="0" data-name="Reddit" data-tip="Sodelovanje v Reddit skupnostih, kjer se kupci pogovarjajo o problemih in orodjih, ter oglasi na Redditu. Anketa 2026 tega kanala ni več merila, lani je bil."><i class="gone"></i>Reddit</em></div></figcaption>
       <div class="frame">
         <div class="ylab">Verjetnost velikega vpliva →</div>
         <div class="plot">
@@ -262,22 +279,22 @@
           <div class="q q3"><span class="qn">Figuring it out</span></div>
           <div class="q q4"><span class="qn">Over-saturated</span></div>
           <ul class="dots">
-            <li class="d l n-te tt" style="--x:97.0;--y:12.4" title="Najbližji kanal 2025: Warm outbound (48 % jedrni). Naš sklep, ne trditev avtorjev."><span>Network<br class="a"> &amp; intros<b class="pr">A</b></span></li>
-            <li class="d r tt" style="--x:61.9;--y:14.3"><span>Intimate<br> events</span></li>
-            <li class="d r tt up" style="--x:59.4;--y:27.5"><span>AI search (AEO)</span></li>
-            <li class="d r tt down" style="--x:50.9;--y:47.1"><span>Large<br> conferences</span></li>
-            <li class="d te tt" style="--x:81.9;--y:43.2" title="Najbližja kanala 2025: Founder brand (37 % jedrni) in LinkedIn (66 %, širše). Naš sklep."><span>LinkedIn<br> posting<b class="pr">B</b></span></li>
-            <li class="d r tt" style="--x:85.0;--y:41.9"><span>SEO</span></li>
-            <li class="d l" style="--x:48.1;--y:26.6"><span>Signal-based outbound</span></li>
-            <li class="d l" style="--x:40.3;--y:34.3"><span>Ecosystem partnerships</span></li>
-            <li class="d l down" style="--x:44.2;--y:53.7"><span>Product launch<br> campaigns</span></li>
-            <li class="d be new" style="--x:48.3;--y:55.8"><span>Newsletters</span></li>
-            <li class="d r new" style="--x:29.1;--y:69.6"><span>Cold calling</span></li>
-            <li class="d ts" style="--x:14.1;--y:72.9"><span>B2B<br> creators</span></li>
-            <li class="d ts" style="--x:2.4;--y:88.6"><span>Agentic campaigns<br> (AI SDR)</span></li>
-            <li class="d r" style="--x:18.3;--y:92.8"><span>PR</span></li>
-            <li class="d r" style="--x:57.8;--y:57.8"><span>Digital ads</span></li>
-            <li class="d r new" style="--x:66.6;--y:64.7"><span>Cold outreach</span></li>
+            <li class="d l n-te tt" style="--x:97.0;--y:12.4" tabindex="0" data-name="Network &amp; intros" data-tip="Lastna mreža poznanstev: do kupcev pridete prek predstavitev in priporočil znancev, strank in partnerjev. Par A: v 2025 je najbližji kanal Warm outbound, 48 % jedrni (naš sklep)."><span>Network<br class="a"> &amp; intros<b class="pr">A</b></span></li>
+            <li class="d r tt" style="--x:61.9;--y:14.3" tabindex="0" data-name="Intimate events" data-tip="Majhni dogodki v živo za ozek krog kupcev, npr. večerje, okrogle mize ali delavnice za nekaj deset ljudi."><span>Intimate<br> events</span></li>
+            <li class="d r tt up" style="--x:59.4;--y:27.5" tabindex="0" data-name="AI search (AEO)" data-tip="Prisotnost v odgovorih AI orodij, kot so ChatGPT, Claude, Perplexity in Googlovi AI povzetki (AEO, answer engine optimization)."><span>AI search (AEO)</span></li>
+            <li class="d r tt down" style="--x:50.9;--y:47.1" tabindex="0" data-name="Large conferences" data-tip="Velike konference in sejmi: razstavni prostor, sponzorstvo ali predavanje pred stotinami ali tisoči obiskovalcev."><span>Large<br> conferences</span></li>
+            <li class="d te tt" style="--x:81.9;--y:43.2" tabindex="0" data-name="LinkedIn posting" data-tip="Objave na LinkedInu, ki jih ustanovitelji in zaposleni pišejo na svojih profilih. Ožje od lanskega kanala LinkedIn. Par B: v 2025 sta najbližja Founder brand (37 % jedrni) in širši LinkedIn (66 %) (naš sklep)."><span>LinkedIn<br> posting<b class="pr">B</b></span></li>
+            <li class="d r tt" style="--x:85.0;--y:41.9" tabindex="0" data-name="SEO" data-tip="Optimizacija spletne strani in vsebin, da vas kupci najdejo v Googlovih rezultatih iskanja."><span>SEO</span></li>
+            <li class="d l" style="--x:48.1;--y:26.6" tabindex="0" data-name="Signal-based outbound" data-tip="Pisanje ali klicanje podjetij, ko signali kažejo pripravljenost na nakup, npr. obisk spletne strani, menjava službe ali investicija. Lani Intent-based outbound."><span>Signal-based outbound</span></li>
+            <li class="d l" style="--x:40.3;--y:34.3" tabindex="0" data-name="Ecosystem partnerships" data-tip="Skupni marketing in prodaja s podjetji, ki imajo dopolnilne produkte ali iste stranke. Lani Ecosystem marketing."><span>Ecosystem partnerships</span></li>
+            <li class="d l down" style="--x:44.2;--y:53.7" tabindex="0" data-name="Product launch campaigns" data-tip="Kampanje ob lansiranju produkta ali funkcije, npr. Product Hunt, launch week, e-pošta in PR. Lani Big product launches."><span>Product launch<br> campaigns</span></li>
+            <li class="d be new" style="--x:48.3;--y:55.8" tabindex="0" data-name="Newsletters" data-tip="Lastni e-novičniki in uredniške vsebine, ki jih bralci redno prejemajo (v poročilu &quot;Newsletters and editorial&quot;)."><span>Newsletters</span></li>
+            <li class="d r new" style="--x:29.1;--y:69.6" tabindex="0" data-name="Cold calling" data-tip="Telefonski klici ljudem, ki vas ne poznajo in klica niso pričakovali."><span>Cold calling</span></li>
+            <li class="d ts" style="--x:14.1;--y:72.9" tabindex="0" data-name="B2B creators" data-tip="Sodelovanje z ustvarjalci vsebin, ki jim sledi vaša ciljna skupina, npr. sponzorirane objave, novičniki ali videi. Lani B2B influencers."><span>B2B<br> creators</span></li>
+            <li class="d ts" style="--x:2.4;--y:88.6" tabindex="0" data-name="Agentic campaigns (AI SDR)" data-tip="Kampanje, ki jih vodijo AI agenti: sami izberejo kontakte, napišejo in pošljejo sporočila ter odgovarjajo. Lani AI SDR."><span>Agentic campaigns<br> (AI SDR)</span></li>
+            <li class="d r" style="--x:18.3;--y:92.8" tabindex="0" data-name="PR" data-tip="Odnosi z mediji: članki, intervjuji in sporočila za javnost."><span>PR</span></li>
+            <li class="d r" style="--x:57.8;--y:57.8" tabindex="0" data-name="Digital ads" data-tip="Plačani digitalni oglasi, npr. Google, LinkedIn, Meta in Reddit. Lani Paid ads."><span>Digital ads</span></li>
+            <li class="d r new" style="--x:66.6;--y:64.7" tabindex="0" data-name="Cold outreach" data-tip="Hladna e-pošta in sporočila ljudem, ki vas ne poznajo, brez predhodnega stika ali signala."><span>Cold outreach</span></li>
           </ul>
         </div>
         <div class="xlab">Priljubljenost v B2B tech →</div>
@@ -320,5 +337,49 @@
   </p>
 
 </div>
+<script>
+(() => {
+  // en tooltip za vse kanale: miska, tipkovnica in dotik
+  const tip = document.createElement('div');
+  tip.className = 'tip'; tip.id = 'tip'; tip.setAttribute('role', 'tooltip');
+  document.body.appendChild(tip);
+  let cur = null;
+  const NOTE = /(Par [AB]:.*|Anketa 20\d\d .*)$/;
+  function show(el) {
+    cur = el;
+    const txt = el.dataset.tip, m = txt.match(NOTE);
+    const b = document.createElement('b'); b.textContent = el.dataset.name;
+    const d = document.createElement('span'); d.textContent = m ? txt.slice(0, m.index).trim() : txt;
+    tip.replaceChildren(b, d);
+    if (m) { const n = document.createElement('span'); n.textContent = m[1]; tip.append(n); }
+    el.setAttribute('aria-describedby', 'tip');
+    const isDot = el.classList.contains('d');
+    const r = el.getBoundingClientRect();
+    const ax = isDot ? r.left : r.left + r.width / 2;
+    tip.style.left = '0px'; tip.style.top = '0px'; tip.classList.add('on');
+    const w = tip.offsetWidth, h = tip.offsetHeight, gap = 12;
+    const x = Math.min(Math.max(8, ax - w / 2), window.innerWidth - w - 8);
+    let y = isDot ? r.top - h - gap : r.bottom + 8;
+    if (y < 8) y = r.bottom + gap;
+    if (y + h > window.innerHeight - 8) y = Math.max(8, r.top - h - gap);
+    tip.style.left = x + 'px'; tip.style.top = y + 'px';
+  }
+  function hide(el) {
+    if (el && el !== cur) return;
+    tip.classList.remove('on');
+    if (cur) cur.removeAttribute('aria-describedby');
+    cur = null;
+  }
+  document.querySelectorAll('[data-tip]').forEach(el => {
+    el.addEventListener('pointerenter', e => { if (e.pointerType !== 'touch') show(el); });
+    el.addEventListener('pointerleave', e => { if (e.pointerType !== 'touch' && document.activeElement !== el) hide(el); });
+    el.addEventListener('focus', () => show(el));
+    el.addEventListener('blur', () => hide(el));
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && cur) { cur.blur(); hide(); } });
+  window.addEventListener('scroll', () => hide(), { passive: true });
+  window.addEventListener('resize', () => hide());
+})();
+</script>
 </body>
 </html>
