@@ -523,10 +523,10 @@
 <style>
   /* ---------- razdelek 0: kapacitete kanalov na dan in izracun kampanj (22. 10. 2026, preurejeno 1. 11. 2026) ---------- */
   .kap0 { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 0.75rem; margin: 14px 0 6px;
-    grid-template-areas: "hh hh xx xx ss ss" "he hl i1 i2 se sl" "he hl r1 r2 se sl" ". . go go . ."; }
+    grid-template-areas: "hh hh hh ss ss ss" "he hl hm sm se sl" "hd hc hk sk sd sc" ". . go go . ."; }
   .kap0 > .gh { font-size: 0.78rem; color: var(--ink-3); align-self: end; line-height: 1.35; }
   .kap0 > .gh b { display: block; font-size: 1.15rem; color: var(--ink); }
-  .kap0 > .gh.c { text-align: center; } .kap0 > .gh.r { text-align: right; }
+  .kap0 > .gh.r { text-align: right; }
   .kapc { background: var(--surface); border: 2px solid var(--line); border-radius: var(--r-lg); padding: 0.875rem 1rem; min-width: 0; }
   .kapc.g { border-color: var(--n-green); }
   .kapc .v { font-weight: 700; font-size: 2.2rem; line-height: 1.1; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; color: var(--ink); white-space: nowrap; overflow: hidden; }
@@ -536,23 +536,34 @@
   .kapc .have { font-size: 0.74rem; color: var(--ink-3); margin-top: 6px; line-height: 1.45; }
   .kapc .use { font-size: 0.74rem; color: var(--ink-2); margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--line-2); line-height: 1.45; }
   .kapc .use b { color: var(--good-fg); font-variant-numeric: tabular-nums; } .kapc .use b.over { color: var(--bad-fg); }
-  .kapc.half { padding: 0.7rem 0.875rem; display: flex; flex-direction: column; justify-content: center; }
   .kapc .k { font-size: 0.68rem; font-weight: 700; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
-  .kapc.half input[type=number] { font-size: 1.5rem; font-weight: 700; min-height: 44px; padding: 4px 10px; }
-  .kapc.half .have { margin-top: 5px; }
-  .kapc.res { border-color: var(--accent); background: var(--accent-soft); }
-  .kapc .pair { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 6px; }
-  .kapc .pair .n { font-weight: 700; font-size: 1.35rem; line-height: 1.15; font-variant-numeric: tabular-nums; color: var(--ink); white-space: nowrap; overflow: hidden; }
-  .kapc .pair small { display: block; font-size: 0.64rem; font-weight: 700; color: var(--ink-3); letter-spacing: 0.05em; text-transform: uppercase; margin-top: 2px; }
-  .kapc .pair > div:last-child { text-align: right; }
+  .kapc.res { border-color: var(--accent); background: var(--accent-soft); align-self: start; }
+  .kapc.inp { border: 2px dashed var(--line); padding: 0.7rem 0.75rem; }
+  .kap0 input[type=text] { width: 100%; min-width: 0; min-height: 30px; font: inherit; font-size: 0.8rem; padding: 3px 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface-2); color: var(--ink); }
+  .kap0 input[type=text]:focus { outline: none; border-color: var(--accent); }
+  .kap0 input[type=text]::placeholder { color: var(--ink-3); }
+  .kap0 .row { display: flex; gap: 4px; align-items: center; margin-top: 4px; }
+  .kap0 .x { flex: none; width: 24px; height: 24px; border: 0; border-radius: 6px; background: transparent; color: var(--ink-3); cursor: pointer; font: inherit; font-size: 1rem; line-height: 1; padding: 0; }
+  .kap0 .x:hover { background: var(--bad-bg); color: var(--bad-fg); }
+  .kap0 .add { margin-top: 6px; border: 1px dashed var(--line); background: transparent; color: var(--accent); border-radius: 6px; padding: 3px 8px; font: inherit; font-size: 0.74rem; font-weight: 700; cursor: pointer; }
+  .kap0 .add:hover { border-color: var(--accent); }
+  .kap0 .grp { margin-top: 8px; }
+  .kap0 .grp .gn { font-size: 0.72rem; font-weight: 700; color: var(--ink); }
+  .kap0 .chips { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 3px; align-items: center; }
+  .kap0 .chip { display: inline-flex; align-items: center; max-width: 100%; background: var(--surface-2); border: 1px solid var(--line); border-radius: 6px; }
+  .kap0 .chip input[type=text] { border: 0; background: transparent; min-height: 24px; padding: 2px 2px 2px 6px; width: 7ch; max-width: 100%; }
+  .kap0 .chip .x { width: 18px; height: 22px; font-size: 0.9rem; }
+  .kap0 .chips .add { margin-top: 0; padding: 2px 7px; }
+  .kap0 .cnt { font-size: 0.7rem; color: var(--ink-3); margin-top: 8px; }
   .kap0 .go0 { grid-area: go; display: flex; flex-direction: column; align-items: center; gap: 8px; }
   .kap0 .go { min-width: 70%; background: var(--accent); color: #04102e; border: 0; border-radius: 10px; padding: 11px 22px; font: inherit; font-weight: 800; font-size: 1.05rem; cursor: pointer; }
   .kap0 .go:hover { filter: brightness(1.08); }
   .kap0 .chk { display: flex; gap: 8px; align-items: center; font-size: 0.78rem; color: var(--ink-2); cursor: pointer; }
   .kap0 .chk input[type=checkbox] { transform: none; width: 15px; height: 15px; margin: 0; }
+  .kap0 .reset { border: 0; background: transparent; color: var(--ink-3); font: inherit; font-size: 0.72rem; text-decoration: underline dotted; text-underline-offset: 3px; cursor: pointer; }
   @media (max-width: 1100px) {
-    .kap0 { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-areas: "hh hh" "he hl" "xx xx" "i1 i2" "r1 r2" "go go" "ss ss" "se sl"; }
-    .kap0 > .gh.c, .kap0 > .gh.r { text-align: left; margin-top: 8px; }
+    .kap0 { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-areas: "hh hh" "hm hk" "he hl" "hd hc" "ss ss" "sm sk" "se sl" "sd sc" "go go"; }
+    .kap0 > .gh.r { text-align: left; margin-top: 10px; }
   }
   details.cost0 { margin-top: 14px; }
   .cost0 .cl { display: grid; grid-template-columns: 1fr 104px 104px; gap: 8px 12px; align-items: center; margin-top: 10px; font-size: 0.85rem; }
@@ -568,7 +579,7 @@
   @media (max-width: 760px) { .nadg .s { grid-template-columns: 1fr; gap: 3px; } .nadg .s em { text-align: left; } }
 </style>
 <h2>0. Kapacitete kanalov na dan in izračun kampanj</h2>
-<p>Koliko emailov in LinkedIn povabil na dan zmoremo z računi, ki jih imamo v Instantlyju in HeyReachu (stanje 1. 11. 2026): levo hoteli, desno ladje. V sredini vneseš število trgov in tipov kampanj in klikneš Izračunaj. Na kartici je levo poraba na dan, desno vse, kar lahko pošljemo; leva številka je zelena, dokler ne presežemo kapacitete, nad njo rdeča.</p>
+<p>Koliko emailov in LinkedIn povabil na dan zmoremo z računi, ki jih imamo v Instantlyju in HeyReachu (stanje 1. 11. 2026): levo hoteli, desno ladje, vsak del se računa posebej. V sredini za vsak del vpišeš trge in k vsakemu trgu tipe kampanj, nato klikneš Izračunaj. Na kartici je levo poraba na dan, desno vse, kar lahko pošljemo; leva številka je zelena, dokler ne presežemo kapacitete, nad njo rdeča.</p>
 <div id="kap0" class="kap0"></div>
 <details class="cost0"><summary>Spremenljivke stroška pošiljanja (mesečno, uredi)</summary><div class="cl" id="o0_cost"></div></details>
 <p class="formula0" id="o0_formula"></p>
@@ -584,7 +595,7 @@
 (function () {
   // Zive kvote 1. 11. 2026: Instantly daily_limit 33 na nabiralnik (21 nabiralnikov), HeyReach connectionRequestLimit 25 na sedez
   // (Rok, Simon, Amadej), messageLimit 40. Matjazevega profila v HeyReachu ni; hoteli racunajo z njim (4. sedez).
-  const TRG = 300, S = 5, SPREJEM = 0.30, MSG_NA_SEDEZ = 40;
+  const TRG = 300, S = 5, SPREJEM = 0.30, MSG_NA_SEDEZ = 40, KLJUC = "gtm-kapacitete-tocka0-v3";
   const SEG = {
     hoteli: { ime: "Hoteli", email: 429, li: 50, sedezev: 2,
       haveE: "13 nabiralnikov × 33 · Amadej, Gregor, Matjaž, Nina po 3, Alex 1",
@@ -592,6 +603,11 @@
     ladje: { ime: "Ladje", email: 264, li: 50, sedezev: 2,
       haveE: "8 nabiralnikov × 33 · Rok 4, Simon 4",
       haveL: "Rok 25 + Simon 25, kvoti v HeyReachu" },
+  };
+  // Primeri, ki jih uporabnik na strani prepise, doda ali izbrise (shranjeno samo v tem brskalniku).
+  const PRIMERI = {
+    hoteli: ["Slovenija", "Hrvaška", "UAE", "ZDA"].map(ime => ({ ime, tipi: ["Scrape", "Index"] })),
+    ladje: ["Evropa", "ZDA", "Azija"].map(ime => ({ ime, tipi: ["Vsebine iz centrale", "Starlink TV kanali", "Onboard info & upsell"] })),
   };
   // Mesecni strosek po segmentu (iz razdelka 8, urejljivo): [kljuc, ime, opis, hoteli, ladje]
   const STR = [
@@ -607,37 +623,90 @@
   const q = (s) => document.querySelector(s);
   const n0 = (n) => String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   const eur = (n, d) => n.toLocaleString("de-DE", { minimumFractionDigits: d || 0, maximumFractionDigits: d || 0 }) + " €";
-  const tednov = (n) => { const m = n % 100; return m === 1 ? "teden" : m === 2 ? "tedna" : (m === 3 || m === 4) ? "tedne" : "tednov"; };
-  const tipF = (n) => { const m = n % 100; return m === 1 ? "tip" : m === 2 ? "tipa" : (m === 3 || m === 4) ? "tipi" : "tipov"; };
-  const cost = { hoteli: {}, ladje: {} };
-  STR.forEach(r => { cost.hoteli[r[0]] = r[3]; cost.ladje[r[0]] = r[4]; });
+  const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
+  const sklon = (n, f) => { const m = n % 100; return m === 1 ? f[0] : m === 2 ? f[1] : (m === 3 || m === 4) ? f[2] : f[3]; };
+  const tednov = (n) => sklon(n, ["teden", "tedna", "tedne", "tednov"]);
+  const trgov = (n) => sklon(n, ["trg", "trga", "trgi", "trgov"]);
+  const kampanj = (n) => sklon(n, ["kampanja", "kampanji", "kampanje", "kampanj"]);
+  const kopija = (o) => JSON.parse(JSON.stringify(o));
+
+  let st = { trgi: kopija(PRIMERI), cost: { hoteli: {}, ladje: {} } };
+  STR.forEach(r => { st.cost.hoteli[r[0]] = r[3]; st.cost.ladje[r[0]] = r[4]; });
+  try {
+    const s = JSON.parse(localStorage.getItem(KLJUC) || "null");
+    if (s && s.trgi && s.trgi.hoteli && s.trgi.ladje) st.trgi = s.trgi;
+    if (s && s.cost) ["hoteli", "ladje"].forEach(k => Object.assign(st.cost[k], s.cost[k] || {}));
+  } catch (e) { /* brez shrambe stran dela s primeri */ }
+  const shrani = () => { try { localStorage.setItem(KLJUC, JSON.stringify(st)); } catch (e) { /* ni shrambe */ } };
 
   const side = (k, kanal) => {
-    const s = SEG[k], e = kanal === "email";
-    return `<div class="kapc g" style="grid-area:${k === "hoteli" ? "h" : "s"}${e ? "e" : "l"}"><div class="v" id="o0_${k}_${kanal}"></div>` +
+    const s = SEG[k], e = kanal === "email", a = k === "hoteli" ? "h" : "s";
+    return `<div class="kapc g" style="grid-area:${a}${e ? "e" : "l"}"><div class="v" id="o0_${k}_${kanal}"></div>` +
       `<div class="l">${e ? "emailov na dan" : "LinkedIn cold povabil na dan"}</div><div class="have">${e ? s.haveE : s.haveL}</div><div class="use" id="o0_${k}_${kanal}_use"></div></div>`;
+  };
+  const res = (k) => {
+    const a = k === "hoteli" ? "h" : "s";
+    return `<div class="kapc res" style="grid-area:${a}d"><div class="k">Trajanje kampanj · ${SEG[k].ime.toLowerCase()}</div><div class="v" id="o0_t_${k}"></div><div class="have" id="o0_t_${k}_sub"></div></div>` +
+      `<div class="kapc res" style="grid-area:${a}c"><div class="k">Strošek pošiljanja · ${SEG[k].ime.toLowerCase()}</div><div class="v" id="o0_e_${k}"></div><div class="have" id="o0_e_${k}_sub"></div></div>`;
+  };
+  const vnos = (k) => {
+    const a = k === "hoteli" ? "h" : "s";
+    return `<div class="kapc inp" style="grid-area:${a}m"><div class="k">Trgi · ${SEG[k].ime.toLowerCase()}</div><div id="o0_${k}_trgi"></div></div>` +
+      `<div class="kapc inp" style="grid-area:${a}k"><div class="k">Tipi kampanj na trg · ${SEG[k].ime.toLowerCase()}</div><div id="o0_${k}_tipi"></div></div>`;
   };
   q("#kap0").innerHTML =
     `<div class="gh" style="grid-area:hh"><b>Hoteli</b>maili: Amadej, Gregor, Matjaž, Nina, Alex · LinkedIn: Matjaž in Amadej</div>` +
-    `<div class="gh c" style="grid-area:xx"><b>Izračun</b>trg = 100 Dream 100 + 200 ostalih = 300 kontaktov</div>` +
     `<div class="gh r" style="grid-area:ss"><b>Ladje</b>maili in LinkedIn: Rok in Simon</div>` +
-    side("hoteli", "email") + side("hoteli", "li") +
-    `<div class="kapc half" style="grid-area:i1"><div class="k">Število trgov</div><input type="number" id="i0_trgov" min="0" step="1" value="1" aria-label="Število trgov"><div class="have" id="o0_kontakti"></div></div>` +
-    `<div class="kapc half" style="grid-area:i2"><div class="k">Tipi kampanj na trg</div><input type="number" id="i0_tipi" min="1" step="1" value="1" aria-label="Tipi kampanj na trg"><div class="have">vsak tip je nova sekvenca 5 mailov istim kontaktom</div></div>` +
-    `<div class="kapc half res" style="grid-area:r1"><div class="k">Trajanje kampanj</div><div class="pair"><div><div class="n" id="o0_t_hoteli"></div><small id="o0_tl_hoteli">hoteli</small></div><div><div class="n" id="o0_t_ladje"></div><small id="o0_tl_ladje">ladje</small></div></div><div class="have" id="o0_t_sub"></div></div>` +
-    `<div class="kapc half res" style="grid-area:r2"><div class="k">Strošek pošiljanja</div><div class="pair"><div><div class="n" id="o0_e_hoteli"></div><small>hoteli</small></div><div><div class="n" id="o0_e_ladje"></div><small>ladje</small></div></div><div class="have" id="o0_e_sub"></div></div>` +
-    side("ladje", "email") + side("ladje", "li") +
-    `<div class="go0"><button type="button" class="go" id="b0_go">Izračunaj</button><label class="chk"><input type="checkbox" id="i0_kratke">Kratke sekvence: isti kanal vsaka 2 dni (sicer vsak 3.)</label></div>`;
+    side("hoteli", "email") + side("hoteli", "li") + vnos("hoteli") + res("hoteli") +
+    vnos("ladje") + side("ladje", "email") + side("ladje", "li") + res("ladje") +
+    `<div class="go0"><button type="button" class="go" id="b0_go">Izračunaj</button>` +
+    `<label class="chk"><input type="checkbox" id="i0_kratke">Kratke sekvence: isti kanal vsaka 2 dni (sicer vsak 3.)</label>` +
+    `<button type="button" class="reset" id="b0_reset">ponastavi trge in tipe na primere</button></div>`;
+
+  const sirina = (inp) => { inp.style.width = Math.max(6, inp.value.length + 2) + "ch"; };
+  function narisiVnos(k) {
+    const T = st.trgi[k];
+    const nKamp = T.reduce((a, m) => a + m.tipi.length, 0);
+    q(`#o0_${k}_trgi`).innerHTML = T.map((m, i) =>
+      `<div class="row"><input type="text" value="${esc(m.ime)}" placeholder="ime trga" data-act="trg-ime" data-seg="${k}" data-i="${i}" aria-label="Trg ${i + 1}"><button type="button" class="x" data-act="trg-x" data-seg="${k}" data-i="${i}" title="Odstrani trg" aria-label="Odstrani trg">×</button></div>`).join("") +
+      `<button type="button" class="add" data-act="trg-add" data-seg="${k}">+ trg</button>` +
+      `<div class="cnt">${T.length} ${trgov(T.length)} × ${TRG} = ${n0(T.length * TRG)} kontaktov</div>`;
+    q(`#o0_${k}_tipi`).innerHTML = T.map((m, i) =>
+      `<div class="grp"><div class="gn" data-gn="${i}">${esc(m.ime || "trg " + (i + 1))}</div><div class="chips">` +
+      m.tipi.map((t, j) => `<span class="chip"><input type="text" value="${esc(t)}" placeholder="tip" data-act="tip-ime" data-seg="${k}" data-i="${i}" data-j="${j}" aria-label="Tip kampanje"><button type="button" class="x" data-act="tip-x" data-seg="${k}" data-i="${i}" data-j="${j}" title="Odstrani tip" aria-label="Odstrani tip">×</button></span>`).join("") +
+      `<button type="button" class="add" data-act="tip-add" data-seg="${k}" data-i="${i}">+ tip</button></div></div>`).join("") +
+      `<div class="cnt">${nKamp} ${kampanj(nKamp)} skupaj</div>`;
+    document.querySelectorAll(`#o0_${k}_tipi .chip input`).forEach(sirina);
+  }
+
+  q("#kap0").addEventListener("input", (e) => {
+    const d = e.target.dataset; if (!d.act) return;
+    const T = st.trgi[d.seg];
+    if (d.act === "trg-ime") { T[+d.i].ime = e.target.value; const g = q(`#o0_${d.seg}_tipi [data-gn="${d.i}"]`); if (g) g.textContent = e.target.value || "trg " + (+d.i + 1); }
+    if (d.act === "tip-ime") { T[+d.i].tipi[+d.j] = e.target.value; sirina(e.target); }
+    shrani();
+  });
+  q("#kap0").addEventListener("click", (e) => {
+    const b = e.target.closest("[data-act]"); if (!b || b.tagName === "INPUT") return;
+    const d = b.dataset, T = st.trgi[d.seg]; let fokus = null;
+    if (d.act === "trg-add") { T.push({ ime: "", tipi: [""] }); fokus = `#o0_${d.seg}_trgi .row input`; }
+    if (d.act === "trg-x") T.splice(+d.i, 1);
+    if (d.act === "tip-add") { T[+d.i].tipi.push(""); fokus = `#o0_${d.seg}_tipi .grp:nth-of-type(${+d.i + 1}) .chip input`; }
+    if (d.act === "tip-x") T[+d.i].tipi.splice(+d.j, 1);
+    shrani(); narisiVnos(d.seg);
+    if (fokus) { const vsi = document.querySelectorAll(fokus); if (vsi.length) vsi[vsi.length - 1].focus(); }
+  });
+  q("#b0_reset").addEventListener("click", () => { st.trgi = kopija(PRIMERI); shrani(); narisiVnos("hoteli"); narisiVnos("ladje"); izracun(); });
 
   q("#o0_cost").innerHTML = `<span></span><span class="hd">Hoteli</span><span class="hd">Ladje</span>` + STR.map(r =>
-    `<span>${r[1]}<small>${r[2]}</small></span>` + ["hoteli", "ladje"].map(k => `<input type="number" min="0" step="0.01" data-seg="${k}" data-cost="${r[0]}" value="${cost[k][r[0]].toFixed(2)}" aria-label="${r[1]}, ${SEG[k].ime}">`).join("")).join("");
-  q("#o0_cost").querySelectorAll("[data-cost]").forEach(inp => inp.addEventListener("change", () => { cost[inp.dataset.seg][inp.dataset.cost] = Math.max(0, parseFloat(inp.value) || 0); izracun(); }));
+    `<span>${r[1]}<small>${r[2]}</small></span>` + ["hoteli", "ladje"].map(k => `<input type="number" min="0" step="0.01" data-cseg="${k}" data-cost="${r[0]}" value="${(+st.cost[k][r[0]] || 0).toFixed(2)}" aria-label="${r[1]}, ${SEG[k].ime}">`).join("")).join("");
+  q("#o0_cost").querySelectorAll("[data-cost]").forEach(inp => inp.addEventListener("change", () => { st.cost[inp.dataset.cseg][inp.dataset.cost] = Math.max(0, parseFloat(inp.value) || 0); shrani(); izracun(); }));
 
-  q("#o0_formula").textContent = `Kako se računa: vsak tip kampanje je sekvenca s ${S} maili istim kontaktom, vsak 3. delovni dan (pri kratkih sekvencah vsak 2.), torej v oknu 13 delovnih dni (pri kratkih 9). ` +
-    `Poraba mailov na dan = trgi × ${TRG} × tipi × ${S} / okno; predpostavka je, da vsi trgi in tipi tečejo hkrati. ` +
-    `LinkedIn povabilo dobi vsak kontakt samo enkrat, ponovnih povabil ni, zato je poraba povabil = trgi × ${TRG} / okno ne glede na tipe; tipi dodajo sporočila tistim, ki povabilo sprejmejo (predpostavka ${Math.round(SPREJEM * 100)} %), največ ${MSG_NA_SEDEZ} na sedež na dan. ` +
+  q("#o0_formula").textContent = `Kako se računa: trg je ${TRG} kontaktov (100 Dream 100 + 200 ostalih). Vsak tip kampanje na trgu je sekvenca s ${S} maili istim ${TRG} kontaktom, vsak 3. delovni dan (pri kratkih sekvencah vsak 2.), torej v oknu 13 delovnih dni (pri kratkih 9). ` +
+    `Poraba mailov na dan = vse kampanje (tipi čez vse trge) × ${TRG} × ${S} / okno; predpostavka je, da vse kampanje tečejo hkrati. ` +
+    `LinkedIn povabilo dobi vsak kontakt samo enkrat, ponovnih povabil ni, zato je poraba povabil = trgi z vsaj enim tipom × ${TRG} / okno; vsak dodatni tip na trgu doda sporočila tistim, ki povabilo sprejmejo (predpostavka ${Math.round(SPREJEM * 100)} %), največ ${MSG_NA_SEDEZ} na sedež na dan. ` +
     `Če poraba preseže kapaciteto, se kampanje raztegnejo: trajanje = okno × največje razmerje poraba / kapaciteta, tedni so zaokroženi navzgor. ` +
-    `Strošek = mesečne postavke segmenta × trajanje v mesecih (delovni dnevi / 5 / 4,33).`;
+    `Strošek = mesečne postavke dela × trajanje v mesecih (delovni dnevi / 5 / 4,33). Hoteli in ladje se računajo ločeno; trgi, tipi in stroški se shranijo v tem brskalniku.`;
 
   // velika stevilka ohrani velikost, dokler gre v kartico; sele ko ne gre, se zmanjsa
   function fit(el) {
@@ -645,44 +714,39 @@
     let fs = parseFloat(getComputedStyle(el).fontSize);
     while (el.scrollWidth > el.clientWidth + 1 && fs > 13) { fs -= 1; el.style.fontSize = fs + "px"; }
   }
+  const fitVse = () => document.querySelectorAll("#kap0 .v").forEach(fit);
   const split = (u, cap) => `<span class="u${Math.round(u) > cap ? " over" : ""}">${n0(u)}</span><span class="sl">/</span>${n0(cap)}`;
 
   function izracun() {
-    const trgov = Math.max(0, Math.round(+q("#i0_trgov").value || 0));
-    const tipov = Math.max(1, Math.round(+q("#i0_tipi").value || 1));
     const razmik = q("#i0_kratke").checked ? 2 : 3;
     const okno = (S - 1) * razmik + 1;
-    const kontakti = trgov * TRG;
-    const mailov = kontakti * tipov * S / okno;
-    const povabil = kontakti / okno;
-    const sporocil = kontakti * SPREJEM * ((S - 1) + S * (tipov - 1)) / okno;
-    q("#o0_kontakti").textContent = `${trgov} × ${TRG} = ${n0(kontakti)} kontaktov`;
-    const dniSeg = [], grla = [], stroski = {};
     ["hoteli", "ladje"].forEach(k => {
       const s = SEG[k], capM = MSG_NA_SEDEZ * s.sedezev;
+      const aktivni = st.trgi[k].filter(m => m.tipi.length);
+      const nKamp = aktivni.reduce((a, m) => a + m.tipi.length, 0);
+      const kontakti = aktivni.length * TRG;
+      const mailov = nKamp * TRG * S / okno;
+      const povabil = kontakti / okno;
+      const sporocil = aktivni.reduce((a, m) => a + TRG * SPREJEM * ((S - 1) + S * (m.tipi.length - 1)), 0) / okno;
       q(`#o0_${k}_email`).innerHTML = split(mailov, s.email);
       q(`#o0_${k}_li`).innerHTML = split(povabil, s.li);
-      q(`#o0_${k}_email_use`).innerHTML = `poraba: ${n0(kontakti)} kontaktov × ${tipov} ${tipF(tipov)} × ${S} mailov v ${okno} delovnih dneh`;
-      q(`#o0_${k}_li_use`).innerHTML = `sporočila sprejetim: <b class="${Math.round(sporocil) > capM ? "over" : ""}">${n0(sporocil)}</b> / ${capM} na dan`;
-      const r = { email: mailov / s.email, LinkedIn: povabil / s.li, "LinkedIn sporočila": sporocil / capM };
+      q(`#o0_${k}_email_use`).textContent = `poraba: ${nKamp} ${kampanj(nKamp)} × ${TRG} kontaktov × ${S} mailov v ${okno} delovnih dneh`;
+      q(`#o0_${k}_li_use`).innerHTML = `povabila za ${aktivni.length} ${trgov(aktivni.length)} × ${TRG}; sporočila sprejetim: <b class="${Math.round(sporocil) > capM ? "over" : ""}">${n0(sporocil)}</b> / ${capM} na dan`;
+      const r = { email: mailov / s.email, "LinkedIn povabila": povabil / s.li, "LinkedIn sporočila": sporocil / capM };
       const grlo = Object.keys(r).reduce((a, b) => (r[b] > r[a] ? b : a));
-      const dni = Math.ceil(okno * Math.max(1, r[grlo])), T = Math.ceil(dni / 5);
-      q(`#o0_t_${k}`).textContent = T;
-      q(`#o0_tl_${k}`).textContent = `${tednov(T)} · ${s.ime.toLowerCase()}`;
-      dniSeg.push(dni); grla.push(r[grlo] > 1 ? grlo : "brez");
-      const mesecno = STR.reduce((a, x) => a + (cost[k][x[0]] || 0), 0);
-      stroski[k] = mesecno * dni / 5 / 4.33;
-      q(`#o0_e_${k}`).textContent = eur(stroski[k]);
+      const dni = nKamp ? Math.ceil(okno * Math.max(1, r[grlo])) : 0, T = Math.ceil(dni / 5);
+      q(`#o0_t_${k}`).textContent = `${T} ${tednov(T)}`;
+      q(`#o0_t_${k}_sub`).textContent = !nKamp ? "dodaj vsaj en trg s tipom" : `${dni} delovnih dni · ` + (r[grlo] > 1 ? `ozko grlo: ${grlo}` : "vse v enem oknu");
+      const mesecno = STR.reduce((a, x) => a + (+st.cost[k][x[0]] || 0), 0), meseci = dni / 5 / 4.33, strosek = mesecno * meseci;
+      q(`#o0_e_${k}`).textContent = eur(strosek);
+      q(`#o0_e_${k}_sub`).textContent = `${eur(mesecno, 2)} na mesec × ${meseci.toLocaleString("de-DE", { maximumFractionDigits: 1 })} mes.` + (kontakti ? ` · ${eur(strosek / kontakti, 2)} na kontakt` : "");
     });
-    q("#o0_t_sub").textContent = `delovnih dni: ${dniSeg.join(" / ")}` + (grla.some(g => g !== "brez") ? ` · ozko grlo: ${grla.join(" / ")}` : " · vse v enem oknu");
-    const skupaj = stroski.hoteli + stroski.ladje;
-    q("#o0_e_sub").textContent = `skupaj ${eur(skupaj)}` + (kontakti ? ` · ${eur(skupaj / (2 * kontakti), 2)} na kontakt` : "");
-    document.querySelectorAll("#kap0 .v, #kap0 .pair .n").forEach(fit);
+    fitVse();
   }
 
+  narisiVnos("hoteli"); narisiVnos("ladje");
   q("#b0_go").addEventListener("click", izracun);
-  ["#i0_trgov", "#i0_tipi"].forEach(id => q(id).addEventListener("keydown", e => { if (e.key === "Enter") izracun(); }));
-  window.addEventListener("resize", () => document.querySelectorAll("#kap0 .v, #kap0 .pair .n").forEach(fit));
+  window.addEventListener("resize", fitVse);
   izracun();
 })();
 </script>
