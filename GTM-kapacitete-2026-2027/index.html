@@ -527,6 +527,17 @@
   .kap0 > .gh { font-size: 0.78rem; color: var(--ink-3); align-self: end; line-height: 1.35; }
   .kap0 > .gh b { display: block; font-size: 1.15rem; color: var(--ink); }
   .kap0 > .gh.r { text-align: right; }
+  .kap0 > .gh .prow { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; margin-top: 5px; }
+  .kap0 > .gh.r .prow { justify-content: flex-end; }
+  .kap0 > .gh .pl { display: inline-flex; align-items: center; gap: 4px; font-size: 0.7rem; color: var(--ink-3); margin-right: 2px; }
+  .kap0 > .gh .pl svg { width: 13px; height: 13px; display: block; }
+  .kap0 .pchip { display: inline-flex; align-items: center; gap: 4px; font-size: 0.75rem; color: var(--ink); background: var(--surface-2); border: 1.5px solid var(--line); border-radius: 999px; padding: 1px 2px 1px 9px; }
+  .kap0 .pchip.mail { border-color: #A9DFFF; } .kap0 .pchip.li { border-color: #0A66C2; }
+  .kap0 .pchip i { font-style: normal; color: var(--ink-3); font-size: 0.68rem; }
+  .kap0 .pchip .x { width: 18px; height: 18px; font-size: 0.85rem; border-radius: 999px; }
+  .kap0 select.padd { width: auto; max-width: 92px; min-height: 24px; padding: 1px 8px; font-size: 0.72rem; font-weight: 700; color: var(--accent); background: transparent; border: 1px dashed var(--line); border-radius: 999px; cursor: pointer; }
+  .kap0 select.padd option { color: var(--ink); background: var(--surface); }
+  .kap0 .pnone { font-size: 0.72rem; color: var(--bad-fg); }
   .kapc { background: var(--surface); border: 2px solid var(--line); border-radius: var(--r-lg); padding: 0.875rem 0.8rem; min-width: 0; }
   .kapc.g { border-color: var(--n-green); }
   .kapc .v { font-weight: 700; font-size: 2.2rem; line-height: 1.1; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; color: var(--ink); white-space: nowrap; overflow: hidden; }
@@ -571,7 +582,7 @@
   .kap0 .reset { border: 0; background: transparent; color: var(--ink-3); font: inherit; font-size: 0.72rem; text-decoration: underline dotted; text-underline-offset: 3px; cursor: pointer; }
   @media (max-width: 1100px) {
     .kap0 { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-areas: "hh hh" "hm hm" "hk hk" "he hl" "hd hc" "ss ss" "sm sm" "sk sk" "se sl" "sd sc" "go go"; }
-    .kap0 > .gh.r { text-align: left; margin-top: 10px; }
+    .kap0 > .gh.r { text-align: left; margin-top: 10px; } .kap0 > .gh.r .prow { justify-content: flex-start; }
   }
   details.cost0 { margin-top: 14px; }
   .cost0 .cl { display: grid; grid-template-columns: 1fr 104px 104px; gap: 8px 12px; align-items: center; margin-top: 10px; font-size: 0.85rem; }
@@ -587,9 +598,9 @@
   @media (max-width: 760px) { .nadg .s { grid-template-columns: 1fr; gap: 3px; } .nadg .s em { text-align: left; } }
 </style>
 <h2>0. Kapacitete kanalov na dan in izračun kampanj</h2>
-<p>Koliko emailov in LinkedIn povabil na dan zmoremo z računi, ki jih imamo v Instantlyju in HeyReachu (stanje 1. 11. 2026): levo hoteli, desno ladje, vsak del se računa posebej. V sredini za vsak del vpišeš trge, pri vsakem trgu število kontaktov za email (Instantly) in za LinkedIn (HeyReach), k vsakemu trgu tipe kampanj, nato klikneš Izračunaj. Na kartici je levo poraba na dan, desno vse, kar lahko pošljemo; leva številka je zelena, dokler ne presežemo kapacitete, nad njo rdeča.</p>
+<p>Koliko emailov in LinkedIn povabil na dan zmoremo z računi, ki jih imamo v Instantlyju in HeyReachu (stanje 1. 11. 2026): levo hoteli, desno ladje, vsak del se računa posebej. V glavi vsakega dela dodajaš ali odstranjuješ pošiljatelje, ponujeni so samo računi, ki jih imamo v Instantlyju in HeyReachu. V sredini za vsak del vpišeš trge, pri vsakem trgu število kontaktov za email (Instantly) in za LinkedIn (HeyReach), k vsakemu trgu tipe kampanj, nato klikneš Izračunaj. Na kartici je levo poraba na dan, desno vse, kar lahko pošljemo; leva številka je zelena, dokler ne presežemo kapacitete, nad njo rdeča.</p>
 <div id="kap0" class="kap0"></div>
-<details class="cost0"><summary>Spremenljivke stroška pošiljanja (mesečno, uredi)</summary><div class="cl" id="o0_cost"></div></details>
+<details class="cost0"><summary>Spremenljivke stroška pošiljanja (mesečno, uredi; HeyReach, Instantly, Google računi, domene in Sales Navigator se ob spremembi pošiljateljev preračunajo)</summary><div class="cl" id="o0_cost"></div></details>
 <p class="formula0" id="o0_formula"></p>
 <h3 style="margin:28px 0 4px">Nadgradnje cold outreach kampanj v prihodnosti</h3>
 <p class="small muted" style="margin:0">Kanali, ki zdaj niso del izračuna in jih lahko dodamo kasneje.</p>
@@ -601,17 +612,16 @@
 </div>
 <script>
 (function () {
-  // Zive kvote 1. 11. 2026: Instantly daily_limit 33 na nabiralnik (21 nabiralnikov), HeyReach connectionRequestLimit 25 na sedez
-  // (Rok, Simon, Amadej), messageLimit 40. Matjazevega profila v HeyReachu ni; hoteli racunajo z njim (4. sedez).
+  // Posiljatelji, ki jih imamo (zivo 2. 11. 2026): Instantly 21 nabiralnikov po 33 na dan, razdeljenih po osebah (net = nevron.net,
+  // Business Standard); HeyReach 3 povezani sedezi (Rok, Simon, Amadej) s kvoto 25 povabil in 40 sporocil na dan, plus Matjaz.
   const TRG = 300, S = 5, SPREJEM = 0.30, MSG_NA_SEDEZ = 40, KLJUC = "gtm-kapacitete-tocka0-v5";
-  const SEG = {
-    hoteli: { ime: "Hoteli", email: 429, li: 50, sedezev: 2,
-      haveE: "13 nabiralnikov × 33 · Amadej, Gregor, Matjaž, Nina po 3, Alex 1",
-      haveL: "Amadej 25 + Matjaž 25 · Matjaževega profila ni v HeyReachu (rabi 4. sedež), brez njega 25" },
-    ladje: { ime: "Ladje", email: 264, li: 50, sedezev: 2,
-      haveE: "8 nabiralnikov × 33 · Rok 4, Simon 4",
-      haveL: "Rok 25 + Simon 25, kvoti v HeyReachu" },
-  };
+  const MAIL_NA_NAB = 33;
+  const MAIL = { Alex: { nab: 1, net: 1 }, Amadej: { nab: 3, net: 0 }, Gregor: { nab: 3, net: 0 }, "Matjaž": { nab: 3, net: 0 }, Nina: { nab: 3, net: 0 }, Rok: { nab: 4, net: 1 }, Simon: { nab: 4, net: 1 } };
+  // Matjaz ima LinkedIn s Sales Navigatorjem, v HeyReachu pa se ni povezan (rabi 4. sedez); racuna se s privzeto kvoto 25.
+  const LI = { Amadej: { povabil: 25, sn: false }, "Matjaž": { povabil: 25, sn: true, nepovezan: true }, Rok: { povabil: 25, sn: true }, Simon: { povabil: 25, sn: true } };
+  const NAB_VSI = Object.values(MAIL).reduce((a, m) => a + m.nab, 0), NAB_OUT = Object.values(MAIL).reduce((a, m) => a + m.nab - m.net, 0);
+  const POS_PRIMERI = { hoteli: { mail: ["Amadej", "Gregor", "Matjaž", "Nina", "Alex"], li: ["Amadej", "Matjaž"] }, ladje: { mail: ["Rok", "Simon"], li: ["Rok", "Simon"] } };
+  const SEG = { hoteli: { ime: "Hoteli" }, ladje: { ime: "Ladje" } };
   // Primeri, ki jih uporabnik na strani prepise, doda ali izbrise (shranjeno samo v tem brskalniku).
   const PRIMERI = {
     hoteli: [["Slovenija", 300], ["Hrvaška", 300], ["UAE", 200], ["ZDA", 100]].map(([ime, n]) => ({ ime, email: n, li: n, tipi: ["Scrape", "Index"] })),
@@ -619,11 +629,11 @@
   };
   // Mesecni strosek po segmentu (iz razdelka 8, urejljivo): [kljuc, ime, opis, hoteli, ladje]
   const STR = [
-    ["heyreach", "HeyReach", "2 sedeža × 45,77 € (4 sedeži, 597 $ na četrtletje)", 91.54, 91.54],
-    ["instantly", "Instantly", "Hyper Growth 87,60 €, delež po nabiralnikih: 13 od 21 in 8 od 21", 54.23, 33.37],
-    ["google", "Google računi", "Workspace Starter 6,80 € na nabiralnik, nevron.net Standard 13,60 € (12 + 1 in 6 + 2)", 95.20, 68.00],
-    ["domene", "Domene", "getnevron.com, nevroncore.com, trynevron.com, okoli 1 € na mesec vsaka, delež po nabiralnikih", 2.00, 1.00],
-    ["salesnav", "Sales Navigator", "2 sedeža × 82,64 €", 165.28, 165.28],
+    ["heyreach", "HeyReach", "45,77 € na sedež (4 sedeži, 597 $ na četrtletje), sedežev je toliko kot LinkedIn pošiljateljev", null, null],
+    ["instantly", "Instantly", "Hyper Growth 87,60 €, delež po nabiralnikih pošiljateljev (od 21)", null, null],
+    ["google", "Google računi", "Workspace Starter 6,80 € na nabiralnik, nevron.net Standard 13,60 €", null, null],
+    ["domene", "Domene", "getnevron.com, nevroncore.com, trynevron.com, okoli 1 € na mesec vsaka, delež po nabiralnikih na teh domenah (od 18)", null, null],
+    ["salesnav", "Sales Navigator", "82,64 € na LinkedIn pošiljatelja s Sales Navigatorjem (Amadej ga nima)", null, null],
     ["apollo", "Apollo", "50 % skupne cene 91,08 €", 45.54, 45.54],
     ["lusha", "Lusha", "50 % skupne cene 29,90 €", 14.95, 14.95],
     ["skrapp", "Skrapp", "50 % skupne cene 45 €", 22.50, 22.50],
@@ -637,14 +647,36 @@
   const trgov = (n) => sklon(n, ["trg", "trga", "trgi", "trgov"]);
   const kampanj = (n) => sklon(n, ["kampanja", "kampanji", "kampanje", "kampanj"]);
   const kopija = (o) => JSON.parse(JSON.stringify(o));
+  const nabiralnikov = (n) => sklon(n, ["nabiralnik", "nabiralnika", "nabiralniki", "nabiralnikov"]);
+  const C2 = (x) => Math.round(x * 100) / 100;
+  const kap = (k) => { const p = st.pos[k], nab = p.mail.reduce((a, n) => a + MAIL[n].nab, 0); return { nab, email: nab * MAIL_NA_NAB, li: p.li.reduce((a, n) => a + LI[n].povabil, 0), sedezev: p.li.length }; };
+  // od posiljateljev odvisni stroski; preracunajo se samo ob spremembi posiljateljev, ostale postavke ostanejo, kot jih uporabnik vpise
+  function izpeljiStroske(k) {
+    const p = st.pos[k], c = st.cost[k];
+    const nab = p.mail.reduce((a, n) => a + MAIL[n].nab, 0), net = p.mail.reduce((a, n) => a + MAIL[n].net, 0);
+    c.heyreach = C2(45.77 * p.li.length);
+    c.salesnav = C2(82.64 * p.li.filter(n => LI[n].sn).length);
+    c.instantly = C2(87.60 * nab / NAB_VSI);
+    c.google = C2(6.80 * (nab - net) + 13.60 * net);
+    c.domene = C2(3 * (nab - net) / NAB_OUT);
+  }
 
-  let st = { trgi: kopija(PRIMERI), cost: { hoteli: {}, ladje: {} } };
-  STR.forEach(r => { st.cost.hoteli[r[0]] = r[3]; st.cost.ladje[r[0]] = r[4]; });
+  let st = { trgi: kopija(PRIMERI), pos: kopija(POS_PRIMERI), cost: { hoteli: {}, ladje: {} } };
+  STR.forEach(r => { if (r[3] != null) { st.cost.hoteli[r[0]] = r[3]; st.cost.ladje[r[0]] = r[4]; } });
+  ["hoteli", "ladje"].forEach(izpeljiStroske);
   try {
     // vnos iz prejsnjih verzij (eno stevilo kontaktov ali nobeno) se prenese
     const s = JSON.parse(localStorage.getItem(KLJUC) || localStorage.getItem("gtm-kapacitete-tocka0-v4") || localStorage.getItem("gtm-kapacitete-tocka0-v3") || "null");
     if (s && s.trgi && s.trgi.hoteli && s.trgi.ladje) st.trgi = s.trgi;
     if (s && s.cost) ["hoteli", "ladje"].forEach(k => Object.assign(st.cost[k], s.cost[k] || {}));
+    if (s && s.pos && s.pos.hoteli && s.pos.ladje) {
+      // samo racuni, ki jih se imamo; isti racun ne more biti v obeh delih
+      const vzeto = { mail: new Set(), li: new Set() };
+      ["hoteli", "ladje"].forEach(k => ["mail", "li"].forEach(kan => {
+        st.pos[k][kan] = (s.pos[k][kan] || []).filter(n => (kan === "mail" ? MAIL : LI)[n] && !vzeto[kan].has(n));
+        st.pos[k][kan].forEach(n => vzeto[kan].add(n));
+      }));
+    } else if (s && s.cost) ["hoteli", "ladje"].forEach(izpeljiStroske); // star zapis brez posiljateljev
   } catch (e) { /* brez shrambe stran dela s primeri */ }
   // star zapis: eno stevilo kontaktov velja za oba kanala; brez stevila dobi vrednost iz primerov po imenu, sicer 300
   ["hoteli", "ladje"].forEach(k => st.trgi[k].forEach(m => {
@@ -654,9 +686,9 @@
   const shrani = () => { try { localStorage.setItem(KLJUC, JSON.stringify(st)); } catch (e) { /* ni shrambe */ } };
 
   const side = (k, kanal) => {
-    const s = SEG[k], e = kanal === "email", a = k === "hoteli" ? "h" : "s";
+    const e = kanal === "email", a = k === "hoteli" ? "h" : "s";
     return `<div class="kapc g" style="grid-area:${a}${e ? "e" : "l"}"><div class="v" id="o0_${k}_${kanal}"></div>` +
-      `<div class="l">${e ? "emailov na dan" : "LinkedIn cold povabil na dan"}</div><div class="have">${e ? s.haveE : s.haveL}</div><div class="use" id="o0_${k}_${kanal}_use"></div></div>`;
+      `<div class="l">${e ? "emailov na dan" : "LinkedIn cold povabil na dan"}</div><div class="have" id="o0_${k}_${kanal}_have"></div><div class="use" id="o0_${k}_${kanal}_use"></div></div>`;
   };
   const res = (k) => {
     const a = k === "hoteli" ? "h" : "s";
@@ -669,18 +701,32 @@
       `<div class="kapc inp" style="grid-area:${a}k"><div class="k">Tipi kampanj na trg · ${SEG[k].ime.toLowerCase()}</div><div id="o0_${k}_tipi"></div></div>`;
   };
   q("#kap0").innerHTML =
-    `<div class="gh" style="grid-area:hh"><b>Hoteli</b>maili: Amadej, Gregor, Matjaž, Nina, Alex · LinkedIn: Matjaž in Amadej</div>` +
-    `<div class="gh r" style="grid-area:ss"><b>Ladje</b>maili in LinkedIn: Rok in Simon</div>` +
+    `<div class="gh" style="grid-area:hh" id="o0_hoteli_glava"></div>` +
+    `<div class="gh r" style="grid-area:ss" id="o0_ladje_glava"></div>` +
     side("hoteli", "email") + side("hoteli", "li") + vnos("hoteli") + res("hoteli") +
     vnos("ladje") + side("ladje", "email") + side("ladje", "li") + res("ladje") +
     `<div class="go0"><button type="button" class="go" id="b0_go">Izračunaj</button>` +
     `<label class="chk"><input type="checkbox" id="i0_kratke">Kratke sekvence: isti kanal vsaka 2 dni (sicer vsak 3.)</label>` +
-    `<button type="button" class="reset" id="b0_reset">ponastavi trge, kontakte in tipe na primere</button></div>`;
+    `<button type="button" class="reset" id="b0_reset">ponastavi pošiljatelje, trge, kontakte in tipe na primere</button></div>`;
 
   const sirina = (inp) => { inp.style.width = Math.max(6, inp.value.length + 2) + "ch"; };
   const IK_E = '<svg viewBox="0 0 24 24" fill="none" stroke="#A9DFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>';
   const IK_L = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="4" fill="#0A66C2"/><rect x="5" y="9.5" width="2.6" height="9" fill="#fff"/><circle cx="6.3" cy="6.4" r="1.5" fill="#fff"/><path fill="#fff" d="M10.2 9.5h2.5v1.3c.4-.8 1.4-1.5 2.8-1.5 2.6 0 3.3 1.7 3.3 4.1v5.1h-2.6v-4.6c0-1.2-.2-2.2-1.5-2.2s-1.9 1-1.9 2.2v4.6h-2.6z"/></svg>';
   const gnHtml = (m, i) => `${esc(m.ime || "trg " + (i + 1))}${IK_E}${n0(m.email)}${IK_L}${n0(m.li)}`;
+  function narisiGlavo(k) {
+    const p = st.pos[k];
+    const prosti = (kan, VIR) => Object.keys(VIR).filter(n => !st.pos.hoteli[kan].includes(n) && !st.pos.ladje[kan].includes(n));
+    const vrsta = (kan, VIR, ikona, oznaka, enota, opis) => {
+      const pr = prosti(kan, VIR);
+      return `<div class="prow"><span class="pl">${ikona} ${oznaka}</span>` +
+        (p[kan].length ? "" : `<span class="pnone">nihče</span>`) +
+        p[kan].map(n => `<span class="pchip ${kan}" title="${esc(n)}: ${opis(n)}">${esc(n)} <i>${enota(n)}</i><button type="button" class="x" data-act="pos-x" data-seg="${k}" data-kan="${kan}" data-ime="${esc(n)}" title="Odstrani ${esc(n)}" aria-label="Odstrani ${esc(n)}">×</button></span>`).join("") +
+        (pr.length ? `<select class="padd" data-act="pos-add" data-seg="${k}" data-kan="${kan}" aria-label="Dodaj pošiljatelja za ${oznaka}"><option value="">+ dodaj</option>${pr.map(n => `<option value="${esc(n)}">${esc(n)}, ${opis(n)}</option>`).join("")}</select>` : "") + `</div>`;
+    };
+    q(`#o0_${k}_glava`).innerHTML = `<b>${SEG[k].ime}</b>` +
+      vrsta("mail", MAIL, IK_E, "maili", n => MAIL[n].nab, n => `${MAIL[n].nab} ${nabiralnikov(MAIL[n].nab)} v Instantlyju`) +
+      vrsta("li", LI, IK_L, "LinkedIn", n => LI[n].povabil, n => `${LI[n].povabil} povabil na dan v HeyReachu` + (LI[n].nepovezan ? " (še ni povezan, rabi 4. sedež)" : ""));
+  }
   function narisiVnos(k) {
     const T = st.trgi[k];
     const nKamp = T.reduce((a, m) => a + m.tipi.length, 0);
@@ -709,7 +755,8 @@
     shrani();
   });
   q("#kap0").addEventListener("click", (e) => {
-    const b = e.target.closest("[data-act]"); if (!b || b.tagName === "INPUT") return;
+    const b = e.target.closest("[data-act]"); if (!b || b.tagName === "INPUT" || b.tagName === "SELECT") return;
+    if (b.dataset.act === "pos-x") { const L = st.pos[b.dataset.seg][b.dataset.kan]; L.splice(L.indexOf(b.dataset.ime), 1); posSprememba(b.dataset.seg); return; }
     const d = b.dataset, T = st.trgi[d.seg]; let fokus = null;
     if (d.act === "trg-add") { T.push({ ime: "", email: 0, li: 0, tipi: [""] }); fokus = `#o0_${d.seg}_trgi .row input`; }
     if (d.act === "trg-x") T.splice(+d.i, 1);
@@ -718,13 +765,25 @@
     shrani(); narisiVnos(d.seg);
     if (fokus) { const vsi = document.querySelectorAll(fokus); if (vsi.length) vsi[vsi.length - 1].focus(); }
   });
-  q("#b0_reset").addEventListener("click", () => { st.trgi = kopija(PRIMERI); shrani(); narisiVnos("hoteli"); narisiVnos("ladje"); izracun(); });
+  q("#kap0").addEventListener("change", (e) => {
+    const d = e.target.dataset; if (d.act !== "pos-add" || !e.target.value) return;
+    st.pos[d.seg][d.kan].push(e.target.value); posSprememba(d.seg);
+  });
+  function posSprememba(k) {
+    izpeljiStroske(k); narisiGlavo("hoteli"); narisiGlavo("ladje"); narisiStroske(); shrani(); izracun();
+  }
+  q("#b0_reset").addEventListener("click", () => {
+    st.trgi = kopija(PRIMERI); st.pos = kopija(POS_PRIMERI); ["hoteli", "ladje"].forEach(izpeljiStroske);
+    shrani(); narisiGlavo("hoteli"); narisiGlavo("ladje"); narisiVnos("hoteli"); narisiVnos("ladje"); narisiStroske(); izracun();
+  });
 
-  q("#o0_cost").innerHTML = `<span></span><span class="hd">Hoteli</span><span class="hd">Ladje</span>` + STR.map(r =>
-    `<span>${r[1]}<small>${r[2]}</small></span>` + ["hoteli", "ladje"].map(k => `<input type="number" min="0" step="0.01" data-cseg="${k}" data-cost="${r[0]}" value="${(+st.cost[k][r[0]] || 0).toFixed(2)}" aria-label="${r[1]}, ${SEG[k].ime}">`).join("")).join("");
-  q("#o0_cost").querySelectorAll("[data-cost]").forEach(inp => inp.addEventListener("change", () => { st.cost[inp.dataset.cseg][inp.dataset.cost] = Math.max(0, parseFloat(inp.value) || 0); shrani(); izracun(); }));
+  function narisiStroske() {
+    q("#o0_cost").innerHTML = `<span></span><span class="hd">Hoteli</span><span class="hd">Ladje</span>` + STR.map(r =>
+      `<span>${r[1]}<small>${r[2]}</small></span>` + ["hoteli", "ladje"].map(k => `<input type="number" min="0" step="0.01" data-cseg="${k}" data-cost="${r[0]}" value="${(+st.cost[k][r[0]] || 0).toFixed(2)}" aria-label="${r[1]}, ${SEG[k].ime}">`).join("")).join("");
+    q("#o0_cost").querySelectorAll("[data-cost]").forEach(inp => inp.addEventListener("change", () => { st.cost[inp.dataset.cseg][inp.dataset.cost] = Math.max(0, parseFloat(inp.value) || 0); shrani(); izracun(); }));
+  }
 
-  q("#o0_formula").textContent = `Kako se računa: vsak trg ima dve števili, kontakte za email (Instantly) in kontakte za LinkedIn (HeyReach). Vsak tip kampanje na trgu je sekvenca s ${S} maili vsem email kontaktom tega trga, vsak 3. delovni dan (pri kratkih sekvencah vsak 2.), torej v oknu 13 delovnih dni (pri kratkih 9). ` +
+  q("#o0_formula").textContent = `Kako se računa: kapaciteta je vsota izbranih pošiljateljev, ${MAIL_NA_NAB} mailov na nabiralnik v Instantlyju in kvota povabil na sedež v HeyReachu. Vsak trg ima dve števili, kontakte za email (Instantly) in kontakte za LinkedIn (HeyReach). Vsak tip kampanje na trgu je sekvenca s ${S} maili vsem email kontaktom tega trga, vsak 3. delovni dan (pri kratkih sekvencah vsak 2.), torej v oknu 13 delovnih dni (pri kratkih 9). ` +
     `Poraba mailov na dan = vsota čez trge (email kontakti trga × tipi na trgu) × ${S} / okno; predpostavka je, da vse kampanje tečejo hkrati. ` +
     `LinkedIn povabilo dobi vsak kontakt samo enkrat, ponovnih povabil ni, zato je poraba povabil = LinkedIn kontakti trgov z vsaj enim tipom / okno; vsak dodatni tip na trgu doda sporočila tistim, ki povabilo sprejmejo (predpostavka ${Math.round(SPREJEM * 100)} %), največ ${MSG_NA_SEDEZ} na sedež na dan. ` +
     `Če poraba preseže kapaciteto, se kampanje raztegnejo: trajanje = okno × največje razmerje poraba / kapaciteta, tedni so zaokroženi navzgor. ` +
@@ -743,7 +802,10 @@
     const razmik = q("#i0_kratke").checked ? 2 : 3;
     const okno = (S - 1) * razmik + 1;
     ["hoteli", "ladje"].forEach(k => {
-      const s = SEG[k], capM = MSG_NA_SEDEZ * s.sedezev;
+      const s = kap(k), capM = MSG_NA_SEDEZ * s.sedezev, p = st.pos[k];
+      q(`#o0_${k}_email_have`).textContent = p.mail.length ? `${s.nab} ${nabiralnikov(s.nab)} × ${MAIL_NA_NAB} · ` + p.mail.map(n => `${n} ${MAIL[n].nab}`).join(", ") : "ni pošiljateljev, dodaj jih v glavi";
+      const brezSN = p.li.filter(n => !LI[n].sn), nepov = p.li.filter(n => LI[n].nepovezan);
+      q(`#o0_${k}_li_have`).textContent = p.li.length ? p.li.map(n => `${n} ${LI[n].povabil}`).join(" + ") + " · kvote v HeyReachu" + (nepov.length ? ` · ${nepov.join(", ")} še ni povezan v HeyReachu (rabi 4. sedež)` : "") + (brezSN.length ? ` · brez Sales Navigatorja: ${brezSN.join(", ")}` : "") : "ni pošiljateljev, dodaj jih v glavi";
       const aktivni = st.trgi[k].filter(m => m.tipi.length);
       const nKamp = aktivni.reduce((a, m) => a + m.tipi.length, 0);
       const liKontakti = aktivni.reduce((a, m) => a + m.li, 0);
@@ -755,11 +817,12 @@
       q(`#o0_${k}_li`).innerHTML = split(povabil, s.li);
       q(`#o0_${k}_email_use`).textContent = `poraba: ${nKamp} ${kampanj(nKamp)}, skupaj ${n0(vKampanjah)} email kontaktov × ${S} mailov v ${okno} delovnih dneh`;
       q(`#o0_${k}_li_use`).innerHTML = `povabila za ${n0(liKontakti)} LinkedIn kontaktov (${aktivni.length} ${trgov(aktivni.length)}); sporočila sprejetim: <b class="${Math.round(sporocil) > capM ? "over" : ""}">${n0(sporocil)}</b> / ${capM} na dan`;
-      const r = { email: mailov / s.email, "LinkedIn povabila": povabil / s.li, "LinkedIn sporočila": sporocil / capM };
-      const grlo = Object.keys(r).reduce((a, b) => (r[b] > r[a] ? b : a));
-      const dni = nKamp ? Math.ceil(okno * Math.max(1, r[grlo])) : 0, T = Math.ceil(dni / 5);
-      q(`#o0_t_${k}`).textContent = `${T} ${tednov(T)}`;
-      q(`#o0_t_${k}_sub`).textContent = !nKamp ? "dodaj vsaj en trg s tipom" : `${dni} delovnih dni · ` + (r[grlo] > 1 ? `ozko grlo: ${grlo}` : "vse v enem oknu");
+      const raz = (u, c) => c ? u / c : (u > 0 ? Infinity : 0);
+      const r = { email: raz(mailov, s.email), "LinkedIn povabila": raz(povabil, s.li), "LinkedIn sporočila": raz(sporocil, capM) };
+      const grlo = Object.keys(r).reduce((a, b) => (r[b] > r[a] ? b : a)), mozno = isFinite(r[grlo]);
+      const dni = nKamp && mozno ? Math.ceil(okno * Math.max(1, r[grlo])) : 0, T = Math.ceil(dni / 5);
+      q(`#o0_t_${k}`).textContent = mozno ? `${T} ${tednov(T)}` : "ni mogoče";
+      q(`#o0_t_${k}_sub`).textContent = !nKamp ? "dodaj vsaj en trg s tipom" : !mozno ? `ni pošiljatelja za ${grlo === "email" ? "maile" : "LinkedIn"}` : `${dni} delovnih dni · ` + (r[grlo] > 1 ? `ozko grlo: ${grlo}` : "vse v enem oknu");
       const mesecno = STR.reduce((a, x) => a + (+st.cost[k][x[0]] || 0), 0), meseci = dni / 5 / 4.33, strosek = mesecno * meseci;
       q(`#o0_e_${k}`).textContent = eur(strosek);
       q(`#o0_e_${k}_sub`).textContent = `${eur(mesecno, 2)} na mesec × ${meseci.toLocaleString("de-DE", { maximumFractionDigits: 1 })} mes.`;
@@ -767,7 +830,7 @@
     fitVse();
   }
 
-  narisiVnos("hoteli"); narisiVnos("ladje");
+  narisiGlavo("hoteli"); narisiGlavo("ladje"); narisiVnos("hoteli"); narisiVnos("ladje"); narisiStroske();
   q("#b0_go").addEventListener("click", izracun);
   window.addEventListener("resize", fitVse);
   izracun();
