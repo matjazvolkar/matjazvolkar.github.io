@@ -1585,7 +1585,7 @@ footer{color:var(--mut);font-size:12.5px;text-align:center;padding:20px}
   <textarea class="fb-kom" data-id="si--k1-scrape-email-posilja-rok--e1-dan-1-aplikacija-ze-narejena" placeholder="Komentar (npr. skrajšaj drugi odstavek, drugačna zadeva ...)" oninput="fbKom('si--k1-scrape-email-posilja-rok--e1-dan-1-aplikacija-ze-narejena',this.value)"></textarea>
 </div>
 
-<div class="blok" id="si--k1-scrape-email-posilja-rok--e2-dan-4-dajte-jo-na-preizkusnjo" data-h="aa5274d504">
+<div class="blok" id="si--k1-scrape-email-posilja-rok--e2-dan-4-dajte-jo-na-preizkusnjo" data-h="abe5f72153">
   <div class="blok-glava"><h4>E2 · dan 4 · dajte jo na preizkušnjo</h4><span class='badge'>87 besed</span>
     <div class="fb">
       <button class="fb-ok" onclick="fbSet('si--k1-scrape-email-posilja-rok--e2-dan-4-dajte-jo-na-preizkusnjo','ok')">V redu</button>
@@ -1601,7 +1601,7 @@ footer{color:var(--mut);font-size:12.5px;text-align:center;padding:20px}
 <p>Za zdaj odgovarja na podlagi informacij z vaše spletne strani. Manjkajoče podatke bi pred dejansko uporabo dopolnili skupaj z vami.</p>
 <p>Namen ni nadomestiti receptorja. Namen je, da mu ostane več časa za goste, ki potrebujejo človeka.</p>
 <p>Lep pozdrav,</p>
-<p><strong>Sloti:</strong> E2 v3, Matjažev popravek 29. 10. (verbatim; dodana samo pika za »<span class="tok">{vprasanje_2}</span>«). <span class="tok">{vprasanje_1}</span> in <span class="tok">{vprasanje_2}</span> stojita v narekovajih »«; <span class="tok">{ne_zna_tema}</span> se v E2 ne uporablja več. Fallback brez slotov: odstavek z vprašanji zamenja renderer (FALLBACK_ODST v payload_k1_si.py); besedilo fallbacka je treba uskladiti z novim E2.</p></div>
+<p><strong>Sloti:</strong> E2 v3, Matjažev popravek 29. 10. (verbatim; dodana samo pika za »<span class="tok">{vprasanje_2}</span>«). <span class="tok">{vprasanje_1}</span> in <span class="tok">{vprasanje_2}</span> stojita v narekovajih »«; <span class="tok">{ne_zna_tema}</span> se v E2 ne uporablja več. Fallback brez slotov: odstavek z vprašanji zamenja renderer (FALLBACK_ODST v payload_k1_si.py); besedilo fallbacka je treba uskladiti z novim E2. Brez <span class="tok">{vprasanje_2}</span> (npr. ker ga prepoveduje pravilo 16; Faraon Celje, Matjaž 2. 11.) se odstavek konča za »<span class="tok">{vprasanje_1}</span>«., brez "Ali pa: ...".</p></div>
   <textarea class="fb-kom" data-id="si--k1-scrape-email-posilja-rok--e2-dan-4-dajte-jo-na-preizkusnjo" placeholder="Komentar (npr. skrajšaj drugi odstavek, drugačna zadeva ...)" oninput="fbKom('si--k1-scrape-email-posilja-rok--e2-dan-4-dajte-jo-na-preizkusnjo',this.value)"></textarea>
 </div>
 
@@ -3505,14 +3505,14 @@ footer{color:var(--mut);font-size:12.5px;text-align:center;padding:20px}
 </div>
 <h3 id='hr--linkedin-povabilo-4-sporocila'>LinkedIn (povabilo + 4 sporočila)</h3>
 
-<div class="blok" id="hr--linkedin-povabilo-4-sporocila--k1-index-profil-rok" data-h="4beb721268">
-  <div class="blok-glava"><h4>K1 Index (profil: Rok)</h4><span class='badge'>povabilo 201 zn.</span>
+<div class="blok" id="hr--linkedin-povabilo-4-sporocila--k1-index-profil-rok" data-h="17c4704361">
+  <div class="blok-glava"><h4>K1 Index (profil: Rok)</h4><span class='badge'>povabilo 204 zn.</span>
     <div class="fb">
       <button class="fb-ok" onclick="fbSet('hr--linkedin-povabilo-4-sporocila--k1-index-profil-rok','ok')">V redu</button>
       <button class="fb-no" onclick="fbSet('hr--linkedin-povabilo-4-sporocila--k1-index-profil-rok','popravi')">Popravi</button>
     </div>
   </div>
-  <div class="vsebina"><p><strong>Povabilo (≤280 znakov):</strong><br><span class="tok">{firstName}</span>, pročitao sam Booking recenzije hotela <span class="tok">{hotel_name}</span> i sve nalaze složio u jedan pregled: prednosti, pritužbe koje se ponavljaju i projekcija na vašim brojkama. Rado bih ga podijelio s vama.</p>
+  <div class="vsebina"><p><strong>Povabilo (≤280 znakov):</strong><br><span class="tok">{firstName}</span>, pročitao sam svaku recenziju vašeg hotela na Bookingu i sve nalaze složio u jedan pregled: prednosti, pritužbe koje se ponavljaju i projekcija na vašim brojkama. Rado bih ga podijelio s vama.</p>
 <p><strong>Fallback:</strong><br>Poštovani, za nezavisne hotele radimo preglede njihovih recenzija: što gosti hvale, što se ponavlja i koliko to vrijedi. Za vaš hotel pregled je već spreman. Rado bih se povezao.</p>
 <p><strong>Sporočilo 1 (po sprejemu):</strong><br>Hvala na povezivanju, <span class="tok">{firstName}</span>. Pregled za <span class="tok">{hotel_name}</span>: <span class="tok">{index_url}</span>. Za početak jedan nalaz: <span class="tok">{index_stevilka}</span>. Ostatak je posložen po tome što gosti hvale, što se ponavlja kao pritužba i što to znači u prihodu.</p>
 <p><strong>Sporočilo 1 · že povezani (kampanja za obstoječe povezave, BREZ zahvale):</strong><br><span class="tok">{firstName}</span>, povezani smo već neko vrijeme, a sada prvi put imam nešto konkretno za vaš hotel: sve vaše recenzije, posložene u jednu analizu: <span class="tok">{index_url}</span>. Za početak jedan nalaz: <span class="tok">{index_stevilka}</span>. Ostatak je posložen po tome što gosti hvale, što se ponavlja kao pritužba i što to znači u prihodu.</p>
@@ -3522,7 +3522,7 @@ footer{color:var(--mut);font-size:12.5px;text-align:center;padding:20px}
   <textarea class="fb-kom" data-id="hr--linkedin-povabilo-4-sporocila--k1-index-profil-rok" placeholder="Komentar (npr. skrajšaj drugi odstavek, drugačna zadeva ...)" oninput="fbKom('hr--linkedin-povabilo-4-sporocila--k1-index-profil-rok',this.value)"></textarea>
 </div>
 
-<div class="blok" id="hr--linkedin-povabilo-4-sporocila--k2-scrape-profil-matjaz-ali-amadej" data-h="0119cb5507">
+<div class="blok" id="hr--linkedin-povabilo-4-sporocila--k2-scrape-profil-matjaz-ali-amadej" data-h="0fa4ab5fca">
   <div class="blok-glava"><h4>K2 Scrape (profil: Matjaž ali Amadej)</h4><span class='badge'>povabilo 197 zn.</span>
     <div class="fb">
       <button class="fb-ok" onclick="fbSet('hr--linkedin-povabilo-4-sporocila--k2-scrape-profil-matjaz-ali-amadej','ok')">V redu</button>
@@ -3532,7 +3532,7 @@ footer{color:var(--mut);font-size:12.5px;text-align:center;padding:20px}
   <div class="vsebina"><p><strong>Povabilo:</strong><br><span class="tok">{firstName}</span>, ono što su si dosad mogli priuštiti samo najveći sada je dostupno i vama: cjelovita platforma za goste, i to vrlo moćna. Za <span class="tok">{hotel_name}</span> smo je već izgradili. Rado bih vam poslao link.</p>
 <p><strong>Fallback:</strong><br>Poštovani, za nezavisne hotele izrađujemo cjelovite platforme za goste izravno iz njihovih web stranica. Za vaš hotel pregled već postoji. Rado bih se povezao i podijelio link.</p>
 <p><strong>Povabilo · brez tenanta (BREZ trditve o živem predogledu):</strong><br><span class="tok">{firstName}</span>, za nezavisne hotele gradimo cjelovitu platformu za goste: aplikaciju za goste, AI asistenta i dodatnu prodaju na jednom mjestu. Rado bih se povezao i pokazao vam kako to izgleda.</p>
-<p><strong>Sporočilo 1:</strong><br>Hvala na povezivanju, <span class="tok">{firstName}</span>. Evo pregleda: <span class="tok">{demo_url}</span>. Treniran je na sadržaju hotela <span class="tok">{hotel_name}</span> i već odgovara na pitanja o sobama, ugostiteljskoj ponudi i kućnom redu, na jeziku gosta. Pet minuta je dovoljno da vidite sve, a ako nešto promaši, ispravak traje 30 sekundi.</p>
+<p><strong>Sporočilo 1:</strong><br>Hvala na povezivanju, <span class="tok">{firstName}</span>. Evo pregleda: <span class="tok">{demo_url}</span>. AI asistent je treniran na sadržaju vaše web stranice i već odgovara na pitanja o sobama, ugostiteljskoj ponudi i kućnom redu, na jeziku gosta. Pet minuta je dovoljno da vidite sve, a ako nešto promaši, ispravak traje 30 sekundi.</p>
 <p><strong>Sporočilo 2:</strong><br><span class="tok">{firstName}</span>, javljam se još jednom: pregled za <span class="tok">{hotel_name}</span> zatvara se za nekoliko tjedana (<span class="tok">{demo_url}</span>). Ako ste ga otvorili, jedna rečenica dojma bila bi mi od velike pomoći.</p>
 <p><strong>Sporočilo 3 (~dan 11):</strong><br><span class="tok">{firstName}</span>, još praktična stvar: platforma se plaća po korištenju, ništa unaprijed, a povezivanje s PMS-om dio je platforme, ne dodatak. Pregled je još otvoren: <span class="tok">{demo_url}</span>. Ako je blizu onoga što trebate, dovršavamo je mi: pošaljite mi odgovor s riječju "dovršite".</p>
 <p><strong>Sporočilo 4 · breakup (~dan 14):</strong><br><span class="tok">{firstName}</span>, o ovome vam se zasad neću javljati. Javit ću se kad naiđem na nešto toliko korisno da bi bilo šteta ne podijeliti to s vama. Pregled za <span class="tok">{hotel_name}</span> ostaje još neko vrijeme na poveznici: <span class="tok">{demo_url}</span>. Ako ikad dođe pravi trenutak, dovoljna je jedna poruka.</p></div>
