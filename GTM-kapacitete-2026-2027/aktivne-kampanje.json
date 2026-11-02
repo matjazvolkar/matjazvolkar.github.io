@@ -1,0 +1,242 @@
+{
+ "kdaj": "2026-11-02T07:31:30+00:00",
+ "zeton": "prvitest",
+ "opomba": "Vse kampanje, ki niso koncane (tece, nacrtovana, osnutek, pavza), brez imen z 'ZA BRISANJE' ali 'TEST'. Email preostalo: osnutek vsi leadi, sicer leadi brez koncane sekvence (Instantly analytics). LinkedIn preostalo: leadi, ki cakajo ali so v teku (HeyReach progressStats).",
+ "vrstice": [
+  {
+   "seg": "hoteli",
+   "trg": "Florida",
+   "tip": "AI",
+   "email": {
+    "status": "pavza",
+    "leadov": 258,
+    "preostalo": 67,
+    "posiljatelji": [
+     "Amadej",
+     "Gregor",
+     "Matjaž",
+     "Nina",
+     "Rok"
+    ]
+   },
+   "li": {
+    "status": "pavza",
+    "leadov": 400,
+    "preostalo": 3,
+    "posiljatelji": [
+     "Rok"
+    ]
+   }
+  },
+  {
+   "seg": "hoteli",
+   "trg": "Florida",
+   "tip": "Competitor",
+   "email": {
+    "status": "pavza",
+    "leadov": 305,
+    "preostalo": 114,
+    "posiljatelji": [
+     "Amadej",
+     "Gregor",
+     "Matjaž",
+     "Nina",
+     "Rok"
+    ]
+   },
+   "li": null
+  },
+  {
+   "seg": "hoteli",
+   "trg": "Florida",
+   "tip": "Competitor 2",
+   "email": null,
+   "li": {
+    "status": "pavza",
+    "leadov": 393,
+    "preostalo": 1,
+    "posiljatelji": [
+     "Rok"
+    ]
+   }
+  },
+  {
+   "seg": "hoteli",
+   "trg": "Florida",
+   "tip": "Rating",
+   "email": {
+    "status": "pavza",
+    "leadov": 259,
+    "preostalo": 63,
+    "posiljatelji": [
+     "Amadej",
+     "Gregor",
+     "Matjaž",
+     "Nina",
+     "Rok"
+    ]
+   },
+   "li": null
+  },
+  {
+   "seg": "hoteli",
+   "trg": "Florida",
+   "tip": "Rating 2",
+   "email": null,
+   "li": {
+    "status": "pavza",
+    "leadov": 275,
+    "preostalo": 1,
+    "posiljatelji": [
+     "Rok"
+    ]
+   }
+  },
+  {
+   "seg": "hoteli",
+   "trg": "Florida",
+   "tip": "Renovation",
+   "email": {
+    "status": "pavza",
+    "leadov": 184,
+    "preostalo": 42,
+    "posiljatelji": [
+     "Amadej",
+     "Gregor",
+     "Matjaž",
+     "Nina",
+     "Rok"
+    ]
+   },
+   "li": null
+  },
+  {
+   "seg": "hoteli",
+   "trg": "Slovenija",
+   "tip": "D100-K1 Scrape B3",
+   "email": {
+    "status": "pavza",
+    "leadov": 11,
+    "preostalo": 11,
+    "posiljatelji": [
+     "Rok"
+    ]
+   },
+   "li": null
+  },
+  {
+   "seg": "hoteli",
+   "trg": "Slovenija",
+   "tip": "General Scrape 2",
+   "email": {
+    "status": "osnutek",
+    "leadov": 2,
+    "preostalo": 2,
+    "posiljatelji": [
+     "Gregor"
+    ]
+   },
+   "li": {
+    "status": "osnutek",
+    "leadov": 1,
+    "preostalo": 1,
+    "posiljatelji": [
+     "Rok"
+    ]
+   }
+  },
+  {
+   "seg": "hoteli",
+   "trg": "Slovenija",
+   "tip": "General Scrape 2 Office",
+   "email": {
+    "status": "osnutek",
+    "leadov": 3,
+    "preostalo": 3,
+    "posiljatelji": [
+     "Amadej"
+    ]
+   },
+   "li": null
+  },
+  {
+   "seg": "hoteli",
+   "trg": "UAE",
+   "tip": "D100-K1 Scrape | L1x caka tenante",
+   "email": null,
+   "li": {
+    "status": "osnutek",
+    "leadov": 0,
+    "preostalo": 0,
+    "posiljatelji": [
+     "Rok"
+    ]
+   }
+  },
+  {
+   "seg": "hoteli",
+   "trg": "UAE",
+   "tip": "General Scrape",
+   "email": {
+    "status": "osnutek",
+    "leadov": 89,
+    "preostalo": 89,
+    "posiljatelji": [
+     "Gregor"
+    ]
+   },
+   "li": {
+    "status": "osnutek",
+    "leadov": 274,
+    "preostalo": 274,
+    "posiljatelji": [
+     "Amadej",
+     "Rok"
+    ]
+   }
+  },
+  {
+   "seg": "hoteli",
+   "trg": "UAE",
+   "tip": "General Scrape Office",
+   "email": {
+    "status": "osnutek",
+    "leadov": 13,
+    "preostalo": 13,
+    "posiljatelji": [
+     "Amadej"
+    ]
+   },
+   "li": null
+  },
+  {
+   "seg": "hoteli",
+   "trg": "ZDA",
+   "tip": "Chain Vendor List",
+   "email": {
+    "status": "pavza",
+    "leadov": 69,
+    "preostalo": 6,
+    "posiljatelji": [
+     "Matjaž",
+     "Rok"
+    ]
+   },
+   "li": null
+  },
+  {
+   "seg": "ladje",
+   "trg": "Severna Evropa",
+   "tip": "Crew-Comfort",
+   "email": {
+    "status": "pavza",
+    "leadov": 280,
+    "preostalo": 2,
+    "posiljatelji": [
+     "Simon"
+    ]
+   },
+   "li": null
+  }
+ ]
+}
