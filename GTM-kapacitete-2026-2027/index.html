@@ -647,6 +647,7 @@
       <li><b>Tipi kampanj:</b> k vsakemu trgu dodaš tipe.</li>
       <li>Klikneš <b>Izračunaj</b>.</li>
     </ol>
+    <p><b>Novemberski plan</b> (dogovor 2. 11. 2026) je privzeti razpored ob odprtju strani. Gumb <i>ponastavi na novemberski plan</i> ga vrne, če si kaj spremenil.</p>
     <p><b>Aktivne kampanje:</b> gumb <i>ponastavi na aktivne kampanje</i> vse napolni iz zadnjega posnetka Instantlyja in HeyReacha. <b>Poženi izračun</b> naredi nov posnetek (okoli minuto, odstotki kažejo napredek).</p>
   </div>
 </div>
@@ -665,7 +666,7 @@
 (function () {
   // Posiljatelji, ki jih imamo (zivo 2. 11. 2026): Instantly 21 nabiralnikov po 33 na dan, razdeljenih po osebah (net = nevron.net,
   // Business Standard); HeyReach 3 povezani sedezi (Rok, Simon, Amadej) s kvoto 25 povabil in 40 sporocil na dan, plus Matjaz.
-  const TRG = 300, S = 5, SPREJEM = 0.30, MSG_NA_SEDEZ = 40, KLJUC = "gtm-kapacitete-tocka0-v5";
+  const TRG = 300, S = 5, SPREJEM = 0.30, MSG_NA_SEDEZ = 40, KLJUC = "gtm-kapacitete-tocka0-v6";
   const MAIL_NA_NAB = 33;
   const MAIL = { Alex: { nab: 1, net: 1 }, Amadej: { nab: 3, net: 0 }, Gregor: { nab: 3, net: 0 }, "Matjaž": { nab: 3, net: 0 }, Nina: { nab: 3, net: 0 }, Rok: { nab: 4, net: 1 }, Simon: { nab: 4, net: 1 } };
   // Matjaz ima LinkedIn s Sales Navigatorjem, v HeyReachu pa se ni povezan (rabi 4. sedez); racuna se s privzeto kvoto 25.
@@ -677,6 +678,25 @@
   const PRIMERI = {
     hoteli: [["Slovenija", 300, "si"], ["Hrvaška", 300, "hr"], ["UAE", 200, "uae"], ["ZDA", 100, "ny"]].map(([ime, n, auto]) => ({ ime, email: n, li: n, auto, tipi: ["Scrape", "Index"] })),
     ladje: ["Evropa", "ZDA", "Azija"].map(ime => ({ ime, email: TRG, li: TRG, tipi: ["Vsebine iz centrale", "Starlink TV kanali", "Onboard info & upsell"] })),
+  };
+  // Novemberski plan (Matjaz 2. 11. 2026): privzeti razpored ob odprtju strani in gumb "ponastavi na novemberski plan".
+  // Znani trgi so vezani na razdelek 2 (auto), zato sledijo pripravljenim kontaktom; stevila tu so stanje 2. 11. 2026.
+  const PLAN = {
+    pos: { hoteli: { mail: ["Matjaž", "Amadej", "Gregor", "Nina", "Alex"], li: ["Matjaž", "Amadej"] }, ladje: { mail: ["Simon", "Rok"], li: ["Simon", "Rok"] } },
+    trgi: {
+      hoteli: [
+        { ime: "Slovenija", email: 266, li: 135, auto: "si", tipi: ["Scrape General", "Scrape Custom 2"] },
+        { ime: "Hrvaška", email: 339, li: 207, auto: "hr", tipi: ["Scrape Custom"] },
+        { ime: "UAE", email: 338, li: 483, auto: "uae", tipi: ["Scrape General"] },
+      ],
+      ladje: [
+        { ime: "Severna Evropa", email: 195, li: 347, auto: "lad-sev", tipi: ["Vsebine centralno", "Loyalty"] },
+        { ime: "Severna evropa integratorji", email: 52, li: 80, auto: "int-sev", tipi: ["Paketi vsebin"] },
+        { ime: "Turčija integratorji", email: 10, li: 24, auto: "int-tr", tipi: ["Paketi vsebin"] },
+        { ime: "ZDA", email: 100, li: 50, auto: null, tipi: [""] },
+        { ime: "Ostala Evropa", email: 100, li: 50, auto: null, tipi: [""] },
+      ],
+    },
   };
   // Mesecni strosek po segmentu (iz razdelka 8, urejljivo): [kljuc, ime, opis, hoteli, ladje]
   const STR = [
@@ -712,12 +732,12 @@
     c.domene = C2(3 * (nab - net) / NAB_OUT);
   }
 
-  let st = { trgi: kopija(PRIMERI), pos: kopija(POS_PRIMERI), cost: { hoteli: {}, ladje: {} } };
+  let st = { trgi: kopija(PLAN.trgi), pos: kopija(PLAN.pos), cost: { hoteli: {}, ladje: {} } };
   STR.forEach(r => { if (r[3] != null) { st.cost.hoteli[r[0]] = r[3]; st.cost.ladje[r[0]] = r[4]; } });
   ["hoteli", "ladje"].forEach(izpeljiStroske);
   try {
-    // vnos iz prejsnjih verzij (eno stevilo kontaktov ali nobeno) se prenese
-    const s = JSON.parse(localStorage.getItem(KLJUC) || localStorage.getItem("gtm-kapacitete-tocka0-v4") || localStorage.getItem("gtm-kapacitete-tocka0-v3") || "null");
+    // od v6 (2. 11. 2026) se starejsi zapisi ne prenesejo: vsak brskalnik enkrat zacne z novemberskim planom
+    const s = JSON.parse(localStorage.getItem(KLJUC) || "null");
     if (s && s.trgi && s.trgi.hoteli && s.trgi.ladje) st.trgi = s.trgi;
     if (s && s.cost) ["hoteli", "ladje"].forEach(k => Object.assign(st.cost[k], s.cost[k] || {}));
     if (s && s.pos && s.pos.hoteli && s.pos.ladje) {
@@ -788,6 +808,7 @@
     vnos("ladje") + side("ladje", "email") + side("ladje", "li") + res("ladje") +
     `<div class="go0"><button type="button" class="go" id="b0_go">Izračunaj</button>` +
     `<label class="chk"><input type="checkbox" id="i0_kratke">Kratke sekvence: isti kanal vsaka 2 dni (sicer vsak 3.)</label>` +
+    `<button type="button" class="reset" id="b0_plan">ponastavi na novemberski plan</button>` +
     `<button type="button" class="reset" id="b0_reset">ponastavi pošiljatelje, trge, kontakte in tipe na aktivne kampanje</button>` +
     `<label class="chk"><input type="checkbox" id="i0_pavze">vključi tudi kampanje na pavzi</label>` +
     `<div class="run0"><button type="button" class="run" id="b0_run">Poženi izračun</button><span class="pct" id="o0_pct" aria-live="polite"></span></div>` +
@@ -924,6 +945,12 @@
     shrani(); narisiGlavo("hoteli"); narisiGlavo("ladje"); narisiVnos("hoteli"); narisiVnos("ladje"); narisiStroske(); izracun();
     opisPosnetka(P, dvojni);
   }
+  q("#b0_plan").addEventListener("click", () => {
+    st.trgi = kopija(PLAN.trgi); st.pos = kopija(PLAN.pos); uporabiKontakte(); ["hoteli", "ladje"].forEach(izpeljiStroske);
+    q("#i0_kratke").checked = false;
+    shrani(); narisiGlavo("hoteli"); narisiGlavo("ladje"); narisiVnos("hoteli"); narisiVnos("ladje"); narisiStroske(); izracun();
+    q("#o0_akt").textContent = "Ponastavljeno na novemberski plan (dogovor 2. 11. 2026).";
+  });
   q("#b0_reset").addEventListener("click", async () => {
     q("#o0_akt").textContent = "berem posnetek aktivnih kampanj ...";
     try { posnetek = await naloziPosnetek(); uporabiPosnetek(posnetek); }
