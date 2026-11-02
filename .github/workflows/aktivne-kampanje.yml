@@ -1,0 +1,58 @@
+# Posnetek aktivnih kampanj (Instantly + HeyReach) za razdelek 0 strani GTM-kapacitete-2026-2027.
+# Zazene ga gumb "Poženi izračun" na strani (workflow_dispatch z oznako zagona) ali rocno v zavihku Actions.
+# Samo bere; zapise GTM-kapacitete-2026-2027/aktivne-kampanje.json s sestevki (brez naslovov, leadov in kljucev).
+name: Aktivne kampanje
+run-name: aktivne kampanje ${{ inputs.zeton }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      zeton:
+        description: "oznaka zagona, ki jo poslje stran (po njej stran najde svoj tek)"
+        required: false
+        default: "rocno"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: aktivne-kampanje
+  cancel-in-progress: false
+
+jobs:
+  posnetek:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Prenos repozitorija
+        uses: actions/checkout@v4
+
+      - name: Instantly, kampanje in seštevki
+        env:
+          INSTANTLY_API_KEY: ${{ secrets.INSTANTLY_API_KEY }}
+        run: python3 .github/scripts/aktivne_kampanje.py instantly
+
+      - name: HeyReach, kampanje in seštevki
+        env:
+          HEYREACH_MCP_URL: ${{ secrets.HEYREACH_MCP_URL }}
+        run: python3 .github/scripts/aktivne_kampanje.py heyreach
+
+      - name: Združi po trgih in tipih
+        env:
+          ZETON: ${{ inputs.zeton }}
+        run: python3 .github/scripts/aktivne_kampanje.py zdruzi
+
+      - name: Shrani posnetek v repo
+        env:
+          ZETON: ${{ inputs.zeton }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add GTM-kapacitete-2026-2027/aktivne-kampanje.json
+          if git diff --cached --quiet; then echo "brez sprememb"; exit 0; fi
+          git commit -q -m "GTM kapacitete: posnetek aktivnih kampanj"
+          for i in 1 2 3 4; do
+            if git pull -q --rebase && git push -q; then echo "shranjeno"; exit 0; fi
+            sleep 5
+          done
+          exit 1

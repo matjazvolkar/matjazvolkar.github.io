@@ -576,7 +576,6 @@
   .kap0 .row input.off { opacity: 0.35; text-decoration: line-through; }
   .kap0 .hint0 { font-size: 0.66rem; color: var(--ink-3); line-height: 1.4; margin: -2px 0 0; }
   .kap0 .hint0 svg { width: 11px; height: 11px; vertical-align: -1px; }
-  .kap0 .gn .src1 { font-size: 0.62rem; font-weight: 600; color: var(--good-fg); margin-left: 6px; white-space: nowrap; }
   .kap0 .chips { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 3px; align-items: center; }
   .kap0 .chip { display: inline-flex; align-items: center; max-width: 100%; background: var(--surface-2); border: 1px solid var(--line); border-radius: 6px; }
   .kap0 .chip input[type=text] { border: 0; background: transparent; min-height: 24px; padding: 2px 2px 2px 6px; width: 7ch; max-width: 100%; }
@@ -589,6 +588,26 @@
   .kap0 .chk { display: flex; gap: 8px; align-items: center; font-size: 0.78rem; color: var(--ink-2); cursor: pointer; }
   .kap0 .chk input[type=checkbox] { transform: none; width: 15px; height: 15px; margin: 0; }
   .kap0 .reset { border: 0; background: transparent; color: var(--ink-3); font: inherit; font-size: 0.72rem; text-decoration: underline dotted; text-underline-offset: 3px; cursor: pointer; }
+  .kap0 .run0 { display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; }
+  .kap0 .run { border: 1.5px solid var(--accent); background: transparent; color: var(--ink); border-radius: 999px; padding: 6px 18px; font: inherit; font-size: 0.82rem; font-weight: 700; cursor: pointer; }
+  .kap0 .run:hover { background: var(--surface-2); }
+  .kap0 .run[disabled] { opacity: 0.55; cursor: progress; }
+  .kap0 .pct { min-width: 4.5em; font-size: 0.85rem; font-weight: 800; color: var(--accent); font-variant-numeric: tabular-nums; }
+  .kap0 .akt0 { max-width: 62ch; font-size: 0.7rem; line-height: 1.45; color: var(--ink-3); text-align: center; }
+  .kap0 .akt0 b { color: var(--ink-2); }
+  .kap0 .akt0 a { color: var(--accent); }
+  .kap0 .pat0 { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 6px; max-width: 62ch; font-size: 0.72rem; color: var(--ink-2); text-align: center; }
+  .kap0 .pat0[hidden] { display: none; }
+  .intro0 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 4px 34px; margin: 0 0 18px; }
+  @media (max-width: 760px) { .intro0 { grid-template-columns: minmax(0, 1fr); } }
+  .intro0 h4 { margin: 10px 0 6px; font-size: 0.74rem; font-weight: 800; letter-spacing: 0.07em; text-transform: uppercase; color: var(--accent); }
+  .intro0 > div > h4:first-child { margin-top: 0; }
+  .intro0 p, .intro0 li { margin: 0 0 7px; font-size: 0.93rem; line-height: 1.5; color: var(--ink-2); }
+  .intro0 ul, .intro0 ol { margin: 0 0 8px; padding-left: 1.25em; }
+  .intro0 li::marker { color: var(--accent); font-weight: 700; }
+  .intro0 b { color: var(--ink); }
+  .intro0 .zel { color: var(--good-fg); font-weight: 700; } .intro0 .rde { color: var(--bad-fg); font-weight: 700; }
+  .kap0 .pat0 input { width: 24ch; max-width: 100%; padding: 5px 8px; border: 1px solid var(--line); border-radius: 8px; background: transparent; color: var(--ink); font: inherit; }
   @media (max-width: 1100px) {
     .kap0 { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-areas: "hh hh" "hm hm" "hk hk" "he hl" "hd hc" "ss ss" "sm sm" "sk sk" "se sl" "sd sc" "go go"; }
     .kap0 > .gh.r { text-align: left; margin-top: 10px; } .kap0 > .gh.r .prow { justify-content: flex-start; }
@@ -607,7 +626,30 @@
   @media (max-width: 760px) { .nadg .s { grid-template-columns: 1fr; gap: 3px; } .nadg .s em { text-align: left; } }
 </style>
 <h2>0. Kapacitete kanalov na dan in izračun kampanj</h2>
-<p>Koliko emailov in LinkedIn povabil na dan zmoremo z računi, ki jih imamo v Instantlyju in HeyReachu (stanje 1. 11. 2026): levo hoteli, desno ladje, vsak del se računa posebej. V glavi vsakega dela dodajaš ali odstranjuješ pošiljatelje, ponujeni so samo računi, ki jih imamo v Instantlyju in HeyReachu. V sredini za vsak del vpišeš trge, pri vsakem trgu število kontaktov za email (Instantly) in za LinkedIn (HeyReach); hotelski trg, ki ga poznamo, dobi številki sam iz razdelka Kontakti odločevalcev po trgih (kontakti, pripravljeni za kampanjo); pri vsakem trgu lahko izključiš email ali LinkedIn, k vsakemu trgu tipe kampanj, nato klikneš Izračunaj. Na kartici je levo poraba na dan, desno vse, kar lahko pošljemo; leva številka je zelena, dokler ne presežemo kapacitete, nad njo rdeča.</p>
+<div class="intro0">
+  <div>
+    <h4>Kaj računa</h4>
+    <p>Koliko <b>emailov</b> in <b>LinkedIn povabil</b> na dan zmoremo z računi, ki jih imamo v <b>Instantlyju</b> in <b>HeyReachu</b> (stanje 1. 11. 2026).</p>
+    <p><b>Levo so hoteli, desno ladje.</b> Vsak del se računa posebej, s svojimi pošiljatelji, trgi in stroški.</p>
+    <h4>Kako bereš kartice</h4>
+    <ul>
+      <li><b>Leva številka</b> je poraba na dan.</li>
+      <li><b>Desna številka</b> je vse, kar lahko pošljemo.</li>
+      <li>Leva je <span class="zel">zelena</span>, dokler ne presežemo kapacitete, nad njo <span class="rde">rdeča</span>.</li>
+    </ul>
+  </div>
+  <div>
+    <h4>Kako vneseš</h4>
+    <ol>
+      <li><b>Pošiljatelji:</b> v glavi vsakega dela jih dodajaš ali odstranjuješ. Ponujeni so samo računi iz Instantlyja in HeyReacha.</li>
+      <li><b>Trgi:</b> v sredini vpišeš trge in pri vsakem dve števili, kontakte za <b>email</b> (Instantly) in za <b>LinkedIn</b> (HeyReach). Hotelski trg, ki ga poznamo, dobi obe števili sam iz razdelka Kontakti odločevalcev po trgih.</li>
+      <li><b>Kanali:</b> pri vsakem trgu lahko izključiš email ali LinkedIn.</li>
+      <li><b>Tipi kampanj:</b> k vsakemu trgu dodaš tipe.</li>
+      <li>Klikneš <b>Izračunaj</b>.</li>
+    </ol>
+    <p><b>Aktivne kampanje:</b> gumb <i>ponastavi na aktivne kampanje</i> vse napolni iz zadnjega posnetka Instantlyja in HeyReacha. <b>Poženi izračun</b> naredi nov posnetek (okoli minuto, odstotki kažejo napredek).</p>
+  </div>
+</div>
 <div id="kap0" class="kap0"></div>
 <details class="cost0"><summary>Spremenljivke stroška pošiljanja (mesečno, uredi; HeyReach, Instantly, Google računi, domene in Sales Navigator se ob spremembi pošiljateljev preračunajo)</summary><div class="cl" id="o0_cost"></div></details>
 <p class="formula0" id="o0_formula"></p>
@@ -698,8 +740,6 @@
   const norm = (x) => String(x).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, " ").trim();
   const prepoznaj = (k, ime) => (k === "hoteli" && TRG_ID[norm(ime)]) || null;
   // trg z oznako auto dobi stevili iz tabele pripravljenih kontaktov ob vsakem nalaganju; rocni popravek stevila oznako odstrani
-  // stevilka razdelka se prebere s strani, ker drugi deli strani razdelke prestevilcijo
-  const virOzn = () => { const h = [...document.querySelectorAll("h2")].find(x => /Kontakti odločevalcev po trgih/.test(x.textContent)); const nr = h && (h.textContent.match(/^\s*(\d+)\./) || [])[1]; return nr ? `samodejno iz razdelka ${nr}` : "samodejno iz tabele kontaktov"; };
   function uporabiKontakte() {
     const KT = window.KONTAKTI_TRGI; if (!KT) return false;
     const STARI = { si: 300, hr: 300, uae: 200, ny: 100 }; // primeri pred 2. 11.; tak shranjen trg se veze na tabelo kontaktov
@@ -734,7 +774,10 @@
     vnos("ladje") + side("ladje", "email") + side("ladje", "li") + res("ladje") +
     `<div class="go0"><button type="button" class="go" id="b0_go">Izračunaj</button>` +
     `<label class="chk"><input type="checkbox" id="i0_kratke">Kratke sekvence: isti kanal vsaka 2 dni (sicer vsak 3.)</label>` +
-    `<button type="button" class="reset" id="b0_reset">ponastavi pošiljatelje, trge, kontakte in tipe na primere</button></div>`;
+    `<button type="button" class="reset" id="b0_reset">ponastavi pošiljatelje, trge, kontakte in tipe na aktivne kampanje</button>` +
+    `<label class="chk"><input type="checkbox" id="i0_pavze">vključi tudi kampanje na pavzi</label>` +
+    `<div class="run0"><button type="button" class="run" id="b0_run">Poženi izračun</button><span class="pct" id="o0_pct" aria-live="polite"></span></div>` +
+    `<div class="pat0" id="o0_pat" hidden></div><div class="akt0" id="o0_akt"></div></div>`;
 
   const sirina = (inp) => { inp.style.width = Math.max(6, inp.value.length + 2) + "ch"; };
   const IK_E = '<svg viewBox="0 0 24 24" fill="none" stroke="#A9DFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>';
@@ -743,7 +786,7 @@
     const off = kan === "email" ? m.brezEmail : m.brezLi, ime = kan === "email" ? "email" : "LinkedIn";
     return `<button type="button" class="kt ${kan === "email" ? "e" : "l"}${off ? " off" : ""}" data-act="kan" data-kan="${kan}" data-seg="${k}" data-i="${i}" aria-pressed="${!off}" title="${off ? `${ime} je za ta trg izključen, klikni za vklop` : `klikni, da ${ime} za ta trg izključiš`}">${kan === "email" ? IK_E : IK_L}${n0(kan === "email" ? m.email : m.li)}</button>`;
   };
-  const gnHtml = (m, i, k) => `${esc(m.ime || "trg " + (i + 1))}${kt(m, i, k, "email")}${kt(m, i, k, "li")}` + (m.auto ? `<span class="src1" title="obe števili sta vzeti iz razdelka Kontakti odločevalcev po trgih: vsi maili in LinkedIn profili trga, pripravljeni za kampanjo (vrstica Skupaj, Dream 100 + ostali); ročni popravek oznako odstrani">${virOzn()}</span>` : "");
+  const gnHtml = (m, i, k) => `${esc(m.ime || "trg " + (i + 1))}${kt(m, i, k, "email")}${kt(m, i, k, "li")}`;
   function narisiGlavo(k) {
     const p = st.pos[k];
     const prosti = (kan, VIR) => Object.keys(VIR).filter(n => !st.pos.hoteli[kan].includes(n) && !st.pos.ladje[kan].includes(n));
@@ -813,10 +856,118 @@
   function posSprememba(k) {
     izpeljiStroske(k); narisiGlavo("hoteli"); narisiGlavo("ladje"); narisiStroske(); shrani(); izracun();
   }
-  q("#b0_reset").addEventListener("click", () => {
-    st.trgi = kopija(PRIMERI); uporabiKontakte(); st.pos = kopija(POS_PRIMERI); ["hoteli", "ladje"].forEach(izpeljiStroske);
+  // ---- aktivne kampanje: posnetek, ki ga naredi GitHub Actions (.github/workflows/aktivne-kampanje.yml) ----
+  // Vsaka nekoncana kampanja je vrstica (segment, trg, tip) s statusom in stevilom leadov po kanalu; stran izbere vstete.
+  const GH = "https://api.github.com/repos/matjazvolkar/matjazvolkar.github.io", WF = "aktivne-kampanje.yml";
+  const POT = "GTM-kapacitete-2026-2027/aktivne-kampanje.json", PAT_K = "gtm-kapacitete-gh-pat";
+  const STAT = { tece: "teče", nacrtovana: "načrtovana", osnutek: "osnutek", pavza: "pavza" };
+  const patBeri = () => { try { return localStorage.getItem(PAT_K) || ""; } catch (e) { return ""; } };
+  const spi = (ms) => new Promise(r => setTimeout(r, ms));
+  const pct = (t) => { q("#o0_pct").textContent = t; };
+  const casOzn = (iso) => { const d = new Date(iso); return `${d.getDate()}. ${d.getMonth() + 1}. ${d.getFullYear()} ob ${d.getHours()}.${String(d.getMinutes()).padStart(2, "0")}`; };
+  let posnetek = null;
+  // vsteto: kar tece ali je nacrtovano, osnutek z leadi in, ce je stikalo vklopljeno, pavza z leadi
+  const vstet = (c, pavze) => !!c && (c.status === "tece" || c.status === "nacrtovana" || ((c.status === "osnutek" || (pavze && c.status === "pavza")) && c.preostalo > 0));
+  async function naloziPosnetek() {
+    const pat = patBeri(), H = { Accept: "application/vnd.github.raw+json" };
+    if (pat) H.Authorization = `Bearer ${pat}`;
+    try { const r = await fetch(`${GH}/contents/${POT}?ref=main`, { headers: H, cache: "no-store" }); if (r.ok) return await r.json(); } catch (e) { /* naprej na kopijo strani */ }
+    const r = await fetch(`aktivne-kampanje.json?t=${Date.now()}`, { cache: "no-store" });
+    if (!r.ok) throw new Error("posnetka še ni");
+    return r.json();
+  }
+  function opisPosnetka(P, dvojni) {
+    const pavze = q("#i0_pavze").checked, vs = [], izv = [];
+    P.vrstice.forEach(v => [["email", v.email], ["LinkedIn", v.li]].forEach(([kan, c]) => {
+      if (!c) return;
+      (vstet(c, pavze) ? vs : izv).push(`${v.trg} · ${v.tip} (${kan} ${n0(c.preostalo)}, ${STAT[c.status] || c.status})`);
+    }));
+    q("#o0_akt").innerHTML = `Posnetek kampanj iz Instantlyja in HeyReacha: <b>${casOzn(P.kdaj)}</b>. ` +
+      (vs.length ? `Všteto: ${vs.map(esc).join("; ")}.` : "Nobena kampanja ne teče in ni osnutka z leadi.") +
+      (izv.length ? ` Ni všteto: ${izv.map(esc).join("; ")}.` : "") +
+      (dvojni && dvojni.length ? ` V obeh delih: ${dvojni.map(esc).join(", ")}; pošiljatelj je pri delu z več leadi.` : "");
+  }
+  function uporabiPosnetek(P) {
+    const pavze = q("#i0_pavze").checked, trgi = { hoteli: [], ladje: [] }, teza = {};
+    P.vrstice.forEach(v => {
+      const e = vstet(v.email, pavze), l = vstet(v.li, pavze);
+      if (!e && !l) return;
+      // ena vrstica trga na kampanjo z enim tipom, da je poraba (kontakti x tipi) tocna; auto null: ne veze se na razdelek 2
+      trgi[v.seg].push({ ime: v.trg, email: e ? v.email.preostalo : 0, li: l ? v.li.preostalo : 0, auto: null, tipi: [v.tip] });
+      [["mail", e && v.email, MAIL], ["li", l && v.li, LI]].forEach(([kan, c, VIR]) => {
+        if (c) c.posiljatelji.filter(n => VIR[n]).forEach(n => { const t = teza[`${kan}:${n}`] = teza[`${kan}:${n}`] || { hoteli: 0, ladje: 0 }; t[v.seg] += c.preostalo || 1; });
+      });
+    });
+    // isti racun ne more biti v obeh delih: dobi ga del z vec leadi
+    const pos = { hoteli: { mail: [], li: [] }, ladje: { mail: [], li: [] } }, dvojni = [];
+    Object.entries(teza).forEach(([kl, t]) => {
+      const [kan, n] = kl.split(":");
+      pos[t.ladje > t.hoteli ? "ladje" : "hoteli"][kan].push(n);
+      if (t.hoteli && t.ladje) dvojni.push(`${n} (${kan === "mail" ? "maili" : "LinkedIn"})`);
+    });
+    ["hoteli", "ladje"].forEach(k => ["mail", "li"].forEach(kan => { const red = Object.keys(kan === "mail" ? MAIL : LI); pos[k][kan].sort((a, b) => red.indexOf(a) - red.indexOf(b)); }));
+    st.trgi = trgi; st.pos = pos; ["hoteli", "ladje"].forEach(izpeljiStroske);
     shrani(); narisiGlavo("hoteli"); narisiGlavo("ladje"); narisiVnos("hoteli"); narisiVnos("ladje"); narisiStroske(); izracun();
+    opisPosnetka(P, dvojni);
+  }
+  q("#b0_reset").addEventListener("click", async () => {
+    q("#o0_akt").textContent = "berem posnetek aktivnih kampanj ...";
+    try { posnetek = await naloziPosnetek(); uporabiPosnetek(posnetek); }
+    catch (e) { q("#o0_akt").textContent = "Posnetka aktivnih kampanj še ni ali ga ni mogoče prebrati. Klikni Poženi izračun."; }
   });
+  q("#i0_pavze").addEventListener("change", () => { if (posnetek) uporabiPosnetek(posnetek); });
+  // Pozeni izracun: zazene workflow prek GitHub API (zeton samo v tem brskalniku), sledi korakom in na koncu uporabi nov posnetek
+  function patObrazec(sporocilo) {
+    const el = q("#o0_pat"); el.hidden = false;
+    el.innerHTML = `<span>${sporocilo || "Za zagon rabim GitHub žeton: fine-grained, samo repo matjazvolkar.github.io, dovoljenje Actions: Read and write. Shrani se samo v tem brskalniku."}</span>` +
+      `<input type="password" id="i0_pat" placeholder="github_pat_..." autocomplete="off" spellcheck="false" aria-label="GitHub žeton">` +
+      `<button type="button" class="run" id="b0_pat">shrani in poženi</button>`;
+    q("#b0_pat").addEventListener("click", () => {
+      const v = q("#i0_pat").value.trim(); if (!v) return;
+      try { localStorage.setItem(PAT_K, v); } catch (e) { /* brez shrambe velja samo za ta zagon */ }
+      el.hidden = true; el.innerHTML = ""; pozeni(v);
+    });
+    q("#i0_pat").focus();
+  }
+  async function pozeni(patZdaj) {
+    const pat = patZdaj || patBeri(); if (!pat) { patObrazec(); return; }
+    const btn = q("#b0_run"), H = { Authorization: `Bearer ${pat}`, Accept: "application/vnd.github+json" };
+    const zeton = Date.now().toString(36) + Math.random().toString(36).slice(2, 8), zacetek = Date.now();
+    let run = null;
+    btn.disabled = true; pct("0 %"); q("#o0_akt").textContent = "zaganjam izračun na GitHubu ...";
+    try {
+      const r = await fetch(`${GH}/actions/workflows/${WF}/dispatches`, { method: "POST", headers: { ...H, "Content-Type": "application/json" }, body: JSON.stringify({ ref: "main", inputs: { zeton } }) });
+      if (r.status === 401 || r.status === 403) {
+        try { localStorage.removeItem(PAT_K); } catch (e) { /* ni shrambe */ }
+        pct(""); q("#o0_akt").textContent = ""; patObrazec(`GitHub je žeton zavrnil (${r.status}). Vpiši novega z dovoljenjem Actions: Read and write za repo matjazvolkar.github.io.`); return;
+      }
+      if (!r.ok) throw new Error(`GitHub zagona ni sprejel (${r.status})`);
+      while (!run) {
+        if (Date.now() - zacetek > 120000) throw new Error("teka na GitHubu ni bilo mogoče najti");
+        await spi(3000); pct("v vrsti");
+        const d = await (await fetch(`${GH}/actions/workflows/${WF}/runs?event=workflow_dispatch&per_page=10`, { headers: H, cache: "no-store" })).json();
+        run = (d.workflow_runs || []).find(x => (x.display_title || "").includes(zeton)) || null;
+      }
+      while (run.status !== "completed") {
+        if (Date.now() - zacetek > 600000) throw new Error("tek traja več kot 10 minut");
+        await spi(2500);
+        const j = await (await fetch(`${GH}/actions/runs/${run.id}/jobs`, { headers: H, cache: "no-store" })).json();
+        const koraki = ((j.jobs || [])[0] || {}).steps || [];
+        if (koraki.length) pct(Math.min(95, Math.round(100 * koraki.filter(x => x.status === "completed").length / koraki.length)) + " %");
+        run = await (await fetch(`${GH}/actions/runs/${run.id}`, { headers: H, cache: "no-store" })).json();
+      }
+      if (run.conclusion !== "success") throw new Error(`tek se je končal z izidom ${run.conclusion}`);
+      let P = null;
+      for (let i = 0; i < 6; i++) { P = await naloziPosnetek(); if (P.zeton === zeton) break; await spi(2000); }
+      posnetek = P; uporabiPosnetek(P); pct("100 %");
+    } catch (e) {
+      pct("");
+      q("#o0_akt").innerHTML = `Izračun ni uspel: ${esc(e.message)}.` + (run && run.html_url ? ` <a href="${esc(run.html_url)}" target="_blank" rel="noopener">dnevnik teka</a>` : "");
+    } finally { btn.disabled = false; }
+  }
+  q("#b0_run").addEventListener("click", () => pozeni());
+  // ob nalaganju samo pokaze, kdaj je bil zadnji posnetek; vnosa ne spremeni
+  naloziPosnetek().then(P => { posnetek = P; q("#o0_akt").innerHTML = `Zadnji posnetek aktivnih kampanj: <b>${casOzn(P.kdaj)}</b>. Ponastavi ga uporabi, Poženi izračun naredi novega.`; }).catch(() => { /* posnetka se ni */ });
 
   function narisiStroske() {
     q("#o0_cost").innerHTML = `<span></span><span class="hd">Hoteli</span><span class="hd">Ladje</span>` + STR.map(r =>
@@ -828,7 +979,7 @@
     `Poraba mailov na dan = vsota čez trge (email kontakti trga × tipi na trgu) × ${S} / okno; predpostavka je, da vse kampanje tečejo hkrati. ` +
     `LinkedIn povabilo dobi vsak kontakt samo enkrat, ponovnih povabil ni, zato je poraba povabil = LinkedIn kontakti trgov z vsaj enim tipom / okno; vsak dodatni tip na trgu doda sporočila tistim, ki povabilo sprejmejo (predpostavka ${Math.round(SPREJEM * 100)} %), največ ${MSG_NA_SEDEZ} na sedež na dan. ` +
     `Če poraba preseže kapaciteto, se kampanje raztegnejo: trajanje = okno × največje razmerje poraba / kapaciteta, tedni so zaokroženi navzgor. ` +
-    `Strošek = mesečne postavke dela × trajanje v mesecih (delovni dnevi / 5 / 4,33). Hoteli in ladje se računajo ločeno; trgi, tipi in stroški se shranijo v tem brskalniku.`;
+    `Strošek = mesečne postavke dela × trajanje v mesecih (delovni dnevi / 5 / 4,33). Hoteli in ladje se računajo ločeno; trgi, tipi in stroški se shranijo v tem brskalniku. Gumb ponastavi na aktivne kampanje vzame zadnji posnetek iz Instantlyja in HeyReacha, ki ga naredi Poženi izračun (GitHub Actions, samo branje): vsaka kampanja, ki teče, je načrtovana ali je osnutek z leadi, postane svoja vrstica trga z enim tipom (na pavzi samo s stikalom); email so leadi, ki jim sekvenca še ni končana (pri osnutku vsi), LinkedIn so leadi, ki čakajo ali so v teku; pošiljatelji so lastniki nabiralnikov in sedežev v teh kampanjah, kapaciteta pa šteje vse njihove nabiralnike.`;
 
   // velika stevilka ohrani velikost, dokler gre v kartico; sele ko ne gre, se zmanjsa
   function fit(el) {
