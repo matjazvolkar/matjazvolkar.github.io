@@ -1,5 +1,5 @@
 {
- "osvezeno": "2026-11-03T20:19:33+00:00",
+ "osvezeno": "2026-11-03T22:36:08+00:00",
  "od": "2026-04-13",
  "vrednosti": {
   "ai_sdr_mail_linkedin": {
@@ -9,10 +9,25 @@
    "opens": 42,
    "reads": 33,
    "clicks": 7
+  },
+  "sdr_followup_klici": {
+   "demos_booked": 2,
+   "ae_follow_up": 2,
+   "wins": 0
+  },
+  "podcast": {
+   "demos_booked": 1,
+   "ae_follow_up": 1,
+   "wins": 0
+  },
+  "sdr_topli_mail_linkedin": {
+   "demos_booked": 2,
+   "ae_follow_up": 2,
+   "wins": 0
   }
  },
  "hub": {
-  "hub_osvezen": "2026-11-03T20:16:26.484885+00:00",
+  "hub_osvezen": "2026-11-03T22:25:23.563136+00:00",
   "hub_poslanih": 225
  },
  "nerazvrsceni": 0
