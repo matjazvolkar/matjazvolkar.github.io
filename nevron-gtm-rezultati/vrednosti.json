@@ -1,5 +1,5 @@
 {
- "osvezeno": "2026-11-03T22:44:00+00:00",
+ "osvezeno": "2026-11-03T22:49:45+00:00",
  "od": "2026-04-13",
  "vrednosti": {
   "ai_sdr_mail_linkedin": {
@@ -40,7 +40,7 @@
    "demos_booked": 0,
    "ae_follow_up": 0,
    "wins": 0,
-   "opens": 105538,
+   "opens": 105576,
    "reads": 40750,
    "clicks": 85
   }
