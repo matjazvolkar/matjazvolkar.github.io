@@ -61,8 +61,7 @@
   .board {
     display: grid;
     grid-template-columns: minmax(0, 1.9fr) repeat(6, minmax(0, 1fr));
-    grid-template-rows: auto;
-    grid-auto-rows: minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr) minmax(0, 1fr) auto minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
     column-gap: 0;
     min-height: 0;
     border-top: 1px solid var(--rule-strong);
@@ -74,6 +73,8 @@
   .row > div { border-bottom: 1px solid var(--rule); min-width: 0; display: flex; align-items: center; }
   .row:last-child > div { border-bottom: 0; }
   .head { padding-block: calc(var(--u) * 1.7); border-bottom-color: var(--rule-strong) !important; }
+  /* naslovna vrstica druge skupine: zrak nad njo, da se skupini locita */
+  .head.nova { padding-top: calc(var(--u) * 3); }
   .head.col {
     justify-content: flex-end; text-align: right;
     font-size: calc(var(--u) * 1.55); font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-dim);
@@ -100,7 +101,7 @@
     .opomba { margin: 0; font-size: 0.8125rem; }
     h1 { font-size: 1.375rem; }
     .scroll { overflow-x: auto; margin-inline: -16px; padding-inline: 16px; }
-    .board { min-width: 1000px; grid-auto-rows: auto; }
+    .board { min-width: 1000px; grid-template-rows: none; }
     .row > div { padding-block: 12px; }
     .label { font-size: 0.9375rem; }
     .head.col { font-size: 0.6875rem; }
@@ -120,12 +121,39 @@
   <section class="board" role="table" aria-label="Rezultati po kanalih">
     <div class="row" role="row">
       <div class="head blank" aria-hidden="true"></div>
-      <div class="head col" role="columnheader">Opens</div>
-      <div class="head col" role="columnheader">Reads</div>
-      <div class="head col" role="columnheader">Clicks</div>
+      <div class="head col" role="columnheader">Called</div>
+      <div class="head col" role="columnheader">Answered</div>
+      <div class="head col" role="columnheader">Positive</div>
       <div class="head col" role="columnheader">Demos Booked</div>
       <div class="head col" role="columnheader">AE Follow-up</div>
       <div class="head col" role="columnheader">Wins</div>
+    </div>
+    <div class="row" role="row">
+      <div class="label" role="rowheader">SDR hladni klici</div>
+      <div class="cell" role="cell"><span class="figure prazno" data-kanal="sdr_hladni_klici" data-kpi="called">00</span></div>
+      <div class="cell" role="cell"><span class="figure prazno" data-kanal="sdr_hladni_klici" data-kpi="answered">00</span></div>
+      <div class="cell" role="cell"><span class="figure prazno" data-kanal="sdr_hladni_klici" data-kpi="positive">00</span></div>
+      <div class="cell" role="cell"><span class="figure prazno" data-kanal="sdr_hladni_klici" data-kpi="demos_booked">00</span></div>
+      <div class="cell" role="cell"><span class="figure prazno" data-kanal="sdr_hladni_klici" data-kpi="ae_follow_up">00</span></div>
+      <div class="cell" role="cell"><span class="figure prazno" data-kanal="sdr_hladni_klici" data-kpi="wins">00</span></div>
+    </div>
+    <div class="row" role="row">
+      <div class="label" role="rowheader">SDR topli klici</div>
+      <div class="cell" role="cell"><span class="figure prazno" data-kanal="sdr_topli_klici" data-kpi="called">00</span></div>
+      <div class="cell" role="cell"><span class="figure prazno" data-kanal="sdr_topli_klici" data-kpi="answered">00</span></div>
+      <div class="cell" role="cell"><span class="figure prazno" data-kanal="sdr_topli_klici" data-kpi="positive">00</span></div>
+      <div class="cell" role="cell"><span class="figure prazno" data-kanal="sdr_topli_klici" data-kpi="demos_booked">00</span></div>
+      <div class="cell" role="cell"><span class="figure prazno" data-kanal="sdr_topli_klici" data-kpi="ae_follow_up">00</span></div>
+      <div class="cell" role="cell"><span class="figure prazno" data-kanal="sdr_topli_klici" data-kpi="wins">00</span></div>
+    </div>
+    <div class="row" role="row">
+      <div class="head blank nova" aria-hidden="true"></div>
+      <div class="head col nova" role="columnheader">Opens</div>
+      <div class="head col nova" role="columnheader">Reads</div>
+      <div class="head col nova" role="columnheader">Clicks</div>
+      <div class="head col nova" role="columnheader">Demos Booked</div>
+      <div class="head col nova" role="columnheader">AE Follow-up</div>
+      <div class="head col nova" role="columnheader">Wins</div>
     </div>
     <div class="row" role="row">
       <div class="label" role="rowheader">AI SDR hladni mail + LinkedIn</div>
@@ -135,24 +163,6 @@
       <div class="cell" role="cell"><span class="figure" data-kanal="ai_sdr_mail_linkedin" data-kpi="demos_booked">10</span></div>
       <div class="cell" role="cell"><span class="figure" data-kanal="ai_sdr_mail_linkedin" data-kpi="ae_follow_up">7</span></div>
       <div class="cell" role="cell"><span class="figure" data-kanal="ai_sdr_mail_linkedin" data-kpi="wins">0</span></div>
-    </div>
-    <div class="row" role="row">
-      <div class="label" role="rowheader">SDR hladni klici</div>
-      <div class="cell" role="cell"><span class="figure prazno" data-kanal="sdr_hladni_klici" data-kpi="opens">00</span></div>
-      <div class="cell" role="cell"><span class="figure prazno" data-kanal="sdr_hladni_klici" data-kpi="reads">00</span></div>
-      <div class="cell" role="cell"><span class="figure prazno" data-kanal="sdr_hladni_klici" data-kpi="clicks">00</span></div>
-      <div class="cell" role="cell"><span class="figure prazno" data-kanal="sdr_hladni_klici" data-kpi="demos_booked">00</span></div>
-      <div class="cell" role="cell"><span class="figure prazno" data-kanal="sdr_hladni_klici" data-kpi="ae_follow_up">00</span></div>
-      <div class="cell" role="cell"><span class="figure prazno" data-kanal="sdr_hladni_klici" data-kpi="wins">00</span></div>
-    </div>
-    <div class="row" role="row">
-      <div class="label" role="rowheader">SDR topli follow-up</div>
-      <div class="cell" role="cell"><span class="figure prazno" data-kanal="sdr_topli_follow_up" data-kpi="opens">00</span></div>
-      <div class="cell" role="cell"><span class="figure prazno" data-kanal="sdr_topli_follow_up" data-kpi="reads">00</span></div>
-      <div class="cell" role="cell"><span class="figure prazno" data-kanal="sdr_topli_follow_up" data-kpi="clicks">00</span></div>
-      <div class="cell" role="cell"><span class="figure prazno" data-kanal="sdr_topli_follow_up" data-kpi="demos_booked">00</span></div>
-      <div class="cell" role="cell"><span class="figure prazno" data-kanal="sdr_topli_follow_up" data-kpi="ae_follow_up">00</span></div>
-      <div class="cell" role="cell"><span class="figure prazno" data-kanal="sdr_topli_follow_up" data-kpi="wins">00</span></div>
     </div>
     <div class="row" role="row">
       <div class="label" role="rowheader">AI Search</div>

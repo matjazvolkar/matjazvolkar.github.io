@@ -2,23 +2,39 @@
   "naslov": "Nevron GTM rezultati",
   "sezona": "Hospitality",
   "opomba": "Opens, Reads in Clicks: osebni linki v hubu od 9. 9. 2026, spomladanske kampanje jih niso merile. Demos Booked, AE Follow-up in Wins: Hotel SDR Pipeline, vsak posel, ki je stopnjo dosegel. Osveži se vsako noč.",
-  "kpiji": [
-    {"id": "opens", "ime": "Opens"},
-    {"id": "reads", "ime": "Reads"},
-    {"id": "clicks", "ime": "Clicks"},
-    {"id": "demos_booked", "ime": "Demos Booked"},
-    {"id": "ae_follow_up", "ime": "AE Follow-up"},
-    {"id": "wins", "ime": "Wins"}
-  ],
-  "kanali": [
-    {"id": "ai_sdr_mail_linkedin", "ime": "AI SDR hladni mail + LinkedIn"},
-    {"id": "sdr_hladni_klici", "ime": "SDR hladni klici"},
-    {"id": "sdr_topli_follow_up", "ime": "SDR topli follow-up"},
-    {"id": "ai_search", "ime": "AI Search"},
-    {"id": "seo", "ime": "SEO"},
-    {"id": "linkedin_posting", "ime": "LinkedIn posting"},
-    {"id": "digital_ads", "ime": "Digital ads"},
-    {"id": "newsletters", "ime": "Newsletters"},
-    {"id": "podcast", "ime": "Podcast"}
+  "skupine": [
+    {
+      "kpiji": [
+        {"id": "called", "ime": "Called"},
+        {"id": "answered", "ime": "Answered"},
+        {"id": "positive", "ime": "Positive"},
+        {"id": "demos_booked", "ime": "Demos Booked"},
+        {"id": "ae_follow_up", "ime": "AE Follow-up"},
+        {"id": "wins", "ime": "Wins"}
+      ],
+      "kanali": [
+        {"id": "sdr_hladni_klici", "ime": "SDR hladni klici"},
+        {"id": "sdr_topli_klici", "ime": "SDR topli klici"}
+      ]
+    },
+    {
+      "kpiji": [
+        {"id": "opens", "ime": "Opens"},
+        {"id": "reads", "ime": "Reads"},
+        {"id": "clicks", "ime": "Clicks"},
+        {"id": "demos_booked", "ime": "Demos Booked"},
+        {"id": "ae_follow_up", "ime": "AE Follow-up"},
+        {"id": "wins", "ime": "Wins"}
+      ],
+      "kanali": [
+        {"id": "ai_sdr_mail_linkedin", "ime": "AI SDR hladni mail + LinkedIn"},
+        {"id": "ai_search", "ime": "AI Search"},
+        {"id": "seo", "ime": "SEO"},
+        {"id": "linkedin_posting", "ime": "LinkedIn posting"},
+        {"id": "digital_ads", "ime": "Digital ads"},
+        {"id": "newsletters", "ime": "Newsletters"},
+        {"id": "podcast", "ime": "Podcast"}
+      ]
+    }
   ]
 }

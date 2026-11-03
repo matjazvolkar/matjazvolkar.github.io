@@ -58,25 +58,36 @@ def obdobje_besedilo(od, osv) -> str:
 
 
 def zgradi(pod: dict, vred: dict, test=None) -> str:
+    """Tabela v skupinah: vsaka skupina ima svojo naslovno vrstico KPI-jev (klici: Called ...; ostali: Opens ...)."""
     e = html.escape
     stevilke = (vred or {}).get("vrednosti") or {}
-    kpiji = pod["kpiji"]
-    vrste = ['    <div class="row" role="row">', '      <div class="head blank" aria-hidden="true"></div>']
-    for k in kpiji:
-        vrste.append(f'      <div class="head col" role="columnheader">{e(k["ime"])}</div>')
-    vrste.append("    </div>")
-    for kanal in pod["kanali"]:
+    skupine = pod["skupine"]
+    stolpcev = len(skupine[0]["kpiji"])
+    if any(len(s["kpiji"]) != stolpcev for s in skupine):
+        raise SystemExit("vse skupine morajo imeti enako stevilo KPI stolpcev")
+    vrste, visine = [], []
+    for i, skupina in enumerate(skupine):
+        kpiji = skupina["kpiji"]
+        nova = " nova" if i else ""
         vrste.append('    <div class="row" role="row">')
-        vrste.append(f'      <div class="label" role="rowheader">{e(kanal["ime"])}</div>')
+        vrste.append(f'      <div class="head blank{nova}" aria-hidden="true"></div>')
         for k in kpiji:
-            v = test if test is not None else (stevilke.get(kanal["id"]) or {}).get(k["id"])
-            besedilo, prazno = stevilka(v)
-            razred = "figure prazno" if prazno else "figure"
-            vrste.append(
-                f'      <div class="cell" role="cell"><span class="{razred}" data-kanal="{e(kanal["id"])}" '
-                f'data-kpi="{e(k["id"])}">{besedilo}</span></div>'
-            )
+            vrste.append(f'      <div class="head col{nova}" role="columnheader">{e(k["ime"])}</div>')
         vrste.append("    </div>")
+        visine.append("auto")
+        for kanal in skupina["kanali"]:
+            vrste.append('    <div class="row" role="row">')
+            vrste.append(f'      <div class="label" role="rowheader">{e(kanal["ime"])}</div>')
+            for k in kpiji:
+                v = test if test is not None else (stevilke.get(kanal["id"]) or {}).get(k["id"])
+                besedilo, prazno = stevilka(v)
+                razred = "figure prazno" if prazno else "figure"
+                vrste.append(
+                    f'      <div class="cell" role="cell"><span class="{razred}" data-kanal="{e(kanal["id"])}" '
+                    f'data-kpi="{e(k["id"])}">{besedilo}</span></div>'
+                )
+            vrste.append("    </div>")
+            visine.append("minmax(0, 1fr)")
     stran = PREDLOGA
     zamenjave = {
         "@@NASLOV@@": e(pod["naslov"]),
@@ -84,7 +95,8 @@ def zgradi(pod: dict, vred: dict, test=None) -> str:
         "@@OSVEZENO@@": e(obdobje_besedilo((vred or {}).get("od"), (vred or {}).get("osvezeno"))),
         "@@OPOMBA@@": e(pod.get("opomba") or ""),
         "@@LOGO@@": LOGO_SVG,
-        "@@STOLPCEV@@": str(len(kpiji)),
+        "@@STOLPCEV@@": str(stolpcev),
+        "@@VRSTICE@@": " ".join(visine),
         "@@TABELA@@": "\n".join(vrste),
     }
     for k, v in zamenjave.items():
@@ -155,8 +167,7 @@ PREDLOGA = """<!doctype html>
   .board {
     display: grid;
     grid-template-columns: minmax(0, 1.9fr) repeat(@@STOLPCEV@@, minmax(0, 1fr));
-    grid-template-rows: auto;
-    grid-auto-rows: minmax(0, 1fr);
+    grid-template-rows: @@VRSTICE@@;
     column-gap: 0;
     min-height: 0;
     border-top: 1px solid var(--rule-strong);
@@ -168,6 +179,8 @@ PREDLOGA = """<!doctype html>
   .row > div { border-bottom: 1px solid var(--rule); min-width: 0; display: flex; align-items: center; }
   .row:last-child > div { border-bottom: 0; }
   .head { padding-block: calc(var(--u) * 1.7); border-bottom-color: var(--rule-strong) !important; }
+  /* naslovna vrstica druge skupine: zrak nad njo, da se skupini locita */
+  .head.nova { padding-top: calc(var(--u) * 3); }
   .head.col {
     justify-content: flex-end; text-align: right;
     font-size: calc(var(--u) * 1.55); font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-dim);
@@ -194,7 +207,7 @@ PREDLOGA = """<!doctype html>
     .opomba { margin: 0; font-size: 0.8125rem; }
     h1 { font-size: 1.375rem; }
     .scroll { overflow-x: auto; margin-inline: -16px; padding-inline: 16px; }
-    .board { min-width: 1000px; grid-auto-rows: auto; }
+    .board { min-width: 1000px; grid-template-rows: none; }
     .row > div { padding-block: 12px; }
     .label { font-size: 0.9375rem; }
     .head.col { font-size: 0.6875rem; }
