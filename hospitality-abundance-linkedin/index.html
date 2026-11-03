@@ -123,6 +123,30 @@
     <div class="stamp">LinkedIn oglasi za članke<span>stanje 3. 11. 2026 ob 19.16</span></div>
   </div>
 
+<style>.ocena{--oc:var(--accent);--oc-dim:var(--ink-2);--oc-rule:var(--rule);--oc-text:var(--ink);--oc-panel:var(--panel)}</style>
+<style>
+  .ocena { margin-bottom: clamp(14px, 2vw, 24px); display: grid; gap: 10px; }
+  .ocena h2 { margin: 0; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--oc-dim); }
+  .ocena .akcija { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 6px clamp(14px, 2.5vw, 28px); align-items: center;
+                   padding: 12px clamp(12px, 2vw, 20px); border: 1px solid var(--oc-rule); border-radius: 6px; background: var(--oc-panel); }
+  .ocena .stev { font-weight: 700; font-variant-numeric: tabular-nums lining-nums; font-size: clamp(34px, 4vw, 48px); line-height: 1; color: var(--oc); grid-row: 1 / 3; min-width: 2.2ch; }
+  .ocena .stev small { font-size: 0.38em; font-weight: 500; color: var(--oc-dim); margin-left: 2px; }
+  .ocena .ime { font-weight: 600; font-size: 14px; color: var(--oc-text); }
+  .ocena .ime span { font-weight: 400; color: var(--oc-dim); }
+  .ocena .ime b { color: var(--oc); font-weight: 700; }
+  .ocena .skala { display: grid; grid-template-columns: repeat(10, 1fr); gap: 3px; height: 10px; }
+  .ocena .skala i { display: block; border-radius: 2px; background: var(--oc-rule); }
+  .ocena .skala i.on { background: var(--oc); }
+  .ocena .merila { grid-column: 2; display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: 11.5px; color: var(--oc-dim); margin-top: 2px; }
+  .ocena .merila span b { color: var(--oc-text); font-weight: 600; font-variant-numeric: tabular-nums; }
+  .ocena .merila span.na { opacity: 0.6; }
+  @media (max-width: 720px) { .ocena .akcija { grid-template-columns: auto minmax(0, 1fr); } .ocena .merila { grid-column: 1 / -1; } }
+</style>
+<section class="ocena" aria-label="Ocena uspešnosti">
+  <h2>Ocena uspešnosti kampanj člankov, 1 do 10</h2>
+  <div class="akcija"><div class="stev">8<small>/10</small></div><div class="ime">Rokovi članki <span>26. 10. do 30. 10., 125,00 €</span> <b>dobro</b></div><div class="skala" role="img" aria-label="8 od 10"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i></div><div class="merila"><span class="">CTR <b>10</b> (4,32 %)</span> <span class="">CPC <b>10</b> (0,46 €)</span> <span class="">CPM <b>6</b> (19,70 €)</span> <span class="">napoved <b>8</b> (80,3 %)</span> <span class="">sledenja <b>8</b> (3,2)</span> <span class="">pogovor <b>3</b> (0,3)</span></div></div>
+</section>
+
   <section class="board" aria-label="Skupaj in zadnji teden">
     <div class="head blank" aria-hidden="true"></div>
     <div class="head col">Skupaj <span class="when">od 26. 10.</span></div>
@@ -225,6 +249,7 @@
 
   <footer>
     <p>Osveži se vsak dan ob 8.20. Zadnji teden je zadnjih sedem končanih dni. Samo oglasi za Rokove članke iz newslettra Hospitality Abundance (osebna znamka Roka Kokalja); oglasi podcasta Hostfulness imajo svoje poročilo. Oglas je članek 1:1 brez dodanega naslova ali gumba; klik na oglas večinoma odpre članek. Napoved z dne 7. 10. je veljala za 5 člankov in samo Slovenijo; tek od 26. do 30. 10. je imel 8 člankov, Slovenijo in Hrvaško. Doseg in frekvenca veljata za kampanjo; pri člankih za vsakega posebej. "n/p" pomeni, da podatek ni na voljo.</p>
+    <p>Ocena uspešnosti je zaokroženo povprečje točk po merilih (1 do 10, med pragovi linearno): Delež klikov na članek (CTR): 0,20 % = 2, 0,50 % = 4, 1,00 % = 6, 2,00 % = 8, 3,00 % = 10; Cena klika (CPC): 0,50 € = 10, 1,00 € = 8, 2,00 € = 6, 3,00 € = 4, 5,00 € = 2, 8,00 € = 1; Cena na 1.000 prikazov (CPM): 10,00 € = 10, 15,00 € = 8, 20,00 € = 6, 30,00 € = 4, 45,00 € = 2, 60,00 € = 1; Prikazi proti zgornji meji napovedi (7.900): 10,0 % = 2, 25,0 % = 4, 50,0 % = 6, 75,0 % = 8, 100,0 % = 10; Novi sledilci Roka na 100 €: 0,0 = 2, 0,5 = 4, 1,5 = 6, 3,0 = 8, 5,0 = 10; Reakcije, komentarji in deljenja na 1.000 prikazov: 0,0 = 2, 0,5 = 4, 1,5 = 6, 3,0 = 8, 5,0 = 10. Pragovi so običajne vrednosti LinkedIn oglasov za B2B in napoved pred zagonom, ne LinkedInova ocena.</p>
     <p>Vir: LinkedIn Campaign Manager, kampanja za članke v računu, iz katerega se oglašuje tudi Hostfulness. Plačnik oglasov je Nevron, vsebina in znamka sta Rokova.</p>
   </footer>
 </div>
