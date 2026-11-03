@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" id="Defs_tereza" targetNamespace="https://nevron.eu/bpmn" exporter="Nevron ai-sdr-proces" exporterVersion="1">
+<bpmn:category id="Kat_faze">
+<bpmn:categoryValue id="CV_0" value="Faza 0: upravičenost"/>
+<bpmn:categoryValue id="CV_1" value="Faza 1: vsebina"/>
+<bpmn:categoryValue id="CV_2" value="Faza 2: vrednosti za copy"/>
+<bpmn:categoryValue id="CV_3" value="Faza 3: test"/>
+<bpmn:categoryValue id="CV_4" value="Faza 4: dosje"/>
+<bpmn:categoryValue id="CV_5" value="Faza 5: kontakt"/>
+<bpmn:categoryValue id="CV_6" value="Faza 6: izris in kontrole"/>
+</bpmn:category>
+<bpmn:collaboration id="Kolaboracija">
+<bpmn:participant id="P_nevron" name="Nevron: Tereza, vratarka pri novih povezavah" processRef="Proces_tereza"/>
+<bpmn:participant id="P_amadej" name="Amadej: scrape tenanti in Index poročila"/>
+<bpmn:messageFlow id="M_povezava" name="nova povezava" sourceRef="P_amadej" targetRef="Start"/>
+<bpmn:messageFlow id="M_napake" name="seznam napak" sourceRef="T_javi" targetRef="P_amadej"/>
+<bpmn:messageFlow id="M_porocilo" name="kaj popraviti" sourceRef="T_por" targetRef="P_amadej"/>
+</bpmn:collaboration>
+<bpmn:process id="Proces_tereza" name="Tereza: od nove povezave do pripravljenega hotela" isExecutable="false">
+<bpmn:laneSet id="Steze">
+<bpmn:lane id="L_matjaz" name="Matjaž (odločitve)">
+<bpmn:flowNodeRef>U_odloci</bpmn:flowNodeRef>
+<bpmn:flowNodeRef>U_batch</bpmn:flowNodeRef>
+<bpmn:flowNodeRef>End_ok</bpmn:flowNodeRef>
+</bpmn:lane>
+<bpmn:lane id="L_seje" name="Claude seje">
+<bpmn:flowNodeRef>Seje_izris</bpmn:flowNodeRef>
+<bpmn:flowNodeRef>Seje_push</bpmn:flowNodeRef>
+</bpmn:lane>
+<bpmn:lane id="L_sistem" name="Orodja in skripte">
+<bpmn:flowNodeRef>S_test</bpmn:flowNodeRef>
+<bpmn:flowNodeRef>S_skrapp</bpmn:flowNodeRef>
+<bpmn:flowNodeRef>S_kontrole</bpmn:flowNodeRef>
+</bpmn:lane>
+<bpmn:lane id="L_tereza" name="Tereza (AI agentka)">
+<bpmn:flowNodeRef>Start</bpmn:flowNodeRef>
+<bpmn:flowNodeRef>T0</bpmn:flowNodeRef>
+<bpmn:flowNodeRef>G0</bpmn:flowNodeRef>
+<bpmn:flowNodeRef>End_ne0</bpmn:flowNodeRef>
+<bpmn:flowNodeRef>T1</bpmn:flowNodeRef>
+<bpmn:flowNodeRef>G1</bpmn:flowNodeRef>
+<bpmn:flowNodeRef>T_javi</bpmn:flowNodeRef>
+<bpmn:flowNodeRef>End_caka</bpmn:flowNodeRef>
+<bpmn:flowNodeRef>G_vrsta</bpmn:flowNodeRef>
+<bpmn:flowNodeRef>T2s</bpmn:flowNodeRef>
+<bpmn:flowNodeRef>T2i</bpmn:flowNodeRef>
+<bpmn:flowNodeRef>G_m2</bpmn:flowNodeRef>
+<bpmn:flowNodeRef>G_dvom</bpmn:flowNodeRef>
+<bpmn:flowNodeRef>G_m3</bpmn:flowNodeRef>
+<bpmn:flowNodeRef>T_presodi</bpmn:flowNodeRef>
+<bpmn:flowNodeRef>G_test</bpmn:flowNodeRef>
+<bpmn:flowNodeRef>T_tema</bpmn:flowNodeRef>
+<bpmn:flowNodeRef>T4</bpmn:flowNodeRef>
+<bpmn:flowNodeRef>T5</bpmn:flowNodeRef>
+<bpmn:flowNodeRef>G_mail</bpmn:flowNodeRef>
+<bpmn:flowNodeRef>T_gen</bpmn:flowNodeRef>
+<bpmn:flowNodeRef>G_m5</bpmn:flowNodeRef>
+<bpmn:flowNodeRef>T6</bpmn:flowNodeRef>
+<bpmn:flowNodeRef>G_ciste</bpmn:flowNodeRef>
+<bpmn:flowNodeRef>T_vzrok</bpmn:flowNodeRef>
+<bpmn:flowNodeRef>T_por</bpmn:flowNodeRef>
+</bpmn:lane>
+</bpmn:laneSet>
+<bpmn:startEvent id="Start" name="Prispe nova povezava">
+<bpmn:outgoing>F0</bpmn:outgoing>
+<bpmn:messageEventDefinition id="MD_povezava"/>
+</bpmn:startEvent>
+<bpmn:serviceTask id="T0" name="Faza 0: povezava dela, angle mogoč, hotel ni izključen?">
+<bpmn:incoming>F0</bpmn:incoming>
+<bpmn:outgoing>F1</bpmn:outgoing>
+</bpmn:serviceTask>
+<bpmn:exclusiveGateway id="G0" name="Upravičen?">
+<bpmn:incoming>F1</bpmn:incoming>
+<bpmn:outgoing>F2</bpmn:outgoing>
+<bpmn:outgoing>F3</bpmn:outgoing>
+</bpmn:exclusiveGateway>
+<bpmn:endEvent id="End_ne0" name="Ni upravičen: razlog v poročilu">
+<bpmn:incoming>F3</bpmn:incoming>
+</bpmn:endEvent>
+<bpmn:serviceTask id="T1" name="Faza 1: preberi kot gost, preveri katalog napak">
+<bpmn:incoming>F2</bpmn:incoming>
+<bpmn:outgoing>F4</bpmn:outgoing>
+</bpmn:serviceTask>
+<bpmn:exclusiveGateway id="G1" name="Stanje vsebine?">
+<bpmn:incoming>F4</bpmn:incoming>
+<bpmn:outgoing>F5</bpmn:outgoing>
+<bpmn:outgoing>F6</bpmn:outgoing>
+</bpmn:exclusiveGateway>
+<bpmn:sendTask id="T_javi" name="Seznam napak Amadeju, z natančnim mestom">
+<bpmn:incoming>F6</bpmn:incoming>
+<bpmn:outgoing>F7</bpmn:outgoing>
+</bpmn:sendTask>
+<bpmn:endEvent id="End_caka" name="Ne gre ven, dokler Amadej ne popravi">
+<bpmn:incoming>F7</bpmn:incoming>
+</bpmn:endEvent>
+<bpmn:exclusiveGateway id="G_vrsta" name="Scrape ali Index?">
+<bpmn:incoming>F5</bpmn:incoming>
+<bpmn:outgoing>F8</bpmn:outgoing>
+<bpmn:outgoing>F9</bpmn:outgoing>
+</bpmn:exclusiveGateway>
+<bpmn:serviceTask id="T2s" name="Faza 2 Scrape: dve vprašanji in ne_zna_tema">
+<bpmn:incoming>F8</bpmn:incoming>
+<bpmn:outgoing>F10</bpmn:outgoing>
+</bpmn:serviceTask>
+<bpmn:serviceTask id="T2i" name="Faza 2 Index: 7 polj, ukrep na to, kar hotel ima">
+<bpmn:incoming>F9</bpmn:incoming>
+<bpmn:outgoing>F11</bpmn:outgoing>
+</bpmn:serviceTask>
+<bpmn:exclusiveGateway id="G_m2">
+<bpmn:incoming>F10</bpmn:incoming>
+<bpmn:incoming>F11</bpmn:incoming>
+<bpmn:outgoing>F12</bpmn:outgoing>
+</bpmn:exclusiveGateway>
+<bpmn:exclusiveGateway id="G_dvom" name="Odprto vprašanje?">
+<bpmn:incoming>F12</bpmn:incoming>
+<bpmn:outgoing>F13</bpmn:outgoing>
+<bpmn:outgoing>F14</bpmn:outgoing>
+</bpmn:exclusiveGateway>
+<bpmn:userTask id="U_odloci" name="Odloči: identiteta, raven odločevalca, sme trditev ven">
+<bpmn:incoming>F13</bpmn:incoming>
+<bpmn:outgoing>F15</bpmn:outgoing>
+</bpmn:userTask>
+<bpmn:exclusiveGateway id="G_m3">
+<bpmn:incoming>F14</bpmn:incoming>
+<bpmn:incoming>F15</bpmn:incoming>
+<bpmn:incoming>F21</bpmn:incoming>
+<bpmn:outgoing>F16</bpmn:outgoing>
+</bpmn:exclusiveGateway>
+<bpmn:scriptTask id="S_test" name="Lokalni test na golem naslovu: slot 3x in sonda">
+<bpmn:incoming>F16</bpmn:incoming>
+<bpmn:outgoing>F17</bpmn:outgoing>
+</bpmn:scriptTask>
+<bpmn:serviceTask id="T_presodi" name="Faza 3: presodi iz polnega besedila odgovorov">
+<bpmn:incoming>F17</bpmn:incoming>
+<bpmn:outgoing>F18</bpmn:outgoing>
+</bpmn:serviceTask>
+<bpmn:exclusiveGateway id="G_test" name="3 od 3 in sonda čista?">
+<bpmn:incoming>F18</bpmn:incoming>
+<bpmn:outgoing>F19</bpmn:outgoing>
+<bpmn:outgoing>F20</bpmn:outgoing>
+</bpmn:exclusiveGateway>
+<bpmn:serviceTask id="T_tema" name="Slot pod 3 od 3 ali zadet s sondo: druga tema">
+<bpmn:incoming>F20</bpmn:incoming>
+<bpmn:outgoing>F21</bpmn:outgoing>
+</bpmn:serviceTask>
+<bpmn:serviceTask id="T4" name="Faza 4: v dosje vpiši slote, napake in pogoje">
+<bpmn:incoming>F19</bpmn:incoming>
+<bpmn:outgoing>F22</bpmn:outgoing>
+<bpmn:dataOutputAssociation id="DOA_dosje"><bpmn:targetRef>DS_dosje</bpmn:targetRef></bpmn:dataOutputAssociation>
+</bpmn:serviceTask>
+<bpmn:serviceTask id="T5" name="Faza 5: aktualen odločevalec, isti človek, en dotik">
+<bpmn:incoming>F22</bpmn:incoming>
+<bpmn:outgoing>F23</bpmn:outgoing>
+</bpmn:serviceTask>
+<bpmn:scriptTask id="S_skrapp" name="Skrapp: preveri naslov z izmišljeno kontrolo">
+<bpmn:incoming>F23</bpmn:incoming>
+<bpmn:outgoing>F24</bpmn:outgoing>
+</bpmn:scriptTask>
+<bpmn:exclusiveGateway id="G_mail" name="Osebni naslov dokazan?">
+<bpmn:incoming>F24</bpmn:incoming>
+<bpmn:outgoing>F25</bpmn:outgoing>
+<bpmn:outgoing>F26</bpmn:outgoing>
+</bpmn:exclusiveGateway>
+<bpmn:serviceTask id="T_gen" name="Info@ odločevalca: osebni copy z imenom">
+<bpmn:incoming>F26</bpmn:incoming>
+<bpmn:outgoing>F27</bpmn:outgoing>
+</bpmn:serviceTask>
+<bpmn:exclusiveGateway id="G_m5">
+<bpmn:incoming>F25</bpmn:incoming>
+<bpmn:incoming>F27</bpmn:incoming>
+<bpmn:outgoing>F28</bpmn:outgoing>
+</bpmn:exclusiveGateway>
+<bpmn:serviceTask id="T6" name="Faza 6: prosi za ponovni izris">
+<bpmn:incoming>F28</bpmn:incoming>
+<bpmn:incoming>F35</bpmn:incoming>
+<bpmn:outgoing>F29</bpmn:outgoing>
+</bpmn:serviceTask>
+<bpmn:serviceTask id="Seje_izris" name="Seja Posebnosti: ponovni izris payloada">
+<bpmn:incoming>F29</bpmn:incoming>
+<bpmn:outgoing>F30</bpmn:outgoing>
+</bpmn:serviceTask>
+<bpmn:serviceTask id="Seje_push" name="Seja Stop in Start: osveži leade v kampanjah">
+<bpmn:incoming>F30</bpmn:incoming>
+<bpmn:outgoing>F31</bpmn:outgoing>
+</bpmn:serviceTask>
+<bpmn:scriptTask id="S_kontrole" name="Kontrole: tuje ime, dvojni dotik, zamiki sekvence">
+<bpmn:incoming>F31</bpmn:incoming>
+<bpmn:outgoing>F32</bpmn:outgoing>
+</bpmn:scriptTask>
+<bpmn:exclusiveGateway id="G_ciste" name="Kontrole čiste?">
+<bpmn:incoming>F32</bpmn:incoming>
+<bpmn:outgoing>F33</bpmn:outgoing>
+<bpmn:outgoing>F34</bpmn:outgoing>
+</bpmn:exclusiveGateway>
+<bpmn:serviceTask id="T_vzrok" name="Popravi vzrok v dosjeju">
+<bpmn:incoming>F34</bpmn:incoming>
+<bpmn:outgoing>F35</bpmn:outgoing>
+</bpmn:serviceTask>
+<bpmn:sendTask id="T_por" name="Poročilo: pripravljeni, pod pogojem, čakajo popravek">
+<bpmn:incoming>F33</bpmn:incoming>
+<bpmn:outgoing>F36</bpmn:outgoing>
+</bpmn:sendTask>
+<bpmn:userTask id="U_batch" name="Presek z Excelom: kdo gre v batch, start">
+<bpmn:incoming>F36</bpmn:incoming>
+<bpmn:outgoing>F37</bpmn:outgoing>
+</bpmn:userTask>
+<bpmn:endEvent id="End_ok" name="Hotel pripravljen za batch">
+<bpmn:incoming>F37</bpmn:incoming>
+</bpmn:endEvent>
+<bpmn:sequenceFlow id="F0" sourceRef="Start" targetRef="T0"/>
+<bpmn:sequenceFlow id="F1" sourceRef="T0" targetRef="G0"/>
+<bpmn:sequenceFlow id="F2" name="da" sourceRef="G0" targetRef="T1"/>
+<bpmn:sequenceFlow id="F3" name="ne" sourceRef="G0" targetRef="End_ne0"/>
+<bpmn:sequenceFlow id="F4" sourceRef="T1" targetRef="G1"/>
+<bpmn:sequenceFlow id="F5" name="popravljen" sourceRef="G1" targetRef="G_vrsta"/>
+<bpmn:sequenceFlow id="F6" name="napake" sourceRef="G1" targetRef="T_javi"/>
+<bpmn:sequenceFlow id="F7" sourceRef="T_javi" targetRef="End_caka"/>
+<bpmn:sequenceFlow id="F8" name="Scrape" sourceRef="G_vrsta" targetRef="T2s"/>
+<bpmn:sequenceFlow id="F9" name="Index" sourceRef="G_vrsta" targetRef="T2i"/>
+<bpmn:sequenceFlow id="F10" sourceRef="T2s" targetRef="G_m2"/>
+<bpmn:sequenceFlow id="F11" sourceRef="T2i" targetRef="G_m2"/>
+<bpmn:sequenceFlow id="F12" sourceRef="G_m2" targetRef="G_dvom"/>
+<bpmn:sequenceFlow id="F13" name="da" sourceRef="G_dvom" targetRef="U_odloci"/>
+<bpmn:sequenceFlow id="F14" name="ne" sourceRef="G_dvom" targetRef="G_m3"/>
+<bpmn:sequenceFlow id="F15" sourceRef="U_odloci" targetRef="G_m3"/>
+<bpmn:sequenceFlow id="F16" sourceRef="G_m3" targetRef="S_test"/>
+<bpmn:sequenceFlow id="F17" sourceRef="S_test" targetRef="T_presodi"/>
+<bpmn:sequenceFlow id="F18" sourceRef="T_presodi" targetRef="G_test"/>
+<bpmn:sequenceFlow id="F19" name="da" sourceRef="G_test" targetRef="T4"/>
+<bpmn:sequenceFlow id="F20" name="ne" sourceRef="G_test" targetRef="T_tema"/>
+<bpmn:sequenceFlow id="F21" sourceRef="T_tema" targetRef="G_m3"/>
+<bpmn:sequenceFlow id="F22" sourceRef="T4" targetRef="T5"/>
+<bpmn:sequenceFlow id="F23" sourceRef="T5" targetRef="S_skrapp"/>
+<bpmn:sequenceFlow id="F24" sourceRef="S_skrapp" targetRef="G_mail"/>
+<bpmn:sequenceFlow id="F25" name="da" sourceRef="G_mail" targetRef="G_m5"/>
+<bpmn:sequenceFlow id="F26" name="ne" sourceRef="G_mail" targetRef="T_gen"/>
+<bpmn:sequenceFlow id="F27" sourceRef="T_gen" targetRef="G_m5"/>
+<bpmn:sequenceFlow id="F28" sourceRef="G_m5" targetRef="T6"/>
+<bpmn:sequenceFlow id="F29" sourceRef="T6" targetRef="Seje_izris"/>
+<bpmn:sequenceFlow id="F30" sourceRef="Seje_izris" targetRef="Seje_push"/>
+<bpmn:sequenceFlow id="F31" sourceRef="Seje_push" targetRef="S_kontrole"/>
+<bpmn:sequenceFlow id="F32" sourceRef="S_kontrole" targetRef="G_ciste"/>
+<bpmn:sequenceFlow id="F33" name="da" sourceRef="G_ciste" targetRef="T_por"/>
+<bpmn:sequenceFlow id="F34" name="ne" sourceRef="G_ciste" targetRef="T_vzrok"/>
+<bpmn:sequenceFlow id="F35" sourceRef="T_vzrok" targetRef="T6"/>
+<bpmn:sequenceFlow id="F36" sourceRef="T_por" targetRef="U_batch"/>
+<bpmn:sequenceFlow id="F37" sourceRef="U_batch" targetRef="End_ok"/>
+<bpmn:dataStoreReference id="DS_dosje" name="Dosje Dream 100"/>
+<bpmn:group id="Grp_0" categoryValueRef="CV_0"/>
+<bpmn:group id="Grp_1" categoryValueRef="CV_1"/>
+<bpmn:group id="Grp_2" categoryValueRef="CV_2"/>
+<bpmn:group id="Grp_3" categoryValueRef="CV_3"/>
+<bpmn:group id="Grp_4" categoryValueRef="CV_4"/>
+<bpmn:group id="Grp_5" categoryValueRef="CV_5"/>
+<bpmn:group id="Grp_6" categoryValueRef="CV_6"/>
+</bpmn:process>
+<bpmndi:BPMNDiagram id="Diagram_tereza"><bpmndi:BPMNPlane id="Plane_tereza" bpmnElement="Kolaboracija">
+<bpmndi:BPMNShape id="P_nevron_di" bpmnElement="P_nevron" isHorizontal="true"><dc:Bounds x="20" y="20" width="3772" height="786"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="L_matjaz_di" bpmnElement="L_matjaz" isHorizontal="true"><dc:Bounds x="50" y="20" width="3742" height="136"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="L_seje_di" bpmnElement="L_seje" isHorizontal="true"><dc:Bounds x="50" y="156" width="3742" height="130"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="L_sistem_di" bpmnElement="L_sistem" isHorizontal="true"><dc:Bounds x="50" y="286" width="3742" height="140"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="L_tereza_di" bpmnElement="L_tereza" isHorizontal="true"><dc:Bounds x="50" y="426" width="3742" height="380"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="P_amadej_di" bpmnElement="P_amadej" isHorizontal="true"><dc:Bounds x="20" y="856" width="3772" height="70"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="Grp_0_di" bpmnElement="Grp_0"><dc:Bounds x="249" y="24" width="266" height="778"/><bpmndi:BPMNLabel><dc:Bounds x="255" y="28" width="254" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="Grp_1_di" bpmnElement="Grp_1"><dc:Bounds x="521" y="24" width="402" height="778"/><bpmndi:BPMNLabel><dc:Bounds x="527" y="28" width="390" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="Grp_2_di" bpmnElement="Grp_2"><dc:Bounds x="929" y="24" width="674" height="778"/><bpmndi:BPMNLabel><dc:Bounds x="935" y="28" width="662" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="Grp_3_di" bpmnElement="Grp_3"><dc:Bounds x="1609" y="24" width="402" height="778"/><bpmndi:BPMNLabel><dc:Bounds x="1615" y="28" width="390" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="Grp_4_di" bpmnElement="Grp_4"><dc:Bounds x="2017" y="24" width="130" height="778"/><bpmndi:BPMNLabel><dc:Bounds x="2023" y="28" width="118" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="Grp_5_di" bpmnElement="Grp_5"><dc:Bounds x="2153" y="24" width="538" height="778"/><bpmndi:BPMNLabel><dc:Bounds x="2159" y="28" width="526" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="Grp_6_di" bpmnElement="Grp_6"><dc:Bounds x="2697" y="24" width="810" height="778"/><bpmndi:BPMNLabel><dc:Bounds x="2703" y="28" width="798" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="Start_di" bpmnElement="Start"><dc:Bounds x="160" y="493" width="36" height="36"/><bpmndi:BPMNLabel><dc:Bounds x="130" y="461" width="96" height="27"/></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="T0_di" bpmnElement="T0" bioc:stroke="#1B92FF" bioc:fill="#E1F4FF" color:border-color="#1B92FF" color:background-color="#E1F4FF"><dc:Bounds x="256" y="463" width="116" height="96"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="G0_di" bpmnElement="G0"><dc:Bounds x="425" y="486" width="50" height="50"/><bpmndi:BPMNLabel><dc:Bounds x="402" y="540" width="96" height="27"/></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="End_ne0_di" bpmnElement="End_ne0"><dc:Bounds x="432" y="613" width="36" height="36"/><bpmndi:BPMNLabel><dc:Bounds x="402" y="653" width="96" height="27"/></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="T1_di" bpmnElement="T1" bioc:stroke="#1B92FF" bioc:fill="#E1F4FF" color:border-color="#1B92FF" color:background-color="#E1F4FF"><dc:Bounds x="528" y="463" width="116" height="96"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="G1_di" bpmnElement="G1"><dc:Bounds x="697" y="486" width="50" height="50"/><bpmndi:BPMNLabel><dc:Bounds x="674" y="454" width="96" height="27"/></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="T_javi_di" bpmnElement="T_javi" bioc:stroke="#1B92FF" bioc:fill="#E1F4FF" color:border-color="#1B92FF" color:background-color="#E1F4FF"><dc:Bounds x="664" y="698" width="116" height="96"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="End_caka_di" bpmnElement="End_caka"><dc:Bounds x="840" y="728" width="36" height="36"/><bpmndi:BPMNLabel><dc:Bounds x="810" y="768" width="96" height="27"/></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="G_vrsta_di" bpmnElement="G_vrsta"><dc:Bounds x="969" y="486" width="50" height="50"/><bpmndi:BPMNLabel><dc:Bounds x="946" y="454" width="96" height="27"/></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="T2s_di" bpmnElement="T2s" bioc:stroke="#1B92FF" bioc:fill="#E1F4FF" color:border-color="#1B92FF" color:background-color="#E1F4FF"><dc:Bounds x="1072" y="463" width="116" height="96"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="T2i_di" bpmnElement="T2i" bioc:stroke="#1B92FF" bioc:fill="#E1F4FF" color:border-color="#1B92FF" color:background-color="#E1F4FF"><dc:Bounds x="1072" y="583" width="116" height="96"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="G_m2_di" bpmnElement="G_m2"><dc:Bounds x="1241" y="486" width="50" height="50"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="G_dvom_di" bpmnElement="G_dvom"><dc:Bounds x="1377" y="486" width="50" height="50"/><bpmndi:BPMNLabel><dc:Bounds x="1354" y="540" width="96" height="27"/></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="U_odloci_di" bpmnElement="U_odloci" bioc:stroke="#DA2025" bioc:fill="#FFF0F0" color:border-color="#DA2025" color:background-color="#FFF0F0"><dc:Bounds x="1344" y="44" width="116" height="96"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="G_m3_di" bpmnElement="G_m3"><dc:Bounds x="1513" y="486" width="50" height="50"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="S_test_di" bpmnElement="S_test" bioc:stroke="#707379" bioc:fill="#F4F5F5" color:border-color="#707379" color:background-color="#F4F5F5"><dc:Bounds x="1616" y="308" width="116" height="96"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="T_presodi_di" bpmnElement="T_presodi" bioc:stroke="#1B92FF" bioc:fill="#E1F4FF" color:border-color="#1B92FF" color:background-color="#E1F4FF"><dc:Bounds x="1752" y="463" width="116" height="96"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="G_test_di" bpmnElement="G_test"><dc:Bounds x="1921" y="486" width="50" height="50"/><bpmndi:BPMNLabel><dc:Bounds x="1898" y="454" width="96" height="27"/></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="T_tema_di" bpmnElement="T_tema" bioc:stroke="#1B92FF" bioc:fill="#E1F4FF" color:border-color="#1B92FF" color:background-color="#E1F4FF"><dc:Bounds x="1888" y="583" width="116" height="96"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="T4_di" bpmnElement="T4" bioc:stroke="#1B92FF" bioc:fill="#E1F4FF" color:border-color="#1B92FF" color:background-color="#E1F4FF"><dc:Bounds x="2024" y="463" width="116" height="96"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="T5_di" bpmnElement="T5" bioc:stroke="#1B92FF" bioc:fill="#E1F4FF" color:border-color="#1B92FF" color:background-color="#E1F4FF"><dc:Bounds x="2160" y="463" width="116" height="96"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="S_skrapp_di" bpmnElement="S_skrapp" bioc:stroke="#707379" bioc:fill="#F4F5F5" color:border-color="#707379" color:background-color="#F4F5F5"><dc:Bounds x="2296" y="308" width="116" height="96"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="G_mail_di" bpmnElement="G_mail"><dc:Bounds x="2465" y="486" width="50" height="50"/><bpmndi:BPMNLabel><dc:Bounds x="2442" y="454" width="96" height="27"/></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="T_gen_di" bpmnElement="T_gen" bioc:stroke="#1B92FF" bioc:fill="#E1F4FF" color:border-color="#1B92FF" color:background-color="#E1F4FF"><dc:Bounds x="2432" y="583" width="116" height="96"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="G_m5_di" bpmnElement="G_m5"><dc:Bounds x="2601" y="486" width="50" height="50"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="T6_di" bpmnElement="T6" bioc:stroke="#1B92FF" bioc:fill="#E1F4FF" color:border-color="#1B92FF" color:background-color="#E1F4FF"><dc:Bounds x="2704" y="463" width="116" height="96"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="Seje_izris_di" bpmnElement="Seje_izris" bioc:stroke="#1B92FF" bioc:fill="#E1F4FF" color:border-color="#1B92FF" color:background-color="#E1F4FF"><dc:Bounds x="2840" y="173" width="116" height="96"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="Seje_push_di" bpmnElement="Seje_push" bioc:stroke="#1B92FF" bioc:fill="#E1F4FF" color:border-color="#1B92FF" color:background-color="#E1F4FF"><dc:Bounds x="2976" y="173" width="116" height="96"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="S_kontrole_di" bpmnElement="S_kontrole" bioc:stroke="#707379" bioc:fill="#F4F5F5" color:border-color="#707379" color:background-color="#F4F5F5"><dc:Bounds x="3112" y="308" width="116" height="96"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="G_ciste_di" bpmnElement="G_ciste"><dc:Bounds x="3281" y="486" width="50" height="50"/><bpmndi:BPMNLabel><dc:Bounds x="3258" y="454" width="96" height="27"/></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="T_vzrok_di" bpmnElement="T_vzrok" bioc:stroke="#1B92FF" bioc:fill="#E1F4FF" color:border-color="#1B92FF" color:background-color="#E1F4FF"><dc:Bounds x="3248" y="583" width="116" height="96"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="T_por_di" bpmnElement="T_por" bioc:stroke="#1B92FF" bioc:fill="#E1F4FF" color:border-color="#1B92FF" color:background-color="#E1F4FF"><dc:Bounds x="3384" y="463" width="116" height="96"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="U_batch_di" bpmnElement="U_batch" bioc:stroke="#DA2025" bioc:fill="#FFF0F0" color:border-color="#DA2025" color:background-color="#FFF0F0"><dc:Bounds x="3520" y="44" width="116" height="96"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="End_ok_di" bpmnElement="End_ok"><dc:Bounds x="3696" y="74" width="36" height="36"/><bpmndi:BPMNLabel><dc:Bounds x="3666" y="114" width="96" height="27"/></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="DS_dosje_di" bpmnElement="DS_dosje"><dc:Bounds x="2057" y="606" width="50" height="50"/><bpmndi:BPMNLabel><dc:Bounds x="2047" y="660" width="70" height="27"/></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+<bpmndi:BPMNEdge id="DOA_dosje_di" bpmnElement="DOA_dosje"><di:waypoint x="2082" y="559"/><di:waypoint x="2082" y="606"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F0_di" bpmnElement="F0"><di:waypoint x="196" y="511"/><di:waypoint x="256" y="511"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F1_di" bpmnElement="F1"><di:waypoint x="372" y="511"/><di:waypoint x="425" y="511"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F2_di" bpmnElement="F2"><di:waypoint x="475" y="511"/><di:waypoint x="528" y="511"/><bpmndi:BPMNLabel><dc:Bounds x="481" y="494" width="19" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F3_di" bpmnElement="F3"><di:waypoint x="450" y="536"/><di:waypoint x="450" y="613"/><bpmndi:BPMNLabel><dc:Bounds x="455" y="568" width="19" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F4_di" bpmnElement="F4"><di:waypoint x="644" y="511"/><di:waypoint x="697" y="511"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F5_di" bpmnElement="F5"><di:waypoint x="747" y="511"/><di:waypoint x="969" y="511"/><bpmndi:BPMNLabel><dc:Bounds x="753" y="494" width="64" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F6_di" bpmnElement="F6"><di:waypoint x="722" y="536"/><di:waypoint x="722" y="698"/><bpmndi:BPMNLabel><dc:Bounds x="727" y="610" width="41" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F7_di" bpmnElement="F7"><di:waypoint x="780" y="746"/><di:waypoint x="840" y="746"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F8_di" bpmnElement="F8"><di:waypoint x="1019" y="511"/><di:waypoint x="1072" y="511"/><bpmndi:BPMNLabel><dc:Bounds x="1025" y="494" width="41" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F9_di" bpmnElement="F9"><di:waypoint x="994" y="536"/><di:waypoint x="994" y="631"/><di:waypoint x="1072" y="631"/><bpmndi:BPMNLabel><dc:Bounds x="999" y="576" width="36" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F10_di" bpmnElement="F10"><di:waypoint x="1188" y="511"/><di:waypoint x="1241" y="511"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F11_di" bpmnElement="F11"><di:waypoint x="1188" y="631"/><di:waypoint x="1266" y="631"/><di:waypoint x="1266" y="536"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F12_di" bpmnElement="F12"><di:waypoint x="1291" y="511"/><di:waypoint x="1377" y="511"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F13_di" bpmnElement="F13"><di:waypoint x="1402" y="486"/><di:waypoint x="1402" y="140"/><bpmndi:BPMNLabel><dc:Bounds x="1407" y="306" width="19" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F14_di" bpmnElement="F14"><di:waypoint x="1427" y="511"/><di:waypoint x="1513" y="511"/><bpmndi:BPMNLabel><dc:Bounds x="1433" y="494" width="19" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F15_di" bpmnElement="F15"><di:waypoint x="1460" y="92"/><di:waypoint x="1538" y="92"/><di:waypoint x="1538" y="486"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F16_di" bpmnElement="F16"><di:waypoint x="1563" y="511"/><di:waypoint x="1590" y="511"/><di:waypoint x="1590" y="356"/><di:waypoint x="1616" y="356"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F17_di" bpmnElement="F17"><di:waypoint x="1732" y="356"/><di:waypoint x="1742" y="356"/><di:waypoint x="1742" y="511"/><di:waypoint x="1752" y="511"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F18_di" bpmnElement="F18"><di:waypoint x="1868" y="511"/><di:waypoint x="1921" y="511"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F19_di" bpmnElement="F19"><di:waypoint x="1971" y="511"/><di:waypoint x="2024" y="511"/><bpmndi:BPMNLabel><dc:Bounds x="1977" y="494" width="19" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F20_di" bpmnElement="F20"><di:waypoint x="1946" y="536"/><di:waypoint x="1946" y="583"/><bpmndi:BPMNLabel><dc:Bounds x="1951" y="552" width="19" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F21_di" bpmnElement="F21"><di:waypoint x="1946" y="679"/><di:waypoint x="1946" y="746"/><di:waypoint x="1538" y="746"/><di:waypoint x="1538" y="536"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F22_di" bpmnElement="F22"><di:waypoint x="2140" y="511"/><di:waypoint x="2160" y="511"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F23_di" bpmnElement="F23"><di:waypoint x="2276" y="511"/><di:waypoint x="2286" y="511"/><di:waypoint x="2286" y="356"/><di:waypoint x="2296" y="356"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F24_di" bpmnElement="F24"><di:waypoint x="2412" y="356"/><di:waypoint x="2438" y="356"/><di:waypoint x="2438" y="511"/><di:waypoint x="2465" y="511"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F25_di" bpmnElement="F25"><di:waypoint x="2515" y="511"/><di:waypoint x="2601" y="511"/><bpmndi:BPMNLabel><dc:Bounds x="2521" y="494" width="19" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F26_di" bpmnElement="F26"><di:waypoint x="2490" y="536"/><di:waypoint x="2490" y="583"/><bpmndi:BPMNLabel><dc:Bounds x="2495" y="552" width="19" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F27_di" bpmnElement="F27"><di:waypoint x="2548" y="631"/><di:waypoint x="2626" y="631"/><di:waypoint x="2626" y="536"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F28_di" bpmnElement="F28"><di:waypoint x="2651" y="511"/><di:waypoint x="2704" y="511"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F29_di" bpmnElement="F29"><di:waypoint x="2820" y="511"/><di:waypoint x="2830" y="511"/><di:waypoint x="2830" y="221"/><di:waypoint x="2840" y="221"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F30_di" bpmnElement="F30"><di:waypoint x="2956" y="221"/><di:waypoint x="2976" y="221"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F31_di" bpmnElement="F31"><di:waypoint x="3092" y="221"/><di:waypoint x="3102" y="221"/><di:waypoint x="3102" y="356"/><di:waypoint x="3112" y="356"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F32_di" bpmnElement="F32"><di:waypoint x="3228" y="356"/><di:waypoint x="3254" y="356"/><di:waypoint x="3254" y="511"/><di:waypoint x="3281" y="511"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F33_di" bpmnElement="F33"><di:waypoint x="3331" y="511"/><di:waypoint x="3384" y="511"/><bpmndi:BPMNLabel><dc:Bounds x="3337" y="494" width="19" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F34_di" bpmnElement="F34"><di:waypoint x="3306" y="536"/><di:waypoint x="3306" y="583"/><bpmndi:BPMNLabel><dc:Bounds x="3311" y="552" width="19" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F35_di" bpmnElement="F35"><di:waypoint x="3306" y="679"/><di:waypoint x="3306" y="746"/><di:waypoint x="2762" y="746"/><di:waypoint x="2762" y="559"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F36_di" bpmnElement="F36"><di:waypoint x="3500" y="511"/><di:waypoint x="3578" y="511"/><di:waypoint x="3578" y="140"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F37_di" bpmnElement="F37"><di:waypoint x="3636" y="92"/><di:waypoint x="3696" y="92"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="M_povezava_di" bpmnElement="M_povezava"><di:waypoint x="178" y="856"/><di:waypoint x="178" y="529"/><bpmndi:BPMNLabel><dc:Bounds x="184" y="686" width="80" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="M_napake_di" bpmnElement="M_napake"><di:waypoint x="722" y="794"/><di:waypoint x="722" y="856"/><bpmndi:BPMNLabel><dc:Bounds x="728" y="818" width="75" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="M_porocilo_di" bpmnElement="M_porocilo"><di:waypoint x="3442" y="559"/><di:waypoint x="3442" y="856"/><bpmndi:BPMNLabel><dc:Bounds x="3356" y="700" width="80" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+</bpmndi:BPMNPlane></bpmndi:BPMNDiagram>
+</bpmn:definitions>
