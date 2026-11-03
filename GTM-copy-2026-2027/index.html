@@ -249,6 +249,11 @@ footer{color:var(--mut);font-size:12.5px;text-align:center;padding:20px}
 <a class='kaz' href='#si--linkedin-povabilo-4-sporocila--k2-index-profil-matjaz-ali-amadej' data-id='si--linkedin-povabilo-4-sporocila--k2-index-profil-matjaz-ali-amadej'><i></i><span class='lbl'>K2 Index (profil: Matjaž ali Amadej)</span></a>
 <a class='kaz' href='#si--linkedin-povabilo-4-sporocila--k3-vsi-jeziki-profil-rok' data-id='si--linkedin-povabilo-4-sporocila--k3-vsi-jeziki-profil-rok'><i></i><span class='lbl'>K3 Vsi jeziki (profil: Rok)</span></a>
 <a class='kaz' href='#si--linkedin-povabilo-4-sporocila--k4-revenue-profil-matjaz-ali-amadej' data-id='si--linkedin-povabilo-4-sporocila--k4-revenue-profil-matjaz-ali-amadej'><i></i><span class='lbl'>K4 Revenue (profil: Matjaž ali Amadej)</span></a>
+<div class='kaz-sek'>OSNUTEK, čaka Matjažev DA: LinkedIn · Rok Kokalj · že povezani z Rokom (custom scrape demo z vodenim ogledom) <span class='kot'>novi časi</span></div>
+<a class='kaz' href='#si--osnutek-caka-matjazev-da-linkedin-rok-kokalj-ze-povezani-z-r--sporocilo-1-3-ure-po-startu' data-id='si--osnutek-caka-matjazev-da-linkedin-rok-kokalj-ze-povezani-z-r--sporocilo-1-3-ure-po-startu'><i></i><span class='lbl'>Sporočilo 1 · 3 ure po startu</span></a>
+<a class='kaz' href='#si--osnutek-caka-matjazev-da-linkedin-rok-kokalj-ze-povezani-z-r--sporocilo-2-dan-3-3-dni' data-id='si--osnutek-caka-matjazev-da-linkedin-rok-kokalj-ze-povezani-z-r--sporocilo-2-dan-3-3-dni'><i></i><span class='lbl'>Sporočilo 2 · dan 3 (+3 dni)</span></a>
+<a class='kaz' href='#si--osnutek-caka-matjazev-da-linkedin-rok-kokalj-ze-povezani-z-r--sporocilo-3-dan-6-3-dni' data-id='si--osnutek-caka-matjazev-da-linkedin-rok-kokalj-ze-povezani-z-r--sporocilo-3-dan-6-3-dni'><i></i><span class='lbl'>Sporočilo 3 · dan 6 (+3 dni)</span></a>
+<a class='kaz' href='#si--osnutek-caka-matjazev-da-linkedin-rok-kokalj-ze-povezani-z-r--sporocilo-4-dan-9-3-dni-zakljucek' data-id='si--osnutek-caka-matjazev-da-linkedin-rok-kokalj-ze-povezani-z-r--sporocilo-4-dan-9-3-dni-zakljucek'><i></i><span class='lbl'>Sporočilo 4 · dan 9 (+3 dni) · zaključek</span></a>
 </details>
 <details class='kaz-trg' id='kaz-ost-si'><summary><svg class="zas" viewBox="0 0 18 12" xmlns="http://www.w3.org/2000/svg"><rect width="18" height="12" fill="#fff"/><rect y="4" width="18" height="4" fill="#005DA4"/><rect y="8" width="18" height="4" fill="#ED1C24"/><rect x="3.2" y="1.9" width="3.4" height="4.2" rx="1" fill="#005DA4"/><path d="M3.6 4.8 L4.9 3.2 L6.2 4.8 Z" fill="#fff"/></svg><span class='kaz-ime'>Slovenija · Ostali</span><span class='kaz-stat' data-trg='ost-si'></span></summary>
 <div class='kaz-sek'>K1 s tenantom · Dream 100 copy</div>
@@ -2349,6 +2354,69 @@ footer{color:var(--mut);font-size:12.5px;text-align:center;padding:20px}
 <p><strong>Sporočilo 3 (~dan 11):</strong><br><span class="tok">{firstName}</span>, še ena številka za konec: desetinka točke na Bookingu premakne ceno sobe čez celo sezono (Cornell, STR). Kje jo vaš hotel pušča, piše v pregledu: <span class="tok">{index_url}</span></p>
 <p><strong>Sporočilo 4 · breakup (~dan 14):</strong><br><span class="tok">{firstName}</span>, za zdaj se umikam, ponudba pa ostane ista kot v mailu: ena beseda, "ocena", "prodaja" ali "ure", in pošljem samo tisto. Pregled ostane vaš: <span class="tok">{index_url}</span>. Sicer pa hvala za povezavo.</p></div>
   <textarea class="fb-kom" data-id="si--linkedin-povabilo-4-sporocila--k4-revenue-profil-matjaz-ali-amadej" placeholder="Komentar (npr. skrajšaj drugi odstavek, drugačna zadeva ...)" oninput="fbKom('si--linkedin-povabilo-4-sporocila--k4-revenue-profil-matjaz-ali-amadej',this.value)"></textarea>
+</div>
+<h3 id='si--osnutek-caka-matjazev-da-linkedin-rok-kokalj-ze-povezani-z-r'>OSNUTEK, čaka Matjažev DA: LinkedIn · Rok Kokalj · že povezani z Rokom (custom scrape demo z vodenim ogledom)</h3>
+<div class='sek-intro'><p><strong>Status: OSNUTEK. Ni v nobeni kampanji in ne gre ven brez Matjaževega DA za vsako sporočilo.</strong> Prošnja seje Stop in Start kampanj, 3. 11. 2026.</p>
+<p>Pošilja Rok Kokalj z LinkedIn računa. Prejemniki so že povezani z Rokom (16 oseb pri 13 hotelih), zato ni povabila in ni zahvale za povezavo. Štiri sporočila: prvo 3 ure po startu, nato vsaka 3 dni (dan 0, 3, 6, 9). Variable: <span class="tok">{firstName}</span> (imenovalnik, zato na začetku stavka) in <span class="tok">{demo_url}</span> (src=li doda render). <span class="tok">{hotel_name}</span> je namenoma izpuščen: glagol bi se moral ujemati s spolom in številom imena (Hotel, Vila, Terme), pravilo 14 pa dovoli samo imenovalnik. Če želiš ime hotela, je možnost v Sporočilu 1 "ki smo ga pripravili za <span class="tok">{hotel_name}</span>" namesto "za vaš hotel": renderer K1 (<code>payload_k1_si.zetoni</code>) to izriše kot "za hotel &lt;ime&gt;", a nov copy po pravilu 14 rabi samo imenovalnik in ni gotovo, da gre ta kampanja skozi isti renderer.</p>
+<p>Pred DA preveri: (1) vseh 16 je prejelo Rokovo K1 Scrape LinkedIn Sporočilo 4, sicer prvi stavek Sporočila 1 zanje ne drži; (2) povezava je predogled tega hotela, vodeni ogled se zažene sam in velja vsaj do dneva 9.</p>
+<p>Kako popraviti: pri sporočilu klikni Popravi in v komentar napiši novo besedilo ali pripombo, nato Izvoz in prilepi v sejo Copy. Ta popravi master in znova objavi stran.</p></div>
+
+<div class="blok" id="si--osnutek-caka-matjazev-da-linkedin-rok-kokalj-ze-povezani-z-r--sporocilo-1-3-ure-po-startu" data-h="855f8a7f86">
+  <div class="blok-glava"><h4>Sporočilo 1 · 3 ure po startu</h4>
+    <div class="fb">
+      <button class="fb-ok" onclick="fbSet('si--osnutek-caka-matjazev-da-linkedin-rok-kokalj-ze-povezani-z-r--sporocilo-1-3-ure-po-startu','ok')">V redu</button>
+      <button class="fb-no" onclick="fbSet('si--osnutek-caka-matjazev-da-linkedin-rok-kokalj-ze-povezani-z-r--sporocilo-1-3-ure-po-startu','popravi')">Popravi</button>
+    </div>
+  </div>
+  <div class="vsebina"><p><span class="tok">{firstName}</span>, ko sva bila nazadnje v stiku, sem obljubil, da se spet oglasim, ko najdem kaj tako uporabnega, da bi ga bilo škoda ne deliti. Zdaj sem to našel.</p>
+<p>Predogled aplikacije za goste, ki smo ga pripravili za vaš hotel, ima vodeni ogled. Ko ga odprete, vas sam popelje skozi aplikacijo, korak za korakom.</p>
+<p><span class="tok">{demo_url}</span></p>
+<p>Povejte mi, kaj vam je ob ogledu najbolj padlo v oči.</p>
+<p><strong>Sloti:</strong> naslonitev na Rokovo obljubo iz K1 Scrape LinkedIn, Sporočilo 4 ("Spet se oglasim, ko najdem kaj tako uporabnega, da bi ga bilo škoda ne deliti."). Če so prejemniki obljubo dobili po drugem kanalu, se prvi stavek prilagodi. "Vodeni ogled" je izraz demo strani za avtomatski vodič; kaj ogled pokaže, preveri na qa- povezavi pred DA.</p></div>
+  <textarea class="fb-kom" data-id="si--osnutek-caka-matjazev-da-linkedin-rok-kokalj-ze-povezani-z-r--sporocilo-1-3-ure-po-startu" placeholder="Komentar (npr. skrajšaj drugi odstavek, drugačna zadeva ...)" oninput="fbKom('si--osnutek-caka-matjazev-da-linkedin-rok-kokalj-ze-povezani-z-r--sporocilo-1-3-ure-po-startu',this.value)"></textarea>
+</div>
+
+<div class="blok" id="si--osnutek-caka-matjazev-da-linkedin-rok-kokalj-ze-povezani-z-r--sporocilo-2-dan-3-3-dni" data-h="0e8ca93262">
+  <div class="blok-glava"><h4>Sporočilo 2 · dan 3 (+3 dni)</h4>
+    <div class="fb">
+      <button class="fb-ok" onclick="fbSet('si--osnutek-caka-matjazev-da-linkedin-rok-kokalj-ze-povezani-z-r--sporocilo-2-dan-3-3-dni','ok')">V redu</button>
+      <button class="fb-no" onclick="fbSet('si--osnutek-caka-matjazev-da-linkedin-rok-kokalj-ze-povezani-z-r--sporocilo-2-dan-3-3-dni','popravi')">Popravi</button>
+    </div>
+  </div>
+  <div class="vsebina"><p><span class="tok">{firstName}</span>, ob ogledu predlagam en preizkus. AI pomočnika vprašajte tisto, kar vas gostje na recepciji sprašujejo najpogosteje.</p>
+<p>Odgovarja na podlagi vsebine vaše spletne strani, zato hitro vidite, kaj že zna in kaj bi pred dejansko uporabo še dopolnili.</p>
+<p><span class="tok">{demo_url}</span></p>
+<p><strong>Sloti:</strong> isto dejstvo kot SI K1 E2 ("odgovarja na podlagi informacij z vaše spletne strani"); brez trditve o vedenju drugih hotelirjev (pravilo 3).</p></div>
+  <textarea class="fb-kom" data-id="si--osnutek-caka-matjazev-da-linkedin-rok-kokalj-ze-povezani-z-r--sporocilo-2-dan-3-3-dni" placeholder="Komentar (npr. skrajšaj drugi odstavek, drugačna zadeva ...)" oninput="fbKom('si--osnutek-caka-matjazev-da-linkedin-rok-kokalj-ze-povezani-z-r--sporocilo-2-dan-3-3-dni',this.value)"></textarea>
+</div>
+
+<div class="blok" id="si--osnutek-caka-matjazev-da-linkedin-rok-kokalj-ze-povezani-z-r--sporocilo-3-dan-6-3-dni" data-h="41cf610e1c">
+  <div class="blok-glava"><h4>Sporočilo 3 · dan 6 (+3 dni)</h4>
+    <div class="fb">
+      <button class="fb-ok" onclick="fbSet('si--osnutek-caka-matjazev-da-linkedin-rok-kokalj-ze-povezani-z-r--sporocilo-3-dan-6-3-dni','ok')">V redu</button>
+      <button class="fb-no" onclick="fbSet('si--osnutek-caka-matjazev-da-linkedin-rok-kokalj-ze-povezani-z-r--sporocilo-3-dan-6-3-dni','popravi')">Popravi</button>
+    </div>
+  </div>
+  <div class="vsebina"><p><span class="tok">{firstName}</span>, predogled je prvi korak. Naslednji je kratka online predstavitev z našim vodjo produkta, na kateri skupaj izberete, kaj bi v aplikaciji ohranili, kaj prilagodili vašemu hotelu in kaj še omogoča celovita platforma za goste NevronCore.</p>
+<p>Nevronova tehnologija teče v več kot 20 slovenskih hotelih.</p>
+<p>Bi bila za vas taka predstavitev smiselna?</p>
+<p><strong>Sloti:</strong> referenčni stavek je SI dokumentirana izjema (pravilo 3); predstavitev brez trajanja (pravilo 6); en CTA (pravilo 9); brez povezave na razpored (pravilo 10).</p></div>
+  <textarea class="fb-kom" data-id="si--osnutek-caka-matjazev-da-linkedin-rok-kokalj-ze-povezani-z-r--sporocilo-3-dan-6-3-dni" placeholder="Komentar (npr. skrajšaj drugi odstavek, drugačna zadeva ...)" oninput="fbKom('si--osnutek-caka-matjazev-da-linkedin-rok-kokalj-ze-povezani-z-r--sporocilo-3-dan-6-3-dni',this.value)"></textarea>
+</div>
+
+<div class="blok" id="si--osnutek-caka-matjazev-da-linkedin-rok-kokalj-ze-povezani-z-r--sporocilo-4-dan-9-3-dni-zakljucek" data-h="5f4186c8bb">
+  <div class="blok-glava"><h4>Sporočilo 4 · dan 9 (+3 dni) · zaključek</h4>
+    <div class="fb">
+      <button class="fb-ok" onclick="fbSet('si--osnutek-caka-matjazev-da-linkedin-rok-kokalj-ze-povezani-z-r--sporocilo-4-dan-9-3-dni-zakljucek','ok')">V redu</button>
+      <button class="fb-no" onclick="fbSet('si--osnutek-caka-matjazev-da-linkedin-rok-kokalj-ze-povezani-z-r--sporocilo-4-dan-9-3-dni-zakljucek','popravi')">Popravi</button>
+    </div>
+  </div>
+  <div class="vsebina"><p><span class="tok">{firstName}</span>, zdaj se za nekaj časa umaknem iz najinega pogovora.</p>
+<p>Predogled z vodenim ogledom ostane na povezavi:</p>
+<p><span class="tok">{demo_url}</span></p>
+<p>Ko bo za vas pravi trenutek, mi samo napišite.</p>
+<p><strong>Sloti:</strong> mehki umik samo v zadnjem dotiku (pravilo 11), brez dovršnosti in brez ponujanja zavrnitve (pravilo 8). "Ostane na povezavi" velja le, če vodeni ogled ne poteče pred tem dnem: rok veljavnosti ogleda preveri pri Amadeju pred startom (splošni ogled na demo strani poteče 21. 11. 2026).</p></div>
+  <textarea class="fb-kom" data-id="si--osnutek-caka-matjazev-da-linkedin-rok-kokalj-ze-povezani-z-r--sporocilo-4-dan-9-3-dni-zakljucek" placeholder="Komentar (npr. skrajšaj drugi odstavek, drugačna zadeva ...)" oninput="fbKom('si--osnutek-caka-matjazev-da-linkedin-rok-kokalj-ze-povezani-z-r--sporocilo-4-dan-9-3-dni-zakljucek',this.value)"></textarea>
 </div>
 </section>
 <section class='trg' id='trg-ost-si'>
@@ -8008,7 +8076,7 @@ footer{color:var(--mut);font-size:12.5px;text-align:center;padding:20px}
 <button onclick="document.getElementById('izvoz-okno').style.display='none'">Zapri</button>
 </div>
 </div>
-<footer>Nevron Cold outreach 2026/2027 · interni osnutek · stran je zunaj iskalnikov (noindex) · zgrajeno 2. 11. 2026</footer>
+<footer>Nevron Cold outreach 2026/2027 · interni osnutek · stran je zunaj iskalnikov (noindex) · zgrajeno 3. 11. 2026</footer>
 <script>
 const KLJUC='gtmcopy_feedback_v1';
 let FB={};
