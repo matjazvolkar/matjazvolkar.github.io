@@ -14,7 +14,7 @@
       ],
       "kanali": [
         {"id": "sdr_hladni_klici", "ime": "SDR hladni klici"},
-        {"id": "sdr_topli_klici", "ime": "SDR topli klici"}
+        {"id": "sdr_followup_klici", "ime": "SDR follow-up klici"}
       ]
     },
     {
