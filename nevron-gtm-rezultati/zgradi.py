@@ -112,7 +112,7 @@ PREDLOGA = """<!doctype html>
 <meta name="robots" content="noindex, nofollow">
 <meta http-equiv="refresh" content="900">
 <title>@@NASLOV@@</title>
-<meta name="description" content="Nevron GTM rezultati po kanalih: opens, reads, clicks, demos booked, AE follow-up in wins od prve pomladne kampanje 2026.">
+<meta name="description" content="GTM rezultati po kanalih: opens, reads, clicks, demos booked, AE follow-up in wins od prve pomladne kampanje 2026.">
 <meta name="color-scheme" content="dark">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2000 2000'><rect width='2000' height='2000' rx='340' fill='%23000126'/><path fill='%231B92FF' d='M1681.3,693.4h197.8V98.8h-594.7v197.8h396.9V693.4z M296.7,1284.3H98.9V1879h594.7v-197.8H296.7V1284.3z'/><path fill='%231B92FF' d='M1879.1,1284.3h-197.8v310.2L296.7,98.8H98.9v594.7h197.8V381.6L1681.3,1879h197.8L1879.1,1284.3z'/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -193,7 +193,7 @@ PREDLOGA = """<!doctype html>
   .cell { justify-content: flex-end; }
   .figure {
     font-weight: 700; font-variant-numeric: tabular-nums lining-nums;
-    font-size: calc(var(--u) * 5.4); line-height: 1; letter-spacing: -0.015em;
+    font-size: calc(var(--u) * 4.9); line-height: 1; letter-spacing: -0.015em;
     color: var(--text); white-space: nowrap;
   }
   .opomba { margin: calc(var(--u) * -0.8) 0 0; font-size: calc(var(--u) * 1.45); line-height: 1.4; color: var(--text-dim); }
