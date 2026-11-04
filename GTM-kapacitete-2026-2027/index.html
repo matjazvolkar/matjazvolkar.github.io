@@ -1104,6 +1104,7 @@
   .nac1 tr.val td.kam b { font-size: 0.88rem; }
   .nac1 tr.val td.n { font-size: 1.05rem; }
   .nac1 tr.val .traj b { font-size: 0.86rem; font-weight: 700; }
+  .nac1 tr.val.izven td:not(.ch) { background: transparent; } .nac1 tr.val.izven td.n, .nac1 tr.val.izven td.kam b { color: var(--ink-3); }
   @media (min-width: 761px) { .nac1 tbody tr.val td { padding-top: 9px; padding-bottom: 9px; } .nac1 tbody tr.val td.kam { padding-left: 30px; box-shadow: inset 3px 0 0 var(--accent); } }
   .nac1-op { margin: 0 0 22px; padding-left: 1.2em; } .nac1-op li { margin: 0 0 4px; line-height: 1.45; } .nac1-op b { color: var(--ink-2); }
   @media (max-width: 760px) {
@@ -1129,11 +1130,13 @@
   // z Matjazevim DA, 4. 11. 2026: val 1 = start 5. 11., val 2 = nove osebe iz drago-osebe-2026-11-04/val2_2026-11-04.json
   // (mail = dobi_mail, LinkedIn = vsi s profilom, brez Vander Urbani Resorta). Vrstica kampanje sesteje vala, hotelov ne
   // (val 2 so isti hoteli). Kljuc payload je do preklica odstranjen: payload ob 7.54 kaze napacne stevilke.
+  // Meja 10 kontaktov na hotel (Matjaz 4. 11.): 12 LinkedIn iz vala 1 gre v val 3, ki je pogojen (po 25. 11.) in ni v vsoti (izven).
   const NACRT = [
     { kampanja: "NevronCore Automated Demo", tip: "Custom Scrape", trg: "Slovenija", zastava: "si", hotelov: 97, od: "2026-11-05", do: "2026-11-25",
       valovi: [
-        { ime: "Val 1", opis: "start čet 5. 11.", hotelov: 97, hotelov_op: "s tenantom, brez DNC", mail: 179, li: 143, cas: "5. do 25. novembra", cas_op: "nalaganje 5. do 11. 11." },
+        { ime: "Val 1", opis: "start čet 5. 11.", hotelov: 97, hotelov_op: "s tenantom, brez DNC", mail: 179, li: 131, li_op: "12 v val 3 (meja 10 na hotel)", cas: "5. do 25. novembra", cas_op: "nalaganje 5. do 11. 11." },
         { ime: "Val 2", opis: "nove osebe, ko Amadej vrne žetone", hotelov: 27, hotelov_op: "isti hoteli, nove osebe", plus: true, mail: 14, mail_op: "samo dokazani naslovi", li: 49, li_op: "7 prek Roka, samo sporočilo", cas: "nalaganje do sre 11. 11.", cas_op: "konec sre 25. 11." },
+        { ime: "Val 3", opis: "pogojno, samo če se hotel ne oglasi", izven: true, hotelov: 4, hotelov_op: "Zagreb, Bledrose, InterContinental, ONE66", mail: 0, mail_op: "mail dobijo v valu 1", li: 12, li_op: "povabila, ni v vsoti", cas: "po 25. 11.", cas_op: "po koncu vala 1" },
       ] },
   ];
   const n0 = (n) => String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -1160,9 +1163,9 @@
     const dp = (x) => { const m = String(x || "").match(/^(\d{4})-(\d\d)-(\d\d)T(\d\d):(\d\d)/); return m ? `${+m[3]}. ${+m[2]}. ${m[1]} ob ${+m[4]}.${m[5]}` : ""; };
     const zPay = NACRT.filter(k => k.zgrajeno);
     // kampanja z valovi: mail in LinkedIn sta vsota valov, hotelov ostane vpisano (val 2 so isti hoteli)
-    NACRT.forEach(k => { if (k.valovi) { k.mail = k.valovi.reduce((a, v) => a + v.mail, 0); k.li = k.valovi.reduce((a, v) => a + v.li, 0); } });
+    NACRT.forEach(k => { if (k.valovi) { const vv = k.valovi.filter(v => !v.izven); k.mail = vv.reduce((a, v) => a + v.mail, 0); k.li = vv.reduce((a, v) => a + v.li, 0); } });
     const st = (v, p) => `${v.plus && p !== "hotelov" ? "+" : ""}${n0(v[p])}${v[p + "_op"] ? `<small>${v[p + "_op"]}</small>` : ""}`;
-    const val = (v) => `<tr class="val"><td class="kam"><b>${v.ime}</b><small>${v.opis}</small></td><td class="prazno"></td><td class="prazno"></td>` +
+    const val = (v) => `<tr class="val${v.izven ? " izven" : ""}"><td class="kam"><b>${v.ime}</b><small>${v.opis}</small></td><td class="prazno"></td><td class="prazno"></td>` +
       `<td class="n" data-l="HOTELOV">${st(v, "hotelov")}</td><td class="n ch email" data-l="KONTAKTOV MAIL">${st(v, "mail")}</td><td class="n ch li" data-l="KONTAKTOV LI">${st(v, "li")}</td>` +
       `<td class="traj" data-l="TRAJANJE"><b>${v.cas}</b><small>${v.cas_op || ""}</small></td></tr>`;
     const vrsta = (k) => {
@@ -1185,9 +1188,10 @@
       `</tbody></table></div>`;
     q("#n_nacrt").innerHTML =
       (zPay.length ? zPay.map(k => `<li><b>Vir številk (${k.kampanja}):</b> payload kampanje (${(k.viri || []).join(", ")}), zgrajen ${dp(k.zgrajeno)}. Šteti so vsi ljudje hotela, ena oseba en mail; samo hoteli s tenantom in brez DNC. Številke se osvežijo ob vsaki gradnji strani.</li>`).join("")
-        : `<li><b>Vir številk:</b> ciljne številke seje Kontakti z Matjaževim DA, 4. 11. 2026. Vrstica kampanje kaže skupaj, pod njo sta vala. Do preklica se številke ne osvežujejo iz payloada kampanje, ker payload ob 7.54 kaže napačne številke.</li>` +
-          `<li><b>Val 1:</b> start v četrtek 5. 11.; 97 hotelov s custom scrape tenantom in brez DNC, 179 mailov in 143 LinkedIn profilov.</li>` +
-          `<li><b>Val 2:</b> nove osebe v 27 hotelih iz vala 1 (raziskava 4. 11.), naložijo se, ko Amadej vrne žetone, najpozneje v sredo 11. 11. Mail samo na dokazane naslove (14). LinkedIn 49: 42 s povabilom Matjaža ali Amadeja, 7 prek Roka samo s sporočilom, ker so z njim že povezani. Vander Urbani Resort (2 maila, 2 LinkedIn) ostane zunaj, dokler nima tenanta.</li>`) +
+        : `<li><b>Vir številk:</b> ciljne številke seje Kontakti z Matjaževim DA, 4. 11. 2026. Vrstica kampanje kaže skupaj valov 1 in 2; val 3 je pogojen in v skupaj ni štet. Do preklica se številke ne osvežujejo iz payloada kampanje, ker payload ob 7.54 kaže napačne številke.</li>` +
+          `<li><b>Val 1:</b> start v četrtek 5. 11.; 97 hotelov s custom scrape tenantom in brez DNC, 179 mailov in 131 LinkedIn profilov. Na hotel gre največ 10 kontaktov (Matjaž 4. 11.), zato 12 LinkedIn povabil v štirih hotelih čaka na val 3.</li>` +
+          `<li><b>Val 2:</b> nove osebe v 27 hotelih iz vala 1 (raziskava 4. 11.), naložijo se, ko Amadej vrne žetone, najpozneje v sredo 11. 11. Mail samo na dokazane naslove (14). LinkedIn 49: 42 s povabilom Matjaža ali Amadeja, 7 prek Roka samo s sporočilom, ker so z njim že povezani. Vander Urbani Resort (2 maila, 2 LinkedIn) ostane zunaj, dokler nima tenanta.</li>` +
+          `<li><b>Val 3:</b> 12 LinkedIn povabil v hotelih Zagreb (4), Bledrose (4), InterContinental (3) in ONE66 (1), po 25. 11. in samo, če se hotel do takrat ne oglasi. Ti ljudje dobijo mail že v valu 1.</li>`) +
       `<li><b>Mail:</b> start v četrtek 5. 11., razmiki med maili 5, 2, 5 in 2 delovna dneva; zadnji kontakti začnejo v sredo 11. 11., njihov peti mail gre v sredo 25. 11.</li>` +
       `<li><b>LinkedIn:</b> HeyReach pošilja od ponedeljka do petka, od 9. do 17. ure, brez vikendov.</li>`;
   }
@@ -1601,6 +1605,7 @@ function renderMirror(P) {
 }
 
 function renderKontaktiPripravljeni(P, T) {
+  const PAY_SKRITO = true; // vrstica "Pripravljeno v payloadu za kampanjo" skrita do signala seje Kontakti (4. 11. 2026)
   const cols = [["dm", "Odločevalci"], ["biz", "Poslovni mail", "email"], ["omail", "Office mail"], ["vsi", "Vsi maili"], ["li", "LinkedIn", "li"], ["mob", "Direktna mobilna", "tel"], ["office", "Office telefon (hotelov)"]];
   const head = `<thead><tr><th class="l">Sloj</th><th>Hotelov</th>${cols.map(c => `<th class="${c[2] ? "ch " + c[2] : ""}">${c[2] ? '<i class="dot"></i>' : ""}${c[1]}</th>`).join("")}</tr></thead>`;
   const tr = (cls, lab, hot, k) => `<tr class="${cls}"><td class="l">${lab}</td><td>${fmt(hot)}</td>${cols.map(c => `<td class="${c[2] ? "ch " + c[2] : ""}">${fmt(k[c[0]] || 0)}</td>`).join("")}</tr>`;
@@ -1616,9 +1621,10 @@ function renderKontaktiPripravljeni(P, T) {
     h += tr("key", "Dream 100", kD.hotelov, kD);
     h += tr("key", "Ostali", kO.hotelov, kO);
     h += tr("sum", "Skupaj", (kD.hotelov || 0) + (kO.hotelov || 0), vsota([kD, kO]));
-    // kontakti, ki so dejansko v payloadu kampanje (kampanje_payload.py, 4. 11. 2026): vsi ljudje hotela, ne samo odlocevalci
+    // kontakti, ki so dejansko v payloadu kampanje (kampanje_payload.py, 4. 11. 2026): vsi ljudje hotela, ne samo odlocevalci.
+    // SKRITO od 4. 11. (seja Kontakti): payload je v popravljanju (regresija 7.54); preklic: PAY_SKRITO = false.
     const dpay = (x) => { const r = String(x || "").match(/^(\d{4})-(\d\d)-(\d\d)T(\d\d):(\d\d)/); return r ? `${+r[3]}. ${+r[2]}. ob ${+r[4]}.${r[5]}` : ""; };
-    ((DATA.kampanje_payload || {}).kampanje || []).filter(x => x.trg_id === m.id).forEach(x => {
+    ((PAY_SKRITO ? null : DATA.kampanje_payload) || {}).kampanje?.filter(x => x.trg_id === m.id).forEach(x => {
       h += `<tr class="pay"><td class="l">Pripravljeno v payloadu za kampanjo<small>${x.ime}, ${x.tip}; payload ${dpay(x.zgrajeno)}</small></td><td>${fmt(x.hotelov)}</td>` +
         cols.map(c => `<td class="${c[2] ? "ch " + c[2] : ""}">${c[0] === "vsi" ? fmt(x.mail) : c[0] === "li" ? fmt(x.li) : ""}</td>`).join("") + `</tr>`;
     });
@@ -1630,7 +1636,7 @@ function renderKontaktiPripravljeni(P, T) {
   h += tr("key", "Ostali", hO, sO);
   h += tr("sum", "Skupaj", hD + hO, sA);
   h += `</tbody></table></div>`;
-  h += `<p class="small muted">Prešteto ${kdaj ? kdaj.replace("T", " ob ") : ""} iz dosjejev Dream 100 in ostalih, iz Attia (živo), iz Skrappovih preverb in z Instantlyjeve blockliste. Vsaka oseba je na trgu šteta enkrat (oseba pri dveh hotelih le pri prvem). Ljudje s skupinskih Attio zapisov (več kot 8 odločevalcev na zapis, npr. Hilton) niso pripisani posameznemu hotelu. Kanali iste osebe pri dveh hotelih se združijo. Pri ostalih so šteti samo hoteli, za katere imamo shranjen dosje ali Attio zapis (${fmt(hO)} od ${fmt(hR)} v registru); ostali hoteli iz registra tu niso ocenjeni. Še ${fmt([...tD, ...tO].reduce((a, k) => a + (k.biz_nepreverjen || 0), 0))} odločevalcev ima poslovni mail, ki v Skrappu še ni preverjen; v tabeli ni štet. Vrstica <b>Pripravljeno v payloadu za kampanjo</b> šteje kontakte iz payloada kampanje, ki je pripravljena za pošiljanje: vse ljudi hotela, tudi neodločevalce in office naslove (ena oseba en mail), in samo hotele s tenantom in brez DNC. Zato se razlikuje od odločevalcev zgoraj.</p>`;
+  h += `<p class="small muted">Prešteto ${kdaj ? kdaj.replace("T", " ob ") : ""} iz dosjejev Dream 100 in ostalih, iz Attia (živo), iz Skrappovih preverb in z Instantlyjeve blockliste. Vsaka oseba je na trgu šteta enkrat (oseba pri dveh hotelih le pri prvem). Ljudje s skupinskih Attio zapisov (več kot 8 odločevalcev na zapis, npr. Hilton) niso pripisani posameznemu hotelu. Kanali iste osebe pri dveh hotelih se združijo. Pri ostalih so šteti samo hoteli, za katere imamo shranjen dosje ali Attio zapis (${fmt(hO)} od ${fmt(hR)} v registru); ostali hoteli iz registra tu niso ocenjeni. Še ${fmt([...tD, ...tO].reduce((a, k) => a + (k.biz_nepreverjen || 0), 0))} odločevalcev ima poslovni mail, ki v Skrappu še ni preverjen; v tabeli ni štet.${PAY_SKRITO ? "" : " Vrstica <b>Pripravljeno v payloadu za kampanjo</b> šteje kontakte iz payloada kampanje, ki je pripravljena za pošiljanje: vse ljudi hotela, tudi neodločevalce in office naslove (ena oseba en mail), in samo hotele s tenantom in brez DNC. Zato se razlikuje od odločevalcev zgoraj."}</p>`;
   // razdelek 0 (izracun kampanj) prevzame vse maile in LinkedIn profile po trgih iz vrstice Skupaj (Dream 100 + ostali); AT brez mailov (§ 174 TKG)
   window.KONTAKTI_TRGI = {}; T.forEach(m => { if (m.vir === "manjka" || !m.pripravljeni) return; const sk = vsota([m.pripravljeni.d100, m.pripravljeni.rest]); window.KONTAKTI_TRGI[m.id] = { ime: m.ime, email: m.id === "at" ? 0 : sk.vsi, li: sk.li }; });
   document.dispatchEvent(new CustomEvent("kontakti-trgi"));
