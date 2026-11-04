@@ -1099,14 +1099,7 @@
   .nac1 .mes i { position: absolute; top: 0; bottom: 0; border-radius: 999px; background: linear-gradient(90deg, var(--accent), var(--email)); box-shadow: 0 0 10px rgba(115, 199, 255, 0.35); }
   .nac1 .mes u { position: absolute; top: -3px; width: 1px; height: 14px; background: var(--line); }
   .nac1 .mes-l { display: flex; justify-content: space-between; margin-top: 4px; font-size: 0.62rem; color: var(--ink-3); }
-  .nac1 td.n small { display: block; margin-top: 2px; font-size: 0.66rem; font-weight: 400; color: var(--ink-3); white-space: normal; }
-  .nac1 tbody tr.val td:not(.ch) { background: var(--surface-2); }
-  .nac1 tr.val td.kam b { font-size: 0.88rem; }
-  .nac1 tr.val td.n { font-size: 1.05rem; }
-  .nac1 tr.val .traj b { font-size: 0.86rem; font-weight: 700; }
-  .nac1 tr.val.izven td:not(.ch) { background: transparent; } .nac1 tr.val.izven td.n, .nac1 tr.val.izven td.kam b { color: var(--ink-3); }
-  @media (min-width: 761px) { .nac1 tbody tr.val td { padding-top: 9px; padding-bottom: 9px; } .nac1 tbody tr.val td.kam { padding-left: 30px; box-shadow: inset 3px 0 0 var(--accent); } }
-  .nac1-op { margin: 0 0 22px; padding-left: 1.2em; } .nac1-op li { margin: 0 0 4px; line-height: 1.45; } .nac1-op b { color: var(--ink-2); }
+  ul.nac1-op { margin: 6px 2px 22px; padding: 0; list-style: none; font-size: 0.7rem; line-height: 1.45; color: var(--ink-3); } ul.nac1-op li { margin: 0; }
   @media (max-width: 760px) {
     .nac1 thead { display: none; }
     .nac1 table, .nac1 tbody, .nac1 td { display: block; width: 100%; }
@@ -1116,10 +1109,6 @@
     .nac1 td[data-l]::before { content: attr(data-l); display: block; margin-bottom: 4px; font-size: 0.6rem; font-weight: 800; letter-spacing: 0.08em; color: var(--ink-3); }
     .nac1 td.kam, .nac1 td.traj { grid-column: 1 / -1; }
     .nac1 td.n { text-align: left; font-size: 1.2rem; }
-    .nac1 tbody tr.val { padding: 10px 14px 10px 24px; background: var(--surface-2); box-shadow: inset 3px 0 0 var(--accent); }
-    .nac1 tbody tr.val td { background: transparent; }
-    .nac1 tr.val td.n { font-size: 1rem; }
-    .nac1 td.prazno { display: none; }
   }
 </style>
 <div class="nac1" id="t_nacrt"></div>
@@ -1131,6 +1120,7 @@
   // (mail = dobi_mail, LinkedIn = vsi s profilom, brez Vander Urbani Resorta). Vrstica kampanje sesteje vala, hotelov ne
   // (val 2 so isti hoteli). Kljuc payload je do preklica odstranjen: payload ob 7.54 kaze napacne stevilke.
   // Meja 10 kontaktov na hotel (Matjaz 4. 11.): 12 LinkedIn iz vala 1 gre v val 3, ki je pogojen (po 25. 11.) in ni v vsoti (izven).
+  // Valovi se ne izrisujejo kot vrstice (Matjaz 4. 11.: "ne deli na val 1 in val 2"); iz njih se racunata vsoti, opis je v drobnem tisku.
   const NACRT = [
     { kampanja: "NevronCore Automated Demo", tip: "Custom Scrape", trg: "Slovenija", zastava: "si", hotelov: 97, od: "2026-11-05", do: "2026-11-25",
       valovi: [
@@ -1164,10 +1154,6 @@
     const zPay = NACRT.filter(k => k.zgrajeno);
     // kampanja z valovi: mail in LinkedIn sta vsota valov, hotelov ostane vpisano (val 2 so isti hoteli)
     NACRT.forEach(k => { if (k.valovi) { const vv = k.valovi.filter(v => !v.izven); k.mail = vv.reduce((a, v) => a + v.mail, 0); k.li = vv.reduce((a, v) => a + v.li, 0); } });
-    const st = (v, p) => `${v.plus && p !== "hotelov" ? "+" : ""}${n0(v[p])}${v[p + "_op"] ? `<small>${v[p + "_op"]}</small>` : ""}`;
-    const val = (v) => `<tr class="val${v.izven ? " izven" : ""}"><td class="kam"><b>${v.ime}</b><small>${v.opis}</small></td><td class="prazno"></td><td class="prazno"></td>` +
-      `<td class="n" data-l="HOTELOV">${st(v, "hotelov")}</td><td class="n ch email" data-l="KONTAKTOV MAIL">${st(v, "mail")}</td><td class="n ch li" data-l="KONTAKTOV LI">${st(v, "li")}</td>` +
-      `<td class="traj" data-l="TRAJANJE"><b>${v.cas}</b><small>${v.cas_op || ""}</small></td></tr>`;
     const vrsta = (k) => {
       const x = D(k.od), y = D(k.do);
       return `<tr><td class="kam" data-l="KAMPANJA"><b>${k.kampanja}</b><small>start ${DAN[x.getDay()]} ${x.getDate()}. ${x.getMonth() + 1}., konec ${DAN[y.getDay()]} ${y.getDate()}. ${y.getMonth() + 1}.</small></td>` +
@@ -1176,8 +1162,7 @@
         `<td class="n" data-l="HOTELOV">${n0(k.hotelov)}</td>` +
         `<td class="n ch email" data-l="KONTAKTOV MAIL">${n0(k.mail)}</td>` +
         `<td class="n ch li" data-l="KONTAKTOV LI">${n0(k.li)}</td>` +
-        `<td class="traj" data-l="TRAJANJE"><b>${obdobje(k.od, k.do)}</b><small>${delovnih(k.od, k.do)} delovnih dni</small>${trak(k.od, k.do)}</td></tr>` +
-        (k.valovi || []).map(val).join("");
+        `<td class="traj" data-l="TRAJANJE"><b>${obdobje(k.od, k.do)}</b><small>${delovnih(k.od, k.do)} delovnih dni</small>${trak(k.od, k.do)}</td></tr>`;
     };
     const vs = (p) => NACRT.reduce((a, k) => a + (k[p] || 0), 0);
     q("#t_nacrt").innerHTML = `<div class="tw" style="margin:0"><table><thead><tr><th>Kampanja</th><th>Tip</th><th>Trg</th><th class="n">Hotelov</th>` +
@@ -1187,13 +1172,8 @@
         `<td class="n ch email" data-l="KONTAKTOV MAIL">${n0(vs("mail"))}</td><td class="n ch li" data-l="KONTAKTOV LI">${n0(vs("li"))}</td><td></td></tr>` : "") +
       `</tbody></table></div>`;
     q("#n_nacrt").innerHTML =
-      (zPay.length ? zPay.map(k => `<li><b>Vir številk (${k.kampanja}):</b> payload kampanje (${(k.viri || []).join(", ")}), zgrajen ${dp(k.zgrajeno)}. Šteti so vsi ljudje hotela, ena oseba en mail; samo hoteli s tenantom in brez DNC. Številke se osvežijo ob vsaki gradnji strani.</li>`).join("")
-        : `<li><b>Vir številk:</b> ciljne številke seje Kontakti z Matjaževim DA, 4. 11. 2026. Vrstica kampanje kaže skupaj valov 1 in 2; val 3 je pogojen in v skupaj ni štet. Do preklica se številke ne osvežujejo iz payloada kampanje, ker payload ob 7.54 kaže napačne številke.</li>` +
-          `<li><b>Val 1:</b> start v četrtek 5. 11.; 97 hotelov s custom scrape tenantom in brez DNC, 179 mailov in 131 LinkedIn profilov. Na hotel gre največ 10 kontaktov (Matjaž 4. 11.), zato 12 LinkedIn povabil v štirih hotelih čaka na val 3.</li>` +
-          `<li><b>Val 2:</b> nove osebe v 27 hotelih iz vala 1 (raziskava 4. 11.), naložijo se, ko Amadej vrne žetone, najpozneje v sredo 11. 11. Mail samo na dokazane naslove (14). LinkedIn 49: 42 s povabilom Matjaža ali Amadeja, 7 prek Roka samo s sporočilom, ker so z njim že povezani. Vander Urbani Resort (2 maila, 2 LinkedIn) ostane zunaj, dokler nima tenanta.</li>` +
-          `<li><b>Val 3:</b> 12 LinkedIn povabil v hotelih Zagreb (4), Bledrose (4), InterContinental (3) in ONE66 (1), po 25. 11. in samo, če se hotel do takrat ne oglasi. Ti ljudje dobijo mail že v valu 1.</li>`) +
-      `<li><b>Mail:</b> start v četrtek 5. 11., razmiki med maili 5, 2, 5 in 2 delovna dneva; zadnji kontakti začnejo v sredo 11. 11., njihov peti mail gre v sredo 25. 11.</li>` +
-      `<li><b>LinkedIn:</b> HeyReach pošilja od ponedeljka do petka, od 9. do 17. ure, brez vikendov.</li>`;
+      (zPay.length ? zPay.map(k => `<li>${k.kampanja}: številke iz payloada kampanje, zgrajen ${dp(k.zgrajeno)}.</li>`).join("")
+        : `<li>Val 1 start 5. 11. (179 mailov, 131 LI); val 2 nove osebe do 11. 11. (+14 mailov, +49 LI, 7 prek Roka); 12 LI po 25. 11., če se hotel ne oglasi.</li>`);
   }
   const q = (x) => document.querySelector(x);
   // zastave (window.FLAG) nastanejo v glavnem skriptu strani, zato risanje po nalaganju
