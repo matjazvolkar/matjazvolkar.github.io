@@ -441,7 +441,7 @@
   .stat .scn { display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: 0.7rem; font-weight: 700; color: #fff; margin-left: 4px; }
   .scn.multi { background: var(--sc-multi); color: #1a1200; } .scn.two { background: var(--sc-two); } .scn.single { background: var(--sc-single); }
 
-  /* ---------- razdelek 6: koledar kampanj ---------- */
+  /* ---------- razdelek 7: koledar kampanj ---------- */
   .s81 { border: 1px solid var(--line-2); border-radius: var(--r-md); background: var(--surface); margin: 8px 0; }
   .s81 summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: 1fr 150px 150px 22px; gap: 14px; align-items: center; padding: 10px 14px; }
   .s81 summary::-webkit-details-marker { display: none; }
@@ -659,7 +659,7 @@
 <div class="nadg">
   <div class="s"><b>Lead magnet sporočila</b><span>Sporočilo z vrednostjo (Hostfulness Index, scrape poročilo hotela) sprejetim LinkedIn stikom in toplim odgovorom, ločeno od prodajne sekvence.</span><em>okoli 40 na dan, deli kvoto 40 sporočil na sedež v HeyReachu</em></div>
   <div class="s"><b>WhatsApp sporočila</b><span>Samo sprožen kanal: ko oseba sama da številko ali piše prva. Meta za poslovna sporočila zahteva privolitev, HeyReach in Instantly WhatsAppa nimata, uradna pot je ponudnik WhatsApp Business API.</span><em>ročno 1:1, okoli 10 do 20 na dan</em></div>
-  <div class="s"><b>Cold klici</b><span>Klic odločevalcu ali centrali hotela med mail in LinkedIn koraki. Rabi klicatelja in direktne številke; v Dream 100 sekvencah iz razdelka 4 so klici že predvideni.</span><em>okoli 30 klicev na dan na klicatelja</em></div>
+  <div class="s"><b>Cold klici</b><span>Klic odločevalcu ali centrali hotela med mail in LinkedIn koraki. Rabi klicatelja in direktne številke; v Dream 100 sekvencah iz razdelka 5 so klici že predvideni.</span><em>okoli 30 klicev na dan na klicatelja</em></div>
   <div class="s"><b>Direktna pošta</b><span>Fizična pošiljka (pismo z demo linkom src=letter ali manjši paket) Dream 100 hotelom, dotik, ki ga ni v nabiralniku.</span><em>ročna priprava, okoli 5 na dan</em></div>
 </div>
 <script>
@@ -680,7 +680,7 @@
     ladje: ["Evropa", "ZDA", "Azija"].map(ime => ({ ime, email: TRG, li: TRG, tipi: ["Vsebine iz centrale", "Starlink TV kanali", "Onboard info & upsell"] })),
   };
   // Novemberski plan (Matjaz 2. 11. 2026): privzeti razpored ob odprtju strani in gumb "ponastavi na novemberski plan".
-  // Znani trgi so vezani na razdelek 2 (auto), zato sledijo pripravljenim kontaktom; stevila tu so stanje 2. 11. 2026.
+  // Znani trgi so vezani na razdelek 3 (auto), zato sledijo pripravljenim kontaktom; stevila tu so stanje 2. 11. 2026.
   const PLAN = {
     pos: { hoteli: { mail: ["Matjaž", "Amadej", "Gregor", "Nina", "Alex"], li: ["Matjaž", "Amadej"] }, ladje: { mail: ["Simon", "Rok"], li: ["Simon", "Rok"] } },
     trgi: {
@@ -698,7 +698,7 @@
       ],
     },
   };
-  // Mesecni strosek po segmentu (iz razdelka 8, urejljivo): [kljuc, ime, opis, hoteli, ladje]
+  // Mesecni strosek po segmentu (iz razdelka 9, urejljivo): [kljuc, ime, opis, hoteli, ladje]
   const STR = [
     ["heyreach", "HeyReach", "45,77 € na sedež (4 sedeži, 597 $ na četrtletje), sedežev je toliko kot LinkedIn pošiljateljev", null, null],
     ["instantly", "Instantly", "Hyper Growth 87,60 €, delež po nabiralnikih pošiljateljev (od 21)", null, null],
@@ -758,7 +758,7 @@
   const TRG_ID = { slovenija: "si", slovenia: "si", hrvaska: "hr", croatia: "hr", uae: "uae", zae: "uae", emirati: "uae", "zdruzeni arabski emirati": "uae", "united arab emirates": "uae",
     italija: "it", italy: "it", avstrija: "at", austria: "at", zda: "ny", usa: "ny", "new york": "ny", ny: "ny", grcija: "gr", greece: "gr" };
   const norm = (x) => String(x).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, " ").trim();
-  // ladijski trgi iz tabele Ladje (razdelek 2): osnova = ladjarji in upravljavci (K1 do K3), z besedo integratorji = K4
+  // ladijski trgi iz tabele Ladje (razdelek 3): osnova = ladjarji in upravljavci (K1 do K3), z besedo integratorji = K4
   const LADJE_ID = { "severna evropa": "sev", nordic: "sev", "nordijske drzave": "sev", skandinavija: "sev", italija: "it", italy: "it",
     grcija: "gr", greece: "gr", turcija: "tr", turkey: "tr", turkiye: "tr", singapur: "sg", singapore: "sg", norveska: "NO", norway: "NO",
     svedska: "SE", sweden: "SE", finska: "FI", finland: "FI", danska: "DK", denmark: "DK", "zdruzeno kraljestvo": "GB", "velika britanija": "GB",
@@ -927,7 +927,7 @@
     P.vrstice.forEach(v => {
       const e = vstet(v.email, pavze), l = vstet(v.li, pavze);
       if (!e && !l) return;
-      // ena vrstica trga na kampanjo z enim tipom, da je poraba (kontakti x tipi) tocna; auto null: ne veze se na razdelek 2
+      // ena vrstica trga na kampanjo z enim tipom, da je poraba (kontakti x tipi) tocna; auto null: ne veze se na razdelek 3
       trgi[v.seg].push({ ime: v.trg, email: e ? v.email.preostalo : 0, li: l ? v.li.preostalo : 0, auto: null, tipi: [v.tip] });
       [["mail", e && v.email, MAIL], ["li", l && v.li, LI]].forEach(([kan, c, VIR]) => {
         if (c) c.posiljatelji.filter(n => VIR[n]).forEach(n => { const t = teza[`${kan}:${n}`] = teza[`${kan}:${n}`] || { hoteli: 0, ladje: 0 }; t[v.seg] += c.preostalo || 1; });
@@ -1075,11 +1075,102 @@
 })();
 </script>
 
-<h2>1. GTM mrzli outreach: Dream 100 proti ostalim - kontakti po kanalih</h2>
+<h2>1. Načrt pošiljanja GTM kampanj - mrzli outreach</h2>
+<style>
+  /* ---------- razdelek 1: nacrt posiljanja GTM kampanj, mrzli outreach (4. 11. 2026) ---------- */
+  .nac1 { margin: 8px 0 10px; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: linear-gradient(180deg, var(--surface-2), var(--surface)); }
+  .nac1 table { width: 100%; border-collapse: collapse; margin: 0; }
+  .nac1 thead th { padding: 12px 14px; font-size: 0.68rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; text-align: left; white-space: nowrap; }
+  .nac1 thead th:not(.ch) { color: var(--ink-3); border-bottom: 1px solid var(--line); }
+  .nac1 thead th.n { text-align: right; }
+  .nac1 tbody td { padding: 16px 14px; border-bottom: 1px solid var(--line-2); vertical-align: middle; color: var(--ink); text-align: left; }
+  .nac1 tbody tr:last-child td { border-bottom: 0; }
+  .nac1 tbody tr.sum td { background: var(--surface-2); border-top: 2px solid var(--line); font-weight: 800; }
+  .nac1 .kam b { display: block; font-size: 1.02rem; font-weight: 800; line-height: 1.25; }
+  .nac1 .kam small { display: block; margin-top: 4px; font-size: 0.72rem; color: var(--ink-3); }
+  .nac1 .ntip { display: inline-block; padding: 4px 11px; border: 1px solid var(--accent); border-radius: 999px; color: var(--accent); font-size: 0.78rem; font-weight: 700; white-space: nowrap; background: var(--accent-soft); }
+  .nac1 .trg { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; white-space: nowrap; }
+  .nac1 .trg .fl { flex: none; width: 27px; height: 18px; border: 1px solid var(--line); border-radius: 3px; overflow: hidden; }
+  .nac1 .trg .fl svg { display: block; width: 100%; height: 100%; }
+  .nac1 td.n { text-align: right; font-size: 1.4rem; font-weight: 800; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .nac1 .traj b { display: block; font-weight: 800; white-space: nowrap; }
+  .nac1 .traj small { display: block; margin-top: 2px; font-size: 0.72rem; color: var(--ink-3); }
+  .nac1 .mes { position: relative; min-width: 160px; height: 8px; margin-top: 9px; border-radius: 999px; background: var(--line-2); }
+  .nac1 .mes i { position: absolute; top: 0; bottom: 0; border-radius: 999px; background: linear-gradient(90deg, var(--accent), var(--email)); box-shadow: 0 0 10px rgba(115, 199, 255, 0.35); }
+  .nac1 .mes u { position: absolute; top: -3px; width: 1px; height: 14px; background: var(--line); }
+  .nac1 .mes-l { display: flex; justify-content: space-between; margin-top: 4px; font-size: 0.62rem; color: var(--ink-3); }
+  .nac1-op { margin: 0 0 22px; padding-left: 1.2em; } .nac1-op li { margin: 0 0 4px; line-height: 1.45; } .nac1-op b { color: var(--ink-2); }
+  @media (max-width: 760px) {
+    .nac1 thead { display: none; }
+    .nac1 table, .nac1 tbody, .nac1 td { display: block; width: 100%; }
+    .nac1 tbody tr { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px 14px; padding: 14px; border-bottom: 1px solid var(--line-2); }
+    .nac1 tbody tr:last-child { border-bottom: 0; }
+    .nac1 tbody td, .nac1 tbody tr.sum td { padding: 0; border: 0; background: transparent; }
+    .nac1 td[data-l]::before { content: attr(data-l); display: block; margin-bottom: 4px; font-size: 0.6rem; font-weight: 800; letter-spacing: 0.08em; color: var(--ink-3); }
+    .nac1 td.kam, .nac1 td.traj { grid-column: 1 / -1; }
+    .nac1 td.n { text-align: left; font-size: 1.2rem; }
+  }
+</style>
+<div class="nac1" id="t_nacrt"></div>
+<ul class="nac1-op small muted" id="n_nacrt"></ul>
+<script>
+(function () {
+  // Nacrt posiljanja (Matjaz 4. 11. 2026). Stevila kampanje SI so iz seje "Stop in Start kampanj"
+  // (payload SI custom scrape, 4. 11. 2026 ob 2.51: 97 hotelov s tenantom in brez DNC, 182 mailov, 147 LinkedIn).
+  const NACRT = [
+    { kampanja: "NevronCore Automated Demo", tip: "Custom Scrape", trg: "Slovenija", zastava: "si", hotelov: 97, mail: 182, li: 147, od: "2026-11-05", do: "2026-11-25" },
+  ];
+  const n0 = (n) => String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  const D = (x) => new Date(x + "T12:00:00");
+  const MES = ["januarja", "februarja", "marca", "aprila", "maja", "junija", "julija", "avgusta", "septembra", "oktobra", "novembra", "decembra"];
+  const MESI = ["januar", "februar", "marec", "april", "maj", "junij", "julij", "avgust", "september", "oktober", "november", "december"];
+  const DAN = ["ned", "pon", "tor", "sre", "čet", "pet", "sob"];
+  const delovnih = (a, b) => { let n = 0; for (const d = D(a); d <= D(b); d.setDate(d.getDate() + 1)) if (d.getDay() % 6) n++; return n; };
+  const obdobje = (a, b) => { const x = D(a), y = D(b); return x.getMonth() === y.getMonth() ? `${x.getDate()}. do ${y.getDate()}. ${MES[y.getMonth()]}` : `${x.getDate()}. ${MES[x.getMonth()]} do ${y.getDate()}. ${MES[y.getMonth()]}`; };
+  // mesecni trak: obdobje kampanje na mesecu, v katerem se zacne; crtice so ponedeljki
+  const trak = (a, b) => {
+    const x = D(a), y = D(b), dim = new Date(x.getFullYear(), x.getMonth() + 1, 0).getDate();
+    const konec = y.getMonth() === x.getMonth() ? y.getDate() : dim;
+    let crte = "";
+    for (let d = 1; d <= dim; d++) if (new Date(x.getFullYear(), x.getMonth(), d).getDay() === 1) crte += `<u style="left:${((d - 1) / dim * 100).toFixed(2)}%"></u>`;
+    return `<div class="mes" title="${obdobje(a, b)}">${crte}<i style="left:${((x.getDate() - 1) / dim * 100).toFixed(2)}%;width:${((konec - x.getDate() + 1) / dim * 100).toFixed(2)}%"></i></div>` +
+      `<div class="mes-l"><span>1.</span><span>${MESI[x.getMonth()]}</span><span>${dim}.</span></div>`;
+  };
+  function narisi() {
+    const FLAG = window.FLAG || {};
+    const vrsta = (k) => {
+      const x = D(k.od), y = D(k.do);
+      return `<tr><td class="kam" data-l="KAMPANJA"><b>${k.kampanja}</b><small>start ${DAN[x.getDay()]} ${x.getDate()}. ${x.getMonth() + 1}., konec ${DAN[y.getDay()]} ${y.getDate()}. ${y.getMonth() + 1}.</small></td>` +
+        `<td data-l="TIP"><span class="ntip">${k.tip}</span></td>` +
+        `<td data-l="TRG"><span class="trg">${FLAG[k.zastava] ? `<span class="fl">${FLAG[k.zastava]}</span>` : ""}${k.trg}</span></td>` +
+        `<td class="n" data-l="HOTELOV">${n0(k.hotelov)}</td>` +
+        `<td class="n ch email" data-l="KONTAKTOV MAIL">${n0(k.mail)}</td>` +
+        `<td class="n ch li" data-l="KONTAKTOV LI">${n0(k.li)}</td>` +
+        `<td class="traj" data-l="TRAJANJE"><b>${obdobje(k.od, k.do)}</b><small>${delovnih(k.od, k.do)} delovnih dni</small>${trak(k.od, k.do)}</td></tr>`;
+    };
+    const vs = (p) => NACRT.reduce((a, k) => a + (k[p] || 0), 0);
+    q("#t_nacrt").innerHTML = `<div class="tw" style="margin:0"><table><thead><tr><th>Kampanja</th><th>Tip</th><th>Trg</th><th class="n">Hotelov</th>` +
+      `<th class="n ch email"><i class="dot"></i>Kontaktov mail</th><th class="n ch li"><i class="dot"></i>Kontaktov LI</th><th>Trajanje</th></tr></thead><tbody>` +
+      NACRT.map(vrsta).join("") +
+      (NACRT.length > 1 ? `<tr class="sum"><td class="kam" data-l="SKUPAJ"><b>Skupaj</b><small>${NACRT.length} kampanj</small></td><td></td><td></td><td class="n" data-l="HOTELOV">${n0(vs("hotelov"))}</td>` +
+        `<td class="n ch email" data-l="KONTAKTOV MAIL">${n0(vs("mail"))}</td><td class="n ch li" data-l="KONTAKTOV LI">${n0(vs("li"))}</td><td></td></tr>` : "") +
+      `</tbody></table></div>`;
+    q("#n_nacrt").innerHTML =
+      `<li><b>Vir številk:</b> seja Stop in Start kampanj, payload kampanje z dne 4. 11. 2026. Hoteli imajo custom scrape tenant in niso DNC; vsak kontakt ima en mail naslov.</li>` +
+      `<li><b>Mail:</b> start v četrtek 5. 11., razmiki med maili 5, 2, 5 in 2 delovna dneva; zadnji kontakti začnejo v sredo 11. 11., njihov peti mail gre v sredo 25. 11.</li>` +
+      `<li><b>LinkedIn:</b> HeyReach pošilja od ponedeljka do petka, od 9. do 17. ure, brez vikendov.</li>`;
+  }
+  const q = (x) => document.querySelector(x);
+  // zastave (window.FLAG) nastanejo v glavnem skriptu strani, zato risanje po nalaganju
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", narisi); else narisi();
+})();
+</script>
+
+<h2>2. GTM mrzli outreach: Dream 100 proti ostalim - kontakti po kanalih</h2>
 <p>ICP: hoteli s 4 in 5 zvezdicami, 30 do 200 sob, neodvisni ali v lokalni verigi, Booking ocena nad 8,0. Odločevalec je lastnik, direktor, GM, vodja hotela, vodja operative, vodja nabave ali vodja odnosov z gosti. Kontakt na kanalu je poslovni mail, LinkedIn profil ali telefon (direktna mobilna ali office številka hotela).</p>
 <div id="mirror"></div>
 
-<h2>2. Kontakti odločevalcev po trgih, podrobno</h2>
+<h2>3. Kontakti odločevalcev po trgih, podrobno</h2>
 <style>.seg2 { margin: 26px 0 2px; padding-bottom: 6px; border-bottom: 1px solid var(--line); font-size: 1.25rem; font-weight: 800; color: var(--ink); } .nl { margin: 12px 0 10px; padding-left: 1.2em; } .nl li { margin: 0 0 5px; line-height: 1.45; } .nl li b { color: var(--ink-2); }</style>
 <h3 class="seg2">Hoteli</h3>
 <div id="t_kontakti"></div>
@@ -1089,7 +1180,7 @@
 <h3 class="seg2">Ladje</h3>
 <div id="t_ladje"></div>
 
-<h2>3. GTM aktivnosti po strategiji 2026-2027: <span style="color:#FFB05E">sestanki</span>, <span style="color:#7DE8A0">projekti</span>, angažmaji in vložek</h2>
+<h2>4. GTM aktivnosti po strategiji 2026-2027: <span style="color:#FFB05E">sestanki</span>, <span style="color:#7DE8A0">projekti</span>, angažmaji in vložek</h2>
 <p>Dvaindvajset aktivnosti iz strategije (z content machine, M10), vsaka s sezonskim številom sestankov in dobljenih projektov pri sredini javnih benchmarkov, deležem angažmaja prodajalca in marketinga (vsak seštevek je 100 %) ter vložkom v EUR z ROI. Interaktivna različica z razponi, viri in vhodnimi podatki: <a href="https://claude.ai/code/artifact/855b9f54-69ad-464f-b64d-2f5d37812074" target="_blank" rel="noopener">GTM benchmarki po aktivnostih</a>. Sestanek v projekt: mrzli vir 10,3 %, topli 19 %, priporočilo 22 %, pilot 40 %, skupina 22 %. Od 31. 8. model računa 4 sekvence s 4 angli na vseh 7 trgih in sveže dosjeje iz obogatitve, ki še teče. Benchmarki z dne 31. 8. 2026.</p>
 <style>
   #bench_tbl td, #bench_tbl th { display: table-cell; }
@@ -1177,26 +1268,26 @@
 })();
 </script>
 
-<h2>4. Sekvence po batchih: trije scenariji</h2>
+<h2>5. Sekvence po batchih: trije scenariji</h2>
 <div id="scenarios3"></div>
-<h2>5. Trgi po tednih: klicatelji, LinkedIn profili, mail accounti</h2>
+<h2>6. Trgi po tednih: klicatelji, LinkedIn profili, mail accounti</h2>
 <p>Vrstica je vir (klicatelj, LinkedIn sedež ali mail account), stolpec teden od 4. 9. 2026; oznaka pove trg in kampanjo (SI|2; mala črka o = batch samo na office naslove ali centrale, torej office copy; poslovne maile pošilja Rok, office maile Nina, UAE v celoti Rok), barva scenarij, rdeča celica brez batcha dopolnilne dotike, prazna celica prost vir. Krogi se vrstijo po batchu: batch naslednjega kroga (npr. K2) starta 30 dni po E1 istega batcha v prejšnjem krogu, v istem vrstnem redu pošiljanja, brez čakanja na konec celega kroga.</p>
 <div class="qleg"><i style="background:var(--sc-multi)"></i>Multichannel <i style="background:var(--sc-two)"></i>2-channel <i style="background:var(--sc-single)"></i>Single channel <span class="qsep"></span><i class="lin" style="background:var(--n-orange)"></i>Dream 100 <i class="lin" style="background:var(--n-white)"></i>ostali <i class="lin split"></i>oba sloja v istem tednu</div>
 <div id="weektable"></div>
 
-<h2>6. Koledar kampanj: mesec, teden, dan</h2>
-<p>Isti razpored kot v razdelku 5 v obliki koledarja: vsak vnos pove kampanjo, trg, kanal s korakom, koliko hotelov ta dan doseže in kdo pošilja; filtri se seštevajo, klik na dan odpre dnevni pogled, podrobnosti so v legendi spodaj.</p>
+<h2>7. Koledar kampanj: mesec, teden, dan</h2>
+<p>Isti razpored kot v razdelku 6 v obliki koledarja: vsak vnos pove kampanjo, trg, kanal s korakom, koliko hotelov ta dan doseže in kdo pošilja; filtri se seštevajo, klik na dan odpre dnevni pogled, podrobnosti so v legendi spodaj.</p>
 <div id="cal" class="cal"></div>
 <datalist id="cal_hotels"></datalist>
 
-<h2>7. Trgi: hoteli po slojih</h2>
+<h2>8. Trgi: hoteli po slojih</h2>
 <p>ICP: 4 in 5 zvezdic, 30 do 200 sob, neodvisni hoteli in lokalne verige; pilotni pas 75 do 200 sob. Vsak trg je razdeljen na tri sklope: celoten trg, Dream 100 in ostali hoteli zunaj izbora (ICP pas; pri Sloveniji in Hrvaški tudi hoteli s tremi zvezdicami v pasu 30 do 200 sob, ker zanje ne delamo scrapa in indexa in je cilj samo čim več LinkedIn kontaktov) (neodvisni, lokalne in mednarodne verige skupaj). Hoteli zunaj pasu 30 do 200 sob niso nikjer. Tri zvezdice danes niso v ICP; kaj bi prinesle, je v tabeli pod karticami.</p>
 <div class="cards" id="t_sloji"></div>
 <p class="small muted" id="c_sloji"></p>
 
 <h3 style="margin:26px 0 6px">Če bi ICP razširili na tri zvezdice</h3>
 <p>Primerjava velja samo za Slovenijo in Hrvaško, kjer imamo poln register s kategorijami in sobami. <b>Široko</b> pomeni vse tri zvezdice v pasu 30 do 200 sob. <b>Ozko</b> pomeni tri zvezdice samo od 75 sob naprej, torej v pilotnem pasu. Kontakti so preračunani z isto stopnjo na hotel kot drugod na strani, pomnoženo s popustom za tri zvezdice. Vrstica <b>Različnih podjetij</b> je pomembnejša od vrstice hotelov: hotel v verigi ne prinese novega sogovornika, ampak samo dodatne sobe pod obstoječim računom.</p>
-<div class="legend"><span class="tag act">danes</span> stanje v razdelku 1 <span class="tag est">scenarij</span> dodatek iz registra × stopnja na hotel × popust</div>
+<div class="legend"><span class="tag act">danes</span> stanje v razdelku 2 <span class="tag est">scenarij</span> dodatek iz registra × stopnja na hotel × popust</div>
 <div id="t_sloji3"></div>
 <p class="small muted" id="c_sloji3"></p>
 <div class="note"><b>Kaj popust pomeni.</b> Sonda Apollo čez 208 domen je izmerila, koliko hotelov ima v bazi vsaj enega odločevalca: Slovenija 26 % pri 4 in 5 zvezdicah proti 15 % pri treh (popust 0,6), Hrvaška 46 % proti 33 % (popust 0,7). Office telefon pride iz registra, zato tam popusta ni. <b>Booking še ni upoštevan.</b> Merilo Booking nad 8,0 velja tudi za tri zvezdice: v hrvaškem pilotnem pasu je od 15 preverjenih velikih trizvezdičnih hotelov padlo 6 (Hvar 7,7, Pula 6,7, Matija Gubec 7,5, Porto Zadar 7,2, Borik Lumbarda 7,4, Zagreb 7,9). Realno preživi približno 60 % ozke variante.</div>
@@ -1211,7 +1302,7 @@
 </ol>
 <p class="sklep"><b>Namesto širitve:</b> ICP ostane 4 in 5 zvezdic, v Dream 100 Hrvaška pa gre 9 poimenskih izjem, veliki neodvisni trizvezdični hoteli nad 75 sob z Booking oceno nad 8,0 (Kimen Cres, Horizont Baška Voda, International Rab, Faraon Trpanj, Selce, Omorika Punat, Park Čakovec, Istra Brijuni, Bolero Biograd). V Sloveniji sta taka hotela dva: Belvedere Izola in Ambient Domžale.</p>
 
-<h2>8. Stroški cold outbound orodij in kaj kupiti zdaj</h2>
+<h2>9. Stroški cold outbound orodij in kaj kupiti zdaj</h2>
 <p>Mesečni strošek orodij, ki poganjajo cold outbound. Stanje 25. 8. 2026.</p>
 <div class="tw"><table>
 <thead><tr><th class="l" style="min-width:250px">Orodje</th><th class="l">Namen</th><th style="min-width:110px">Cena / mesec</th><th style="min-width:110px">Obnovitev</th></tr></thead>
@@ -1278,7 +1369,7 @@
 <div class="s81t"><span class="nm">Skupaj</span><span class="kn"><b>15.089</b><span>100 %</span></span><span class="cs"><b>812 €</b><span>dejanski strošek do 2. 9.</span></span><span></span></div>
 <p class="small muted">Stanje 4. 9. 2026, po končni prerazporeditvi Dream 100 (HR takrat 150, vsi ICP DA; danes je seznam manjši): 7.072 imenovanih odločevalcev in ~4.950 hotelov; klik na vrstico odpre podrobnosti in račun. Razrez 15.089 kontaktov: 1.692 poslovnih mailov, 6.258 LinkedIn profilov, 1.016 mobilnih, 6.072 central/info@ in 51 osebnih mailov samo za občinstva. Vsak kontakt je pripisan enemu glavnemu viru (orodju, ki ga je dejansko prineslo), zato se deleži seštejejo v 100 %, čeprav gre kontakt pogosto skozi več orodij. Zelena številka je dejansko porabljeni denar, ne polna naročnina: delež meseca po porabi (Apollo in Lusha po grafih kreditov, Firecrawl in Claude Max po oceni, Sales Navigator po sedežih Rok + Simon) plus dokupi kreditov v celoti (Apollo ~50 € ocena, Lusha 36 €). Seštevek: registri 0 + Places 80 + Firecrawl ~205 + Drago ~90 + Apollo ~141 + Lusha ~66 + Skrapp ~45 + Sales Navigator ~165 + Attio ~20 = ~812 €. Polne mesečne cene orodij so v tabeli 8 zgoraj.</p>
 
-<h2>9. Kontekst novih trgov, viri in metoda</h2>
+<h2>10. Kontekst novih trgov, viri in metoda</h2>
 <div id="ctx"></div>
 
 <details style="margin-top:36px"><summary>Arhiv: pravila sestavljanja batchev in nastavitve sekvenc (če se bo kdaj rabilo)</summary>
@@ -1288,7 +1379,7 @@
 <li><b>Vrstni red polnjenja:</b> 1. odločevalci Dream 100 z vsemi tremi kanali, 2. LinkedIn + telefon brez maila, 3. mail + drugi kanal, 4. en sam kanal; potem enako za ostale v ICP pasu. Znotraj skupine ICP DA pred MEJNO.</li>
 <li><b>Kanali so sinhronizirani po kontaktu.</b> Isti ljudje, ki dobijo E1 v ponedeljek, dobijo L1 v torek in klic C1 v sredo; batch potuje skupaj skozi vse dotike.</li>
 <li><b>Vsak trg ima svoj ogret mail account.</b> Slovenija: rok.kokalj@nevroncore.com in matjaz.volkar@nevroncore.com; Hrvaška: amadej.demsar@nevroncore.com; ostali trgi vsak svoj account iz preostalih ogretih. Ko zmanjka direktnih mailov odločevalcev, gredo mail dotiki na office/info naslov hotela s posebno kampanjo (prošnja za posredovanje), označeno E-info.</li>
-<li><b>LinkedIn profili so trije</b> (Rok, Matjaž, Amadej), vsak nosi največ tri batche hkrati. Batch drugega trga dobi profil šele, ko se ta na svojem trgu sprosti; razdelek 5 kaže, kdaj.</li>
+<li><b>LinkedIn profili so trije</b> (Rok, Matjaž, Amadej), vsak nosi največ tri batche hkrati. Batch drugega trga dobi profil šele, ko se ta na svojem trgu sprosti; razdelek 6 kaže, kdaj.</li>
 <li><b>Klicatelj kliče v prodajalčevem imenu</b> (Slovenija: Tomaž za Roka in Matjaža, Italija: popoldanski prodajalec). Vsak klicni dan dobi mail s scenarijem in seznamom: ime, hotel, številka, direktna ali office; če isti dan padeta C1 in C2, sta v mailu oba scenarija. Scenariji gredo najprej na matjaz.volkar@nevron.eu, potem na Tomažev naslov. Trg brez klicatelja klicne dotike preskoči.</li>
 <li><b>Ko se Dream 100 na kanalu porabi, se isti dan nadaljuje z ostalimi v ICP pasu.</b></li>
 </ol></div>
@@ -1767,8 +1858,8 @@ function renderScenarios(P) {
   rec += `<li><b>Pipeline je isti v vseh scenarijih.</b> Email zmore ${fmt(P.warm * P.mails * P.days / P.perlead)} novih leadov na teden (${P.warm} accountov × ${P.mails} × ${P.days} dni / ${P.perlead} mailov na lead), LinkedIn ${fmt(P.li * P.lid * P.days)} povabil na teden, vsak prodajalec ${fmt(P.calls * P.days / P.cph)} hotelov na teden. Zaporedje spremeni samo, kdo je gotov prvi.</li>`;
   if (best) rec += `<li><b>Dream 100 z obema angloma na vseh trgih je najhitreje gotov v ${best.sc.name.split(":")[0]}</b>: ${wDate(P, best.r.d100Done)}. ${s1b.d100Done != null && s1.d100Done != null && s1b.d100Done < s1.d100Done ? "Scenarij 1 brez prednosti za Dream 100 ga zamakne na " + wDate(P, s1.d100Done) + ", ker tretji angle (" + fmt(totalRest) + " leadov nad Dream 100) pije isti pipeline." : ""}</li>`;
   if (firstMarketS3 && firstMarketS3.done != null) rec += `<li><b>Če hočeš en trg zares zaključen zgodaj, je to scenarij 3</b>: Slovenija ima oba angla za sabo ${wDate(P, firstMarketS3.done)}, ostali trgi pa čakajo. Vzporedno (1b) dobi vsak trg prvi angle v prvih tednih, a nihče ni gotov pred ${s1b.d100Done != null ? wDate(P, s1b.d100Done) : "koncem okna"}.</li>`;
-  rec += `<li><b>Kje zmanjka:</b> ${s1b.restDone == null ? "sloj nad Dream 100 (" + fmt(totalRest) + " leadov) se z današnjimi accounti ne izteče do 30. 4.; rabimo dodatne mailboxe ali ožji izbor (glej razdelek 5)." : "sloj nad Dream 100 se z današnjimi accounti izteče " + wDate(P, s1b.restDone) + "."} ${s1b.telOpen.length ? "Klici: " + s1b.telOpen.map(c => c.m.ime).join(", ") + " brez prodajalca ali nedokončani; Grčija in Avstrija nista telefonska trga." : "Klici so pokriti."}</li>`;
-  rec += `<li><b>Priporočilo:</b> scenarij 1b. Vsi trgi dobijo prvi angle takoj (vsak dan en trg, glej razdelek 6), Dream 100 ima prednost pred tretjim anglom, pipeline nikoli ne stoji. Ko so vsi Dream 100 skozi oba angla, se sprosti vsa kapaciteta za sloj nad Dream 100, kjer je največ leadov in kjer je smiselno dodati accounte.</li></ul>`;
+  rec += `<li><b>Kje zmanjka:</b> ${s1b.restDone == null ? "sloj nad Dream 100 (" + fmt(totalRest) + " leadov) se z današnjimi accounti ne izteče do 30. 4.; rabimo dodatne mailboxe ali ožji izbor (glej razdelek 6)." : "sloj nad Dream 100 se z današnjimi accounti izteče " + wDate(P, s1b.restDone) + "."} ${s1b.telOpen.length ? "Klici: " + s1b.telOpen.map(c => c.m.ime).join(", ") + " brez prodajalca ali nedokončani; Grčija in Avstrija nista telefonska trga." : "Klici so pokriti."}</li>`;
+  rec += `<li><b>Priporočilo:</b> scenarij 1b. Vsi trgi dobijo prvi angle takoj (vsak dan en trg, glej razdelek 7), Dream 100 ima prednost pred tretjim anglom, pipeline nikoli ne stoji. Ko so vsi Dream 100 skozi oba angla, se sprosti vsa kapaciteta za sloj nad Dream 100, kjer je največ leadov in kjer je smiselno dodati accounte.</li></ul>`;
   $("#rec").innerHTML = rec;
 }
 
@@ -1849,7 +1940,7 @@ function renderCapacity(P, G) {
     return `<div class="caphead"><h3>Skupaj vsi kanali</h3></div><div class="tiles caprow"><div></div><div></div><div></div>
       <div class="tile hot sum"><div class="v">${fmt(mid)}</div><div class="l">pričakovanih sestankov v sezoni</div><div class="have">razpon ${fmt(lo)} do ${fmt(hi)} · klici + LinkedIn + mail</div></div>
       <div class="tile hot sum"><div class="v">${fmt(mid * WIN.mid)}</div><div class="l">dobljenih projektov v sezoni</div><div class="have">razpon ${fmt(lo * WIN.lo)} do ${fmt(hi * WIN.hi)} · ob ${(WIN.mid * 100).toFixed(1).replace('.', ',')} % (${(WIN.lo * 100).toFixed(1).replace('.', ',')} do ${(WIN.hi * 100).toFixed(0)} %) konverziji z dokaznim dvigom</div></div></div>`; })();
-  $("#c_need").innerHTML = `Dejansko na dan je povprečje oktobrskih delovnih dni iz razporeda v razdelku 4. Kontakt, ki je hkrati na mailu in na LinkedInu, šteje na obeh kanalih; vsak naslednji krog isti osebi šteje 60, 50 in 40 % stopnje prvega. Razpon so nizki in visoki konci objavljenih benchmarkov.`;
+  $("#c_need").innerHTML = `Dejansko na dan je povprečje oktobrskih delovnih dni iz razporeda v razdelku 5. Kontakt, ki je hkrati na mailu in na LinkedInu, šteje na obeh kanalih; vsak naslednji krog isti osebi šteje 60, 50 in 40 % stopnje prvega. Razpon so nizki in visoki konci objavljenih benchmarkov.`;
 }
 
 // ---------- globalni model: trije scenariji, 14 dotikov ----------
