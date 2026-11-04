@@ -1099,6 +1099,12 @@
   .nac1 .mes i { position: absolute; top: 0; bottom: 0; border-radius: 999px; background: linear-gradient(90deg, var(--accent), var(--email)); box-shadow: 0 0 10px rgba(115, 199, 255, 0.35); }
   .nac1 .mes u { position: absolute; top: -3px; width: 1px; height: 14px; background: var(--line); }
   .nac1 .mes-l { display: flex; justify-content: space-between; margin-top: 4px; font-size: 0.62rem; color: var(--ink-3); }
+  .nac1 td.n small { display: block; margin-top: 2px; font-size: 0.66rem; font-weight: 400; color: var(--ink-3); white-space: normal; }
+  .nac1 tbody tr.val td:not(.ch) { background: var(--surface-2); }
+  .nac1 tr.val td.kam b { font-size: 0.88rem; }
+  .nac1 tr.val td.n { font-size: 1.05rem; }
+  .nac1 tr.val .traj b { font-size: 0.86rem; font-weight: 700; }
+  @media (min-width: 761px) { .nac1 tbody tr.val td { padding-top: 9px; padding-bottom: 9px; } .nac1 tbody tr.val td.kam { padding-left: 30px; box-shadow: inset 3px 0 0 var(--accent); } }
   .nac1-op { margin: 0 0 22px; padding-left: 1.2em; } .nac1-op li { margin: 0 0 4px; line-height: 1.45; } .nac1-op b { color: var(--ink-2); }
   @media (max-width: 760px) {
     .nac1 thead { display: none; }
@@ -1109,16 +1115,26 @@
     .nac1 td[data-l]::before { content: attr(data-l); display: block; margin-bottom: 4px; font-size: 0.6rem; font-weight: 800; letter-spacing: 0.08em; color: var(--ink-3); }
     .nac1 td.kam, .nac1 td.traj { grid-column: 1 / -1; }
     .nac1 td.n { text-align: left; font-size: 1.2rem; }
+    .nac1 tbody tr.val { padding: 10px 14px 10px 24px; background: var(--surface-2); box-shadow: inset 3px 0 0 var(--accent); }
+    .nac1 tbody tr.val td { background: transparent; }
+    .nac1 tr.val td.n { font-size: 1rem; }
+    .nac1 td.prazno { display: none; }
   }
 </style>
 <div class="nac1" id="t_nacrt"></div>
 <ul class="nac1-op small muted" id="n_nacrt"></ul>
 <script>
 (function () {
-  // Nacrt posiljanja (Matjaz 4. 11. 2026). Stevila kampanje SI so iz seje "Stop in Start kampanj"
-  // (payload SI custom scrape, 4. 11. 2026 ob 2.51: 97 hotelov s tenantom in brez DNC, 182 mailov, 147 LinkedIn).
+  // Nacrt posiljanja (Matjaz 4. 11. 2026). Stevila kampanje SI so ciljne stevilke seje Kontakti (matjaz-yoga-elegant-ritchie)
+  // z Matjazevim DA, 4. 11. 2026: val 1 = start 5. 11., val 2 = nove osebe iz drago-osebe-2026-11-04/val2_2026-11-04.json
+  // (mail = dobi_mail, LinkedIn = vsi s profilom, brez Vander Urbani Resorta). Vrstica kampanje sesteje vala, hotelov ne
+  // (val 2 so isti hoteli). Kljuc payload je do preklica odstranjen: payload ob 7.54 kaze napacne stevilke.
   const NACRT = [
-    { kampanja: "NevronCore Automated Demo", tip: "Custom Scrape", trg: "Slovenija", zastava: "si", hotelov: 97, mail: 182, li: 147, od: "2026-11-05", do: "2026-11-25", payload: "si-custom-scrape-k1" },
+    { kampanja: "NevronCore Automated Demo", tip: "Custom Scrape", trg: "Slovenija", zastava: "si", hotelov: 97, od: "2026-11-05", do: "2026-11-25",
+      valovi: [
+        { ime: "Val 1", opis: "start čet 5. 11.", hotelov: 97, hotelov_op: "s tenantom, brez DNC", mail: 179, li: 143, cas: "5. do 25. novembra", cas_op: "nalaganje 5. do 11. 11." },
+        { ime: "Val 2", opis: "nove osebe, ko Amadej vrne žetone", hotelov: 27, hotelov_op: "isti hoteli, nove osebe", plus: true, mail: 14, mail_op: "samo dokazani naslovi", li: 49, li_op: "7 prek Roka, samo sporočilo", cas: "nalaganje do sre 11. 11.", cas_op: "konec sre 25. 11." },
+      ] },
   ];
   const n0 = (n) => String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   const D = (x) => new Date(x + "T12:00:00");
@@ -1143,6 +1159,12 @@
     NACRT.forEach(k => { const p = KP.find(x => x.id === k.payload); if (p) Object.assign(k, { hotelov: p.hotelov, mail: p.mail, li: p.li, zgrajeno: p.zgrajeno, viri: p.viri }); });
     const dp = (x) => { const m = String(x || "").match(/^(\d{4})-(\d\d)-(\d\d)T(\d\d):(\d\d)/); return m ? `${+m[3]}. ${+m[2]}. ${m[1]} ob ${+m[4]}.${m[5]}` : ""; };
     const zPay = NACRT.filter(k => k.zgrajeno);
+    // kampanja z valovi: mail in LinkedIn sta vsota valov, hotelov ostane vpisano (val 2 so isti hoteli)
+    NACRT.forEach(k => { if (k.valovi) { k.mail = k.valovi.reduce((a, v) => a + v.mail, 0); k.li = k.valovi.reduce((a, v) => a + v.li, 0); } });
+    const st = (v, p) => `${v.plus && p !== "hotelov" ? "+" : ""}${n0(v[p])}${v[p + "_op"] ? `<small>${v[p + "_op"]}</small>` : ""}`;
+    const val = (v) => `<tr class="val"><td class="kam"><b>${v.ime}</b><small>${v.opis}</small></td><td class="prazno"></td><td class="prazno"></td>` +
+      `<td class="n" data-l="HOTELOV">${st(v, "hotelov")}</td><td class="n ch email" data-l="KONTAKTOV MAIL">${st(v, "mail")}</td><td class="n ch li" data-l="KONTAKTOV LI">${st(v, "li")}</td>` +
+      `<td class="traj" data-l="TRAJANJE"><b>${v.cas}</b><small>${v.cas_op || ""}</small></td></tr>`;
     const vrsta = (k) => {
       const x = D(k.od), y = D(k.do);
       return `<tr><td class="kam" data-l="KAMPANJA"><b>${k.kampanja}</b><small>start ${DAN[x.getDay()]} ${x.getDate()}. ${x.getMonth() + 1}., konec ${DAN[y.getDay()]} ${y.getDate()}. ${y.getMonth() + 1}.</small></td>` +
@@ -1151,7 +1173,8 @@
         `<td class="n" data-l="HOTELOV">${n0(k.hotelov)}</td>` +
         `<td class="n ch email" data-l="KONTAKTOV MAIL">${n0(k.mail)}</td>` +
         `<td class="n ch li" data-l="KONTAKTOV LI">${n0(k.li)}</td>` +
-        `<td class="traj" data-l="TRAJANJE"><b>${obdobje(k.od, k.do)}</b><small>${delovnih(k.od, k.do)} delovnih dni</small>${trak(k.od, k.do)}</td></tr>`;
+        `<td class="traj" data-l="TRAJANJE"><b>${obdobje(k.od, k.do)}</b><small>${delovnih(k.od, k.do)} delovnih dni</small>${trak(k.od, k.do)}</td></tr>` +
+        (k.valovi || []).map(val).join("");
     };
     const vs = (p) => NACRT.reduce((a, k) => a + (k[p] || 0), 0);
     q("#t_nacrt").innerHTML = `<div class="tw" style="margin:0"><table><thead><tr><th>Kampanja</th><th>Tip</th><th>Trg</th><th class="n">Hotelov</th>` +
@@ -1162,7 +1185,9 @@
       `</tbody></table></div>`;
     q("#n_nacrt").innerHTML =
       (zPay.length ? zPay.map(k => `<li><b>Vir številk (${k.kampanja}):</b> payload kampanje (${(k.viri || []).join(", ")}), zgrajen ${dp(k.zgrajeno)}. Šteti so vsi ljudje hotela, ena oseba en mail; samo hoteli s tenantom in brez DNC. Številke se osvežijo ob vsaki gradnji strani.</li>`).join("")
-        : `<li><b>Vir številk:</b> seja Stop in Start kampanj, payload kampanje z dne 4. 11. 2026. Hoteli imajo custom scrape tenant in niso DNC; vsak kontakt ima en mail naslov.</li>`) +
+        : `<li><b>Vir številk:</b> ciljne številke seje Kontakti z Matjaževim DA, 4. 11. 2026. Vrstica kampanje kaže skupaj, pod njo sta vala. Do preklica se številke ne osvežujejo iz payloada kampanje, ker payload ob 7.54 kaže napačne številke.</li>` +
+          `<li><b>Val 1:</b> start v četrtek 5. 11.; 97 hotelov s custom scrape tenantom in brez DNC, 179 mailov in 143 LinkedIn profilov.</li>` +
+          `<li><b>Val 2:</b> nove osebe v 27 hotelih iz vala 1 (raziskava 4. 11.), naložijo se, ko Amadej vrne žetone, najpozneje v sredo 11. 11. Mail samo na dokazane naslove (14). LinkedIn 49: 42 s povabilom Matjaža ali Amadeja, 7 prek Roka samo s sporočilom, ker so z njim že povezani. Vander Urbani Resort (2 maila, 2 LinkedIn) ostane zunaj, dokler nima tenanta.</li>`) +
       `<li><b>Mail:</b> start v četrtek 5. 11., razmiki med maili 5, 2, 5 in 2 delovna dneva; zadnji kontakti začnejo v sredo 11. 11., njihov peti mail gre v sredo 25. 11.</li>` +
       `<li><b>LinkedIn:</b> HeyReach pošilja od ponedeljka do petka, od 9. do 17. ure, brez vikendov.</li>`;
   }
