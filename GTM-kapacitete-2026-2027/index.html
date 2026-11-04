@@ -1124,8 +1124,8 @@
   const NACRT = [
     { kampanja: "NevronCore Automated Demo", tip: "Custom Scrape", trg: "Slovenija", zastava: "si", hotelov: 97, od: "2026-11-05", do: "2026-11-25",
       valovi: [
-        { ime: "Val 1", opis: "start čet 5. 11.", hotelov: 97, hotelov_op: "s tenantom, brez DNC", mail: 179, li: 131, li_op: "12 v val 3 (meja 10 na hotel)", cas: "5. do 25. novembra", cas_op: "nalaganje 5. do 11. 11." },
-        { ime: "Val 2", opis: "nove osebe, ko Amadej vrne žetone", hotelov: 27, hotelov_op: "isti hoteli, nove osebe", plus: true, mail: 14, mail_op: "samo dokazani naslovi", li: 49, li_op: "7 prek Roka, samo sporočilo", cas: "nalaganje do sre 11. 11.", cas_op: "konec sre 25. 11." },
+        { ime: "Val 1", opis: "start čet 5. 11.", hotelov: 97, hotelov_op: "s tenantom, brez DNC", mail: 179, li: 129, li_op: "12 v val 3 (meja 10 na hotel); Krivec in Dominc po en profil", cas: "5. do 25. novembra", cas_op: "nalaganje 5. do 11. 11." },
+        { ime: "Val 2", opis: "nove osebe, ko Amadej vrne žetone", hotelov: 27, hotelov_op: "isti hoteli, nove osebe", plus: true, mail: 22, mail_op: "dokazani naslovi + 8 z DA Matjaza 4. 11.", li: 49, li_op: "7 prek Roka, samo sporočilo", cas: "nalaganje do sre 11. 11.", cas_op: "konec sre 25. 11." },
         { ime: "Val 3", opis: "pogojno, samo če se hotel ne oglasi", izven: true, hotelov: 4, hotelov_op: "Zagreb, Bledrose, InterContinental, ONE66", mail: 0, mail_op: "mail dobijo v valu 1", li: 12, li_op: "povabila, ni v vsoti", cas: "po 25. 11.", cas_op: "po koncu vala 1" },
       ] },
   ];
@@ -1173,7 +1173,7 @@
       `</tbody></table></div>`;
     q("#n_nacrt").innerHTML =
       (zPay.length ? zPay.map(k => `<li>${k.kampanja}: številke iz payloada kampanje, zgrajen ${dp(k.zgrajeno)}.</li>`).join("")
-        : `<li>Val 1 start 5. 11. (179 mailov, 131 LI); val 2 nove osebe do 11. 11. (+14 mailov, +49 LI, 7 prek Roka); 12 LI po 25. 11., če se hotel ne oglasi.</li>`);
+        : `<li>Val 1 start 5. 11. (179 mailov, 129 LI); val 2 nove osebe do 11. 11. (+22 mailov, +49 LI, 7 prek Roka); 12 LI po 25. 11., če se hotel ne oglasi.</li>`);
   }
   const q = (x) => document.querySelector(x);
   // zastave (window.FLAG) nastanejo v glavnem skriptu strani, zato risanje po nalaganju
