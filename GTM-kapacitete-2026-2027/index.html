@@ -1120,12 +1120,14 @@
   // (mail = dobi_mail, LinkedIn = vsi s profilom, brez Vander Urbani Resorta). Vrstica kampanje sesteje vala, hotelov ne
   // (val 2 so isti hoteli). Kljuc payload je do preklica odstranjen: payload ob 7.54 kaze napacne stevilke.
   // Meja 10 kontaktov na hotel (Matjaz 4. 11.): 12 LinkedIn iz vala 1 gre v val 3, ki je pogojen (po 25. 11.) in ni v vsoti (izven).
+  // Hotelov 100 = 97 s tenantom + Cubis, Gredic, Vander (cakajo tenant; 6 mailov, 4 LI ocena seje Kontakti, Matjaz 4. 11.).
   // Valovi se ne izrisujejo kot vrstice (Matjaz 4. 11.: "ne deli na val 1 in val 2"); iz njih se racunata vsoti, opis je v drobnem tisku.
   const NACRT = [
-    { kampanja: "NevronCore Automated Demo", tip: "Custom Scrape", trg: "Slovenija", zastava: "si", hotelov: 97, od: "2026-11-05", do: "2026-11-25",
+    { kampanja: "NevronCore Automated Demo", tip: "Custom Scrape", trg: "Slovenija", zastava: "si", hotelov: 100, od: "2026-11-05", do: "2026-11-25",
       valovi: [
         { ime: "Val 1", opis: "start čet 5. 11.", hotelov: 97, hotelov_op: "s tenantom, brez DNC", mail: 179, li: 129, li_op: "12 v val 3 (meja 10 na hotel); Krivec in Dominc po en profil", cas: "5. do 25. novembra", cas_op: "nalaganje 5. do 11. 11." },
         { ime: "Val 2", opis: "nove osebe, ko Amadej vrne žetone", hotelov: 27, hotelov_op: "isti hoteli, nove osebe", plus: true, mail: 22, mail_op: "dokazani naslovi + 8 z DA Matjaza 4. 11.", li: 49, li_op: "7 prek Roka, samo sporočilo", cas: "nalaganje do sre 11. 11.", cas_op: "konec sre 25. 11." },
+        { ime: "Brez tenanta", opis: "Cubis, Gredič, Vander čakajo tenant; ocena (Matjaž 4. 11.)", hotelov: 3, mail: 6, li: 4 },
         { ime: "Val 3", opis: "pogojno, samo če se hotel ne oglasi", izven: true, hotelov: 4, hotelov_op: "Zagreb, Bledrose, InterContinental, ONE66", mail: 0, mail_op: "mail dobijo v valu 1", li: 12, li_op: "povabila, ni v vsoti", cas: "po 25. 11.", cas_op: "po koncu vala 1" },
       ] },
   ];
@@ -1173,7 +1175,7 @@
       `</tbody></table></div>`;
     q("#n_nacrt").innerHTML =
       (zPay.length ? zPay.map(k => `<li>${k.kampanja}: številke iz payloada kampanje, zgrajen ${dp(k.zgrajeno)}.</li>`).join("")
-        : `<li>Val 1 start 5. 11. (179 mailov, 129 LI); val 2 nove osebe do 11. 11. (+22 mailov, +49 LI, 7 prek Roka); 12 LI po 25. 11., če se hotel ne oglasi.</li>`);
+        : `<li>Val 1 start 5. 11. (179 mailov, 129 LI); val 2 nove osebe do 11. 11. (+22 mailov, +49 LI, 7 prek Roka); 12 LI po 25. 11., če se hotel ne oglasi. Od tega 3 hoteli (Cubis, Gredič, Vander) čakajo tenant; njihovih 6 mailov in 4 LI je ocena.</li>`);
   }
   const q = (x) => document.querySelector(x);
   // zastave (window.FLAG) nastanejo v glavnem skriptu strani, zato risanje po nalaganju
