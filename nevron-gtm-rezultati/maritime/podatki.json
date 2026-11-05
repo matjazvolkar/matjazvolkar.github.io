@@ -1,0 +1,111 @@
+{
+  "naslov": "GTM rezultati",
+  "zavihek": "GTM rezultati Maritime",
+  "sezona": "Maritime",
+  "opomba": "Demos Booked, AE Follow-up in Wins: Maritime SDR Pipeline v Attiu, vsak posel, ki je stopnjo dosegel. Opens, Reads in Clicks: maritime kampanje nimajo osebnih linkov in ne merijo odpiranja. Obdobje od prvih Simonovih sporočil v Sales Navigatorju (december 2024). Osveži se vsako noč.",
+  "ozadje": "../slike/ladja.jpg",
+  "skupine": [
+    {
+      "kpiji": [
+        {
+          "id": "calls",
+          "ime": "Calls"
+        },
+        {
+          "id": "answers",
+          "ime": "Answers"
+        },
+        {
+          "id": "positive",
+          "ime": "Positive"
+        },
+        {
+          "id": "demos_booked",
+          "ime": "Demos Booked",
+          "poudarek": true
+        },
+        {
+          "id": "ae_follow_up",
+          "ime": "AE Follow-up"
+        },
+        {
+          "id": "wins",
+          "ime": "Wins"
+        }
+      ],
+      "kanali": [
+        {
+          "id": "sdr_hladni_klici",
+          "ime": "SDR hladni klici"
+        },
+        {
+          "id": "sdr_followup_klici",
+          "ime": "SDR follow-up klici"
+        }
+      ]
+    },
+    {
+      "kpiji": [
+        {
+          "id": "opens",
+          "ime": "Opens"
+        },
+        {
+          "id": "reads",
+          "ime": "Reads"
+        },
+        {
+          "id": "clicks",
+          "ime": "Clicks"
+        },
+        {
+          "id": "demos_booked",
+          "ime": "Demos Booked",
+          "poudarek": true
+        },
+        {
+          "id": "ae_follow_up",
+          "ime": "AE Follow-up"
+        },
+        {
+          "id": "wins",
+          "ime": "Wins"
+        }
+      ],
+      "kanali": [
+        {
+          "id": "ai_sdr_mail_linkedin",
+          "ime": "AI SDR hladni mail + LinkedIn"
+        },
+        {
+          "id": "sdr_topli_mail_linkedin",
+          "ime": "SDR topli mail + LinkedIn"
+        },
+        {
+          "id": "ai_search",
+          "ime": "AI Search"
+        },
+        {
+          "id": "seo",
+          "ime": "SEO"
+        },
+        {
+          "id": "linkedin_posting",
+          "ime": "LinkedIn posting"
+        },
+        {
+          "id": "digital_ads",
+          "ime": "Digital ads"
+        },
+        {
+          "id": "newsletters",
+          "ime": "Newsletters"
+        },
+        {
+          "id": "podcast",
+          "ime": "Podcast"
+        }
+      ]
+    }
+  ]
+}

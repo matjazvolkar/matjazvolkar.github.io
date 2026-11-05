@@ -1,10 +1,14 @@
 """Zgradi stran Nevron GTM rezultati (index.html) iz podatki.json in vrednosti.json.
 
 Samo standardna knjiznica: tece na PC-ju in na Hetznerju (/opt/nevron-gtm-rezultati/run.sh, vsako noc).
-  podatki.json    zgradba: naslov, sezona, opomba, kanali, KPI-ji (ureja clovek)
+  podatki.json    zgradba: naslov, sezona (oznaka desno zgoraj), opomba, ozadje, kanali, KPI-ji (ureja clovek)
   vrednosti.json  stevilke, obdobje in cas osvezitve (pise nocni proces SDR/scripts/pipelines/gtm_rezultati.py)
 
-  python zgradi.py
+Strani sta dve z istim generatorjem (Matjaz 5. 11. 2026): hospitality v tej mapi in maritime v maritime/
+(svoj podatki.json in vrednosti.json). Slike ozadij so v slike/.
+
+  python zgradi.py                       # samo hospitality (ta mapa)
+  python zgradi.py --vse                 # ta mapa in vsaka podmapa s podatki.json (nocni proces)
   python zgradi.py --test 88888 --izhod C:/pot/test.html   # vse celice z isto vrednostjo (prileganje)
 
 Vrednost, ki je ni, se izpise kot "00". Preverba prileganja: Projects/nevron-gtm-rezultati/shot.py.
@@ -49,12 +53,24 @@ def _datum(t: datetime) -> str:
     return f"{t.day}. {t.month}. {t.year}"
 
 
+MESECI_RODILNIK = ["januarja", "februarja", "marca", "aprila", "maja", "junija", "julija", "avgusta",
+                   "septembra", "oktobra", "novembra", "decembra"]
+
+
+def _od(od: str) -> str:
+    """Zacetek obdobja: "2026-04-13" -> "13. 4. 2026"; samo mesec "2024-12" -> "decembra 2024"."""
+    if len(od) == 7:
+        leto, mesec = od.split("-")
+        return f"{MESECI_RODILNIK[int(mesec) - 1]} {leto}"
+    return _datum(datetime.fromisoformat(od))
+
+
 def obdobje_besedilo(od, osv) -> str:
-    """Od prve pomladne kampanje do dneva nocnega teka (zastal proces = star datum na TV)."""
+    """Od prve kampanje do dneva nocnega teka (zastal proces = star datum na TV)."""
     if not od:
         return "Številke še niso povezane z viri"
     do = _lokalno(datetime.fromisoformat(osv)) if osv else datetime.now()
-    return f"Od {_datum(datetime.fromisoformat(od))} do {_datum(do)}"
+    return f"Od {_od(str(od))} do {_datum(do)}"
 
 
 def zgradi(pod: dict, vred: dict, test=None) -> str:
@@ -72,7 +88,8 @@ def zgradi(pod: dict, vred: dict, test=None) -> str:
         vrste.append('    <div class="row" role="row">')
         vrste.append(f'      <div class="head blank{nova}" aria-hidden="true"></div>')
         for k in kpiji:
-            vrste.append(f'      <div class="head col{nova}" role="columnheader">{e(k["ime"])}</div>')
+            poud = " poudarek" if k.get("poudarek") else ""
+            vrste.append(f'      <div class="head col{nova}{poud}" role="columnheader">{e(k["ime"])}</div>')
         vrste.append("    </div>")
         visine.append("auto")
         for kanal in skupina["kanali"]:
@@ -81,7 +98,7 @@ def zgradi(pod: dict, vred: dict, test=None) -> str:
             for k in kpiji:
                 v = test if test is not None else (stevilke.get(kanal["id"]) or {}).get(k["id"])
                 besedilo, prazno = stevilka(v)
-                razred = "figure prazno" if prazno else "figure"
+                razred = ("figure prazno" if prazno else "figure") + (" poudarek" if k.get("poudarek") else "")
                 vrste.append(
                     f'      <div class="cell" role="cell"><span class="{razred}" data-kanal="{e(kanal["id"])}" '
                     f'data-kpi="{e(k["id"])}">{besedilo}</span></div>'
@@ -89,9 +106,15 @@ def zgradi(pod: dict, vred: dict, test=None) -> str:
             vrste.append("    </div>")
             visine.append("minmax(0, 1fr)")
     stran = PREDLOGA
+    # Ozadje: fotografija pod 70 % crno plastjo (Matjaz 5. 11. 2026); brez nje ostane navy preliv.
+    ozadje = pod.get("ozadje")
+    ozadje_css = f'url("{e(ozadje)}")' if ozadje else "none"
     zamenjave = {
         "@@NASLOV@@": e(pod["naslov"]),
+        "@@ZAVIHEK@@": e(pod.get("zavihek") or pod["naslov"]),
         "@@SEZONA@@": e(pod["sezona"]),
+        "@@OZADJE@@": ozadje_css,
+        "@@OZADJE_DIV@@": '<div class="ozadje" aria-hidden="true"></div>\n' if ozadje else "",
         "@@OSVEZENO@@": e(obdobje_besedilo((vred or {}).get("od"), (vred or {}).get("osvezeno"))),
         "@@OPOMBA@@": e(pod.get("opomba") or ""),
         "@@LOGO@@": LOGO_SVG,
@@ -111,8 +134,8 @@ PREDLOGA = """<!doctype html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <meta http-equiv="refresh" content="900">
-<title>@@NASLOV@@</title>
-<meta name="description" content="GTM rezultati po kanalih: opens, reads, clicks, demos booked, AE follow-up in wins od prve pomladne kampanje 2026.">
+<title>@@ZAVIHEK@@</title>
+<meta name="description" content="GTM rezultati po kanalih (@@SEZONA@@): klici, opens, reads, clicks, demos booked, AE follow-up in wins.">
 <meta name="color-scheme" content="dark">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2000 2000'><rect width='2000' height='2000' rx='340' fill='%23000126'/><path fill='%231B92FF' d='M1681.3,693.4h197.8V98.8h-594.7v197.8h396.9V693.4z M296.7,1284.3H98.9V1879h594.7v-197.8H296.7V1284.3z'/><path fill='%231B92FF' d='M1879.1,1284.3h-197.8v310.2L296.7,98.8H98.9v594.7h197.8V381.6L1681.3,1879h197.8L1879.1,1284.3z'/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -131,6 +154,7 @@ PREDLOGA = """<!doctype html>
     --text-soft: #E0E1E2;
     --blue: #1B92FF;
     --blue-mid: #73C7FF;
+    --orange: #E56600;
     color-scheme: dark;
     /* ena enota za vse mere: 1 % visine 16:9 zaslona, zato se vse prilega v okno (HD TV, prenosnik) */
     --u: min(1vh, 0.5625vw);
@@ -146,7 +170,13 @@ PREDLOGA = """<!doctype html>
     line-height: 1.3;
     -webkit-font-smoothing: antialiased;
   }
+  /* fotografija cez cel zaslon pod 70 % crno plastjo, da beli teksti ostanejo berljivi; fiksna tudi na telefonu */
+  .ozadje {
+    position: fixed; inset: 0;
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), @@OZADJE@@ center / cover no-repeat;
+  }
   .page {
+    position: relative;
     height: 100vh; height: 100svh;
     display: grid;
     grid-template-rows: auto minmax(0, 1fr) auto;
@@ -196,6 +226,8 @@ PREDLOGA = """<!doctype html>
     font-size: calc(var(--u) * 4.9); line-height: 1; letter-spacing: -0.015em;
     color: var(--text); white-space: nowrap;
   }
+  /* Demos Booked v oranzni (brand orange, Matjaz 5. 11. 2026): glava stolpca in stevilke */
+  .head.col.poudarek, .figure.poudarek { color: var(--orange); }
   .opomba { margin: calc(var(--u) * -0.8) 0 0; font-size: calc(var(--u) * 1.45); line-height: 1.4; color: var(--text-dim); }
 
   /* telefon in ozko okno: brez prileganja v en zaslon, tabela se drsi vodoravno */
@@ -216,7 +248,7 @@ PREDLOGA = """<!doctype html>
 </style>
 </head>
 <body>
-<div class="page">
+@@OZADJE_DIV@@<div class="page">
   <header class="brand">
     <div class="logo">@@LOGO@@</div>
     <h1>@@NASLOV@@</h1>
@@ -235,19 +267,27 @@ PREDLOGA = """<!doctype html>
 """
 
 
+def zgradi_mapo(podatki: Path, vrednosti: Path, izhod: Path, test=None) -> None:
+    pod = json.loads(podatki.read_text(encoding="utf-8"))
+    vred = json.loads(vrednosti.read_text(encoding="utf-8")) if vrednosti.exists() else {}
+    izhod.write_text(zgradi(pod, vred, test), encoding="utf-8", newline="\n")
+    print("zapisano:", izhod)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--podatki", default=str(TU / "podatki.json"))
     ap.add_argument("--vrednosti", default=str(TU / "vrednosti.json"))
     ap.add_argument("--izhod", default=str(TU / "index.html"))
+    ap.add_argument("--vse", action="store_true", help="ta mapa in vsaka podmapa s podatki.json (maritime/)")
     ap.add_argument("--test", type=float, default=None, help="vse celice s to vrednostjo")
     a = ap.parse_args()
-    pod = json.loads(Path(a.podatki).read_text(encoding="utf-8"))
-    vp = Path(a.vrednosti)
-    vred = json.loads(vp.read_text(encoding="utf-8")) if vp.exists() else {}
     test = None if a.test is None else (int(a.test) if a.test.is_integer() else a.test)
-    Path(a.izhod).write_text(zgradi(pod, vred, test), encoding="utf-8", newline="\n")
-    print("zapisano:", a.izhod)
+    if a.vse:
+        for mapa in [TU] + sorted(p.parent for p in TU.glob("*/podatki.json")):
+            zgradi_mapo(mapa / "podatki.json", mapa / "vrednosti.json", mapa / "index.html", test)
+        return
+    zgradi_mapo(Path(a.podatki), Path(a.vrednosti), Path(a.izhod), test)
 
 
 if __name__ == "__main__":
