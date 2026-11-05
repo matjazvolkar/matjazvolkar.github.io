@@ -94,7 +94,7 @@
   .fill-live strong { color: var(--ink); }
 
   .table-scroll { overflow-x: auto; border: 1px solid var(--line-2); border-radius: 8px; }
-  table { border-collapse: collapse; width: 100%; min-width: 620px; font-size: 13.5px; }
+  table { border-collapse: collapse; width: 100%; min-width: 760px; font-size: 13.5px; }
   thead th {
     position: sticky; top: 0; background: var(--bg); z-index: 1;
     text-align: left; font-family: var(--mono); font-size: 10.5px; letter-spacing: .07em; text-transform: uppercase;
@@ -105,6 +105,15 @@
   .c-num { width: 34px; color: var(--ink-3); font-family: var(--mono); font-size: 12px; text-align: right; }
   .c-time { width: 108px; font-family: var(--mono); font-size: 12px; color: var(--ink-2); white-space: nowrap; font-variant-numeric: tabular-nums; }
   .c-ai { width: 44px; text-align: center; }
+  .c-kat { width: 220px; }
+  select.kat {
+    width: 100%; font: inherit; font-size: 12.5px; color: var(--ink-3); background: transparent;
+    border: 1px solid var(--line-2); border-radius: 6px; padding: 4px 6px; cursor: pointer;
+  }
+  select.kat:hover { border-color: var(--line); }
+  select.kat:focus { outline: none; border-color: var(--accent); }
+  select.kat.has-kat { color: var(--accent); background: var(--accent-2); border-color: transparent; font-weight: 600; }
+  select.kat option { color: var(--ink); background: var(--bg); font-weight: 400; }
   th.th-ai { text-align: center; }
 
   input[type="text"] {
@@ -204,6 +213,7 @@
   .modal-list li:last-child { border-bottom: none; }
   .mp-time { font-family: var(--mono); font-size: 11.5px; color: var(--ink-3); white-space: nowrap; }
   .mp-opis { flex: 1; color: var(--ink); }
+  .mp-kat { font-size: 11.5px; color: var(--ink-3); white-space: nowrap; }
   .mp-ai {
     font-family: var(--mono); font-size: 9.5px; font-weight: 700; letter-spacing: .06em;
     color: var(--accent); background: var(--accent-2); border-radius: 999px; padding: 2px 6px; white-space: nowrap;
@@ -228,8 +238,8 @@
     <a class="back" href="https://matjazvolkar.github.io/">← matjazvolkar.github.io</a>
     <h1 class="name">Hormozi Focus</h1>
     <p class="tagline">
-      Dan, razrezan na 76 kosov po 15 minut, od 5.00 do polnoči. Vsak dan izberi na koledarju,
-      zapiši, kaj si počel v posameznem bloku, in pošlji. Kar meriš, to izboljšaš.
+      Delovni dan od 7.00 do 16.00, razrezan na 36 blokov po 15 minut. Vsak dan izberi na koledarju,
+      zapiši, kaj si počel v posameznem bloku, izberi kategorijo in pošlji. Kar meriš, to izboljšaš.
     </p>
   </header>
 
@@ -238,7 +248,7 @@
     <section class="panel table-panel">
       <div class="panel-head">
         <h2>Razpored za <span class="datelabel" id="selDateLabel">-</span></h2>
-        <div class="fill-live">Zapolnjeno: <strong id="liveFilled">0</strong>/76</div>
+        <div class="fill-live">Zapolnjeno: <strong id="liveFilled">0</strong>/<span id="liveTotal">36</span></div>
       </div>
       <div class="table-scroll">
         <table id="slotsTable">
@@ -247,6 +257,7 @@
               <th>#</th>
               <th>Čas</th>
               <th>Opis dela</th>
+              <th>Kategorija</th>
               <th class="th-ai">AI</th>
             </tr>
           </thead>
@@ -286,8 +297,8 @@
       <section class="panel stats-panel">
         <h2>Statistika</h2>
         <dl class="stats-list">
-          <div class="stat"><dt>Povprečno zapolnjenih na dan</dt><dd id="statAvg">-</dd></div>
-          <div class="stat"><dt>Zaporednih polnih dni (76/76)</dt><dd id="statStreak">-</dd></div>
+          <div class="stat"><dt>Povprečna zapolnjenost dneva</dt><dd id="statAvg">-</dd></div>
+          <div class="stat"><dt>Zaporednih polnih dni (vsi bloki)</dt><dd id="statStreak">-</dd></div>
           <div class="stat"><dt>Prazni dnevi, zadnjih 30</dt><dd id="statEmpty">-</dd></div>
         </dl>
         <h3>Top 5 opisov dela</h3>
@@ -331,19 +342,40 @@
   "use strict";
 
   var LS_DAYS = "hormoziFocus.days.v1";
-  var SLOT_COUNT = 76;
-  var START_MIN = 5 * 60;
+  var LS_KAT = "hormoziFocus.kategorije.v1";
+  var LS_DAYS_BACKUP = "hormoziFocus.days.v1.pred-delovnim-casom";
 
-  var slotLabels = buildSlotLabels();
+  // Kategorije. Nova kategorija = nova vrstica v tem seznamu.
+  // Na strani jo lahko dodaš tudi sam: v stolpcu Kategorija izberi "+ Nova kategorija".
+  var KATEGORIJE = [
+    "AI SDR",
+    "AI Content",
+    "Planiranje outreach kampanj",
+    "Hostfulness",
+    "Kava",
+    "Kosilo",
+    "Sestanek",
+    "Nepredvideno"
+  ];
+  var NOVA_KAT = "__nova__";
+
+  // Delovni čas 07:00 do 16:00. Vsak dan hrani svojo mrežo (start, n);
+  // dnevi brez te oznake so iz časa pred 5. 11. 2026, ko je stran merila 05:00 do 24:00.
+  var GRID = { start: 7 * 60, n: 36 };
+  var LEGACY_GRID = { start: 5 * 60, n: 76 };
+
   var days = loadJSON(LS_DAYS, {});
+  var customKat = loadJSON(LS_KAT, []);
   var selectedDate = startOfDay(new Date());
   var calendarViewDate = new Date(selectedDate);
-  var currentRows = blankRows();
+  var currentRows = blankRows(GRID.n);
+  var currentGrid = GRID;
 
   var el = {
     body: document.getElementById("slotsBody"),
     selDateLabel: document.getElementById("selDateLabel"),
     liveFilled: document.getElementById("liveFilled"),
+    liveTotal: document.getElementById("liveTotal"),
     sendBtn: document.getElementById("sendBtn"),
     sendStatus: document.getElementById("sendStatus"),
     calPrev: document.getElementById("calPrev"),
@@ -365,10 +397,16 @@
   };
   var previewKey = null;
 
-  function buildSlotLabels(){
+  function gridOf(entry){
+    if (!entry) return GRID;
+    if (typeof entry.start === "number" && typeof entry.n === "number") return { start: entry.start, n: entry.n };
+    return LEGACY_GRID;
+  }
+
+  function labelsFor(grid){
     var labels = [];
-    for (var i = 0; i < SLOT_COUNT; i++){
-      labels.push(fmtMin(START_MIN + i * 15) + "-" + fmtMin(START_MIN + i * 15 + 15));
+    for (var i = 0; i < grid.n; i++){
+      labels.push(fmtMin(grid.start + i * 15) + "-" + fmtMin(grid.start + i * 15 + 15));
     }
     return labels;
     function fmtMin(min){
@@ -383,13 +421,73 @@
   function addDays(d, n){ var r = new Date(d); r.setDate(r.getDate() + n); return r; }
   function toKey(d){ return d.getFullYear() + "-" + pad2(d.getMonth()+1) + "-" + pad2(d.getDate()); }
   function fromKey(key){ var p = key.split("-").map(Number); return new Date(p[0], p[1]-1, p[2]); }
-  function blankRows(){
+  function blankRows(n){
     var r = [];
-    for (var i = 0; i < SLOT_COUNT; i++) r.push({ opis:"", ai:false });
+    for (var i = 0; i < n; i++) r.push({ opis:"", ai:false, kat:"" });
     return r;
   }
-  function deepCopyRows(rows){ return rows.map(function(r){ return { opis:r.opis||"", ai:!!r.ai }; }); }
+  function deepCopyRows(rows){ return rows.map(function(r){ return { opis:r.opis||"", ai:!!r.ai, kat:r.kat||"" }; }); }
   function countFilled(rows){ return rows.filter(function(r){ return r.opis && r.opis.trim() !== ""; }).length; }
+  function rowHasData(r){ return !!(r && ((r.opis && r.opis.trim() !== "") || r.ai || r.kat)); }
+
+  // Stari dnevi (05:00 do 24:00): če so vsi vpisi znotraj 07:00 do 16:00, jih prestavi v
+  // novo mrežo brez izgube. Dnevi z vpisom zunaj delovnega časa ostanejo v stari mreži.
+  // Pred prvo spremembo se izvirnik shrani pod LS_DAYS_BACKUP.
+  function migrateLegacyDays(){
+    var raw = null;
+    try { raw = localStorage.getItem(LS_DAYS); } catch (e) {}
+    var off = (GRID.start - LEGACY_GRID.start) / 15;
+    var changed = false;
+    Object.keys(days).forEach(function(k){
+      var e = days[k];
+      if (!e || typeof e.start === "number") return;
+      var rows = Array.isArray(e.rows) ? e.rows : [];
+      var fits = rows.every(function(r, i){ return !rowHasData(r) || (i >= off && i < off + GRID.n); });
+      if (!fits) return;
+      var nr = blankRows(GRID.n);
+      for (var j = 0; j < GRID.n; j++){
+        var src = rows[j + off];
+        if (src) nr[j] = { opis: src.opis || "", ai: !!src.ai, kat: src.kat || "" };
+      }
+      e.rows = nr; e.start = GRID.start; e.n = GRID.n;
+      changed = true;
+    });
+    if (!changed) return;
+    try { if (raw && !localStorage.getItem(LS_DAYS_BACKUP)) localStorage.setItem(LS_DAYS_BACKUP, raw); } catch (e) {}
+    saveJSON(LS_DAYS, days);
+  }
+
+  function allKategorije(){
+    var seen = {}, out = [];
+    KATEGORIJE.concat(customKat).forEach(function(k){
+      var lk = k.toLowerCase();
+      if (seen[lk]) return;
+      seen[lk] = true; out.push(k);
+    });
+    return out;
+  }
+
+  // Vrne ime, ki se dejansko uporabi (obstoječe ime ob ujemanju ne glede na velike črke).
+  function addKategorija(name){
+    var existing = allKategorije().filter(function(k){ return k.toLowerCase() === name.toLowerCase(); })[0];
+    if (existing) return existing;
+    customKat.push(name);
+    saveJSON(LS_KAT, customKat);
+    return name;
+  }
+
+  function katSelectHtml(kat){
+    var list = allKategorije();
+    var html = '<option value="">-</option>';
+    list.forEach(function(k){
+      html += '<option value="' + escapeHtml(k) + '"' + (k === kat ? " selected" : "") + '>' + escapeHtml(k) + '</option>';
+    });
+    if (kat && list.indexOf(kat) === -1){
+      html += '<option value="' + escapeHtml(kat) + '" selected>' + escapeHtml(kat) + '</option>';
+    }
+    html += '<option value="' + NOVA_KAT + '">+ Nova kategorija</option>';
+    return '<select class="kat' + (kat ? " has-kat" : "") + '" data-field="kat" aria-label="Kategorija">' + html + '</select>';
+  }
 
   function loadJSON(key, fallback){
     try {
@@ -426,24 +524,29 @@
   }
 
   function ensureDay(key){
-    if (!days[key]) days[key] = { rows: blankRows(), updatedAt: null, sentAt: null };
+    if (!days[key]) days[key] = { rows: blankRows(GRID.n), start: GRID.start, n: GRID.n, updatedAt: null, sentAt: null };
     return days[key];
   }
 
   function loadDayData(key){
     var entry = days[key];
-    if (!entry) return { rows: blankRows(), sentAt: null };
-    return { rows: deepCopyRows(entry.rows), sentAt: entry.sentAt };
+    var grid = gridOf(entry);
+    if (!entry) return { rows: blankRows(grid.n), grid: grid, sentAt: null };
+    var rows = deepCopyRows(entry.rows || []);
+    while (rows.length < grid.n) rows.push({ opis:"", ai:false, kat:"" });
+    return { rows: rows, grid: grid, sentAt: entry.sentAt };
   }
 
   function renderTableRows(rows){
+    var labels = labelsFor(currentGrid);
     var html = "";
     for (var i = 0; i < rows.length; i++){
       var r = rows[i];
       html += '<tr data-idx="' + i + '">'
         + '<td class="c-num">' + (i+1) + '</td>'
-        + '<td class="c-time">' + slotLabels[i] + '</td>'
+        + '<td class="c-time">' + labels[i] + '</td>'
         + '<td class="c-opis"><input type="text" data-field="opis" value="' + escapeHtml(r.opis) + '" placeholder="Opis dela …"></td>'
+        + '<td class="c-kat">' + katSelectHtml(r.kat) + '</td>'
         + '<td class="c-ai"><input type="checkbox" data-field="ai"' + (r.ai ? " checked" : "") + '></td>'
         + '</tr>';
     }
@@ -452,6 +555,7 @@
 
   function updateLiveCount(){
     el.liveFilled.textContent = countFilled(currentRows);
+    el.liveTotal.textContent = currentGrid.n;
   }
 
   function persistCurrentRows(){
@@ -465,6 +569,7 @@
   function loadAndRenderDay(key){
     var data = loadDayData(key);
     currentRows = data.rows;
+    currentGrid = data.grid;
     renderTableRows(currentRows);
     updateLiveCount();
     el.selDateLabel.textContent = formatDateSl(fromKey(key));
@@ -482,12 +587,15 @@
   function showDayPreview(key, entry){
     previewKey = key;
     var items = [];
+    var grid = gridOf(entry);
+    var labels = labelsFor(grid);
     entry.rows.forEach(function(r, i){
-      if (r.opis && r.opis.trim() !== "") items.push({ idx:i, opis:r.opis.trim(), ai:!!r.ai });
+      if (r.opis && r.opis.trim() !== "") items.push({ idx:i, opis:r.opis.trim(), ai:!!r.ai, kat:r.kat || "" });
     });
-    el.previewTitle.textContent = formatDateSl(fromKey(key)) + " · " + items.length + "/" + SLOT_COUNT;
+    el.previewTitle.textContent = formatDateSl(fromKey(key)) + " · " + items.length + "/" + grid.n;
     el.previewList.innerHTML = items.map(function(it){
-      return '<li><span class="mp-time">' + slotLabels[it.idx] + '</span><span class="mp-opis">' + escapeHtml(it.opis) + '</span>'
+      return '<li><span class="mp-time">' + labels[it.idx] + '</span><span class="mp-opis">' + escapeHtml(it.opis) + '</span>'
+        + (it.kat ? '<span class="mp-kat">' + escapeHtml(it.kat) + '</span>' : "")
         + (it.ai ? '<span class="mp-ai">AI</span>' : "") + '</li>';
     }).join("");
     el.previewBackdrop.hidden = false;
@@ -523,10 +631,28 @@
   });
 
   el.body.addEventListener("change", function(e){
-    if (e.target.dataset.field !== "ai") return;
+    var field = e.target.dataset.field;
+    if (field !== "ai" && field !== "kat") return;
     var tr = e.target.closest("tr");
     var idx = Number(tr.dataset.idx);
-    currentRows[idx].ai = e.target.checked;
+    if (field === "ai"){
+      currentRows[idx].ai = e.target.checked;
+    } else {
+      var v = e.target.value;
+      if (v === NOVA_KAT){
+        var name = (prompt("Ime nove kategorije:") || "").trim();
+        v = name ? addKategorija(name) : currentRows[idx].kat;
+        currentRows[idx].kat = v;
+        persistCurrentRows();
+        renderTableRows(currentRows);
+        var again = el.body.querySelector('tr[data-idx="' + idx + '"] select');
+        if (again) again.focus();
+        renderCalendar();
+        return;
+      }
+      currentRows[idx].kat = v;
+      e.target.classList.toggle("has-kat", !!v);
+    }
     persistCurrentRows();
     renderCalendar();
     computeStats();
@@ -562,7 +688,7 @@
       var statusClass = "none";
       if (entry && entry.sentAt){
         var filled = countFilled(entry.rows);
-        statusClass = filled === SLOT_COUNT ? "full" : (filled > 0 ? "partial" : "zero");
+        statusClass = filled >= gridOf(entry).n ? "full" : (filled > 0 ? "partial" : "zero");
       } else if (entry) {
         statusClass = "draft";
       }
@@ -616,9 +742,10 @@
       return;
     }
 
-    var totalFilled = keys.reduce(function(sum, k){ return sum + countFilled(days[k].rows); }, 0);
-    var avg = totalFilled / keys.length;
-    el.statAvg.textContent = avg.toFixed(1) + " / 76 (" + keys.length + " " + dayWord(keys.length) + ")";
+    // Delež namesto števila blokov, ker imajo stari dnevi 76 blokov, novi 36.
+    var totalShare = keys.reduce(function(sum, k){ return sum + countFilled(days[k].rows) / gridOf(days[k]).n; }, 0);
+    var avgPct = Math.round(100 * totalShare / keys.length);
+    el.statAvg.textContent = avgPct + " % (" + keys.length + " " + dayWord(keys.length) + ")";
 
     var streak = 0, cursor = startOfDay(new Date()), first = true;
     while (true){
@@ -629,7 +756,7 @@
         break;
       }
       first = false;
-      if (countFilled(entry.rows) === SLOT_COUNT){ streak++; cursor = addDays(cursor, -1); }
+      if (countFilled(entry.rows) >= gridOf(entry).n){ streak++; cursor = addDays(cursor, -1); }
       else break;
     }
     el.statStreak.textContent = streak + " " + dayWord(streak) + " zapored";
@@ -662,7 +789,7 @@
   }
 
   el.exportBtn.addEventListener("click", function(){
-    var payload = { exportedAt: new Date().toISOString(), days: days };
+    var payload = { exportedAt: new Date().toISOString(), days: days, kategorije: customKat };
     var blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
     var url = URL.createObjectURL(blob);
     var a = document.createElement("a");
@@ -687,6 +814,10 @@
         if (!confirm("Uvozim " + n + " dni iz datoteke? Obstoječi dnevi z enakim datumom bodo prepisani.")) return;
         Object.keys(incoming).forEach(function(k){ days[k] = incoming[k]; });
         saveJSON(LS_DAYS, days);
+        migrateLegacyDays();
+        if (Array.isArray(parsed.kategorije)){
+          parsed.kategorije.forEach(function(k){ if (typeof k === "string" && k.trim()) addKategorija(k.trim()); });
+        }
         renderCalendar();
         computeStats();
         loadAndRenderDay(toKey(selectedDate));
@@ -728,6 +859,7 @@
   alarmEl.on.addEventListener("click", function(){ setAlarm("on"); });
   alarmEl.off.addEventListener("click", function(){ setAlarm("off"); });
 
+  migrateLegacyDays();
   loadAndRenderDay(toKey(selectedDate));
   renderCalendar();
   computeStats();
