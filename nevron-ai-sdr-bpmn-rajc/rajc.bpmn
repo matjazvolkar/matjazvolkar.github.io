@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" id="Defs_rajc" targetNamespace="https://nevron.eu/bpmn" exporter="Nevron ai-sdr-proces" exporterVersion="1">
+<bpmn:category id="Kat_sklopi">
+<bpmn:categoryValue id="CV_0" value="Faze 0 do 4"/>
+<bpmn:categoryValue id="CV_1" value="Razsodba"/>
+<bpmn:categoryValue id="CV_2" value="Faze 5 do 7: merge, Attio, predaja"/>
+</bpmn:category>
+<bpmn:collaboration id="Kolaboracija">
+<bpmn:participant id="P_nevron" name="Nevron: Rajc, razsodnik pri obogatitvi hotelov" processRef="Proces_rajc"/>
+</bpmn:collaboration>
+<bpmn:process id="Proces_rajc" name="Rajc: od spornega primera do razsodbe v merge" isExecutable="false">
+<bpmn:laneSet id="Steze">
+<bpmn:lane id="L_seja" name="Claude seja (skill)">
+<bpmn:flowNodeRef>Start</bpmn:flowNodeRef>
+<bpmn:flowNodeRef>S_brief</bpmn:flowNodeRef>
+<bpmn:flowNodeRef>S_prevzem</bpmn:flowNodeRef>
+<bpmn:flowNodeRef>G_reg</bpmn:flowNodeRef>
+<bpmn:flowNodeRef>S_drago</bpmn:flowNodeRef>
+<bpmn:flowNodeRef>End_drago</bpmn:flowNodeRef>
+</bpmn:lane>
+<bpmn:lane id="L_skripte" name="Skripte in viri">
+<bpmn:flowNodeRef>X_vhod</bpmn:flowNodeRef>
+<bpmn:flowNodeRef>X_sloj</bpmn:flowNodeRef>
+<bpmn:flowNodeRef>G_sporno</bpmn:flowNodeRef>
+<bpmn:flowNodeRef>G_m_merge</bpmn:flowNodeRef>
+<bpmn:flowNodeRef>S_merge</bpmn:flowNodeRef>
+<bpmn:flowNodeRef>X_attio</bpmn:flowNodeRef>
+<bpmn:flowNodeRef>G_icp</bpmn:flowNodeRef>
+<bpmn:flowNodeRef>End_ne</bpmn:flowNodeRef>
+</bpmn:lane>
+<bpmn:lane id="L_rajc" name="Rajc (AI agent)">
+<bpmn:flowNodeRef>R_vrsta</bpmn:flowNodeRef>
+<bpmn:flowNodeRef>R_id</bpmn:flowNodeRef>
+<bpmn:flowNodeRef>R_sk</bpmn:flowNodeRef>
+<bpmn:flowNodeRef>R_reg</bpmn:flowNodeRef>
+<bpmn:flowNodeRef>R_konf</bpmn:flowNodeRef>
+<bpmn:flowNodeRef>G_dokaz_m</bpmn:flowNodeRef>
+<bpmn:flowNodeRef>G_dokaz</bpmn:flowNodeRef>
+<bpmn:flowNodeRef>R_nerazr</bpmn:flowNodeRef>
+<bpmn:flowNodeRef>R_razs</bpmn:flowNodeRef>
+<bpmn:flowNodeRef>G_izhod_m</bpmn:flowNodeRef>
+<bpmn:flowNodeRef>R_json</bpmn:flowNodeRef>
+<bpmn:flowNodeRef>R_por</bpmn:flowNodeRef>
+</bpmn:lane>
+</bpmn:laneSet>
+<bpmn:startEvent id="Start" name="Seznam hotelov za obogatitev">
+<bpmn:outgoing>F0</bpmn:outgoing>
+</bpmn:startEvent>
+<bpmn:scriptTask id="X_vhod" name="Normaliziraj vhod; dedup po ID, domeni in imenu">
+<bpmn:incoming>F0</bpmn:incoming>
+<bpmn:outgoing>F1</bpmn:outgoing>
+</bpmn:scriptTask>
+<bpmn:scriptTask id="X_sloj" name="Registri, Places, spletne strani, Booking sweep">
+<bpmn:incoming>F1</bpmn:incoming>
+<bpmn:incoming>F23</bpmn:incoming>
+<bpmn:outgoing>F2</bpmn:outgoing>
+</bpmn:scriptTask>
+<bpmn:exclusiveGateway id="G_sporno" name="Ostal sporen primer?">
+<bpmn:incoming>F2</bpmn:incoming>
+<bpmn:outgoing>F3</bpmn:outgoing>
+<bpmn:outgoing>F4</bpmn:outgoing>
+</bpmn:exclusiveGateway>
+<bpmn:serviceTask id="S_brief" name="Rajcu samo sporni primeri, z dokazi skript">
+<bpmn:incoming>F3</bpmn:incoming>
+<bpmn:outgoing>F5</bpmn:outgoing>
+</bpmn:serviceTask>
+<bpmn:exclusiveGateway id="R_vrsta" name="Vrsta spora?">
+<bpmn:incoming>F5</bpmn:incoming>
+<bpmn:outgoing>F6</bpmn:outgoing>
+<bpmn:outgoing>F7</bpmn:outgoing>
+<bpmn:outgoing>F8</bpmn:outgoing>
+<bpmn:outgoing>F9</bpmn:outgoing>
+</bpmn:exclusiveGateway>
+<bpmn:serviceTask id="R_id" name="Identiteta: Attio, register, stran, Booking slug">
+<bpmn:incoming>F6</bpmn:incoming>
+<bpmn:outgoing>F10</bpmn:outgoing>
+<bpmn:property id="Prop_R_id" name="__targetRef_placeholder"/>
+<bpmn:dataInputAssociation id="DIA_attio"><bpmn:sourceRef>DS_attio</bpmn:sourceRef><bpmn:targetRef>Prop_R_id</bpmn:targetRef></bpmn:dataInputAssociation>
+</bpmn:serviceTask>
+<bpmn:serviceTask id="R_sk" name="Podatek skupine razčleni na objekte">
+<bpmn:incoming>F7</bpmn:incoming>
+<bpmn:outgoing>F11</bpmn:outgoing>
+</bpmn:serviceTask>
+<bpmn:serviceTask id="R_reg" name="Najdi uradni register trga in prenesi izvoz">
+<bpmn:incoming>F8</bpmn:incoming>
+<bpmn:outgoing>F12</bpmn:outgoing>
+<bpmn:dataOutputAssociation id="DOA_cache"><bpmn:targetRef>DS_cache</bpmn:targetRef></bpmn:dataOutputAssociation>
+</bpmn:serviceTask>
+<bpmn:serviceTask id="R_konf" name="Zvezdice in sobe po registru, ocena po platformi">
+<bpmn:incoming>F9</bpmn:incoming>
+<bpmn:outgoing>F13</bpmn:outgoing>
+</bpmn:serviceTask>
+<bpmn:exclusiveGateway id="G_dokaz_m">
+<bpmn:incoming>F10</bpmn:incoming>
+<bpmn:incoming>F11</bpmn:incoming>
+<bpmn:incoming>F12</bpmn:incoming>
+<bpmn:incoming>F13</bpmn:incoming>
+<bpmn:outgoing>F14</bpmn:outgoing>
+</bpmn:exclusiveGateway>
+<bpmn:exclusiveGateway id="G_dokaz" name="Vsaka trditev z URL ali datoteko?">
+<bpmn:incoming>F14</bpmn:incoming>
+<bpmn:outgoing>F15</bpmn:outgoing>
+<bpmn:outgoing>F16</bpmn:outgoing>
+</bpmn:exclusiveGateway>
+<bpmn:serviceTask id="R_nerazr" name="Nerazrešljivo, z razlogi: veljaven izid">
+<bpmn:incoming>F16</bpmn:incoming>
+<bpmn:outgoing>F18</bpmn:outgoing>
+</bpmn:serviceTask>
+<bpmn:serviceTask id="R_razs" name="Razsodba z dokazi in zaupanjem">
+<bpmn:incoming>F15</bpmn:incoming>
+<bpmn:outgoing>F17</bpmn:outgoing>
+</bpmn:serviceTask>
+<bpmn:exclusiveGateway id="G_izhod_m">
+<bpmn:incoming>F17</bpmn:incoming>
+<bpmn:incoming>F18</bpmn:incoming>
+<bpmn:outgoing>F19</bpmn:outgoing>
+</bpmn:exclusiveGateway>
+<bpmn:serviceTask id="R_json" name="JSON: razsodba, vrednosti, dokazi, zaupanje">
+<bpmn:incoming>F19</bpmn:incoming>
+<bpmn:outgoing>F20</bpmn:outgoing>
+</bpmn:serviceTask>
+<bpmn:serviceTask id="R_por" name="Povzetek: razsojeno, nerazrešljivo, poraba klicev">
+<bpmn:incoming>F20</bpmn:incoming>
+<bpmn:outgoing>F21</bpmn:outgoing>
+</bpmn:serviceTask>
+<bpmn:serviceTask id="S_prevzem" name="Razsodbe gredo v merge kot vir">
+<bpmn:incoming>F21</bpmn:incoming>
+<bpmn:outgoing>F22</bpmn:outgoing>
+</bpmn:serviceTask>
+<bpmn:exclusiveGateway id="G_reg" name="Prenesen nov register?">
+<bpmn:incoming>F22</bpmn:incoming>
+<bpmn:outgoing>F23</bpmn:outgoing>
+<bpmn:outgoing>F24</bpmn:outgoing>
+</bpmn:exclusiveGateway>
+<bpmn:exclusiveGateway id="G_m_merge">
+<bpmn:incoming>F4</bpmn:incoming>
+<bpmn:incoming>F24</bpmn:incoming>
+<bpmn:outgoing>F25</bpmn:outgoing>
+</bpmn:exclusiveGateway>
+<bpmn:scriptTask id="S_merge" name="Merge po prednosti virov; konflikti se zapišejo">
+<bpmn:incoming>F25</bpmn:incoming>
+<bpmn:outgoing>F26</bpmn:outgoing>
+</bpmn:scriptTask>
+<bpmn:scriptTask id="X_attio" name="Attio: zvezdice, sobe, ocene, icp_v2">
+<bpmn:incoming>F26</bpmn:incoming>
+<bpmn:outgoing>F27</bpmn:outgoing>
+</bpmn:scriptTask>
+<bpmn:exclusiveGateway id="G_icp" name="ICP v2 DA?">
+<bpmn:incoming>F27</bpmn:incoming>
+<bpmn:outgoing>F28</bpmn:outgoing>
+<bpmn:outgoing>F29</bpmn:outgoing>
+</bpmn:exclusiveGateway>
+<bpmn:endEvent id="End_ne" name="ICP NE: ne gre v outreach">
+<bpmn:incoming>F29</bpmn:incoming>
+</bpmn:endEvent>
+<bpmn:serviceTask id="S_drago" name="Predaja Dragu: paketi 7 do 13 z lastnostmi">
+<bpmn:incoming>F28</bpmn:incoming>
+<bpmn:outgoing>F30</bpmn:outgoing>
+</bpmn:serviceTask>
+<bpmn:endEvent id="End_drago" name="Hotel gre k Dragu">
+<bpmn:incoming>F30</bpmn:incoming>
+</bpmn:endEvent>
+<bpmn:sequenceFlow id="F0" sourceRef="Start" targetRef="X_vhod"/>
+<bpmn:sequenceFlow id="F1" sourceRef="X_vhod" targetRef="X_sloj"/>
+<bpmn:sequenceFlow id="F2" sourceRef="X_sloj" targetRef="G_sporno"/>
+<bpmn:sequenceFlow id="F3" name="da" sourceRef="G_sporno" targetRef="S_brief"/>
+<bpmn:sequenceFlow id="F4" name="ne" sourceRef="G_sporno" targetRef="G_m_merge"/>
+<bpmn:sequenceFlow id="F5" sourceRef="S_brief" targetRef="R_vrsta"/>
+<bpmn:sequenceFlow id="F6" name="identiteta" sourceRef="R_vrsta" targetRef="R_id"/>
+<bpmn:sequenceFlow id="F7" name="skupina" sourceRef="R_vrsta" targetRef="R_sk"/>
+<bpmn:sequenceFlow id="F8" name="register" sourceRef="R_vrsta" targetRef="R_reg"/>
+<bpmn:sequenceFlow id="F9" name="konflikt" sourceRef="R_vrsta" targetRef="R_konf"/>
+<bpmn:sequenceFlow id="F10" sourceRef="R_id" targetRef="G_dokaz_m"/>
+<bpmn:sequenceFlow id="F11" sourceRef="R_sk" targetRef="G_dokaz_m"/>
+<bpmn:sequenceFlow id="F12" sourceRef="R_reg" targetRef="G_dokaz_m"/>
+<bpmn:sequenceFlow id="F13" sourceRef="R_konf" targetRef="G_dokaz_m"/>
+<bpmn:sequenceFlow id="F14" sourceRef="G_dokaz_m" targetRef="G_dokaz"/>
+<bpmn:sequenceFlow id="F15" name="da" sourceRef="G_dokaz" targetRef="R_razs"/>
+<bpmn:sequenceFlow id="F16" name="ne" sourceRef="G_dokaz" targetRef="R_nerazr"/>
+<bpmn:sequenceFlow id="F17" sourceRef="R_razs" targetRef="G_izhod_m"/>
+<bpmn:sequenceFlow id="F18" sourceRef="R_nerazr" targetRef="G_izhod_m"/>
+<bpmn:sequenceFlow id="F19" sourceRef="G_izhod_m" targetRef="R_json"/>
+<bpmn:sequenceFlow id="F20" sourceRef="R_json" targetRef="R_por"/>
+<bpmn:sequenceFlow id="F21" sourceRef="R_por" targetRef="S_prevzem"/>
+<bpmn:sequenceFlow id="F22" sourceRef="S_prevzem" targetRef="G_reg"/>
+<bpmn:sequenceFlow id="F23" name="da" sourceRef="G_reg" targetRef="X_sloj"/>
+<bpmn:sequenceFlow id="F24" name="ne" sourceRef="G_reg" targetRef="G_m_merge"/>
+<bpmn:sequenceFlow id="F25" sourceRef="G_m_merge" targetRef="S_merge"/>
+<bpmn:sequenceFlow id="F26" sourceRef="S_merge" targetRef="X_attio"/>
+<bpmn:sequenceFlow id="F27" sourceRef="X_attio" targetRef="G_icp"/>
+<bpmn:sequenceFlow id="F28" name="da" sourceRef="G_icp" targetRef="S_drago"/>
+<bpmn:sequenceFlow id="F29" name="ne" sourceRef="G_icp" targetRef="End_ne"/>
+<bpmn:sequenceFlow id="F30" sourceRef="S_drago" targetRef="End_drago"/>
+<bpmn:dataStoreReference id="DS_attio" name="Attio"/>
+<bpmn:dataStoreReference id="DS_cache" name="Registri v cache"/>
+<bpmn:group id="Grp_0" categoryValueRef="CV_0"/>
+<bpmn:group id="Grp_1" categoryValueRef="CV_1"/>
+<bpmn:group id="Grp_2" categoryValueRef="CV_2"/>
+</bpmn:process>
+<bpmndi:BPMNDiagram id="Diagram_rajc"><bpmndi:BPMNPlane id="Plane_rajc" bpmnElement="Kolaboracija">
+<bpmndi:BPMNShape id="P_nevron_di" bpmnElement="P_nevron" isHorizontal="true"><dc:Bounds x="20" y="20" width="3228" height="850"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="L_seja_di" bpmnElement="L_seja" isHorizontal="true"><dc:Bounds x="50" y="20" width="3198" height="150"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="L_skripte_di" bpmnElement="L_skripte" isHorizontal="true"><dc:Bounds x="50" y="170" width="3198" height="215"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="L_rajc_di" bpmnElement="L_rajc" isHorizontal="true"><dc:Bounds x="50" y="385" width="3198" height="485"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="Grp_0_di" bpmnElement="Grp_0"><dc:Bounds x="249" y="174" width="266" height="207"/><bpmndi:BPMNLabel><dc:Bounds x="255" y="178" width="254" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="Grp_1_di" bpmnElement="Grp_1"><dc:Bounds x="793" y="389" width="1354" height="477"/><bpmndi:BPMNLabel><dc:Bounds x="799" y="393" width="1342" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="Grp_2_di" bpmnElement="Grp_2"><dc:Bounds x="2425" y="24" width="810" height="357"/><bpmndi:BPMNLabel><dc:Bounds x="2431" y="28" width="798" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="Start_di" bpmnElement="Start"><dc:Bounds x="160" y="87" width="36" height="36"/><bpmndi:BPMNLabel><dc:Bounds x="130" y="55" width="96" height="27"/></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="X_vhod_di" bpmnElement="X_vhod" bioc:stroke="#707379" bioc:fill="#F4F5F5" color:border-color="#707379" color:background-color="#F4F5F5"><dc:Bounds x="256" y="197" width="116" height="96"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="X_sloj_di" bpmnElement="X_sloj" bioc:stroke="#707379" bioc:fill="#F4F5F5" color:border-color="#707379" color:background-color="#F4F5F5"><dc:Bounds x="392" y="197" width="116" height="96"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="G_sporno_di" bpmnElement="G_sporno"><dc:Bounds x="561" y="220" width="50" height="50"/><bpmndi:BPMNLabel><dc:Bounds x="538" y="274" width="96" height="27"/></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="S_brief_di" bpmnElement="S_brief" bioc:stroke="#1B92FF" bioc:fill="#E1F4FF" color:border-color="#1B92FF" color:background-color="#E1F4FF"><dc:Bounds x="664" y="57" width="116" height="96"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="R_vrsta_di" bpmnElement="R_vrsta"><dc:Bounds x="833" y="445" width="50" height="50"/><bpmndi:BPMNLabel><dc:Bounds x="810" y="413" width="96" height="27"/></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="R_id_di" bpmnElement="R_id" bioc:stroke="#1B92FF" bioc:fill="#E1F4FF" color:border-color="#1B92FF" color:background-color="#E1F4FF"><dc:Bounds x="1072" y="422" width="116" height="96"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="R_sk_di" bpmnElement="R_sk" bioc:stroke="#1B92FF" bioc:fill="#E1F4FF" color:border-color="#1B92FF" color:background-color="#E1F4FF"><dc:Bounds x="1072" y="537" width="116" height="96"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="R_reg_di" bpmnElement="R_reg" bioc:stroke="#1B92FF" bioc:fill="#E1F4FF" color:border-color="#1B92FF" color:background-color="#E1F4FF"><dc:Bounds x="1072" y="652" width="116" height="96"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="R_konf_di" bpmnElement="R_konf" bioc:stroke="#1B92FF" bioc:fill="#E1F4FF" color:border-color="#1B92FF" color:background-color="#E1F4FF"><dc:Bounds x="1072" y="767" width="116" height="96"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="G_dokaz_m_di" bpmnElement="G_dokaz_m"><dc:Bounds x="1377" y="445" width="50" height="50"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="G_dokaz_di" bpmnElement="G_dokaz"><dc:Bounds x="1513" y="445" width="50" height="50"/><bpmndi:BPMNLabel><dc:Bounds x="1490" y="413" width="96" height="27"/></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="R_nerazr_di" bpmnElement="R_nerazr" bioc:stroke="#1B92FF" bioc:fill="#E1F4FF" color:border-color="#1B92FF" color:background-color="#E1F4FF"><dc:Bounds x="1480" y="537" width="116" height="96"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="R_razs_di" bpmnElement="R_razs" bioc:stroke="#1B92FF" bioc:fill="#E1F4FF" color:border-color="#1B92FF" color:background-color="#E1F4FF"><dc:Bounds x="1616" y="422" width="116" height="96"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="G_izhod_m_di" bpmnElement="G_izhod_m"><dc:Bounds x="1785" y="445" width="50" height="50"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="R_json_di" bpmnElement="R_json" bioc:stroke="#1B92FF" bioc:fill="#E1F4FF" color:border-color="#1B92FF" color:background-color="#E1F4FF"><dc:Bounds x="1888" y="422" width="116" height="96"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="R_por_di" bpmnElement="R_por" bioc:stroke="#1B92FF" bioc:fill="#E1F4FF" color:border-color="#1B92FF" color:background-color="#E1F4FF"><dc:Bounds x="2024" y="422" width="116" height="96"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="S_prevzem_di" bpmnElement="S_prevzem" bioc:stroke="#1B92FF" bioc:fill="#E1F4FF" color:border-color="#1B92FF" color:background-color="#E1F4FF"><dc:Bounds x="2160" y="57" width="116" height="96"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="G_reg_di" bpmnElement="G_reg"><dc:Bounds x="2329" y="80" width="50" height="50"/><bpmndi:BPMNLabel><dc:Bounds x="2306" y="134" width="96" height="27"/></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="G_m_merge_di" bpmnElement="G_m_merge"><dc:Bounds x="2465" y="220" width="50" height="50"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="S_merge_di" bpmnElement="S_merge" bioc:stroke="#707379" bioc:fill="#F4F5F5" color:border-color="#707379" color:background-color="#F4F5F5"><dc:Bounds x="2568" y="197" width="116" height="96"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="X_attio_di" bpmnElement="X_attio" bioc:stroke="#707379" bioc:fill="#F4F5F5" color:border-color="#707379" color:background-color="#F4F5F5"><dc:Bounds x="2704" y="197" width="116" height="96"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="G_icp_di" bpmnElement="G_icp"><dc:Bounds x="2873" y="220" width="50" height="50"/><bpmndi:BPMNLabel><dc:Bounds x="2850" y="188" width="96" height="27"/></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="End_ne_di" bpmnElement="End_ne"><dc:Bounds x="2880" y="312" width="36" height="36"/><bpmndi:BPMNLabel><dc:Bounds x="2922" y="317" width="96" height="27"/></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="S_drago_di" bpmnElement="S_drago" bioc:stroke="#1B92FF" bioc:fill="#E1F4FF" color:border-color="#1B92FF" color:background-color="#E1F4FF"><dc:Bounds x="2976" y="57" width="116" height="96"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="End_drago_di" bpmnElement="End_drago"><dc:Bounds x="3152" y="87" width="36" height="36"/><bpmndi:BPMNLabel><dc:Bounds x="3122" y="127" width="96" height="27"/></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="DS_attio_di" bpmnElement="DS_attio"><dc:Bounds x="1105" y="305" width="50" height="50"/><bpmndi:BPMNLabel><dc:Bounds x="1161" y="317" width="60" height="27"/></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="DS_cache_di" bpmnElement="DS_cache"><dc:Bounds x="1241" y="732" width="50" height="50"/><bpmndi:BPMNLabel><dc:Bounds x="1297" y="744" width="60" height="27"/></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+<bpmndi:BPMNEdge id="DIA_attio_di" bpmnElement="DIA_attio"><di:waypoint x="1130" y="355"/><di:waypoint x="1130" y="422"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="DOA_cache_di" bpmnElement="DOA_cache"><di:waypoint x="1174" y="748"/><di:waypoint x="1241" y="757"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F0_di" bpmnElement="F0"><di:waypoint x="196" y="105"/><di:waypoint x="226" y="105"/><di:waypoint x="226" y="245"/><di:waypoint x="256" y="245"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F1_di" bpmnElement="F1"><di:waypoint x="372" y="245"/><di:waypoint x="392" y="245"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F2_di" bpmnElement="F2"><di:waypoint x="508" y="245"/><di:waypoint x="561" y="245"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F3_di" bpmnElement="F3"><di:waypoint x="586" y="220"/><di:waypoint x="586" y="105"/><di:waypoint x="664" y="105"/><bpmndi:BPMNLabel><dc:Bounds x="591" y="156" width="19" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F4_di" bpmnElement="F4"><di:waypoint x="611" y="245"/><di:waypoint x="2465" y="245"/><bpmndi:BPMNLabel><dc:Bounds x="617" y="228" width="19" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F5_di" bpmnElement="F5"><di:waypoint x="780" y="105"/><di:waypoint x="806" y="105"/><di:waypoint x="806" y="470"/><di:waypoint x="833" y="470"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F6_di" bpmnElement="F6"><di:waypoint x="883" y="470"/><di:waypoint x="1072" y="470"/><bpmndi:BPMNLabel><dc:Bounds x="889" y="453" width="64" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F7_di" bpmnElement="F7"><di:waypoint x="858" y="495"/><di:waypoint x="858" y="585"/><di:waypoint x="1072" y="585"/><bpmndi:BPMNLabel><dc:Bounds x="864" y="568" width="47" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F8_di" bpmnElement="F8"><di:waypoint x="858" y="495"/><di:waypoint x="858" y="700"/><di:waypoint x="1072" y="700"/><bpmndi:BPMNLabel><dc:Bounds x="864" y="683" width="52" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F9_di" bpmnElement="F9"><di:waypoint x="858" y="495"/><di:waypoint x="858" y="815"/><di:waypoint x="1072" y="815"/><bpmndi:BPMNLabel><dc:Bounds x="864" y="798" width="52" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F10_di" bpmnElement="F10"><di:waypoint x="1188" y="470"/><di:waypoint x="1377" y="470"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F11_di" bpmnElement="F11"><di:waypoint x="1188" y="585"/><di:waypoint x="1402" y="585"/><di:waypoint x="1402" y="495"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F12_di" bpmnElement="F12"><di:waypoint x="1188" y="700"/><di:waypoint x="1402" y="700"/><di:waypoint x="1402" y="495"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F13_di" bpmnElement="F13"><di:waypoint x="1188" y="815"/><di:waypoint x="1402" y="815"/><di:waypoint x="1402" y="495"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F14_di" bpmnElement="F14"><di:waypoint x="1427" y="470"/><di:waypoint x="1513" y="470"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F15_di" bpmnElement="F15"><di:waypoint x="1563" y="470"/><di:waypoint x="1616" y="470"/><bpmndi:BPMNLabel><dc:Bounds x="1569" y="453" width="19" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F16_di" bpmnElement="F16"><di:waypoint x="1538" y="495"/><di:waypoint x="1538" y="537"/><bpmndi:BPMNLabel><dc:Bounds x="1543" y="509" width="19" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F17_di" bpmnElement="F17"><di:waypoint x="1732" y="470"/><di:waypoint x="1785" y="470"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F18_di" bpmnElement="F18"><di:waypoint x="1596" y="585"/><di:waypoint x="1810" y="585"/><di:waypoint x="1810" y="495"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F19_di" bpmnElement="F19"><di:waypoint x="1835" y="470"/><di:waypoint x="1888" y="470"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F20_di" bpmnElement="F20"><di:waypoint x="2004" y="470"/><di:waypoint x="2024" y="470"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F21_di" bpmnElement="F21"><di:waypoint x="2140" y="470"/><di:waypoint x="2218" y="470"/><di:waypoint x="2218" y="153"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F22_di" bpmnElement="F22"><di:waypoint x="2276" y="105"/><di:waypoint x="2329" y="105"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F23_di" bpmnElement="F23"><di:waypoint x="2354" y="80"/><di:waypoint x="2354" y="34"/><di:waypoint x="450" y="34"/><di:waypoint x="450" y="197"/><bpmndi:BPMNLabel><dc:Bounds x="2359" y="50" width="19" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F24_di" bpmnElement="F24"><di:waypoint x="2379" y="105"/><di:waypoint x="2490" y="105"/><di:waypoint x="2490" y="220"/><bpmndi:BPMNLabel><dc:Bounds x="2385" y="88" width="19" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F25_di" bpmnElement="F25"><di:waypoint x="2515" y="245"/><di:waypoint x="2568" y="245"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F26_di" bpmnElement="F26"><di:waypoint x="2684" y="245"/><di:waypoint x="2704" y="245"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F27_di" bpmnElement="F27"><di:waypoint x="2820" y="245"/><di:waypoint x="2873" y="245"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F28_di" bpmnElement="F28"><di:waypoint x="2923" y="245"/><di:waypoint x="2950" y="245"/><di:waypoint x="2950" y="105"/><di:waypoint x="2976" y="105"/><bpmndi:BPMNLabel><dc:Bounds x="2929" y="228" width="19" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F29_di" bpmnElement="F29"><di:waypoint x="2898" y="270"/><di:waypoint x="2898" y="312"/><bpmndi:BPMNLabel><dc:Bounds x="2903" y="284" width="19" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="F30_di" bpmnElement="F30"><di:waypoint x="3092" y="105"/><di:waypoint x="3152" y="105"/></bpmndi:BPMNEdge>
+</bpmndi:BPMNPlane></bpmndi:BPMNDiagram>
+</bpmn:definitions>
