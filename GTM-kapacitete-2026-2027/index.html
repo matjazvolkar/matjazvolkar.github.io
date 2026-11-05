@@ -1124,12 +1124,19 @@
   // Valovi se ne izrisujejo kot vrstice (Matjaz 4. 11.: "ne deli na val 1 in val 2"); iz njih se racunata vsoti, opis je v drobnem tisku.
   const NACRT = [
     { kampanja: "NevronCore Automated Demo", tip: "Custom Scrape", trg: "Slovenija", zastava: "si", hotelov: 100, od: "2026-11-05", do: "2026-11-25",
+      op: "Val 1 start 5. 11. (179 mailov, 129 LI); val 2 nove osebe do 11. 11. (+22 mailov, +49 LI, 7 prek Roka); 12 LI po 25. 11., če se hotel ne oglasi. Od tega 3 hoteli (Cubis, Gredič, Vander) čakajo tenant; njihovih 6 mailov in 4 LI je ocena.",
       valovi: [
         { ime: "Val 1", opis: "start čet 5. 11.", hotelov: 97, hotelov_op: "s tenantom, brez DNC", mail: 179, li: 129, li_op: "12 v val 3 (meja 10 na hotel); Krivec in Dominc po en profil", cas: "5. do 25. novembra", cas_op: "nalaganje 5. do 11. 11." },
         { ime: "Val 2", opis: "nove osebe, ko Amadej vrne žetone", hotelov: 27, hotelov_op: "isti hoteli, nove osebe", plus: true, mail: 22, mail_op: "dokazani naslovi + 8 z DA Matjaza 4. 11.", li: 49, li_op: "7 prek Roka, samo sporočilo", cas: "nalaganje do sre 11. 11.", cas_op: "konec sre 25. 11." },
         { ime: "Brez tenanta", opis: "Cubis, Gredič, Vander čakajo tenant; ocena (Matjaž 4. 11.)", hotelov: 3, mail: 6, li: 4 },
         { ime: "Val 3", opis: "pogojno, samo če se hotel ne oglasi", izven: true, hotelov: 4, hotelov_op: "Zagreb, Bledrose, InterContinental, ONE66", mail: 0, mail_op: "mail dobijo v valu 1", li: 12, li_op: "povabila, ni v vsoti", cas: "po 25. 11.", cas_op: "po koncu vala 1" },
       ] },
+    // UAE General Scrape (Matjaz 5. 11.): vsi UAE hoteli brez svojega tenanta ali Indexa, vsi kontakti z imenom in priimkom.
+    // Stevila iz Projects/kampanje-uae-general-scrape/zberi.py (Attio + dosjeja uae/uaeost + baza tenantov), zaprta stran
+    // zaprto/kampanje/uae-general-scrape. Start najmanj 5 dni pred koncem SI (25. 11.): cet 19. 11. je zadnji UAE delovni
+    // dan (ned do cet) pred tem; konec je ocena (nalaganje 5 dni + 14 dni sekvence).
+    { kampanja: "NevronCore Automated Demo", tip: "General Scrape", trg: "UAE", zastava: "uae", hotelov: 299, mail: 217, li: 527, od: "2026-11-19", do: "2026-12-09",
+      op: "predlog, čaka potrditev seje General demo; 200 oseb z mailom (112 Skrapp valid), 183 kontaktov samo iz Attia brez preverbe; start 5 dni pred koncem SI, konec je ocena." },
   ];
   const n0 = (n) => String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   const D = (x) => new Date(x + "T12:00:00");
@@ -1170,12 +1177,12 @@
     q("#t_nacrt").innerHTML = `<div class="tw" style="margin:0"><table><thead><tr><th>Kampanja</th><th>Tip</th><th>Trg</th><th class="n">Hotelov</th>` +
       `<th class="n ch email"><i class="dot"></i>Kontaktov mail</th><th class="n ch li"><i class="dot"></i>Kontaktov LI</th><th>Trajanje</th></tr></thead><tbody>` +
       NACRT.map(vrsta).join("") +
-      (NACRT.length > 1 ? `<tr class="sum"><td class="kam" data-l="SKUPAJ"><b>Skupaj</b><small>${NACRT.length} kampanj</small></td><td></td><td></td><td class="n" data-l="HOTELOV">${n0(vs("hotelov"))}</td>` +
+      (NACRT.length > 1 ? `<tr class="sum"><td class="kam" data-l="SKUPAJ"><b>Skupaj</b><small>${NACRT.length} ${NACRT.length === 2 ? "kampanji" : NACRT.length < 5 ? "kampanje" : "kampanj"}</small></td><td></td><td></td><td class="n" data-l="HOTELOV">${n0(vs("hotelov"))}</td>` +
         `<td class="n ch email" data-l="KONTAKTOV MAIL">${n0(vs("mail"))}</td><td class="n ch li" data-l="KONTAKTOV LI">${n0(vs("li"))}</td><td></td></tr>` : "") +
       `</tbody></table></div>`;
     q("#n_nacrt").innerHTML =
       (zPay.length ? zPay.map(k => `<li>${k.kampanja}: številke iz payloada kampanje, zgrajen ${dp(k.zgrajeno)}.</li>`).join("")
-        : `<li>Val 1 start 5. 11. (179 mailov, 129 LI); val 2 nove osebe do 11. 11. (+22 mailov, +49 LI, 7 prek Roka); 12 LI po 25. 11., če se hotel ne oglasi. Od tega 3 hoteli (Cubis, Gredič, Vander) čakajo tenant; njihovih 6 mailov in 4 LI je ocena.</li>`);
+        : NACRT.map(k => `<li>${NACRT.length > 1 ? k.trg + ": " : ""}${k.op || ""}</li>`).join(""));
   }
   const q = (x) => document.querySelector(x);
   // zastave (window.FLAG) nastanejo v glavnem skriptu strani, zato risanje po nalaganju
