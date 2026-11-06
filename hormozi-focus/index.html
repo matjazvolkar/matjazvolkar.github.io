@@ -60,7 +60,7 @@
     font-family: var(--sans); font-size: 15.5px; line-height: 1.5;
     -webkit-font-smoothing: antialiased;
   }
-  .wrap { max-width: 1280px; margin: 0 auto; padding: 40px 24px 72px; }
+  .wrap { max-width: 1480px; margin: 0 auto; padding: 40px 24px 72px; }
 
   header { border-bottom: 2px solid var(--ink); padding-bottom: 20px; margin-bottom: 28px; }
   .back { font-family: var(--mono); font-size: 12px; color: var(--ink-3); text-decoration: none; }
@@ -100,17 +100,20 @@
     text-align: left; font-family: var(--mono); font-size: 10.5px; letter-spacing: .07em; text-transform: uppercase;
     color: var(--ink-3); padding: 8px 8px; border-bottom: 1px solid var(--line);
   }
-  tbody td { padding: 4px 8px; border-bottom: 1px solid var(--line-2); vertical-align: middle; }
+  tbody td { padding: 1px 8px; border-bottom: 1px solid var(--line-2); vertical-align: middle; }
   tbody tr:hover td { background: var(--line-2); }
   .c-num { width: 34px; color: var(--ink-3); font-family: var(--mono); font-size: 12px; text-align: right; }
-  .c-time { width: 108px; font-family: var(--mono); font-size: 12px; color: var(--ink-2); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .c-time { width: 96px; font-family: var(--mono); font-size: 12px; color: var(--ink-2); white-space: nowrap; font-variant-numeric: tabular-nums; }
   .c-ai { width: 44px; text-align: center; }
-  .c-kat { width: 220px; }
+  .c-kat { width: 370px; }
+  /* kategorija in kampanja v isti vrsti, da so vse vrstice enako nizke */
+  .kat-wrap { display: flex; gap: 6px; }
   select.kamp[hidden] { display: none; }
-  select.kamp { margin-top: 4px; }
+  select.kat { flex: 0 0 186px; }
+  select.kamp { flex: 0 0 176px; }
   select.kat, select.kamp {
-    width: 100%; font: inherit; font-size: 12.5px; color: var(--ink-3); background: transparent;
-    border: 1px solid var(--line-2); border-radius: 6px; padding: 4px 6px; cursor: pointer;
+    min-width: 0; font: inherit; font-size: 12px; color: var(--ink-3); background: transparent;
+    border: 1px solid var(--line-2); border-radius: 5px; padding: 1px 4px; cursor: pointer;
   }
   select.kat:hover, select.kamp:hover { border-color: var(--line); }
   select.kat:focus, select.kamp:focus { outline: none; border-color: var(--accent); }
@@ -120,11 +123,11 @@
 
   input[type="text"] {
     width: 100%; border: none; border-bottom: 1px solid transparent; background: transparent;
-    color: var(--ink); font: inherit; font-size: 13.5px; padding: 5px 2px; border-radius: 3px;
+    color: var(--ink); font: inherit; font-size: 13.5px; padding: 2px 2px; border-radius: 3px;
   }
   input[type="text"]:hover { border-bottom-color: var(--line); }
   input[type="text"]:focus { outline: none; border-bottom-color: var(--accent); background: var(--line-2); }
-  input[type="checkbox"] { width: 17px; height: 17px; accent-color: var(--accent); cursor: pointer; }
+  input[type="checkbox"] { width: 15px; height: 15px; margin: 0; vertical-align: middle; accent-color: var(--accent); cursor: pointer; }
 
   .panel-foot { display: flex; align-items: center; gap: 14px; margin-top: 14px; flex-wrap: wrap; }
   .btn-primary {
@@ -608,7 +611,7 @@
         + '<td class="c-num">' + (i+1) + '</td>'
         + '<td class="c-time">' + labels[i] + '</td>'
         + '<td class="c-opis"><input type="text" data-field="opis" value="' + escapeHtml(r.opis) + '" placeholder="Opis dela …"></td>'
-        + '<td class="c-kat">' + katSelectHtml(r.kat) + kampSelectHtml(r.kamp, needsKamp(r.kat)) + '</td>'
+        + '<td class="c-kat"><div class="kat-wrap">' + katSelectHtml(r.kat) + kampSelectHtml(r.kamp, needsKamp(r.kat)) + '</div></td>'
         + '<td class="c-ai"><input type="checkbox" data-field="ai"' + (r.ai ? " checked" : "") + '></td>'
         + '</tr>';
     }
