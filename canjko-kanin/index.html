@@ -1,0 +1,651 @@
+<!doctype html>
+<html lang="sl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2000 2000'><rect width='2000' height='2000' rx='340' fill='%23000126'/><path fill='%231B92FF' d='M1681.3,693.4h197.8V98.8h-594.7v197.8h396.9V693.4z M296.7,1284.3H98.9V1879h594.7v-197.8H296.7V1284.3z'/><path fill='%231B92FF' d='M1879.1,1284.3h-197.8v310.2L296.7,98.8H98.9v594.7h197.8V381.6L1681.3,1879h197.8L1879.1,1284.3z'/></svg>">
+<title>Predrag Canjko, SPA Hotel Kanin</title>
+<style>
+  :root {
+    --navy: #182440;
+    --navy-2: #24345c;
+    --gold: #825A3A;
+    --gold-mid: #B08960;
+    --gold-light: #DEBA92;
+    --tint: #f6f0e8;
+    --line: #e6dccd;
+    --text: #1d2433;
+    --mute: #5b6375;
+    --red: #b3362b;
+    --red-tint: #fbeeeb;
+    --c-open: #2a78d6;
+    --c-closed: #e34948;
+    --c-build: #d99a1e;
+  }
+  @page { size: A4; margin: 11mm 12mm; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #fff; }
+  body {
+    font-family: "Segoe UI", Arial, sans-serif; font-size: 10.5pt; line-height: 1.42; color: var(--text);
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .page { break-after: page; position: relative; }
+  .page:last-child { break-after: auto; }
+  svg.i { width: 1em; height: 1em; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; vertical-align: -0.14em; }
+  sup { font-size: 6.6pt; line-height: 0; color: var(--gold-mid); font-weight: 600; }
+  a { color: inherit; text-decoration: none; }
+  p { margin: 0 0 2mm; }
+  b, strong { font-weight: 700; }
+
+  /* glava strani */
+  .run { display: flex; justify-content: space-between; align-items: center; font-size: 7.6pt; color: var(--mute); letter-spacing: .5px; margin-bottom: 4mm; }
+  .run .brand { color: var(--gold); font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; }
+  .pnum { display: inline-block; background: var(--navy); color: #fff; border-radius: 3mm; padding: .3mm 2.4mm; font-weight: 700; }
+
+  /* naslovi sekcij */
+  .sec { display: flex; align-items: center; gap: 3mm; margin: 0 0 3mm; }
+  .sec .ico { width: 9mm; height: 9mm; border-radius: 50%; background: var(--navy); color: var(--gold-light); display: flex; align-items: center; justify-content: center; font-size: 13pt; flex: none; }
+  .sec h2 { margin: 0; font-size: 16pt; line-height: 1.1; color: var(--navy); font-weight: 800; }
+  .sec .kick { font-size: 8pt; color: var(--gold); font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; }
+  .lbl { font-size: 7.8pt; font-weight: 700; letter-spacing: 1.3px; text-transform: uppercase; color: var(--gold); margin: 0 0 1.6mm; }
+  .note { font-size: 8.6pt; color: var(--mute); line-height: 1.38; }
+  .mt { margin-top: 4.2mm; }
+
+  /* HERO */
+  .hero { position: relative; height: 106mm; border-radius: 4mm; overflow: hidden; background: var(--navy); color: #fff; }
+  .hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .hero .shade { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(24,36,64,.96) 0%, rgba(24,36,64,.86) 42%, rgba(24,36,64,.25) 75%, rgba(24,36,64,.05) 100%); }
+  .hero .in { position: absolute; left: 10mm; top: 10mm; bottom: 9mm; width: 112mm; display: flex; flex-direction: column; }
+  .hero .eyebrow { font-size: 8pt; letter-spacing: 2.2px; text-transform: uppercase; color: var(--gold-light); font-weight: 700; }
+  .hero h1 { font-size: 34pt; line-height: 1.02; margin: 5mm 0 2.5mm; font-weight: 800; letter-spacing: -.5px; }
+  .hero .role { font-size: 13pt; color: var(--gold-light); font-weight: 600; margin-bottom: 4mm; }
+  .hero .topic { font-size: 10.6pt; line-height: 1.45; color: #e8ebf3; border-left: 2px solid var(--gold-mid); padding-left: 3mm; }
+  .hero .chips { margin-top: auto; display: flex; gap: 2mm; flex-wrap: wrap; }
+  .chip { display: inline-flex; align-items: center; gap: 1.4mm; font-size: 8pt; font-weight: 600; padding: 1mm 2.6mm; border-radius: 4mm; }
+  .hero .chip { background: rgba(255,255,255,.12); border: 1px solid rgba(222,186,146,.55); color: #fff; }
+  .hero .credit { position: absolute; right: 3mm; bottom: 2mm; font-size: 6.6pt; color: rgba(255,255,255,.8); }
+
+  /* opozorila */
+  .alerts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3mm; margin: 5mm 0 4mm; }
+  .alert { background: var(--red-tint); border: 1px solid #efcdc6; border-top: 3px solid var(--red); border-radius: 2.5mm; padding: 3mm 3.2mm; }
+  .alert .h { display: flex; align-items: center; gap: 1.6mm; color: var(--red); font-weight: 800; font-size: 10.6pt; margin-bottom: 1.2mm; }
+  .alert p { font-size: 9pt; line-height: 1.38; margin: 0; }
+
+  /* stat ploščice */
+  .stats { display: grid; grid-template-columns: repeat(5, 1fr); gap: 2.6mm; }
+  .stat { background: var(--tint); border-radius: 2.5mm; padding: 3mm 3mm 2.6mm; }
+  .stat .ic { color: var(--gold); font-size: 13pt; }
+  .stat .n { font-size: 17pt; font-weight: 800; color: var(--navy); line-height: 1.05; margin-top: 1mm; white-space: nowrap; }
+  .stat .n small { font-size: 10pt; }
+  .stat .l { font-size: 8pt; color: var(--mute); line-height: 1.3; margin-top: 1mm; }
+
+  /* ponudba s slikami */
+  .offer { display: grid; grid-template-columns: 1.05fr 1fr; gap: 4mm; margin-top: 5mm; }
+  .photos { display: grid; grid-template-rows: repeat(2, minmax(0, 1fr)); gap: 2.4mm; height: 74mm; }
+  .photo { position: relative; border-radius: 2.5mm; overflow: hidden; min-height: 0; }
+  .photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .photo .cap { position: absolute; left: 0; right: 0; bottom: 0; padding: 4mm 2.6mm 1.6mm; font-size: 7.6pt; font-weight: 600; color: #fff; background: linear-gradient(0deg, rgba(24,36,64,.85), rgba(24,36,64,0)); }
+  .facts { display: grid; gap: 2.4mm; }
+  .fact { display: flex; gap: 2.6mm; align-items: flex-start; }
+  .fact .ic { width: 8mm; height: 8mm; border-radius: 2mm; background: var(--navy); color: var(--gold-light); display: flex; align-items: center; justify-content: center; font-size: 11pt; flex: none; }
+  .fact .t { font-size: 9.4pt; line-height: 1.36; }
+  .fact .t b { color: var(--navy); }
+
+  /* kariera */
+  .thesis { background: var(--navy); color: #fff; border-radius: 3mm; padding: 4mm 5mm; display: flex; gap: 4mm; align-items: center; margin: 1mm 0 5mm; }
+  .thesis .ic { font-size: 20pt; color: var(--gold-light); flex: none; }
+  .thesis .k { font-size: 7.8pt; letter-spacing: 1.4px; text-transform: uppercase; color: var(--gold-light); font-weight: 700; }
+  .thesis .q { font-size: 12.4pt; line-height: 1.35; font-weight: 600; }
+  .career { position: relative; display: grid; grid-template-columns: repeat(5, 1fr); gap: 2mm; margin: 2mm 0 2mm; }
+  .career::before { content: ""; position: absolute; left: 6%; right: 6%; top: 9.5mm; height: 2px; background: linear-gradient(90deg, var(--gold-light), var(--gold)); }
+  .node { text-align: center; position: relative; }
+  .node .yr { font-size: 8.4pt; font-weight: 700; color: var(--gold); height: 6mm; }
+  .node .dot { width: 7mm; height: 7mm; border-radius: 50%; background: #fff; border: 2px solid var(--gold-mid); margin: 0 auto 2mm; position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; font-size: 8.5pt; color: var(--gold); }
+  .node.now .dot { background: var(--navy); border-color: var(--navy); color: var(--gold-light); width: 8mm; height: 8mm; margin-top: -.5mm; }
+  .node .pl { font-weight: 800; color: var(--navy); font-size: 9.8pt; line-height: 1.2; }
+  .node .rl { font-size: 8.2pt; color: var(--mute); line-height: 1.3; margin-top: .8mm; }
+  .cards3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3mm; }
+  .card { border: 1px solid var(--line); border-radius: 2.5mm; padding: 3.2mm 3.4mm; background: #fff; }
+  .card .ic { width: 9mm; height: 9mm; border-radius: 50%; background: var(--tint); color: var(--gold); display: flex; align-items: center; justify-content: center; font-size: 13pt; margin-bottom: 2mm; }
+  .card h4 { margin: 0 0 1mm; font-size: 10.6pt; color: var(--navy); line-height: 1.25; }
+  .card p { font-size: 9.2pt; line-height: 1.38; margin: 0; }
+  .cards2 { display: grid; grid-template-columns: 1fr 1fr; gap: 3mm; }
+  .hook { display: flex; gap: 3mm; background: var(--tint); border-radius: 2.5mm; padding: 3mm 3.4mm; }
+  .hook .ic { width: 10mm; height: 10mm; border-radius: 50%; background: var(--gold); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 14pt; flex: none; }
+  .hook h4 { margin: 0 0 .6mm; font-size: 10.4pt; color: var(--navy); }
+  .hook p { margin: 0; font-size: 9.2pt; line-height: 1.36; }
+  .warmq { margin-top: 3mm; border: 2px dashed var(--gold-mid); border-radius: 2.5mm; padding: 3mm 4mm; font-size: 10.6pt; color: var(--navy); }
+  .warmq .k { font-size: 7.8pt; letter-spacing: 1.3px; text-transform: uppercase; color: var(--gold); font-weight: 700; display: block; margin-bottom: .6mm; }
+
+  /* časovnica */
+  .legend { display: flex; gap: 5mm; font-size: 8.4pt; color: var(--mute); margin: 0 0 1mm; }
+  .legend span { display: inline-flex; align-items: center; gap: 1.4mm; }
+  .legend i { display: inline-block; width: 5mm; height: 2.6mm; border-radius: 1mm; }
+  .tl { width: 100%; height: auto; display: block; }
+  .tl text { font-family: "Segoe UI", Arial, sans-serif; }
+  .miles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.6mm; margin-top: 3mm; }
+  .mile { border-radius: 2.5mm; padding: 2.8mm 3.2mm; background: #fff; border: 1px solid var(--line); border-left: 4px solid var(--c-open); }
+  .mile.closed { border-left-color: var(--c-closed); }
+  .mile.build { border-left-color: var(--c-build); }
+  .mile .y { font-size: 13pt; font-weight: 800; color: var(--navy); line-height: 1.05; }
+  .mile .w { font-size: 8.2pt; font-weight: 700; color: var(--gold); text-transform: uppercase; letter-spacing: .8px; margin: .6mm 0 1mm; }
+  .mile p { font-size: 8.9pt; line-height: 1.36; margin: 0; }
+
+  /* destinacija */
+  .band { position: relative; height: 36mm; border-radius: 3mm; overflow: hidden; margin-top: 5mm; }
+  .band img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .band .shade { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(24,36,64,.9) 0%, rgba(24,36,64,.55) 55%, rgba(24,36,64,.1) 100%); }
+  .band .in { position: absolute; left: 6mm; top: 0; bottom: 0; display: flex; flex-direction: column; justify-content: center; color: #fff; width: 110mm; }
+  .band .in .k { font-size: 7.8pt; letter-spacing: 1.6px; text-transform: uppercase; color: var(--gold-light); font-weight: 700; }
+  .band .in .h { font-size: 15pt; font-weight: 800; line-height: 1.15; margin-top: 1mm; }
+  .band .credit { position: absolute; right: 2.6mm; bottom: 1.6mm; font-size: 6.6pt; color: rgba(255,255,255,.85); }
+  .dstats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2.6mm; margin-top: 3mm; }
+  .dstat { border-top: 3px solid var(--navy); padding-top: 1.6mm; }
+  .dstat .n { font-size: 17pt; font-weight: 800; color: var(--navy); line-height: 1.05; }
+  .dstat .l { font-size: 8.4pt; color: var(--mute); line-height: 1.3; margin-top: .8mm; }
+  .meter { display: grid; grid-template-columns: auto 1fr auto; gap: 3mm; align-items: center; margin-top: 3.4mm; font-size: 9pt; }
+  .meter .track { height: 3.2mm; background: #ece7df; border-radius: 2mm; overflow: hidden; }
+  .meter .fill { height: 100%; width: 31.66%; background: var(--navy); border-radius: 0 2mm 2mm 0; }
+  .meter .v { font-weight: 800; color: var(--navy); }
+  .comp { display: flex; gap: 2mm; flex-wrap: wrap; margin-top: 3mm; align-items: center; }
+  .comp .chip { background: var(--tint); color: var(--navy); }
+
+  /* organigram */
+  .org { display: grid; grid-template-columns: 1fr 52mm; gap: 4mm; align-items: start; }
+  .tier { border-radius: 3mm; padding: 3.2mm 4mm; position: relative; }
+  .tier.own { background: var(--navy); color: #fff; }
+  .tier.co { background: var(--tint); border: 1px solid var(--line); }
+  .tier.ho { background: #fff; border: 2px solid var(--gold); }
+  .tier .k { font-size: 7.6pt; letter-spacing: 1.4px; text-transform: uppercase; font-weight: 700; color: var(--gold); }
+  .tier.own .k { color: var(--gold-light); }
+  .tier .nm { font-size: 13pt; font-weight: 800; line-height: 1.15; margin: .6mm 0 .6mm; }
+  .tier.co .nm, .tier.ho .nm { color: var(--navy); }
+  .tier .d { font-size: 9pt; line-height: 1.35; }
+  .tier.own .d { color: #dfe4ee; }
+  .people { display: flex; gap: 2.4mm; margin-top: 2mm; }
+  .person { flex: 1; background: #fff; border: 1px solid var(--line); border-radius: 2mm; padding: 2mm 2.6mm; font-size: 8.8pt; line-height: 1.32; }
+  .person b { color: var(--navy); display: block; font-size: 9.6pt; }
+  .arrow { display: flex; align-items: center; justify-content: center; gap: 1.6mm; color: var(--gold); font-size: 8pt; font-weight: 700; letter-spacing: .6px; padding: 1.2mm 0; }
+  .arrow svg { width: 3.6mm; height: 4.6mm; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .side { border: 1px dashed var(--gold-mid); border-radius: 3mm; padding: 3mm 3.4mm; font-size: 8.8pt; line-height: 1.36; }
+  .side b { color: var(--navy); }
+  .side + .side { margin-top: 3mm; }
+
+  /* denar */
+  .money { display: grid; grid-template-columns: 1.15fr 1fr; gap: 5mm; }
+  .bar-row { display: grid; grid-template-columns: 34mm 1fr; gap: 2.4mm; align-items: center; margin-bottom: 2.4mm; }
+  .bar-row .lb { font-size: 8.8pt; line-height: 1.25; color: var(--text); }
+  .bar-wrap { display: flex; align-items: center; gap: 2mm; }
+  .bar { height: 6.5mm; background: var(--navy); border-radius: 0 1.2mm 1.2mm 0; }
+  .bar-wrap .v { font-size: 10.4pt; font-weight: 800; color: var(--navy); white-space: nowrap; }
+  .hist { display: grid; grid-template-columns: 1fr 1fr; gap: 2.4mm; }
+  .hcard { background: var(--tint); border-radius: 2.4mm; padding: 2.4mm 3mm; }
+  .hcard .y { font-size: 8pt; font-weight: 700; color: var(--gold); letter-spacing: .8px; }
+  .hcard .n { font-size: 14pt; font-weight: 800; color: var(--navy); line-height: 1.1; }
+  .hcard .l { font-size: 8.2pt; color: var(--mute); line-height: 1.3; }
+  .hcard.unk .n { color: var(--red); }
+
+  /* smučišče */
+  .ski { display: grid; grid-template-columns: 58mm 1fr; gap: 5mm; align-items: center; }
+  .ski svg text { font-family: "Segoe UI", Arial, sans-serif; }
+  .ski ul { margin: 0; padding-left: 4.4mm; font-size: 9.4pt; }
+  .ski li { margin-bottom: 1.2mm; }
+
+  /* snemanje */
+  .script { background: var(--navy); color: #fff; border-radius: 3mm; padding: 3.4mm 5mm 3.2mm; position: relative; }
+  .script .k { font-size: 7.8pt; letter-spacing: 1.6px; text-transform: uppercase; color: var(--gold-light); font-weight: 700; display: flex; align-items: center; gap: 1.6mm; }
+  .script .t { font-size: 10.9pt; line-height: 1.42; font-style: italic; margin-top: 1.6mm; }
+  .qs { list-style: none; margin: 0; padding: 0; counter-reset: q; }
+  .qs li { counter-increment: q; display: grid; grid-template-columns: 7mm 1fr; gap: 2.4mm; align-items: start; padding: 1.1mm 0; border-bottom: 1px solid #eee6da; break-inside: avoid; }
+  .qs li::before { content: counter(q); width: 6.6mm; height: 6.6mm; border-radius: 50%; background: var(--gold); color: #fff; font-weight: 800; font-size: 9pt; display: flex; align-items: center; justify-content: center; }
+  .qs .tag { display: inline-block; font-size: 7pt; font-weight: 700; letter-spacing: .9px; text-transform: uppercase; color: var(--gold); border: 1px solid var(--gold-light); border-radius: 2mm; padding: .1mm 1.6mm; margin-right: 1.6mm; vertical-align: .2mm; }
+  .qs .tx { font-size: 9.9pt; line-height: 1.38; }
+  .journey { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; margin-top: 2mm; }
+  .step { position: relative; padding: 0 2mm; text-align: center; }
+  .step .ic { width: 10mm; height: 10mm; border-radius: 50%; background: var(--navy); color: var(--gold-light); display: flex; align-items: center; justify-content: center; font-size: 13pt; margin: 0 auto 1.4mm; position: relative; z-index: 1; }
+  .step:not(:last-child)::after { content: ""; position: absolute; top: 5mm; left: calc(50% + 6mm); right: calc(-50% + 6mm); height: 2px; background: var(--gold-light); }
+  .step h4 { margin: 0 0 .6mm; font-size: 9.4pt; color: var(--navy); }
+  .step p { margin: 0; font-size: 8.3pt; line-height: 1.32; color: var(--text); }
+  .checks { display: flex; gap: 2mm; flex-wrap: wrap; justify-content: center; margin-top: 2.4mm; }
+  .checks .chip { background: var(--tint); color: var(--navy); }
+  .twocol { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; }
+  .redbox { background: var(--red-tint); border-radius: 2.5mm; padding: 3mm 3.6mm; }
+  .redbox .lbl { color: var(--red); display: flex; align-items: center; gap: 1.4mm; }
+  .goldbox { background: var(--tint); border-radius: 2.5mm; padding: 3mm 3.6mm; }
+  .goldbox .lbl { display: flex; align-items: center; gap: 1.4mm; }
+  .redbox ul, .goldbox ul { margin: 0; padding-left: 4.2mm; font-size: 9.1pt; line-height: 1.36; }
+  .redbox li, .goldbox li { margin-bottom: .8mm; }
+  ul.two { columns: 2; column-gap: 8mm; }
+  ul.two li { break-inside: avoid; }
+  .src-list { columns: 4; column-gap: 5mm; font-size: 7pt; line-height: 1.3; padding-left: 4.4mm; margin: 0; color: var(--mute); }
+  .src-list li { break-inside: avoid; }
+  .src-list a { color: var(--navy); font-weight: 600; }
+
+  @media screen {
+    body { background: #e9e6e1; }
+    .page { width: 210mm; min-height: 297mm; margin: 6mm auto; padding: 11mm 12mm; background: #fff; box-shadow: 0 1px 6px rgba(0,0,0,.15); }
+  }
+  @media screen and (max-width: 820px) {
+    body { font-size: 15px; }
+    .page { width: auto; min-height: 0; margin: 0 0 10px; padding: 18px 16px; box-shadow: none; }
+    .run { flex-wrap: wrap; gap: 4px; }
+    .alerts, .offer, .cards3, .cards2, .miles, .org, .money, .ski, .twocol, .career, .journey { grid-template-columns: 1fr; }
+    .stats, .dstats { grid-template-columns: 1fr 1fr; }
+    .hero { height: auto; }
+    .hero .shade { background: linear-gradient(180deg, rgba(24,36,64,.45) 0%, rgba(24,36,64,.9) 38%, rgba(24,36,64,.94) 100%); }
+    .hero .in { padding-top: 120px !important; }
+    .hero .in { position: relative; left: auto; top: auto; bottom: auto; width: auto; padding: 26px 20px 20px; }
+    .hero .chips { margin-top: 16px; }
+    .hero .credit { position: relative; right: auto; bottom: auto; padding: 0 20px 10px; text-align: right; }
+    .photos { height: auto; grid-template-rows: none; }
+    .photo { height: 190px; }
+    .career::before { display: none; }
+    .node { display: grid; grid-template-columns: 9mm 1fr; column-gap: 3mm; text-align: left; align-items: start; }
+    .node .dot { grid-row: 1 / span 3; margin: 0; }
+    .node .yr { height: auto; }
+    .tl-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .tl { min-width: 760px; }
+    .tl-hint { display: block; }
+    .band .in { width: auto; right: 6mm; }
+    .meter { grid-template-columns: 1fr auto; }
+    .meter > span:first-child { grid-column: 1 / -1; }
+    .ski svg { max-width: 260px; margin: 0 auto; display: block; }
+    .step { text-align: left; display: grid; grid-template-columns: 12mm 1fr; column-gap: 3mm; padding: 0 0 8px; }
+    .step .ic { grid-row: 1 / span 2; margin: 0; }
+    .step:not(:last-child)::after { display: none; }
+    .checks { justify-content: flex-start; }
+    ul.two { columns: 1; }
+    .src-list { columns: 1; font-size: 12px; }
+  }
+  .tl-hint { display: none; font-size: 8pt; color: var(--mute); margin-top: 1mm; }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-bed" viewBox="0 0 24 24"><path d="M3 18v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6M3 15h18M3 18v2M21 18v2M6.5 10V7.5a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1V10"/></symbol>
+    <symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 3s6 6.6 6 11a6 6 0 0 1-12 0c0-4.4 6-11 6-11z"/><path d="M9.5 15a2.5 2.5 0 0 0 2.5 2.5"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.8l-5.2 2.8 1-5.8-4.3-4.1 5.9-.8z"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17.2" cy="9" r="2.4"/><path d="M16 14.3c2.9.3 5 2.6 5 5.7"/></symbol>
+    <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M8 14h3"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3.5l9.5 16.5h-19z"/><path d="M12 10v4.5M12 17.3v.2"/></symbol>
+    <symbol id="i-userx" viewBox="0 0 24 24"><circle cx="10" cy="8" r="3.6"/><path d="M3 20.5c0-3.9 3.1-7 7-7 1.4 0 2.6.4 3.7 1M16.5 15.5l4 4M20.5 15.5l-4 4"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4.5" y="11" width="15" height="10" rx="2"/><path d="M8 11V7.5a4 4 0 0 1 8 0V11M12 15v2"/></symbol>
+    <symbol id="i-build" viewBox="0 0 24 24"><path d="M3 21h18M5 21V9l7-5 7 5v12M9.5 21v-6h5v6"/></symbol>
+    <symbol id="i-restart" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.4-5.7M20 4v4.5h-4.5"/></symbol>
+    <symbol id="i-music" viewBox="0 0 24 24"><path d="M9 18V5.5l11-2v12.5"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="17.5" cy="16" r="2.5"/></symbol>
+    <symbol id="i-tvoff" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="12" rx="2"/><path d="M8.5 3.5L12 7l3.5-3.5M3.5 3.5l17 17"/></symbol>
+    <symbol id="i-net" viewBox="0 0 24 24"><circle cx="6" cy="6" r="2.4"/><circle cx="18" cy="6" r="2.4"/><circle cx="12" cy="18" r="2.4"/><path d="M8.2 7.2l2.6 8.5M15.8 7.2l-2.6 8.5M8.4 6h7.2"/></symbol>
+    <symbol id="i-brain" viewBox="0 0 24 24"><path d="M9 4.5a3 3 0 0 0-3 3 3 3 0 0 0-2 5 3 3 0 0 0 2 5 3 3 0 0 0 6 1V6a2 2 0 0 0-3-1.5zM15 4.5a3 3 0 0 1 3 3 3 3 0 0 1 2 5 3 3 0 0 1-2 5 3 3 0 0 1-6 1"/></symbol>
+    <symbol id="i-snow" viewBox="0 0 24 24"><path d="M12 2.5v19M3.8 7.2l16.4 9.6M3.8 16.8l16.4-9.6M9.5 4.5L12 7l2.5-2.5M9.5 19.5L12 17l2.5 2.5"/></symbol>
+    <symbol id="i-food" viewBox="0 0 24 24"><path d="M6 3v7a2 2 0 0 0 4 0V3M8 12v9M17 3c-2.2 2-2.2 7 0 9v9"/></symbol>
+    <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M8.5 21h7"/></symbol>
+    <symbol id="i-chip" viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M10 3v4M14 3v4M10 17v4M14 17v4M3 10h4M3 14h4M17 10h4M17 14h4"/></symbol>
+    <symbol id="i-euro" viewBox="0 0 24 24"><path d="M17.5 6.5a6.5 6.5 0 1 0 0 11M4.5 10.5h9M4.5 13.5h9"/></symbol>
+    <symbol id="i-mount" viewBox="0 0 24 24"><path d="M2.5 20l6.5-11 4 6.5 2.5-3.5 6 8z"/></symbol>
+    <symbol id="i-door" viewBox="0 0 24 24"><path d="M14 3H6a1 1 0 0 0-1 1v17h9M14 3l5 2v16h-5z"/><path d="M11.5 12.5v.5"/></symbol>
+    <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5.5 5.5"/></symbol>
+  </defs>
+</svg>
+
+<!-- ============ STRAN 1: NASLOVNICA ============ -->
+<section class="page">
+  <div class="run"><span class="brand">Hostfulness podcast</span><span>Briefing za Roka Kokalja · stanje 9. 11. 2026 &nbsp;<span class="pnum">1/5</span></span></div>
+
+  <div class="hero">
+    <img src="canjko-briefing-slike/aerial.jpg" alt="SPA Hotel Kanin Bovec od zgoraj">
+    <div class="shade"></div>
+    <div class="in">
+      <div class="eyebrow">Gost epizode</div>
+      <h1>Predrag<br>Canjko</h1>
+      <div class="role">Generalni direktor, SPA Hotel Kanin Bovec</div>
+      <div class="topic">Hotel se po 13 letih zaprtja pripravlja na ponovno odprtje. Pogovor naj bo o tem, kako gostova izkušnja nastaja pred prvim gostom, ne o doseženih rezultatih.</div>
+      <div class="chips">
+        <span class="chip"><svg class="i"><use href="#i-mount"/></svg>Bovec, Slovenija</span>
+        <span class="chip"><svg class="i"><use href="#i-cal"/></svg>Odprtje: pomlad 2027 (napoved)</span>
+      </div>
+    </div>
+    <div class="credit">Vizualizacija: hotelkanin.com</div>
+  </div>
+
+  <div class="alerts">
+    <div class="alert">
+      <div class="h"><svg class="i"><use href="#i-userx"/></svg>Ni lastnik</div>
+      <p>Je generalni direktor od avgusta 2026.<sup>1</sup> Lastnik je <b>Ivan Fornazarič</b> prek družbe FORIS d.o.o. (100 %).<sup>16</sup></p>
+    </div>
+    <div class="alert">
+      <div class="h"><svg class="i"><use href="#i-lock"/></svg>Hotel še ne obratuje</div>
+      <p>Odprtje je napoved za pomlad 2027. Objava iz avgusta 2025 je še omenjala 2026; zamika ne pripisujte Canjku.<sup>4,8</sup></p>
+    </div>
+    <div class="alert">
+      <div class="h"><svg class="i"><use href="#i-restart"/></svg>Isti, stari Kanin</div>
+      <p>Prenovljeni Lajovičev hotel iz začetka sedemdesetih, zaprt od oktobra 2013, z več propadlimi poskusi odprtja.<sup>4,14</sup></p>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="ic"><svg class="i"><use href="#i-bed"/></svg></div><div class="n">98</div><div class="l">sob in suit, od 19 do 60 m²</div></div>
+    <div class="stat"><div class="ic"><svg class="i"><use href="#i-drop"/></svg></div><div class="n">1.300 <small>m²</small></div><div class="l">wellnessa s panoramskim bazenom</div></div>
+    <div class="stat"><div class="ic"><svg class="i"><use href="#i-star"/></svg></div><div class="n">4★ <small>Superior</small></div><div class="l">napovedana kategorija, prej 3★</div></div>
+    <div class="stat"><div class="ic"><svg class="i"><use href="#i-users"/></svg></div><div class="n">80</div><div class="l">gostov v glavni dvorani, plus 2 sejni sobi</div></div>
+    <div class="stat"><div class="ic"><svg class="i"><use href="#i-cal"/></svg></div><div class="n">2027</div><div class="l">pomlad, napovedano odprtje</div></div>
+  </div>
+
+  <div class="offer">
+    <div class="photos">
+      <div class="photo"><img src="canjko-briefing-slike/pool.jpg" alt="Panoramski bazen"><div class="cap">Panoramski bazen (vizualizacija)</div></div>
+      <div class="photo"><img src="canjko-briefing-slike/room.jpg" alt="Soba"><div class="cap">Soba (vizualizacija)</div></div>
+    </div>
+    <div>
+      <div class="lbl">Napovedana ponudba</div>
+      <div class="facts">
+        <div class="fact"><div class="ic"><svg class="i"><use href="#i-drop"/></svg></div><div class="t"><b>Wellness 1.300 m²:</b> panoramski bazen, savne, tretmaji, fitnes. Bazen in fitnes sta vključena v bivanje.<sup>4</sup></div></div>
+        <div class="fact"><div class="ic"><svg class="i"><use href="#i-tvoff"/></svg></div><div class="t"><b>Soba Alpina brez televizorja,</b> a z Wi-Fi, balkonom in 210 cm posteljo. Zavesten odklop.<sup>5</sup></div></div>
+        <div class="fact"><div class="ic"><svg class="i"><use href="#i-food"/></svg></div><div class="t"><b>Kulinarika:</b> frika, soška postrv, lokalne sestavine, alpsko-mediteranska kuhinja, vinska klet in lobby bar.<sup>7</sup></div></div>
+        <div class="fact"><div class="ic"><svg class="i"><use href="#i-chip"/></svg></div><div class="t"><b>Tehnologija:</b> HIQ/Robotina ga navaja kot referenco pametne modernizacije; končna postavitev ni potrjena.<sup>22</sup></div></div>
+        <div class="fact"><div class="ic"><svg class="i"><use href="#i-flag"/></svg></div><div class="t"><b>Lastna znamka,</b> brez potrjene franšize. Ocen novega hotela še ni.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STRAN 2: GOST ============ -->
+<section class="page">
+  <div class="run"><span class="brand">Hostfulness podcast</span><span>Predrag Canjko, Kanin Bovec &nbsp;<span class="pnum">2/5</span></span></div>
+
+  <div class="sec"><div class="ico"><svg class="i"><use href="#i-users"/></svg></div><div><div class="kick">Kdo je gost</div><h2>Specialist za ponovne zagone hotelov</h2></div></div>
+  <p>Na LinkedInu se predstavlja kot hotelirski vodja za ponovna odprtja, prestrukturiranje, prihodkovno rast in digitalno preobrazbo.<sup>1</sup> Njegova rdeča nit niso stavbe, ampak to, da prenovljena stavba spet zaživi kot delujoča organizacija: v termah, v gorah in v kongresnem hotelu.</p>
+
+  <div class="thesis">
+    <div class="ic"><svg class="i"><use href="#i-net"/></svg></div>
+    <div><div class="k">Teza, zanimiva za Nevron</div><div class="q">Tehnologija mora postati povezan ekosistem, ne zbirka ločenih rešitev.<sup>2</sup></div></div>
+  </div>
+
+  <div class="lbl">Karierna pot</div>
+  <div class="career">
+    <div class="node"><div class="yr">2005-2014</div><div class="dot"><svg class="i"><use href="#i-drop"/></svg></div><div class="pl">Terme Dobrna</div><div class="rl">F&amp;B in širše hotelske odgovornosti, vodja gostinstva</div></div>
+    <div class="node"><div class="yr">2017-2019</div><div class="dot"><svg class="i"><use href="#i-mount"/></svg></div><div class="pl">Hotel Špik</div><div class="rl">direktor hotela</div></div>
+    <div class="node"><div class="yr">2019-2022</div><div class="dot"><svg class="i"><use href="#i-drop"/></svg></div><div class="pl">Terme Snovik</div><div class="rl">direktor, vodil tudi med epidemijo<sup>26,27</sup></div></div>
+    <div class="node"><div class="yr">2022-2026</div><div class="dot"><svg class="i"><use href="#i-build"/></svg></div><div class="pl">Terme Maribor</div><div class="rl">vodenje hotela; 2023 v medijih kot vodja Habakuka<sup>28</sup></div></div>
+    <div class="node now"><div class="yr">od 8/2026</div><div class="dot"><svg class="i"><use href="#i-star"/></svg></div><div class="pl">SPA Hotel Kanin</div><div class="rl">generalni direktor: ekipa, standardi, prihodki, digitalna infrastruktura<sup>1</sup></div></div>
+  </div>
+  <p class="note">Izobrazba: LinkedIn navaja Univerzo v Zagrebu, smer in naziv nista potrjena. Starost, kraj odraščanja in motiv za vstop v poklic niso javno znani.</p>
+
+  <div class="lbl mt">Kako razmišlja</div>
+  <div class="cards3">
+    <div class="card"><div class="ic"><svg class="i"><use href="#i-net"/></svg></div><h4>Odprtje je usklajevanje</h4><p>Ljudi, procesov in sistemov, ne zaključek gradnje. Ne gre za popolnost vsake stvari, ampak za to, da vse deluje skupaj.<sup>2</sup></p></div>
+    <div class="card"><div class="ic"><svg class="i"><use href="#i-brain"/></svg></div><h4>AI pomaga ekipi, je ne nadomesti</h4><p>Pri cenah, dolžini bivanja, prezasedenosti, razporedu dela in dodatni prodaji. Meril bi RevPAR, natančnost napovedi in manj paničnih popustov.<sup>3</sup></p></div>
+    <div class="card"><div class="ic"><svg class="i"><use href="#i-snow"/></svg></div><h4>Celo leto, ne samo poletje</h4><p>Osrednji izziv velikega hotela v poletni destinaciji. Že v Snoviku je zahtevnega gosta povezoval z mirom, naravo in lokalno hrano.<sup>24,25</sup></p></div>
+  </div>
+
+  <div class="lbl mt">Osebni hooki za začetek pogovora</div>
+  <div class="cards2">
+    <div class="hook"><div class="ic"><svg class="i"><use href="#i-music"/></svg></div><div><h4>Pevec in glasbenik</h4><p>Ob praznovanju Term Snovik je nastopil kot pevec in glasbenik.<sup>27</sup></p></div></div>
+    <div class="hook"><div class="ic"><svg class="i"><use href="#i-alert"/></svg></div><div><h4>Direktor v kriznem letu</h4><p>Aprila 2020 je bilo v Snoviku 90 % zaposlenih na čakanju, takrat brez odpuščanj.<sup>26</sup></p></div></div>
+    <div class="hook"><div class="ic"><svg class="i"><use href="#i-restart"/></svg></div><div><h4>Serijski ponovni zagoni</h4><p>Od Habakuka do Kanina: kako iz prenovljene stavbe narediti delujočo organizacijo.</p></div></div>
+    <div class="hook"><div class="ic"><svg class="i"><use href="#i-tvoff"/></svg></div><div><h4>Tehnolog s sobo brez TV</h4><p>Zagovornik povezane tehnologije vodi hotel, ki prodaja sobo brez televizorja.</p></div></div>
+  </div>
+  <div class="warmq"><span class="k">Toplo vprašanje za uvod</span>»Ko ste pred gosti nastopili tudi kot glasbenik: kaj vam oder pove o gostoljubju, česar vas direktorska pisarna ne nauči?«</div>
+</section>
+
+<!-- ============ STRAN 3: ZGODOVINA IN DESTINACIJA ============ -->
+<section class="page">
+  <div class="run"><span class="brand">Hostfulness podcast</span><span>Predrag Canjko, Kanin Bovec &nbsp;<span class="pnum">3/5</span></span></div>
+
+  <div class="sec"><div class="ico"><svg class="i"><use href="#i-build"/></svg></div><div><div class="kick">Zgodovina hotela</div><h2>40 let odprt, 13 let zaprt, zdaj nov poskus vrnitve</h2></div></div>
+
+  <div class="legend">
+    <span><i style="background:var(--c-open)"></i>hotel obratuje</span>
+    <span><i style="background:var(--c-closed)"></i>hotel zaprt</span>
+    <span><i style="background:var(--c-build)"></i>gradnja in prenove</span>
+    <span><i style="background:#9aa3b2"></i>lastnik</span>
+  </div>
+  <div class="tl-wrap">
+  <svg class="tl" viewBox="0 0 1000 188" role="img" aria-label="Časovnica Hotela Kanin od 1971 do 2027">
+    <g font-size="14" fill="#1d2433">
+      <line x1="78.6" y1="40" x2="78.6" y2="76" stroke="#9aa3b2" stroke-width="1"/>
+      <text x="74" y="22" font-weight="700" fill="#182440">1973</text>
+      <text x="74" y="37" fill="#5b6375">odprtje hotela in smučišča</text>
+      <line x1="653.9" y1="40" x2="653.9" y2="76" stroke="#9aa3b2" stroke-width="1"/>
+      <text x="649" y="22" font-weight="700" fill="#182440" text-anchor="end">2008</text>
+      <text x="649" y="37" fill="#5b6375" text-anchor="end">Hit odpre wellness</text>
+      <line x1="726.9" y1="40" x2="726.9" y2="76" stroke="#9aa3b2" stroke-width="1"/>
+      <text x="731" y="22" font-weight="700" fill="#b3362b">okt. 2013</text>
+      <text x="731" y="37" fill="#5b6375">zaprtje</text>
+    </g>
+    <rect x="759.3" y="56" width="48.7" height="14" rx="3" fill="#d99a1e"/>
+    <text x="783.6" y="51" font-size="12.5" fill="#5b6375" text-anchor="middle">Cubo, ustavljen</text>
+    <rect x="905.2" y="56" width="53.5" height="14" rx="3" fill="#d99a1e"/>
+    <text x="931.9" y="51" font-size="12.5" fill="#5b6375" text-anchor="middle">prenova FORIS</text>
+    <rect x="46.2" y="76" width="30.4" height="28" rx="4" fill="#d99a1e"/>
+    <rect x="78.6" y="76" width="646.3" height="28" rx="4" fill="#2a78d6"/>
+    <text x="400" y="95" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">obratuje 40 let</text>
+    <rect x="728.9" y="76" width="227.8" height="28" rx="4" fill="#e34948"/>
+    <text x="842.8" y="95" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">zaprt od 2013</text>
+    <path d="M966 78 l9 12 -9 12 -9 -12 z" fill="#182440"/>
+    <text x="992" y="22" font-weight="700" font-size="14" fill="#182440" text-anchor="end">2027</text>
+    <text x="992" y="37" font-size="14" fill="#5b6375" text-anchor="end">napoved</text>
+    <line x1="966" y1="40" x2="966" y2="76" stroke="#9aa3b2" stroke-width="1"/>
+    <g font-size="11.5" fill="#8a91a0" text-anchor="middle">
+      <text x="192" y="120">1980</text><text x="354" y="120">1990</text><text x="516" y="120">2000</text><text x="678" y="120">2010</text><text x="840" y="120">2020</text>
+    </g>
+    <rect x="46.2" y="128" width="549" height="10" rx="2" fill="#b7bfcc"/>
+    <rect x="597.2" y="128" width="30.5" height="10" rx="2" fill="#8d97a8"/>
+    <rect x="629.7" y="128" width="95.2" height="10" rx="2" fill="#b7bfcc"/>
+    <rect x="726.9" y="128" width="30.4" height="10" rx="2" fill="#e2e5ea"/>
+    <rect x="759.3" y="128" width="111.5" height="10" rx="2" fill="#8d97a8"/>
+    <rect x="872.8" y="128" width="85.9" height="10" rx="2" fill="#182440"/>
+    <g font-size="13" fill="#1d2433" text-anchor="middle">
+      <text x="320" y="156">Alpski turistični center Bovec, nato Alpkomerc (Mercator)</text>
+      <text x="612" y="156">GPG</text>
+      <text x="677" y="176">Hit</text>
+      <text x="742" y="156" fill="#8a91a0">stečaj</text>
+      <text x="815" y="176">Alpe Adria Hoteli</text>
+      <text x="916" y="156" font-weight="700" fill="#182440">FORIS</text>
+    </g>
+  </svg>
+  </div>
+  <div class="tl-hint">Časovnico povlecite vstran.</div>
+
+  <div class="miles">
+    <div class="mile build"><div class="y">1973</div><div class="w">Lajovičev hotel</div><p>240 postelj, 400 sedežev, pokrit bazen s pomično streho. Borbina nagrada. Nastal skupaj s smučiščem.<sup>9,10</sup></p></div>
+    <div class="mile"><div class="y">2005</div><div class="w">Mercator proda</div><p>128 sob, 258 ležišč, 25 zaposlenih. GPG Naložbe ponudi 655 milijonov tolarjev.<sup>11</sup></p></div>
+    <div class="mile"><div class="y">2007-2008</div><div class="w">Hit vlaga v wellness</div><p>Nakup za okoli 2,7 mio €, nato okoli 3,2 mio € v sobe in wellness.<sup>12</sup></p></div>
+    <div class="mile closed"><div class="y">2013</div><div class="w">Zaprtje</div><p>Slabo povpraševanje in izpad zime po nesreči žičnice. 21 zaposlenih, stečaj, delavci poplačani le delno.<sup>13,14</sup></p></div>
+    <div class="mile build"><div class="y">2015-2018</div><div class="w">Cubo Alp Resort</div><p>Dražba za 1,3 mio €, Sergej Vorožejkin s 50 %. Nova streha in okna, odprtje 2018 se ni zgodilo.<sup>14</sup></p></div>
+    <div class="mile build"><div class="y">od 2022</div><div class="w">Fornazarič, FORIS</div><p>Nov razvojni cikel; od 2024 celovita obnova in nova podzemna garaža.<sup>15,18</sup></p></div>
+  </div>
+  <p class="note" style="margin-top:2mm">Letnice se med viri razhajajo (1973 ali 1974), zato recite »hotel iz začetka sedemdesetih let«. Lastniki niso ena pravna oseba. Wellness ni nova ideja: bazen je imel že izvirni hotel.</p>
+
+  <div class="redbox" style="margin-top:3.4mm">
+    <div class="lbl"><svg class="i"><use href="#i-alert"/></svg>Občutljive teme v pogovoru</div>
+    <ul class="two">
+      <li>Ni lastnik; zamud in odločitev predhodnikov mu ne pripisujte.</li>
+      <li>Odprtje je napoved, ne dokončno dejstvo.</li>
+      <li>Stečaj iz 2013 ni stvar novega lastnika; rusko lastništvo je preteklost.</li>
+      <li>Zaprtje je kraj stalo delovnih mest. Odprtje je tudi vračanje zaupanja.</li>
+    </ul>
+  </div>
+
+  <div class="band">
+    <img src="canjko-briefing-slike/plateau.jpg" alt="Kaninska planota">
+    <div class="shade"></div>
+    <div class="in"><div class="k">Destinacija Bovec</div><div class="h">Polno poleti, prazno pozimi: kaj je razlog za prihod februarja?</div></div>
+    <div class="credit">Foto: hotelkanin.com</div>
+  </div>
+  <div class="dstats">
+    <div class="dstat"><div class="n">621.121</div><div class="l">nočitev v občini Bovec 2025, okoli 12 % več kot 2024<sup>23</sup></div></div>
+    <div class="dstat"><div class="n">235.614</div><div class="l">prihodov gostov v letu 2025</div></div>
+    <div class="dstat"><div class="n">2,64 dni</div><div class="l">povprečno bivanje</div></div>
+    <div class="dstat"><div class="n">jul-avg</div><div class="l">izrazit vrh, po septembru obisk upade</div></div>
+  </div>
+  <div class="meter"><span>Delež nočitev gostov iz Nemčije (vsa Dolina Soče, ne samo Bovec)</span><div class="track"><div class="fill"></div></div><span class="v">31,66 %</span></div>
+  <div class="comp"><span class="note"><b>Primerjava v Bovcu:</b></span>
+    <a class="chip" href="https://www.hotelsoca.si/">Hotel Soča · 20 sob, športni center</a>
+    <a class="chip" href="https://dobra-vila-bovec.si/">Dobra Vila · 11 sob, butična</a>
+    <a class="chip" href="https://hotel-mangart.com/en/">Hotel Mangart · 4★, skupine</a>
+  </div>
+</section>
+
+<!-- ============ STRAN 4: KDO STOJI ZA HOTELOM ============ -->
+<section class="page">
+  <div class="run"><span class="brand">Hostfulness podcast</span><span>Predrag Canjko, Kanin Bovec &nbsp;<span class="pnum">4/5</span></span></div>
+
+  <div class="sec"><div class="ico"><svg class="i"><use href="#i-euro"/></svg></div><div><div class="kick">Kdo stoji za hotelom</div><h2>Lastnik, družba, direktor: tri različne ravni</h2></div></div>
+
+  <div class="org">
+    <div>
+      <div class="tier own">
+        <div class="k">Lastnik in investitor</div>
+        <div class="nm">Ivan Fornazarič</div>
+        <div class="d">Edini lastnik FORIS-a (100 %) in prokurist.<sup>16</sup> Podjetnik z Vogrskega, živi in posluje v Dubaju. Ustanovitelj GORICA Group: prikolice in nadgradnje gospodarskih vozil na Bližnjem vzhodu; 2021 štiri družbe v treh državah, več kot tisoč zaposlenih.<sup>19</sup></div>
+      </div>
+      <div class="arrow"><svg viewBox="0 0 16 20"><path d="M8 1v16M2.5 11.5L8 17l5.5-5.5"/></svg>100 % lastništvo</div>
+      <div class="tier co">
+        <div class="k">Projektna družba</div>
+        <div class="nm">FORIS d.o.o.</div>
+        <div class="d">Ustanovljena decembra 2021. Investitor prenove in delodajalec v zaposlitvenih oglasih.<sup>8,16</sup></div>
+        <div class="people">
+          <div class="person"><b>Boris Kosuta</b>direktor družbe od 11. 8. 2026</div>
+          <div class="person"><b>Luka Fornazarič</b>prokurist od junija 2026</div>
+        </div>
+      </div>
+      <div class="arrow"><svg viewBox="0 0 16 20"><path d="M8 1v16M2.5 11.5L8 17l5.5-5.5"/></svg>gradi in vodi hotel</div>
+      <div class="tier ho">
+        <div class="k">Hotel</div>
+        <div class="nm">Predrag Canjko, generalni direktor</div>
+        <div class="d">SPA Hotel Kanin Bovec, od avgusta 2026. Operativni in komercialni zagon.<sup>6</sup></div>
+      </div>
+    </div>
+    <div>
+      <div class="side"><b>Urška Radanovič Veljkovič</b><br>Predhodna direktorica FORIS-a, leta 2025 direktorica Hotela Kanin. Ključna oseba razvojne faze pred Canjkom.<sup>16,24</sup></div>
+      <div class="side"><b>Kaj razlikovati</b><br>Direktor družbe ni isto kot direktor hotela. Prokura ne pomeni lastniškega deleža. Povezava z GORICA Group ne dokazuje, da skupina hotel financira.</div>
+      <div class="side"><b>Za Roka</b><br>Canjko v projekt vstopi več let po nakupu. Za roke in odločitve pred avgustom 2026 ni odgovoren.</div>
+    </div>
+  </div>
+
+  <div class="lbl mt">Denar v projektu</div>
+  <div class="money">
+    <div>
+      <p class="note" style="margin-bottom:2.4mm">Državni seznam sofinanciranja iz Načrta za okrevanje in odpornost, projekt »Popolna rekonstrukcija hotela Kanin«:<sup>17</sup></p>
+      <div class="bar-row"><div class="lb">Vrednost investicije z DDV</div><div class="bar-wrap"><div class="bar" style="width:76%"></div><span class="v">10,95 mio €</span></div></div>
+      <div class="bar-row"><div class="lb">Upravičeni stroški</div><div class="bar-wrap"><div class="bar" style="width:22.3%"></div><span class="v">3,21 mio €</span></div></div>
+      <div class="bar-row"><div class="lb">Odobreno sofinanciranje</div><div class="bar-wrap"><div class="bar" style="width:7.6%"></div><span class="v">1,10 mio €</span></div></div>
+      <p class="note">Razpisna vrednost ni nujno končni proračun, odobrena pomoč ni dokaz izplačila. Razmerje lastnih sredstev in posojil ni javno.</p>
+    </div>
+    <div>
+      <div class="hist">
+        <div class="hcard"><div class="y">2007 · NAKUP HIT</div><div class="n">2,7 mio €</div><div class="l">kupnina, približno<sup>12</sup></div></div>
+        <div class="hcard"><div class="y">2008 · PRENOVA HIT</div><div class="n">3,2 mio €</div><div class="l">sobe in wellness, približno<sup>12</sup></div></div>
+        <div class="hcard"><div class="y">2015 · DRAŽBA</div><div class="n">1,3 mio €</div><div class="l">Alpe Adria Hoteli<sup>14</sup></div></div>
+        <div class="hcard unk"><div class="y">2022 · FORNAZARIČ</div><div class="n">ni znano</div><div class="l">1,3 mio € v člankih je kupnina iz 2015</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="lbl mt">Povezava s smučiščem Kanin</div>
+  <div class="ski">
+    <svg viewBox="0 0 230 150" role="img" aria-label="Hotel in smučišče sta ločena, a povezana projekta">
+      <circle cx="58" cy="62" r="46" fill="#182440"/>
+      <text x="58" y="56" font-size="12.5" font-weight="700" fill="#ffffff" text-anchor="middle">Hotel Kanin</text>
+      <text x="58" y="72" font-size="11" fill="#DEBA92" text-anchor="middle">FORIS</text>
+      <circle cx="172" cy="62" r="46" fill="#f6f0e8" stroke="#B08960" stroke-width="2"/>
+      <text x="172" y="56" font-size="12.5" font-weight="700" fill="#182440" text-anchor="middle">Smučišče</text>
+      <text x="172" y="72" font-size="11" fill="#825A3A" text-anchor="middle">do 60 mio € (cilj)</text>
+      <path d="M104 62 H126" stroke="#B08960" stroke-width="2.5" stroke-dasharray="4 3"/>
+      <rect x="66" y="118" width="98" height="24" rx="12" fill="#ffffff" stroke="#B08960"/>
+      <text x="115" y="134" font-size="11" fill="#182440" text-anchor="middle" font-weight="700">konzorcij Promotor</text>
+      <path d="M115 118 V96" stroke="#B08960" stroke-width="1.5"/>
+    </svg>
+    <ul>
+      <li><b>Ločena projekta, poslovno tesno povezana.</b> Po besedah Urške Radanovič (februar 2025) se je Fornazarič za nakup odločil tudi zaradi obljub države o novi žičnici.<sup>20</sup></li>
+      <li>FORIS in Soča Rafting sta povezana s konzorcijem <b>Promotor</b>, ki je julija 2026 oddal edino ponudbo na občinskem razpisu. Leitner, Riko in drugi člani niso lastniki hotela.</li>
+      <li>Vlada je 8. 10. 2026 podprla ponovni zagon smučišča in cilj do <b>60 mio €</b> proračunskih sredstev. <b>Datum ni zagotovljen.</b><sup>21</sup></li>
+      <li>Leta 2013 je hotel zaprl tudi zaradi izgube zimske sezone. Tveganje je danes enako.</li>
+    </ul>
+  </div>
+
+  <p class="note" style="margin-top:4mm"><b>Previdnost:</b> briefing povzema raziskavo Perplexity Deep Research (531 virov), ki je nihče ni neodvisno preveril. Potrjenega dolgega intervjuja s Canjkom ni. Podatki z LinkedIna so samoopis. Številke ob besedilu kažejo na seznam virov na zadnji strani.</p>
+</section>
+
+<!-- ============ STRAN 5: ZA SNEMANJE ============ -->
+<section class="page">
+  <div class="run"><span class="brand">Hostfulness podcast</span><span>Predrag Canjko, Kanin Bovec &nbsp;<span class="pnum">5/5</span></span></div>
+
+  <div class="sec"><div class="ico"><svg class="i"><use href="#i-mic"/></svg></div><div><div class="kick">Za snemanje</div><h2>Kako po propadlih zagonih zgraditi verodostojno obljubo</h2></div></div>
+
+  <div class="script">
+    <div class="k"><svg class="i"><use href="#i-mic"/></svg>Uvod za branje</div>
+    <div class="t">»Danes je z nami Predrag Canjko, generalni direktor SPA Hotela Kanin Bovec. Po izkušnjah v Snoviku in Habakuku zdaj sodeluje pri ponovnem rojstvu bovškega hotela. Govorila bova o tem, kako pred prihodom prvega gosta povezati ljudi, tehnologijo in lokalno okolje ter iz prenovljene stavbe ustvariti gostoljuben hotel.«</div>
+  </div>
+
+  <div class="lbl mt">Vprašanja</div>
+  <ol class="qs">
+    <li><div class="tx"><span class="tag">Prevzem</span>»Ko ste prišli v Kanin, ste prevzeli stavbo z več kot petdesetletno zgodovino in več poskusi ponovnega odprtja. Kaj ste morali najprej razumeti, preden ste začeli sestavljati svojo ekipo?«</div></li>
+    <li><div class="tx"><span class="tag">Investitor</span>»Vaš investitor prihaja iz industrije in mednarodne proizvodnje. Kje takšno razmišljanje hotelu koristi, kje pa mu morate kot hotelir razložiti, da gostoljubje deluje drugače?«</div></li>
+    <li><div class="tx"><span class="tag">Uspeh</span>»Kaj sta z lastnikom dogovorila kot merilo uspeha: datum odprtja, donosnost, celoletna delovna mesta ali ugled hotela? In kaj ima prednost, ko si ti cilji nasprotujejo?«</div></li>
+    <li><div class="tx"><span class="tag">Zima</span>»Hotel je nekoč zaprl tudi zaradi izgube zimske sezone. Kako danes izgleda vaš osnovni poslovni scenarij, če smučišče še nekaj časa ne obratuje?«</div></li>
+    <li><div class="tx"><span class="tag">Wellness</span>»Bazen in wellness sta bila del Kanina že prej. Zakaj naj bi današnji spa ustvaril drugačen razlog za prihod in daljše bivanje?«</div></li>
+    <li><div class="tx"><span class="tag">Ekipa</span>»Gost se po raftingu vrne premočen in soba še ni pripravljena: kdo sme kaj odločiti brez vas?«</div></li>
+    <li><div class="tx"><span class="tag">Tehnologija</span>»Katero povezavo med sistemi boste najprej preizkusili na celotni poti gosta in kako boste dokazali njeno vrednost?«</div></li>
+    <li><div class="tx"><span class="tag">Izkušnje</span>»Kaj ste iz ponovnega zagona Habakuka prenesli sem, česa pa namenoma ne?«</div></li>
+    <li><div class="tx"><span class="tag">Kraj</span>»Kaj morate narediti za lokalne zaposlene in prebivalce, da ponovno odprtje ne bo samo še ena napoved, ampak začetek novega zaupanja?«</div></li>
+  </ol>
+
+  <div class="lbl mt">Momenti resnice: scenariji za pogovor, ne potrjeni postopki</div>
+  <div class="journey">
+    <div class="step"><div class="ic"><svg class="i"><use href="#i-cal"/></svg></div><h4>Pred prihodom</h4><p>Gost ve, da je soba brez TV in kaj vključuje wellness.</p></div>
+    <div class="step"><div class="ic"><svg class="i"><use href="#i-drop"/></svg></div><h4>Po raftingu</h4><p>Najprej pomoč z mokro opremo, ne prodajni nagovor.</p></div>
+    <div class="step"><div class="ic"><svg class="i"><use href="#i-bed"/></svg></div><h4>V sobi</h4><p>Tišina in razgled; svetlobo uredi brez navodil.</p></div>
+    <div class="step"><div class="ic"><svg class="i"><use href="#i-food"/></svg></div><h4>Pri večerji</h4><p>Lokalna jed in zgodba dobavitelja iz ust zaposlenega.</p></div>
+    <div class="step"><div class="ic"><svg class="i"><use href="#i-door"/></svg></div><h4>Ob odhodu</h4><p>Pritožba rešena pred računom, ne na spletu.</p></div>
+  </div>
+  <div class="checks"><span class="chip">Kdo je odgovoren?</span><span class="chip">Kaj vidi v sistemu?</span><span class="chip">Kaj sme odločiti sam?</span><span class="chip">Kako veste, da je uspelo?</span></div>
+
+  <div class="goldbox mt">
+    <div class="lbl"><svg class="i"><use href="#i-search"/></svg>Kar lahko odpremo prvi (o tem javno še ni veliko govoril)</div>
+    <ul class="two">
+      <li>Trening ekipe in pooblastila pri pritožbah</li>
+      <li>Dejanske integracije sistemov in njihov ROI</li>
+      <li>Ciljna zimska zasedenost in ekonomika spa ponudbe</li>
+      <li>Njegova vizija Kanina čez pet do deset let</li>
+    </ul>
+  </div>
+  <div class="lbl" style="margin-top:2.4mm">Viri</div>
+  <ol class="src-list">
+    <li><a href="https://www.linkedin.com/in/predrag-canjko-548596168/">LinkedIn profil Canjka</a></li>
+    <li><a href="https://www.linkedin.com/posts/predrag-canjko-548596168_hotelkanin-preopening-hospitalityleadership-activity-7493031453610536960-lDvz">Objava o predotvoritvi</a></li>
+    <li><a href="https://www.linkedin.com/posts/predrag-canjko-548596168_hospitality-revenue-operations-activity-7427087862270939136-Acvq">Objava o AI v prihodkih</a></li>
+    <li><a href="https://hotelkanin.com/">Uradna stran hotela</a></li>
+    <li><a href="https://hotelkanin.com/rooms-suites/alpina-room/?overview=1">Soba Alpina brez TV</a></li>
+    <li><a href="https://hotelkanin.com/meet-celebrate/meetings-conferences/">Dogodki in direktor</a></li>
+    <li><a href="https://hotelkanin.com/eat-drink/">Kulinarika</a></li>
+    <li><a href="https://www.mojedelo.com/oglas/vodja-recepcije/3070c921-382f-4bd0-baf6-ef6bd11afd6f">Oglas: vodja recepcije</a></li>
+    <li><a href="https://gradbenivestnik.zveza-dgits.si/pdf/GradbeniVestnik-1974_05.pdf">Gradbeni vestnik, 1974</a></li>
+    <li><a href="https://odprtehiseslovenije.org/en/objekt/hotel-kanin-bovec/">Arhitekturna zgodovina</a></li>
+    <li><a href="https://seonet.ljse.si/?doc_id=18137">Mercator: prodaja, 2005</a></li>
+    <li><a href="https://nepremicnine.si21.com/novice-iz-sveta-nepremicnin/Bovski_Alp_hotel_bo_menjal_lastnika/">Nakup Hita, 2007</a></li>
+    <li><a href="https://www.24ur.com/je-bovski-turizem-dokoncno-na-kolenih-po-hotelu-alp-vrata-zaprl-se-kanin.html">24ur: zaprtje, 2013</a></li>
+    <li><a href="https://radiokoper.rtvslo.si/clanek/novice/obnova-hotela-kanin-na-polovici-poti/421972">Radio Koper, 2017</a></li>
+    <li><a href="https://siol.net/novice/posel-danes/hotel-v-bovcu-ni-vec-v-lasti-rusa-574036">Siol: nakup, 2022</a></li>
+    <li><a href="https://www.companywall.si/podjetje/foris-doo/MM9uaZHC/osebe">FORIS: lastništvo</a></li>
+    <li><a href="https://www.gov.si/assets/ministrstva/MGTS/Dokumenti/DTUR/JR-nastanitvene-kapacitete/Seznami/Seznam-prejemnikov-sredstev-na-JR-nastanitvene-kapacitete-NOO_koncni.pdf">Seznam prejemnikov NOO</a></li>
+    <li><a href="https://geokonfin.si/obnova-hotela-kanin-in-izgradnja-podzemne-garazne-hise-geodetske-meritve/">Obnova in garaža</a></li>
+    <li><a href="https://prvi.rtvslo.si/podkast/intervju-radio/3633109/174823127">Radio Prvi: Fornazarič</a></li>
+    <li><a href="https://www.24ur.com/novice/slovenija/bo-marca-podpisano-pismo-o-nameri-gradnje-nove-zicnice-na-kanin.html">24ur: nova žičnica, 2025</a></li>
+    <li><a href="https://www.gov.si/novice/2026-10-08-15-redna-seja-vlade-republike-slovenije/">Seja vlade, 8. 10. 2026</a></li>
+    <li><a href="https://hiq-automation.com/2026/10/15/spa-hotel-kanin-bovec/">HIQ/Robotina: referenca</a></li>
+    <li><a href="https://www.soca-valley.com/mma/TURISTI__NI_PROMET_IN_STRUKTURA_OBISKA_2025.pdf/2026022614440832/?m=1772113448">Turistični promet 2025</a></li>
+    <li><a href="https://portal24.si/bovski-hoteli-potrebujejo-zimsko-sezono">Portal24: hoteli in zima</a></li>
+    <li><a href="https://lipovlist.turisticna-zveza.si/voda-kot-zaprisega-zdravju-terme-snovik/">Lipov list: Snovik</a></li>
+    <li><a href="https://arhiv.gorenjskiglas.si/pdf/Gorenjski_glas_20200417_31.pdf">Gorenjski glas, 2020</a></li>
+    <li><a href="https://www.kamnik.si/Files/eMagazine/61/602147/07.02.2020%20Leto%205%20Stevilka%203.pdf">Kamniški časopis, 2020</a></li>
+    <li><a href="https://mariborinfo.com/novica/politika-gospodarstvo/hotel-piramida-v-srediscu-maribora-tik-pred-prodajo-znano-je-kdo-bi">Mariborinfo: Habakuk, 2023</a></li>
+  </ol>
+</section>
+
+</body>
+</html>
