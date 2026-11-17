@@ -1,5 +1,5 @@
 {
- "osvezeno": "2026-11-17T07:05:02+00:00",
+ "osvezeno": "2026-11-17T07:40:19+00:00",
  "od": "2026-04-13",
  "vrednosti": {
   "ai_sdr_mail_linkedin": {
@@ -40,13 +40,13 @@
    "demos_booked": 0,
    "ae_follow_up": 0,
    "wins": 0,
-   "opens": 169921,
-   "reads": 74881,
+   "opens": 174651,
+   "reads": 77379,
    "clicks": 96
   }
  },
  "hub": {
-  "hub_osvezen": "2026-11-17T07:04:28.364060+00:00",
+  "hub_osvezen": "2026-11-17T07:24:06.816382+00:00",
   "hub_poslanih": 296
  },
  "nerazvrsceni": 0
