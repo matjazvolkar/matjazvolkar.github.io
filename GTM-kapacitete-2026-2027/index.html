@@ -1098,6 +1098,7 @@
   .nac1 td.n { text-align: right; font-size: 1.4rem; font-weight: 800; font-variant-numeric: tabular-nums; white-space: nowrap; }
   .nac1 td.n small { display: block; margin-top: 2px; font-size: 0.68rem; font-weight: 400; color: var(--ink-3); white-space: normal; }
   .nac1 td.kam { white-space: normal; min-width: 220px; }
+  .nac1 .kam .zap { color: var(--accent); margin-right: 2px; }
   .nac1 .traj b { display: block; font-weight: 800; white-space: nowrap; }
   .nac1 .traj small { display: block; margin-top: 2px; font-size: 0.72rem; color: var(--ink-3); }
   .nac1 .mes { position: relative; min-width: 160px; height: 8px; margin-top: 9px; border-radius: 999px; background: var(--line-2); }
@@ -1185,9 +1186,9 @@
     const zPay = NACRT.filter(k => k.zgrajeno);
     // kampanja z valovi: mail in LinkedIn sta vsota valov, hotelov ostane vpisano (val 2 so isti hoteli)
     NACRT.forEach(k => { if (k.valovi) { const vv = k.valovi.filter(v => !v.izven); k.mail = vv.reduce((a, v) => a + v.mail, 0); k.li = vv.reduce((a, v) => a + v.li, 0); } });
-    const vrsta = (k) => {
+    const vrsta = (k, i) => {
       const x = D(k.od), y = D(k.do);
-      return `<tr><td class="kam" data-l="KAMPANJA"><b>${k.kampanja}</b><small>start ${DAN[x.getDay()]} ${x.getDate()}. ${x.getMonth() + 1}., konec ${DAN[y.getDay()]} ${y.getDate()}. ${y.getMonth() + 1}.</small></td>` +
+      return `<tr><td class="kam" data-l="KAMPANJA"><b><span class="zap">${i + 1}.</span> ${k.kampanja}</b><small>start ${DAN[x.getDay()]} ${x.getDate()}. ${x.getMonth() + 1}., konec ${DAN[y.getDay()]} ${y.getDate()}. ${y.getMonth() + 1}.</small></td>` +
         `<td data-l="TIP"><span class="ntip ${({ "Custom Scrape": "t-custom", "General Demo": "t-general", "AI": "t-ai" })[k.tip] || ""}">${k.tip}</span></td>` +
         `<td data-l="TRG"><span class="trg">${FLAG[k.zastava] ? `<span class="fl">${FLAG[k.zastava]}</span>` : ""}${k.trg}</span></td>` +
         `<td class="n" data-l="HOTELOV">${n0(k.hotelov)}</td>` +
@@ -1198,13 +1199,13 @@
     const vs = (p) => NACRT.reduce((a, k) => a + (k[p] || 0), 0);
     q("#t_nacrt").innerHTML = `<div class="tw" style="margin:0"><table><thead><tr><th>Kampanja</th><th>Tip</th><th>Trg</th><th class="n">Hotelov</th>` +
       `<th class="n ch email"><i class="dot"></i>Kontaktov mail</th><th class="n ch li"><i class="dot"></i>Kontaktov LI</th><th>Trajanje</th></tr></thead><tbody>` +
-      NACRT.map(vrsta).join("") +
+      NACRT.map((k, i) => vrsta(k, i)).join("") +
       (NACRT.length > 1 ? `<tr class="sum"><td class="kam" data-l="SKUPAJ"><b>Skupaj</b><small>${NACRT.length} ${NACRT.length === 2 ? "kampanji" : NACRT.length < 5 ? "kampanje" : "kampanj"}</small></td><td></td><td></td><td class="n" data-l="HOTELOV">${n0(vs("hotelov"))}</td>` +
         `<td class="n ch email" data-l="KONTAKTOV MAIL">${n0(vs("mail"))}</td><td class="n ch li" data-l="KONTAKTOV LI">${n0(vs("li"))}${NACRT.some(k => k.li_novih != null) ? `<small>novih ${n0(vs("li_novih"))}</small>` : ""}</td><td></td></tr>` : "") +
       `</tbody></table></div>`;
     q("#n_nacrt").innerHTML =
       (zPay.length ? zPay.map(k => `<li>${k.kampanja}: številke iz payloada kampanje, zgrajen ${dp(k.zgrajeno)}.</li>`).join("")
-        : NACRT.map(k => `<li>${NACRT.length > 1 ? `<b>${k.trg}, ${k.tip}:</b> ` : ""}${k.op || ""}</li>`).join("") + (ZAPOREDJE ? `<li class="zap">${ZAPOREDJE}</li>` : ""));
+        : NACRT.map((k, i) => `<li>${NACRT.length > 1 ? `<b>${i + 1}. ${k.trg}, ${k.tip}:</b> ` : ""}${k.op || ""}</li>`).join("") + (ZAPOREDJE ? `<li class="zap">${ZAPOREDJE}</li>` : ""));
   }
   const q = (x) => document.querySelector(x);
   // zastave (window.FLAG) nastanejo v glavnem skriptu strani, zato risanje po nalaganju
