@@ -1098,17 +1098,18 @@
   .nac1 td.n { text-align: right; font-size: 1.4rem; font-weight: 800; font-variant-numeric: tabular-nums; white-space: nowrap; }
   .nac1 td.n small { display: block; margin-top: 2px; font-size: 0.68rem; font-weight: 400; color: var(--ink-3); white-space: normal; }
   .nac1 td.kam { white-space: normal; min-width: 220px; }
+  .nac1 th.tipc, .nac1 td.tipc, .nac1 th.ch, .nac1 td.ch { width: 1%; }
+  .nac1 td.ch { font-size: 1.25rem; }
+  .nac1 td.ch small { white-space: nowrap; }
+  .nac1 .ntip { padding: 3px 9px; font-size: 0.72rem; }
+  .nac1 .mes s { position: absolute; top: -5px; width: 2px; height: 18px; background: var(--ink-3); opacity: 0.7; }
+  .nac1 .mes-l2 { display: flex; margin-top: 4px; font-size: 0.66rem; color: var(--ink-3); }
+  .nac1 .mes-l2 span { text-align: center; } .nac1 .mes-l2 span + span { flex: 1; }
+  .nac1 tr.obd td { padding: 9px 14px; background: var(--surface-2); color: var(--ink-2); font-size: 0.74rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
   .nac1 .kam .zap { color: var(--accent); margin-right: 2px; }
   .nac1 .traj b { display: block; font-weight: 800; white-space: nowrap; }
-  /* podlaga po mesecu starta (Matjaz 19. 11.): isti mesec ima isto barvo */
-  .nac1 td.traj.m11 { background: rgba(56, 189, 190, 0.13); box-shadow: inset 3px 0 0 #38BDBE; }
-  .nac1 td.traj.m12 { background: rgba(236, 104, 150, 0.13); box-shadow: inset 3px 0 0 #EC6896; }
-  .nac1 td.traj.m1 { background: rgba(132, 146, 255, 0.15); box-shadow: inset 3px 0 0 #8492FF; }
-  .nac1 td.traj.m2 { background: rgba(246, 200, 119, 0.12); box-shadow: inset 3px 0 0 #F6C877; }
-  .nac1 td.traj.m11 .mes-l span:nth-child(2) { color: #6FD9DA; } .nac1 td.traj.m12 .mes-l span:nth-child(2) { color: #F38FB3; }
-  .nac1 td.traj.m1 .mes-l span:nth-child(2) { color: #A9B3FF; } .nac1 td.traj.m2 .mes-l span:nth-child(2) { color: #F6C877; }
   .nac1 .traj small { display: block; margin-top: 2px; font-size: 0.72rem; color: var(--ink-3); }
-  .nac1 .mes { position: relative; min-width: 160px; height: 8px; margin-top: 9px; border-radius: 999px; background: var(--line-2); }
+  .nac1 .mes { position: relative; min-width: 320px; height: 8px; margin-top: 9px; border-radius: 999px; background: var(--line-2); }
   .nac1 .mes i { position: absolute; top: 0; bottom: 0; border-radius: 999px; background: linear-gradient(90deg, var(--accent), var(--email)); box-shadow: 0 0 10px rgba(115, 199, 255, 0.35); }
   .nac1 .mes u { position: absolute; top: -3px; width: 1px; height: 14px; background: var(--line); }
   .nac1 .mes-l { display: flex; justify-content: space-between; margin-top: 4px; font-size: 0.62rem; color: var(--ink-3); }
@@ -1121,8 +1122,10 @@
     .nac1 tbody tr:last-child { border-bottom: 0; }
     .nac1 tbody td, .nac1 tbody tr.sum td { padding: 0; border: 0; background: transparent; }
     .nac1 td[data-l]::before { content: attr(data-l); display: block; margin-bottom: 4px; font-size: 0.6rem; font-weight: 800; letter-spacing: 0.08em; color: var(--ink-3); }
-    .nac1 td.kam, .nac1 td.traj { grid-column: 1 / -1; }
-    .nac1 tbody td.traj.m11, .nac1 tbody td.traj.m12, .nac1 tbody td.traj.m1, .nac1 tbody td.traj.m2 { padding: 10px 12px; border-radius: 10px; }
+    .nac1 td.kam, .nac1 td.traj, .nac1 tr.obd td { grid-column: 1 / -1; }
+    .nac1 .mes { min-width: 0; }
+    .nac1 tbody tr.obd { display: block; padding: 0; }
+    .nac1 tbody tr.obd td { padding: 9px 14px; background: var(--surface-2); }
     .nac1 td.n { text-align: left; font-size: 1.2rem; }
   }
 </style>
@@ -1176,14 +1179,21 @@
   const DAN = ["ned", "pon", "tor", "sre", "čet", "pet", "sob"];
   const delovnih = (a, b) => { let n = 0; for (const d = D(a); d <= D(b); d.setDate(d.getDate() + 1)) if (d.getDay() % 6) n++; return n; };
   const obdobje = (a, b) => { const x = D(a), y = D(b); return x.getMonth() === y.getMonth() ? `${x.getDate()}. do ${y.getDate()}. ${MES[y.getMonth()]}` : `${x.getDate()}. ${MES[x.getMonth()]} do ${y.getDate()}. ${MES[y.getMonth()]}`; };
-  // mesecni trak: obdobje kampanje na mesecu, v katerem se zacne; crtice so ponedeljki
+  // dvomesecni trak (Matjaz 19. 11.): november in december skupaj, januar in februar skupaj; crtice so ponedeljki,
+  // debelejsa crta je meja meseca; kampanja, ki sega cez obdobje, se odreze na koncu obdobja
+  const OBD0 = 2026 * 12 + 10;
+  const obdZac = (d) => { const i = d.getFullYear() * 12 + d.getMonth(); const z = i - ((((i - OBD0) % 2) + 2) % 2); return new Date(Math.floor(z / 12), z % 12, 1, 12); };
+  const obdIme = (p) => { const p2 = new Date(p.getFullYear(), p.getMonth() + 1, 1, 12); const a = MESI[p.getMonth()]; return `${a[0].toUpperCase() + a.slice(1)} in ${MESI[p2.getMonth()]} ${p2.getFullYear()}`; };
   const trak = (a, b) => {
-    const x = D(a), y = D(b), dim = new Date(x.getFullYear(), x.getMonth() + 1, 0).getDate();
-    const konec = y.getMonth() === x.getMonth() ? y.getDate() : dim;
+    const x = D(a), y = D(b), p = obdZac(x);
+    const dim1 = new Date(p.getFullYear(), p.getMonth() + 1, 0).getDate(), dim2 = new Date(p.getFullYear(), p.getMonth() + 2, 0).getDate(), tot = dim1 + dim2;
+    const off = (d) => Math.round((d - p) / 86400000);
+    const zac = off(x), kon = Math.min(off(y), tot - 1);
     let crte = "";
-    for (let d = 1; d <= dim; d++) if (new Date(x.getFullYear(), x.getMonth(), d).getDay() === 1) crte += `<u style="left:${((d - 1) / dim * 100).toFixed(2)}%"></u>`;
-    return `<div class="mes" title="${obdobje(a, b)}">${crte}<i style="left:${((x.getDate() - 1) / dim * 100).toFixed(2)}%;width:${((konec - x.getDate() + 1) / dim * 100).toFixed(2)}%"></i></div>` +
-      `<div class="mes-l"><span>1.</span><span>${MESI[x.getMonth()]}</span><span>${dim}.</span></div>`;
+    for (let i = 0; i < tot; i++) if (new Date(p.getFullYear(), p.getMonth(), 1 + i).getDay() === 1) crte += `<u style="left:${(i / tot * 100).toFixed(2)}%"></u>`;
+    const meja = (dim1 / tot * 100).toFixed(2);
+    return `<div class="mes" title="${obdobje(a, b)}">${crte}<s style="left:${meja}%"></s><i style="left:${(zac / tot * 100).toFixed(2)}%;width:${((kon - zac + 1) / tot * 100).toFixed(2)}%"></i></div>` +
+      `<div class="mes-l2"><span style="width:${meja}%">${MESI[p.getMonth()]}</span><span>${MESI[(p.getMonth() + 1) % 12]}</span></div>`;
   };
   function narisi() {
     const FLAG = window.FLAG || {};
@@ -1197,19 +1207,19 @@
     const vrsta = (k, i) => {
       const x = D(k.od), y = D(k.do);
       return `<tr><td class="kam" data-l="KAMPANJA"><b><span class="zap">${i + 1}.</span> ${k.kampanja}</b><small>start ${DAN[x.getDay()]} ${x.getDate()}. ${x.getMonth() + 1}., konec ${DAN[y.getDay()]} ${y.getDate()}. ${y.getMonth() + 1}.</small></td>` +
-        `<td data-l="TIP"><span class="ntip ${({ "Custom Scrape": "t-custom", "General Demo": "t-general", "AI": "t-ai" })[k.tip] || ""}">${k.tip}</span></td>` +
+        `<td class="tipc" data-l="TIP"><span class="ntip ${({ "Custom Scrape": "t-custom", "General Demo": "t-general", "AI": "t-ai" })[k.tip] || ""}">${k.tip}</span></td>` +
         `<td data-l="TRG"><span class="trg">${FLAG[k.zastava] ? `<span class="fl">${FLAG[k.zastava]}</span>` : ""}${k.trg}</span></td>` +
         `<td class="n" data-l="HOTELOV">${n0(k.hotelov)}</td>` +
-        `<td class="n ch email" data-l="KONTAKTOV MAIL">${n0(k.mail)}${k.mail_op ? `<small>${k.mail_op}</small>` : ""}</td>` +
-        `<td class="n ch li" data-l="KONTAKTOV LI">${n0(k.li)}${k.li_novih != null ? `<small>novih ${n0(k.li_novih)}</small>` : ""}</td>` +
-        `<td class="traj m${x.getMonth() + 1}" data-l="TRAJANJE"><b>${obdobje(k.od, k.do)}</b><small>${delovnih(k.od, k.do)} delovnih dni</small>${trak(k.od, k.do)}</td></tr>`;
+        `<td class="n ch email" data-l="EMAIL">${n0(k.mail)}${k.mail_op ? `<small>${k.mail_op}</small>` : ""}</td>` +
+        `<td class="n ch li" data-l="LI">${n0(k.li)}${k.li_novih != null ? `<small>novih ${n0(k.li_novih)}</small>` : ""}</td>` +
+        `<td class="traj" data-l="TRAJANJE"><b>${obdobje(k.od, k.do)}</b><small>${delovnih(k.od, k.do)} delovnih dni</small>${trak(k.od, k.do)}</td></tr>`;
     };
     const vs = (p) => NACRT.reduce((a, k) => a + (k[p] || 0), 0);
-    q("#t_nacrt").innerHTML = `<div class="tw" style="margin:0"><table><thead><tr><th>Kampanja</th><th>Tip</th><th>Trg</th><th class="n">Hotelov</th>` +
-      `<th class="n ch email"><i class="dot"></i>Kontaktov mail</th><th class="n ch li"><i class="dot"></i>Kontaktov LI</th><th>Trajanje</th></tr></thead><tbody>` +
-      NACRT.map((k, i) => vrsta(k, i)).join("") +
+    q("#t_nacrt").innerHTML = `<div class="tw" style="margin:0"><table><thead><tr><th>Kampanja</th><th class="tipc">Tip</th><th>Trg</th><th class="n">Hotelov</th>` +
+      `<th class="n ch email"><i class="dot"></i>Email</th><th class="n ch li"><i class="dot"></i>LI</th><th>Trajanje</th></tr></thead><tbody>` +
+      (() => { let prej = null; return NACRT.map((k, i) => { const p = obdZac(D(k.od)), kl = p.getFullYear() * 12 + p.getMonth(); const g = kl !== prej ? `<tr class="obd"><td colspan="7">${obdIme(p)}</td></tr>` : ""; prej = kl; return g + vrsta(k, i); }).join(""); })() +
       (NACRT.length > 1 ? `<tr class="sum"><td class="kam" data-l="SKUPAJ"><b>Skupaj</b><small>${NACRT.length} ${NACRT.length === 2 ? "kampanji" : NACRT.length < 5 ? "kampanje" : "kampanj"}</small></td><td></td><td></td><td class="n" data-l="HOTELOV">${n0(vs("hotelov"))}</td>` +
-        `<td class="n ch email" data-l="KONTAKTOV MAIL">${n0(vs("mail"))}</td><td class="n ch li" data-l="KONTAKTOV LI">${n0(vs("li"))}${NACRT.some(k => k.li_novih != null) ? `<small>novih ${n0(vs("li_novih"))}</small>` : ""}</td><td></td></tr>` : "") +
+        `<td class="n ch email" data-l="EMAIL">${n0(vs("mail"))}</td><td class="n ch li" data-l="LI">${n0(vs("li"))}${NACRT.some(k => k.li_novih != null) ? `<small>novih ${n0(vs("li_novih"))}</small>` : ""}</td><td></td></tr>` : "") +
       `</tbody></table></div>`;
     q("#n_nacrt").innerHTML =
       (zPay.length ? zPay.map(k => `<li>${k.kampanja}: številke iz payloada kampanje, zgrajen ${dp(k.zgrajeno)}.</li>`).join("")
