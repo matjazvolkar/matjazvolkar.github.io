@@ -1100,6 +1100,13 @@
   .nac1 td.kam { white-space: normal; min-width: 220px; }
   .nac1 .kam .zap { color: var(--accent); margin-right: 2px; }
   .nac1 .traj b { display: block; font-weight: 800; white-space: nowrap; }
+  /* podlaga po mesecu starta (Matjaz 19. 11.): isti mesec ima isto barvo */
+  .nac1 td.traj.m11 { background: rgba(56, 189, 190, 0.13); box-shadow: inset 3px 0 0 #38BDBE; }
+  .nac1 td.traj.m12 { background: rgba(236, 104, 150, 0.13); box-shadow: inset 3px 0 0 #EC6896; }
+  .nac1 td.traj.m1 { background: rgba(132, 146, 255, 0.15); box-shadow: inset 3px 0 0 #8492FF; }
+  .nac1 td.traj.m2 { background: rgba(246, 200, 119, 0.12); box-shadow: inset 3px 0 0 #F6C877; }
+  .nac1 td.traj.m11 .mes-l span:nth-child(2) { color: #6FD9DA; } .nac1 td.traj.m12 .mes-l span:nth-child(2) { color: #F38FB3; }
+  .nac1 td.traj.m1 .mes-l span:nth-child(2) { color: #A9B3FF; } .nac1 td.traj.m2 .mes-l span:nth-child(2) { color: #F6C877; }
   .nac1 .traj small { display: block; margin-top: 2px; font-size: 0.72rem; color: var(--ink-3); }
   .nac1 .mes { position: relative; min-width: 160px; height: 8px; margin-top: 9px; border-radius: 999px; background: var(--line-2); }
   .nac1 .mes i { position: absolute; top: 0; bottom: 0; border-radius: 999px; background: linear-gradient(90deg, var(--accent), var(--email)); box-shadow: 0 0 10px rgba(115, 199, 255, 0.35); }
@@ -1115,6 +1122,7 @@
     .nac1 tbody td, .nac1 tbody tr.sum td { padding: 0; border: 0; background: transparent; }
     .nac1 td[data-l]::before { content: attr(data-l); display: block; margin-bottom: 4px; font-size: 0.6rem; font-weight: 800; letter-spacing: 0.08em; color: var(--ink-3); }
     .nac1 td.kam, .nac1 td.traj { grid-column: 1 / -1; }
+    .nac1 tbody td.traj.m11, .nac1 tbody td.traj.m12, .nac1 tbody td.traj.m1, .nac1 tbody td.traj.m2 { padding: 10px 12px; border-radius: 10px; }
     .nac1 td.n { text-align: left; font-size: 1.2rem; }
   }
 </style>
@@ -1194,7 +1202,7 @@
         `<td class="n" data-l="HOTELOV">${n0(k.hotelov)}</td>` +
         `<td class="n ch email" data-l="KONTAKTOV MAIL">${n0(k.mail)}${k.mail_op ? `<small>${k.mail_op}</small>` : ""}</td>` +
         `<td class="n ch li" data-l="KONTAKTOV LI">${n0(k.li)}${k.li_novih != null ? `<small>novih ${n0(k.li_novih)}</small>` : ""}</td>` +
-        `<td class="traj" data-l="TRAJANJE"><b>${obdobje(k.od, k.do)}</b><small>${delovnih(k.od, k.do)} delovnih dni</small>${trak(k.od, k.do)}</td></tr>`;
+        `<td class="traj m${x.getMonth() + 1}" data-l="TRAJANJE"><b>${obdobje(k.od, k.do)}</b><small>${delovnih(k.od, k.do)} delovnih dni</small>${trak(k.od, k.do)}</td></tr>`;
     };
     const vs = (p) => NACRT.reduce((a, k) => a + (k[p] || 0), 0);
     q("#t_nacrt").innerHTML = `<div class="tw" style="margin:0"><table><thead><tr><th>Kampanja</th><th>Tip</th><th>Trg</th><th class="n">Hotelov</th>` +
