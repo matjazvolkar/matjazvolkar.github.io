@@ -189,6 +189,21 @@
 
   /* backup panel */
   .backup-panel .note { margin: 6px 0 12px; color: var(--ink-3); font-size: 12.5px; }
+
+  /* lists panel */
+  .lists-panel h3 { margin-top: 12px; }
+  .lists-panel .note { margin: 4px 0 0; color: var(--ink-3); font-size: 12.5px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 6px; }
+  .chip {
+    display: inline-flex; align-items: center; font-size: 12.5px; color: var(--ink);
+    background: var(--line-2); border-radius: 999px; padding: 2px 3px 2px 10px;
+  }
+  .chip button {
+    background: none; border: none; color: var(--ink-3); cursor: pointer;
+    font-size: 15px; line-height: 1; padding: 2px 6px; margin-left: 2px; border-radius: 999px;
+  }
+  .chip button:hover { color: var(--bg); background: var(--warn-fg); }
+  .chips-empty { font-size: 12.5px; color: var(--ink-3); }
   .backup-actions { display: flex; gap: 10px; flex-wrap: wrap; }
   .file-label { cursor: pointer; }
 
@@ -310,6 +325,15 @@
         <ol id="top5List"></ol>
       </section>
 
+      <section class="panel lists-panel" id="listsPanel">
+        <h2>Kategorije in kampanje</h2>
+        <h3>Kategorije</h3>
+        <div class="chips" id="katChips"></div>
+        <h3>Kampanje</h3>
+        <div class="chips" id="kampChips"></div>
+        <p class="note">× odstrani ime iz izbire v tabeli. Vpisi, ki ga že imajo, ostanejo nespremenjeni. Novo ime dodaš v tabeli z "+ Nova kategorija" ali "+ Nova kampanja", tako vrneš tudi odstranjeno.</p>
+      </section>
+
       <section class="panel backup-panel">
         <h2>Varnostna kopija</h2>
         <p class="note">Podatki so shranjeni samo v tem brskalniku (localStorage), nikamor se ne pošiljajo. Če počistiš podatke brskalnika ali zamenjaš napravo, jih izgubiš brez izvoza.</p>
@@ -349,10 +373,13 @@
   var LS_DAYS = "hormoziFocus.days.v1";
   var LS_KAT = "hormoziFocus.kategorije.v1";
   var LS_KAMP = "hormoziFocus.kampanje.v1";
+  var LS_KAT_SKRITE = "hormoziFocus.kategorije.skrite.v1";
+  var LS_KAMP_SKRITE = "hormoziFocus.kampanje.skrite.v1";
   var LS_DAYS_BACKUP = "hormoziFocus.days.v1.pred-delovnim-casom";
 
   // Kategorije. Nova kategorija = nova vrstica v tem seznamu.
   // Na strani jo lahko dodaš tudi sam: v stolpcu Kategorija izberi "+ Nova kategorija".
+  // Odstraniš jo v okvirju "Kategorije in kampanje" (privzeta iz tega seznama se tam samo skrije).
   var KATEGORIJE = [
     "AI SDR",
     "AI Content",
@@ -385,6 +412,13 @@
   var days = loadJSON(LS_DAYS, {});
   var customKat = loadJSON(LS_KAT, []);
   var customKamp = loadJSON(LS_KAMP, []);
+
+  // Svoja imena (dodana na strani) in skrita privzeta imena (iz kode, odstranjena na strani).
+  // Oboje živi samo v tem brskalniku in gre v izvoz JSON.
+  var SEZNAMA = {
+    kat:  { privzete: KATEGORIJE, svoje: customKat,  skrite: loadJSON(LS_KAT_SKRITE, []),  lsSvoje: LS_KAT,  lsSkrite: LS_KAT_SKRITE },
+    kamp: { privzete: KAMPANJE,   svoje: customKamp, skrite: loadJSON(LS_KAMP_SKRITE, []), lsSvoje: LS_KAMP, lsSkrite: LS_KAMP_SKRITE }
+  };
   var selectedDate = startOfDay(new Date());
   var calendarViewDate = new Date(selectedDate);
   var currentRows = blankRows(GRID.n);
@@ -476,28 +510,50 @@
     saveJSON(LS_DAYS, days);
   }
 
-  function mergeList(defaults, custom){
+  function indexOfName(list, name){
+    var ln = name.toLowerCase();
+    for (var i = 0; i < list.length; i++) if (list[i].toLowerCase() === ln) return i;
+    return -1;
+  }
+
+  function mergeList(s){
     var seen = {}, out = [];
-    defaults.concat(custom).forEach(function(k){
+    s.skrite.forEach(function(k){ seen[k.toLowerCase()] = true; });
+    s.privzete.concat(s.svoje).forEach(function(k){
       var lk = k.toLowerCase();
       if (seen[lk]) return;
       seen[lk] = true; out.push(k);
     });
     return out;
   }
-  function allKategorije(){ return mergeList(KATEGORIJE, customKat); }
-  function allKampanje(){ return mergeList(KAMPANJE, customKamp); }
+  function allKategorije(){ return mergeList(SEZNAMA.kat); }
+  function allKampanje(){ return mergeList(SEZNAMA.kamp); }
 
-  // Vrne ime, ki se dejansko uporabi (obstoječe ime ob ujemanju ne glede na velike črke).
-  function addToList(defaults, custom, lsKey, name){
-    var existing = mergeList(defaults, custom).filter(function(k){ return k.toLowerCase() === name.toLowerCase(); })[0];
+  // Doda ime ali vrne odstranjeno nazaj. Vrne ime, ki se dejansko uporabi
+  // (obstoječe ime ob ujemanju ne glede na velike črke).
+  function addToList(s, name){
+    var hi = indexOfName(s.skrite, name);
+    if (hi !== -1){ s.skrite.splice(hi, 1); saveJSON(s.lsSkrite, s.skrite); }
+    var existing = mergeList(s).filter(function(k){ return k.toLowerCase() === name.toLowerCase(); })[0];
     if (existing) return existing;
-    custom.push(name);
-    saveJSON(lsKey, custom);
+    s.svoje.push(name);
+    saveJSON(s.lsSvoje, s.svoje);
     return name;
   }
-  function addKategorija(name){ return addToList(KATEGORIJE, customKat, LS_KAT, name); }
-  function addKampanja(name){ return addToList(KAMPANJE, customKamp, LS_KAMP, name); }
+
+  // Odstrani ime iz izbire: svoje se izbriše, privzeto iz kode se skrije.
+  // Vrstic, ki ime že imajo, ne spreminja.
+  function removeFromList(s, name){
+    var ci = indexOfName(s.svoje, name);
+    if (ci !== -1){ s.svoje.splice(ci, 1); saveJSON(s.lsSvoje, s.svoje); }
+    if (indexOfName(s.privzete, name) !== -1 && indexOfName(s.skrite, name) === -1){
+      s.skrite.push(name);
+      saveJSON(s.lsSkrite, s.skrite);
+    }
+  }
+
+  function addKategorija(name){ return addToList(SEZNAMA.kat, name); }
+  function addKampanja(name){ return addToList(SEZNAMA.kamp, name); }
 
   function needsKamp(kat){
     var lk = (kat || "").toLowerCase();
@@ -699,6 +755,7 @@
   function addNewAndRerender(idx, selector){
     persistCurrentRows();
     renderTableRows(currentRows);
+    renderSeznama();
     var again = el.body.querySelector('tr[data-idx="' + idx + '"] ' + selector);
     if (again) again.focus();
     updateLiveCount();
@@ -869,7 +926,11 @@
   }
 
   el.exportBtn.addEventListener("click", function(){
-    var payload = { exportedAt: new Date().toISOString(), days: days, kategorije: customKat, kampanje: customKamp };
+    var payload = {
+      exportedAt: new Date().toISOString(), days: days,
+      kategorije: customKat, kampanje: customKamp,
+      kategorijeSkrite: SEZNAMA.kat.skrite, kampanjeSkrite: SEZNAMA.kamp.skrite
+    };
     var blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
     var url = URL.createObjectURL(blob);
     var a = document.createElement("a");
@@ -901,6 +962,11 @@
         if (Array.isArray(parsed.kampanje)){
           parsed.kampanje.forEach(function(k){ if (typeof k === "string" && k.trim()) addKampanja(k.trim()); });
         }
+        [["kategorijeSkrite", SEZNAMA.kat], ["kampanjeSkrite", SEZNAMA.kamp]].forEach(function(p){
+          if (!Array.isArray(parsed[p[0]])) return;
+          parsed[p[0]].forEach(function(k){ if (typeof k === "string" && k.trim()) removeFromList(p[1], k.trim()); });
+        });
+        renderSeznama();
         renderCalendar();
         computeStats();
         loadAndRenderDay(toKey(selectedDate));
@@ -942,7 +1008,38 @@
   alarmEl.on.addEventListener("click", function(){ setAlarm("on"); });
   alarmEl.off.addEventListener("click", function(){ setAlarm("off"); });
 
+  // Okvir "Kategorije in kampanje": × odstrani ime iz izbire.
+  var listsEl = {
+    panel: document.getElementById("listsPanel"),
+    kat: document.getElementById("katChips"),
+    kamp: document.getElementById("kampChips")
+  };
+
+  function renderSeznama(){
+    [["kat", allKategorije()], ["kamp", allKampanje()]].forEach(function(p){
+      listsEl[p[0]].innerHTML = p[1].length
+        ? p[1].map(function(k){
+            return '<span class="chip">' + escapeHtml(k)
+              + '<button type="button" data-tip="' + p[0] + '" data-ime="' + escapeHtml(k) + '"'
+              + ' title="Odstrani" aria-label="Odstrani ' + escapeHtml(k) + '">×</button></span>';
+          }).join("")
+        : '<span class="chips-empty">Ni nobene.</span>';
+    });
+  }
+
+  listsEl.panel.addEventListener("click", function(e){
+    var btn = e.target.closest("button[data-tip]");
+    if (!btn) return;
+    var tip = btn.dataset.tip, ime = btn.dataset.ime;
+    var beseda = tip === "kat" ? "kategorijo" : "kampanjo";
+    if (!confirm("Odstranim " + beseda + " \"" + ime + "\" iz izbire?\n\nVpisi, ki jo že imajo, ostanejo nespremenjeni.")) return;
+    removeFromList(SEZNAMA[tip], ime);
+    renderSeznama();
+    renderTableRows(currentRows);
+  });
+
   migrateLegacyDays();
+  renderSeznama();
   loadAndRenderDay(toKey(selectedDate));
   renderCalendar();
   computeStats();
